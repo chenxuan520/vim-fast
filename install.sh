@@ -493,6 +493,7 @@ function install_coc()
 	cd ~/.vim/plugged/coc.nvim
 	yarn install
 	yarn build
+	chmod 664 ~/.viminfo
 }
 
 # 在android上安装ycm插件
