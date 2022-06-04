@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt-get install wget clangd
+sudo apt-get  install -y wget clangd
 type clangd
 if [ $? == 1 ];then
 	wget  https://gitee.com/mirrorvim/vim-coc/attach_files/1084289/download/clangd-linux-14.0.3.zip
