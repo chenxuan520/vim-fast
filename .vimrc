@@ -187,10 +187,10 @@ let g:airline#extensions#tabline#enabled = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
 
 " cpp-mode
 nnoremap <leader>U :GoToFunImpl<cr>
@@ -227,6 +227,8 @@ endfunction
 
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)
+nmap <silent>gd <Plug>(coc-definition)
+nmap <silent>gt <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <leader>ff <Plug>(coc-fix-current)
@@ -242,6 +244,19 @@ xmap ic <Plug>(coc-classobj-i)
 omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
+
+command! -nargs=0 Format :call CocActionAsync('format')
+
+nnoremap <silent> K :call ShowDocumentation()<CR>
+
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
 
 " tagbar
 let g:tagbar_width = 30
