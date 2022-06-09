@@ -214,6 +214,7 @@ let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
 
 " coc.nvim
+" coc tab
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ CheckBackspace() ? "\<TAB>" :
@@ -224,7 +225,8 @@ function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
+" coc find define
+nmap <leader>r <Plug>(coc-rename)
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)
 nmap <silent>gd <Plug>(coc-definition)
@@ -232,10 +234,13 @@ nmap <silent>gt <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <leader>ff <Plug>(coc-fix-current)
+" coc find wrong
 nmap <silent><F3> <Plug>(coc-diagnostic-prev)
 nmap <silent><F4> <Plug>(coc-diagnostic-next)
 nmap <silent><leader><leader>W <Plug>(coc-diagnostic-prev)
 nmap <silent><leader><leader>w <Plug>(coc-diagnostic-next)
+nnoremap <silent><nowait> <space>w :<C-u>CocList diagnostics<cr>
+" coc text obj
 xmap if <Plug>(coc-funcobj-i)
 omap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
@@ -244,9 +249,13 @@ xmap ic <Plug>(coc-classobj-i)
 omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
-
+" coc code action
+nmap <leader>a  <Plug>(coc-codeaction)
+nmap <leader>l  <Plug>(coc-codelens-action)
+xmap <leader>s  <Plug>(coc-codeaction-selected)
+" coc format
 command! -nargs=0 Format :call CocActionAsync('format')
-
+" coc help
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
 function! ShowDocumentation()
