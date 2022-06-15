@@ -255,6 +255,7 @@ nmap <leader>l  <Plug>(coc-codelens-action)
 xmap <leader>s  <Plug>(coc-codeaction-selected)
 " coc format
 command! -nargs=0 Format :call CocActionAsync('format')
+command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 " coc help
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
@@ -356,3 +357,8 @@ nnoremap <Leader>p "0p
 vnoremap <Leader>p "0p
 nnoremap <Leader>P "0P
 vnoremap <Leader>P "0P
+
+" vimdiff merge
+command! -nargs=0 Remote :diffg RE
+command! -nargs=0 Base :diffg BA
+command! -nargs=0 Local :diffg LO
