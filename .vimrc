@@ -252,10 +252,13 @@ omap ac <Plug>(coc-classobj-a)
 " coc code action
 nmap <leader>a  <Plug>(coc-codeaction)
 nmap <leader>l  <Plug>(coc-codelens-action)
-xmap <leader>s  <Plug>(coc-codeaction-selected)
+xmap <silent><leader>s  <Plug>(coc-codeaction-selected)
 " coc format
 command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+" coc config
+nmap <silent><nowait> <space>c :CocConfig<cr>
+nmap <silent><nowait> <space>l :CocList<cr>
 " coc help
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
