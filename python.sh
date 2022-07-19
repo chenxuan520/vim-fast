@@ -1,3 +1,3 @@
 #!/bin/bash
-echo "{\"python.pythonPath\" : \"/usr/bin/python3\"}" > ~/.vim/coc-settings.json
+echo "{\n\t\"python.pythonPath\" : \"/usr/bin/python3\"\n}" > ~/.vim/coc-settings.json
 vim -c "CocInstall coc-pyright" 
