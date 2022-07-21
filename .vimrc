@@ -150,9 +150,6 @@ call plug#end()
 " load vim default plugin
 runtime macros/matchit.vim
 
-" 打开当前光标所在单词的vim帮助文档
-nnoremap <leader>h :execute /":help /" . expand("<cword>")<cr>
-
 " 重新加载vimrc文件
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
 
@@ -303,6 +300,7 @@ let g:Lf_UseCache = 0
 
 " ack
 nnoremap <leader>A :Ack! -i<space>
+nnoremap <leader>h :execute ":Ack! -i " . expand("<cword>")<cr>
 
 " echodoc.vim
 let g:echodoc_enable_at_startup = 1
