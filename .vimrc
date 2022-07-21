@@ -112,8 +112,6 @@ nnoremap <silent> <leader>d :bd<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-Plug 'chxuan/cpp-mode'
-Plug 'chxuan/change-colorscheme'
 Plug 'chxuan/prepare-code'
 Plug 'chxuan/vimplus-startify'
 Plug 'preservim/tagbar'
@@ -191,14 +189,6 @@ let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
-
-" cpp-mode
-nnoremap <leader>U :GoToFunImpl<cr>
-
-" change-colorscheme
-nnoremap <silent> <F9> :PreviousColorScheme<cr>
-nnoremap <silent> <F10> :NextColorScheme<cr>
-nnoremap <silent> <F12> :ShowColorScheme<cr>
 
 " prepare-code
 let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
@@ -333,9 +323,9 @@ nnoremap <leader>G :GV!<cr>
 nnoremap <leader>gg :GV?<cr>
 
 " termdebug
+let g:termdebug_wide=1
 nnoremap <leader><leader>d :packadd termdebug<CR>:Termdebug<space>
 nnoremap <F5> :packadd termdebug<CR>:Termdebug<space>
-let g:termdebug_wide=1
 nnoremap <F6> :Break<cr>
 nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
