@@ -243,6 +243,7 @@ xmap <silent><leader>s  <Plug>(coc-codeaction-selected)
 " coc format
 command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+nmap <leader><leader>f :Format<cr>
 " coc config
 nmap <silent><nowait> <space>c :CocConfig<cr>
 nmap <silent><nowait> <space>l :CocList<cr>
