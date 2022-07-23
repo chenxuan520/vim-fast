@@ -27,6 +27,7 @@ function copy_files()
 function install_plug()
 {
 	mkdir ~/.vim/plugged
+	rm ./vim.tar.gz
 	wget https://gitee.com/mirrorvim/vim-coc/attach_files/1084291/download/vim.tar.gz 
 	tar -zxvf ${PWD}/vim.tar.gz -C ~/.vim/plugged/
 	curl -sL install-node.now.sh | bash
@@ -38,8 +39,8 @@ function install_plug()
 	yarn config set registry https://registry.npm.taobao.org/
 	yarn install
 	yarn build
-	chmod 664 ~/.viminfo
 	vim -c "PlugInstall" -c "q" -c "q"
+	chmod 664 ~/.viminfo
 }
 
 # 安装vim插件
@@ -132,8 +133,8 @@ function get_linux_distro()
 		echo "CentOS"
 	elif grep -Eq "fedora" /etc/*-release; then
 		echo "fedora"
-	elif grep -Eq "openSUSE" /etc/*-release; then
-		echo "openSUSE"
+	elif grep -Eq "openSUSE" /etc/*-release; then 
+		echo "openSUSE" 
 	elif grep -Eq "Arch Linux" /etc/*-release; then
 		echo "ArchLinux"
 	elif grep -Eq "ManjaroLinux" /etc/*-release; then
