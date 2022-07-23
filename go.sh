@@ -1,6 +1,7 @@
 #!/bin/bash
 type go
 if [ $? == 1 ];then
+	sudo apt update
 	sudo apt-get install -y wget
 	sudo apt-get remove golang
 	wget https://gomirrors.org/dl/go/go1.18.3.linux-amd64.tar.gz 

@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo apt update
 sudo apt-get install -y wget clangd
 type clangd
 if [ $? == 1 ];then
