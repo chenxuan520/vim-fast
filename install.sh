@@ -27,7 +27,6 @@ function copy_files()
 function install_plug()
 {
 	mkdir ~/.vim/plugged
-	rm ./vim.tar.gz
 	tar -zxvf ${PWD}/vim.tar.gz -C ~/.vim/plugged/
 	curl -sL install-node.now.sh | bash
 	# curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
