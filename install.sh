@@ -30,7 +30,7 @@ function install_plug()
 	tar -zxvf ${PWD}/vim.tar.gz -C ~/.vim/plugged/
 	curl -sL install-node.now.sh | bash
 	# curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
-	# npm config set registry https://registry.npmmirror.com
+	npm config set registry https://registry.npmmirror.com
 	# https://registry.npmjs.org/
 	# npm install -g yarn
 	git clone -b release https://gitclone.com/github.com/neoclide/coc.nvim ~/.vim/plugged/coc.nvim
