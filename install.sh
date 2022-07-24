@@ -28,16 +28,16 @@ function install_plug()
 {
 	mkdir ~/.vim/plugged
 	rm ./vim.tar.gz
-	wget https://gitee.com/mirrorvim/vim-coc/attach_files/1084291/download/vim.tar.gz 
 	tar -zxvf ${PWD}/vim.tar.gz -C ~/.vim/plugged/
 	curl -sL install-node.now.sh | bash
 	# curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 	# npm config set registry https://registry.npmmirror.com
-	npm install -g yarn
-	git clone https://gitclone.com/github.com/neoclide/coc.nvim ~/.vim/plugged/coc.nvim
-	cd ~/.vim/plugged/coc.nvim
-	yarn install
-	yarn build
+	# https://registry.npmjs.org/
+	# npm install -g yarn
+	git clone -b release https://gitclone.com/github.com/neoclide/coc.nvim ~/.vim/plugged/coc.nvim
+	# cd ~/.vim/plugged/coc.nvim
+	# yarn install
+	# yarn build
 	vim -c "PlugInstall" -c "q" -c "q"
 	chmod 664 ~/.viminfo
 }
