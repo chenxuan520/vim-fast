@@ -9,5 +9,5 @@ if [ $? == 1 ];then
 	sudo apt update
 	sudo apt install neovim
 fi
-ln -s ./.vimrc ~/.config/nvim/init.vim
+ln -s ~/.config/nvim/init.vim ./.vimrc
 cp -r ./colors ~/.config/nvim/
