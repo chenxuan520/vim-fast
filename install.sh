@@ -28,7 +28,7 @@ function install_plug()
 {
 	mkdir ~/.vim/plugged
 	tar -zxvf ${PWD}/vim.tar.gz -C ~/.vim/plugged/
-	curl -sL install-node.now.sh | bash
+	sudo curl -sL install-node.now.sh | sudo bash
 	# curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 	npm config set registry https://registry.npmmirror.com
 	# https://registry.npmjs.org/
@@ -319,10 +319,10 @@ function main(){
 		echo "Not support platform type: "${type}
 	fi
 
-end=`get_now_timestamp`
-second=`expr ${end} - ${begin}`
-min=`expr ${second} / 60`
-echo "It takes "${min}" minutes."
+	end=`get_now_timestamp`
+	second=`expr ${end} - ${begin}`
+	min=`expr ${second} / 60`
+	echo "It takes "${min}" minutes."
 }
 
 main
