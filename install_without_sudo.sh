@@ -6,12 +6,6 @@ function copy_files()
 	rm -rf ~/.vimrc
 	ln -s ${PWD}/.vimrc ~
 
-	rm -rf ~/.vimrc.custom.plugins
-	cp ${PWD}/.vimrc.custom.plugins ~
-
-	rm -rf ~/.vimrc.custom.config
-	cp ${PWD}/.vimrc.custom.config ~
-
 	mkdir ~/.vim
 	rm -rf ~/.vim/colors
 	ln -s ${PWD}/colors ~/.vim
