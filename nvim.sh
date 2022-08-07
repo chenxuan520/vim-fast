@@ -13,8 +13,10 @@ function main(){
 	rm ~/.config/nvim/init.vim
 	mkdir ~/.config/nvim
 	ln -s $PWD/.vimrc ~/.config/nvim/init.vim 
+	cp ~/.vim/coc-settings.json ~/.config/nvim/
 	cp -r ./colors ~/.config/nvim/
 	cp -r ./autoload ~/.config/nvim/
 	cp -r ./ftplugin ~/.config/nvim/
+	echo "nvim install ok"
 }
 main

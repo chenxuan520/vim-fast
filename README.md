@@ -12,9 +12,9 @@ mirrorvim
 
 3. 用coc 替换YCM,获得更加流畅的补全体验
 
-4. 增加对go和python的支持
+4. 增加对go和python的支持,目前支持C++,go,python
 
-5. **!目前只支持ubuntu,其他系统可以使用vimplus!**
+5. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux,其他系统可以使用vimplus!**
 
 ## 安装
 
