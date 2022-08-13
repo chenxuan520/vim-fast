@@ -112,38 +112,55 @@ nnoremap <silent> <leader>d :bd<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-Plug 'chxuan/prepare-code'
+" begin vim 
 Plug 'chxuan/vimplus-startify'
+Plug 'chxuan/prepare-code'
+" function list
 Plug 'preservim/tagbar'
+" auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" find anything
 Plug 'Yggdroot/LeaderF'
+" find key in file
 Plug 'mileszs/ack.vim'
+" quick move mouse
 Plug 'easymotion/vim-easymotion'
+" enhance the /
 Plug 'haya14busa/incsearch.vim'
+Plug 'junegunn/vim-slash'
+" pair auto
 Plug 'jiangmiao/auto-pairs'
+" file tree left
 Plug 'preservim/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+" easy align
 Plug 'godlygeek/tabular'
-Plug 'tpope/vim-fugitive'
+" change surround quick
 Plug 'tpope/vim-surround'
+" quick add comment
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-endwise'
-Plug 'octol/vim-cpp-enhanced-highlight'
+" for cpp highlight(temp no use)
+Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
+" line of bottom
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" file devicon
 Plug 'ryanoasis/vim-devicons'
-Plug 'junegunn/vim-slash'
+" Git
+Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
+" test obj (temp no use)
 Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-textobj-indent'
-Plug 'kana/vim-textobj-syntax'
-Plug 'kana/vim-textobj-function'
+" funtion info inline
 Plug 'Shougo/echodoc.vim'
+" enhance c-f/b and c-d/u
 Plug 'terryma/vim-smooth-scroll'
+" enhance f
 Plug 'rhysd/clever-f.vim'
-Plug 'vim-scripts/indentpython.vim'
+" code snippets
 Plug 'honza/vim-snippets'
 
 call plug#end()  
@@ -294,6 +311,16 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 
 " leaderF
 nnoremap <leader>F :LeaderfFile .<cr>
+nnoremap <leader>b :LeaderfBuffer<cr>
+nnoremap <space>f :LeaderfFile .<cr>
+nnoremap <space>b :LeaderfBuffer<cr>
+nnoremap <space>t :LeaderfFunction<cr>
+nnoremap <space>a :Leaderf rg -i<cr>
+nnoremap <space>: :LeaderfCommand<cr>
+nnoremap <space>/ :LeaderfLine<cr>
+nnoremap <F1> :LeaderfColorscheme<cr>
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
 let g:Lf_WildIgnore = {
             \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
