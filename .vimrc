@@ -234,7 +234,7 @@ endfunction
 nmap <leader>r <Plug>(coc-rename)
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)
-nmap <silent>gd <Plug>(coc-definition)
+nmap <silent>gu <Plug>(coc-definition)
 nmap <silent>gt <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
