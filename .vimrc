@@ -113,7 +113,7 @@ nnoremap <silent> <leader>d :bd<cr>
 call plug#begin('~/.vim/plugged')
 
 " begin vim 
-Plug 'chxuan/vimplus-startify'
+Plug 'mhinz/vim-startify'
 Plug 'chxuan/prepare-code'
 " function list
 Plug 'preservim/tagbar'
@@ -144,6 +144,8 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-endwise'
 " for cpp highlight(temp no use)
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
+" for go highlight
+Plug 'chenxuan520/vim-go-highlight',{'for':'go'}
 " line of bottom
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -295,6 +297,24 @@ nmap <Leader>f <Plug>(easymotion-overwin-f)
 nmap <Leader>j <Plug>(easymotion-j)
 nmap <Leader>k <Plug>(easymotion-k)
 
+" vim-go-highlight
+let g:go_highlight_functions = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_space_tab_error = 1
+let g:go_highlight_trailing_whitespace_error = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
+let g:go_highlight_build_constraints =1
+let g:go_highlight_generate_tags =1
+let g:go_highlight_string_spellcheck = 1
+" let g:go_highlight_fields = 1
+" let g:go_highlight_array_whitespace_error = 1
+" let g:go_highlight_variable_declarations = 1
+" let g:go_highlight_variable_assignments = 1
+
+
 " nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
             \ "Modified"  : "✹",
@@ -358,6 +378,7 @@ nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
 
 " term console
+tnoremap <c-\> <c-\><c-n>
 nnoremap <Leader><Leader>T :term<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
 
