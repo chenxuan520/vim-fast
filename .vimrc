@@ -113,7 +113,7 @@ nnoremap <silent> <leader>d :bd<cr>
 call plug#begin('~/.vim/plugged')
 
 " begin vim 
-Plug 'mhinz/vim-startify'
+Plug 'chenxuan520/my-vim-dashboard'
 Plug 'chxuan/prepare-code'
 " function list
 Plug 'preservim/tagbar'
@@ -314,6 +314,9 @@ let g:go_highlight_string_spellcheck = 1
 " let g:go_highlight_variable_declarations = 1
 " let g:go_highlight_variable_assignments = 1
 
+" dashboard
+nnoremap <space>s :SessionSave<cr> 
+nnoremap <space>S :SessionLoad<cr> 
 
 " nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
