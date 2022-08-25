@@ -29,7 +29,7 @@ function install_plug()
 	# npm install -g yarn
 	git clone -b release https://gitee.com/zgpio/coc.nvim.git ~/.vim/plugged/coc.nvim
 	cd ~/.vim/plugged/coc.nvim
-	git reset --hard tag v0.0.8
+	git reset --hard v0.0.80
 	# yarn install
 	# yarn build
 	vim -c "PlugInstall" -c "q" -c "q"
