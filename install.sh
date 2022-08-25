@@ -27,8 +27,9 @@ function install_plug()
 	npm config set registry https://registry.npmmirror.com
 	# https://registry.npmjs.org/
 	# npm install -g yarn
-	git clone -b release https://gitclone.com/github.com/neoclide/coc.nvim ~/.vim/plugged/coc.nvim
-	# cd ~/.vim/plugged/coc.nvim
+	git clone -b release https://gitee.com/zgpio/coc.nvim.git ~/.vim/plugged/coc.nvim
+	cd ~/.vim/plugged/coc.nvim
+	git reset --hard tag v0.0.8
 	# yarn install
 	# yarn build
 	vim -c "PlugInstall" -c "q" -c "q"
