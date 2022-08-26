@@ -406,3 +406,9 @@ vnoremap <Leader>P "0P
 command! -nargs=0 Remote :diffg RE
 command! -nargs=0 Base :diffg BA
 command! -nargs=0 Local :diffg LO
+
+" change window width
+nnoremap <c-up> <c-w>+
+nnoremap <c-down> <c-w>-
+nnoremap <c-left> <c-w><
+nnoremap <c-right> <c-w>>
