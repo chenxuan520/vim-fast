@@ -21,6 +21,7 @@ set whichwrap+=<,>,h,l   " 设置光标键跨行
 set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
 set noshowmode			 " 设置不打开底部insert
+set hidden               " 设置允许在未保存切换buffer
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -331,6 +332,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
             \ 'Ignored'   : '☒',
             \ "Unknown"   : "?"
             \ }
+let g:NERDTreeWinSize=27
 
 " leaderF
 nnoremap <leader>F :LeaderfFile .<cr>
