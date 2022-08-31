@@ -143,10 +143,12 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-endwise'
-" for cpp highlight(temp no use)
+" for cpp highlight
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 " for go highlight
 Plug 'chenxuan520/vim-go-highlight',{'for':'go'}
+" for python highlight
+Plug 'vim-python/python-syntax', {'for':'py'}
 " line of bottom
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -220,6 +222,7 @@ let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1 
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
+let g:NERDTreeWinSize=27
 
 " coc.nvim
 " coc tab
@@ -234,7 +237,6 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 " coc find define
-nmap <leader>r <Plug>(coc-rename)
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)
 nmap <silent>gu <Plug>(coc-definition)
@@ -242,6 +244,9 @@ nmap <silent>gt <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <leader>ff <Plug>(coc-fix-current)
+" coc refactor code
+nmap <space>r <Plug>(coc-refactor)
+nmap <leader>r <Plug>(coc-rename)
 " coc find wrong
 nmap <silent><F3> <Plug>(coc-diagnostic-prev)
 nmap <silent><F4> <Plug>(coc-diagnostic-next)
@@ -298,6 +303,9 @@ nmap <Leader>f <Plug>(easymotion-overwin-f)
 nmap <Leader>j <Plug>(easymotion-j)
 nmap <Leader>k <Plug>(easymotion-k)
 
+" python-highlight
+let g:python_highlight_all = 1
+
 " vim-go-highlight
 let g:go_highlight_functions = 1
 let g:go_highlight_extra_types = 1
@@ -332,7 +340,6 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
             \ 'Ignored'   : '☒',
             \ "Unknown"   : "?"
             \ }
-let g:NERDTreeWinSize=27
 
 " leaderF
 nnoremap <leader>F :LeaderfFile .<cr>
