@@ -324,8 +324,8 @@ let g:go_highlight_string_spellcheck = 1
 " let g:go_highlight_variable_assignments = 1
 
 " dashboard
-nnoremap <space>s :SessionSave<cr> 
-nnoremap <space>S :SessionLoad<cr> 
+nnoremap <space>S :SessionSave<cr>
+nnoremap <space>s :SessionLoad<cr>
 
 " nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
