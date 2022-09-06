@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"chenxuan的个人Vim配置
+"chenxuan's vim config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 通用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -102,13 +102,6 @@ endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" vim-buffer
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <c-p> :bp<cr>
-nnoremap <silent> <c-n> :bn<cr>
-nnoremap <silent> <leader>d :bd<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 插件列表
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
@@ -117,9 +110,9 @@ call plug#begin('~/.vim/plugged')
 Plug 'chenxuan520/my-vim-dashboard'
 Plug 'chxuan/prepare-code'
 " function list
-Plug 'preservim/tagbar'
+Plug 'preservim/tagbar', {'tag':'2.2'}
 " auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release','tag': '0.0.80'}
 " find anything
 Plug 'Yggdroot/LeaderF'
 " find key in file
@@ -134,19 +127,19 @@ Plug 'jiangmiao/auto-pairs'
 " file tree left
 Plug 'preservim/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 " easy align
 Plug 'godlygeek/tabular'
 " change surround quick
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 " quick add comment
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
+" add endif when enter if
 Plug 'tpope/vim-endwise'
 " for cpp highlight
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 " for go highlight
-Plug 'chenxuan520/vim-go-highlight',{'for':'go'}
+Plug 'chenxuan520/vim-go-highlight', {'for':'go'}
 " for python highlight
 Plug 'vim-python/python-syntax', {'for':'py'}
 " line of bottom
@@ -154,10 +147,10 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " file devicon
 Plug 'ryanoasis/vim-devicons'
-" Git
+" Git control
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-" test obj (temp no use)
+" test obj
 Plug 'kana/vim-textobj-user'
 " funtion info inline
 Plug 'Shougo/echodoc.vim'
@@ -173,30 +166,43 @@ call plug#end()
 " load vim default plugin
 runtime macros/matchit.vim
 
-" 重新加载vimrc文件
+" reload .vimrc
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
 
-" 安装、更新、删除插件
+" install and clean plug
 nnoremap <leader><leader>i :PlugInstall<cr>
 nnoremap <leader><leader>c :PlugClean<cr>
 
-" 插入模式下的光标移动
+" vim-buffer
+nnoremap <silent> <c-p> :bp<cr>
+nnoremap <silent> <c-n> :bn<cr>
+nnoremap <silent> <leader>d :bd<cr>
+
+" insert model to move cursor
 imap <c-j> <DOWN>
 imap <c-k> <UP>
 imap <c-l> <RIGHT>
 
-" 复制当前选中到系统剪切板
+" yank to system
 vmap <leader><leader>y "+y
-"将系统剪切板内容粘贴到vim
+" paste to system
 nnoremap <leader><leader>p "+p
 
-" 打开文件自动定位到最后编辑的位置
+" load the file last edit
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
-" 主题设置
+" set themes
 set background=dark
-let g:onedark_termcolors=256
-colorscheme onedark
+
+" onedark
+" let g:onedark_termcolors=256
+" colorscheme onedark
+
+" tokyonight
+set termguicolors
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 1
+colorscheme tokyonight
 
 " airline
 let g:airline_theme="onedark"
@@ -222,7 +228,10 @@ let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1 
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
-let g:NERDTreeWinSize=27
+let g:NERDTreeWinSize=24
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
 " coc.nvim
 " coc tab
@@ -286,7 +295,7 @@ endfunction
 
 
 " tagbar
-let g:tagbar_width = 30
+let g:tagbar_width = 25
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " incsearch.vim
@@ -327,20 +336,6 @@ let g:go_highlight_string_spellcheck = 1
 nnoremap <space>S :SessionSave<cr>
 nnoremap <space>s :SessionLoad<cr>
 
-" nerdtree-git-plugin
-let g:NERDTreeGitStatusIndicatorMapCustom = {
-            \ "Modified"  : "✹",
-            \ "Staged"    : "✚",
-            \ "Untracked" : "✭",
-            \ "Renamed"   : "➜",
-            \ "Unmerged"  : "═",
-            \ "Deleted"   : "✖",
-            \ "Dirty"     : "✗",
-            \ "Clean"     : "✔︎",
-            \ 'Ignored'   : '☒',
-            \ "Unknown"   : "?"
-            \ }
-
 " leaderF
 nnoremap <leader>F :LeaderfFile .<cr>
 nnoremap <leader>b :LeaderfBuffer<cr>
@@ -358,6 +353,7 @@ let g:Lf_WildIgnore = {
             \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
             \}
 let g:Lf_UseCache = 0
+
 
 " ack
 nnoremap <leader>A :Ack! -i<space>
@@ -394,7 +390,7 @@ tnoremap <c-\> <c-\><c-n>
 nnoremap <Leader><Leader>T :term<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
 
-" fast add comment
+" fast add comment for cpp
 func SetComment()
 	call append(line("."),'/***********************************************')
 	call append(line(".")+1,'* Author: chenxuan-1607772321@qq.com')

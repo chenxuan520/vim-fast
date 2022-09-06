@@ -58,14 +58,7 @@ function print_logo()
 	color="$(tput setaf 6)"
 	normal="$(tput sgr0)"
 	printf "${color}"
-	echo '        __                __           '
-	echo '__   __/_/___ ___  ____  / /_  _______ '
-	echo '\ \ / / / __ `__ \/ __ \/ / / / / ___/ '
-	echo ' \ V / / / / / / / /_/ / / /_/ (__  )  '
-	echo '  \_/_/_/ /_/ /_/ ,___/_/\____/____/   '
-	echo '               /_/                     ...is now installed!'
-	echo ''
-	echo ''
+	echo 'install ok'
 	echo 'Just enjoy it!'
 	echo 'p.s. Follow me at https://github.com/chenxuan520.'
 	echo ''
