@@ -102,7 +102,7 @@ endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 插件列表
+" plug list 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
@@ -163,8 +163,11 @@ Plug 'honza/vim-snippets'
 
 call plug#end()  
 
+
 " load vim default plugin
 runtime macros/matchit.vim
+
+" key map and inside config setting
 
 " reload .vimrc
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
@@ -191,18 +194,61 @@ nnoremap <leader><leader>p "+p
 " load the file last edit
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
+" termdebug
+let g:termdebug_wide=1
+nnoremap <leader><leader>d :packadd termdebug<CR>:Termdebug<space>
+nnoremap <F5> :packadd termdebug<CR>:Termdebug<space>
+nnoremap <F6> :Break<cr>
+nnoremap <F7> :Over<cr>
+nnoremap <F8> :Step<cr>
+
+" term console
+tnoremap <c-\> <c-\><c-n>
+nnoremap <Leader><Leader>T :term<CR>
+nnoremap <Leader><Leader>t :vert term<CR>
+
+" fast add comment for cpp
+func SetComment()
+	call append(line("."),'/***********************************************')
+	call append(line(".")+1,'* Author: chenxuan-1607772321@qq.com')
+	call append(line(".")+2,'* change time:'.strftime("%Y-%m-%d %H:%M:%S"))
+	call append(line(".")+3,'* description:')
+	call append(line(".")+4,'* example: ')
+	call append(line(".")+5,'***********************************************/')
+endfunc
+nnoremap <Leader>c :call SetComment()<CR>
+
+" yank and paste
+nnoremap <Leader>p "0p
+vnoremap <Leader>p "0p
+nnoremap <Leader>P "0P
+vnoremap <Leader>P "0P
+
+" vimdiff merge
+command! -nargs=0 Remote :diffg RE
+command! -nargs=0 Base :diffg BA
+command! -nargs=0 Local :diffg LO
+
+" change window width
+nnoremap <c-up> <c-w>+
+nnoremap <c-down> <c-w>-
+nnoremap <c-left> <c-w><
+nnoremap <c-right> <c-w>>
+
 " set themes
 set background=dark
 
-" onedark
-" let g:onedark_termcolors=256
-" colorscheme onedark
+" plug config setting
 
-" tokyonight
+" tokyonight themes
 set termguicolors
 let g:tokyonight_style = 'night' " available: night, storm
 let g:tokyonight_enable_italic = 1
 colorscheme tokyonight
+
+" onedark themes
+" let g:onedark_termcolors=256
+" colorscheme onedark
 
 " airline
 let g:airline_theme="onedark"
@@ -228,7 +274,7 @@ let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1 
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
-let g:NERDTreeWinSize=24
+let g:NERDTreeWinSize=22
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
@@ -295,7 +341,7 @@ endfunction
 
 
 " tagbar
-let g:tagbar_width = 25
+let g:tagbar_width = 24
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " incsearch.vim
@@ -377,43 +423,3 @@ nnoremap <leader>g :GV<cr>
 nnoremap <leader>G :GV!<cr>
 nnoremap <leader>gg :GV?<cr>
 
-" termdebug
-let g:termdebug_wide=1
-nnoremap <leader><leader>d :packadd termdebug<CR>:Termdebug<space>
-nnoremap <F5> :packadd termdebug<CR>:Termdebug<space>
-nnoremap <F6> :Break<cr>
-nnoremap <F7> :Over<cr>
-nnoremap <F8> :Step<cr>
-
-" term console
-tnoremap <c-\> <c-\><c-n>
-nnoremap <Leader><Leader>T :term<CR>
-nnoremap <Leader><Leader>t :vert term<CR>
-
-" fast add comment for cpp
-func SetComment()
-	call append(line("."),'/***********************************************')
-	call append(line(".")+1,'* Author: chenxuan-1607772321@qq.com')
-	call append(line(".")+2,'* change time:'.strftime("%Y-%m-%d %H:%M:%S"))
-	call append(line(".")+3,'* description:')
-	call append(line(".")+4,'* example: ')
-	call append(line(".")+5,'***********************************************/')
-endfunc
-nnoremap <Leader>c :call SetComment()<CR>
-
-" yank and paste
-nnoremap <Leader>p "0p
-vnoremap <Leader>p "0p
-nnoremap <Leader>P "0P
-vnoremap <Leader>P "0P
-
-" vimdiff merge
-command! -nargs=0 Remote :diffg RE
-command! -nargs=0 Base :diffg BA
-command! -nargs=0 Local :diffg LO
-
-" change window width
-nnoremap <c-up> <c-w>+
-nnoremap <c-down> <c-w>-
-nnoremap <c-left> <c-w><
-nnoremap <c-right> <c-w>>
