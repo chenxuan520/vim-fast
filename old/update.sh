@@ -43,7 +43,7 @@ function update_fonts_on_linux()
 # 更新vim插件
 function update_vim_plugin()
 {
-    vim -c "PlugUpdate" -c "q" -c "q"
+    # vim -c "PlugUpdate" -c "q" -c "q"
 }
 
 # 拷贝文件
@@ -83,16 +83,8 @@ function print_logo()
     color="$(tput setaf 6)"
     normal="$(tput sgr0)"
     printf "${color}"
-    echo '        __                __           '
-    echo '__   __/_/___ ___  ____  / /_  _______ '
-    echo '\ \ / / / __ `__ \/ __ \/ / / / / ___/ '
-    echo ' \ V / / / / / / / /_/ / / /_/ (__  )  '
-    echo '  \_/_/_/ /_/ /_/ ,___/_/\____/____/   '
-    echo '               /_/                     ...is now updated!'
-    echo ''
-    echo ''
     echo 'Just enjoy it!'
-    echo 'p.s. Follow me at https://github.com/chxuan.'
+    echo 'p.s. Follow me at https://github.com/chenxuan520.'
     echo ''
     printf "${normal}"
 }

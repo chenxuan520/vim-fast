@@ -4,6 +4,12 @@
 
 mirrorvim
 
+## 仓库地址
+
+1. gitee:[vim-fast: A easy vim config](https://gitee.com/mirrorvim/vim-fast)
+
+2. github:[GitHub - chenxuan520/vim-fast](https://github.com/chenxuan520/vim-fast)
+
 ## 项目说明
 
 1. 仓库fork于Vimplus
