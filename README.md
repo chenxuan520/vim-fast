@@ -2,7 +2,7 @@
 
 ### 修改人
 
-mirrorvim
+chenxuan
 
 ## 仓库地址
 
@@ -12,7 +12,7 @@ mirrorvim
 
 ## 项目说明
 
-1. 仓库fork于Vimplus
+1. 仓库基于Vimplus
 
 2. 解决插件本地安装太慢问题
 
@@ -79,6 +79,20 @@ mirrorvim
 ## 源仓库
 
 [Vimplus](https://gitee.com/chxuan/vimplus.git)
+
+## 杂谈
+
+1. 为什么不直接用Vimplus
+   
+   - 下载插件依赖github,网络不好下载太慢了,对VIM新手不友好
+   
+   - YCM体验没有coc好,而且coc安装更加简单
+   
+   - 更换了一些插件,使得界面更加美观和更加流畅
+
+## 希望
+
+- 由于个人能力有限,希望大家可以给自己的linux写一份install.sh,然后提mr,非常感谢
 
 ---
 

@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"chenxuan's vim config
+" chenxuan's vim config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 通用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -150,13 +150,13 @@ Plug 'ryanoasis/vim-devicons'
 " Git control
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-" test obj
+" text obj
 Plug 'kana/vim-textobj-user'
 " funtion info inline
 Plug 'Shougo/echodoc.vim'
 " enhance c-f/b and c-d/u
 Plug 'terryma/vim-smooth-scroll'
-" enhance f
+" enhance f/t
 Plug 'rhysd/clever-f.vim'
 " code snippets
 Plug 'honza/vim-snippets'
