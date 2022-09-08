@@ -160,6 +160,9 @@ Plug 'terryma/vim-smooth-scroll'
 Plug 'rhysd/clever-f.vim'
 " code snippets
 Plug 'honza/vim-snippets'
+" project maneage
+Plug 'skywind3000/asynctasks.vim'
+Plug 'skywind3000/asyncrun.vim'
 
 call plug#end()  
 
@@ -326,8 +329,8 @@ command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 nmap <leader><leader>f :Format<cr>
 " coc config
-nmap <silent><nowait> <space>c :CocConfig<cr>
-nmap <silent><nowait> <space>l :CocList<cr>
+nmap <silent><nowait> <space><space>c :CocConfig<cr>
+nmap <silent><nowait> <space>l :CocList extensions<cr>
 " coc help
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
@@ -403,7 +406,7 @@ let g:Lf_UseCache = 0
 
 " ack
 nnoremap <leader>A :Ack! -i<space>
-nnoremap <leader>h :execute ":Ack! -i " . expand("<cword>")<cr>
+nnoremap <leader>H :execute ":Ack! -i " . expand("<cword>")<cr>
 
 " echodoc.vim
 let g:echodoc_enable_at_startup = 1
@@ -423,3 +426,6 @@ nnoremap <leader>g :GV<cr>
 nnoremap <leader>G :GV!<cr>
 nnoremap <leader>gg :GV?<cr>
 
+" asyncrun
+let g:asyncrun_open = 6
+nmap <silent><nowait> <space>c :AsyncTaskEdit<cr>
