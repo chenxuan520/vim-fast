@@ -115,8 +115,6 @@ Plug 'preservim/tagbar', {'tag':'2.2'}
 Plug 'neoclide/coc.nvim', {'branch': 'release','tag': '0.0.80'}
 " find anything
 Plug 'Yggdroot/LeaderF'
-" find key in file
-Plug 'mileszs/ack.vim'
 " quick move mouse
 Plug 'easymotion/vim-easymotion'
 " enhance the /
@@ -256,7 +254,7 @@ colorscheme tokyonight
 " airline
 let g:airline_theme="onedark"
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline_extensions = ['tabline']
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -403,11 +401,6 @@ let g:Lf_WildIgnore = {
             \}
 let g:Lf_UseCache = 0
 
-
-" ack
-nnoremap <leader>A :Ack! -i<space>
-nnoremap <leader>H :execute ":Ack! -i " . expand("<cword>")<cr>
-
 " echodoc.vim
 let g:echodoc_enable_at_startup = 1
 
@@ -429,3 +422,7 @@ nnoremap <leader>gg :GV?<cr>
 " asyncrun
 let g:asyncrun_open = 6
 nmap <silent><nowait> <space>c :AsyncTaskEdit<cr>
+let g:asyncrun_bell = 0
+" asyncrun ack
+nnoremap <leader>A :AsyncRun ack -i<space>
+nnoremap <leader>H :execute ":AsyncRun ack -i " . expand("<cword>")<cr>
