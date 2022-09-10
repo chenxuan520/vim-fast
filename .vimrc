@@ -388,6 +388,7 @@ nnoremap <space>s :SessionLoad<cr>
 nnoremap <leader>F :LeaderfFile .<cr>
 nnoremap <leader>b :LeaderfBuffer<cr>
 nnoremap <space>f :LeaderfFile .<cr>
+nnoremap <space>F :LeaderfMru<cr>
 nnoremap <space>b :LeaderfBuffer<cr>
 nnoremap <space>t :LeaderfFunction<cr>
 nnoremap <space>h :LeaderfHelp<cr>
