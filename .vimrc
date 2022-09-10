@@ -191,6 +191,7 @@ imap <c-l> <RIGHT>
 vmap <leader><leader>y "+y
 " paste to system
 nnoremap <leader><leader>p "+p
+vnoremap <leader><leader>p "+p
 
 " load the file last edit
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
@@ -252,9 +253,9 @@ colorscheme tokyonight
 " colorscheme onedark
 
 " airline
-let g:airline_theme="onedark"
+let g:airline_theme= "tokyonight"
 let g:airline_powerline_fonts = 1
-let g:airline_extensions = ['tabline']
+let g:airline_extensions = ['tabline', 'coc']
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -342,7 +343,7 @@ endfunction
 
 
 " tagbar
-let g:tagbar_width = 24
+let g:tagbar_width = 22
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " incsearch.vim
@@ -389,6 +390,7 @@ nnoremap <leader>b :LeaderfBuffer<cr>
 nnoremap <space>f :LeaderfFile .<cr>
 nnoremap <space>b :LeaderfBuffer<cr>
 nnoremap <space>t :LeaderfFunction<cr>
+nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>: :LeaderfCommand<cr>
 nnoremap <space>/ :LeaderfLine<cr>
@@ -421,8 +423,8 @@ nnoremap <leader>gg :GV?<cr>
 
 " asyncrun
 let g:asyncrun_open = 6
-nmap <silent><nowait> <space>c :AsyncTaskEdit<cr>
 let g:asyncrun_bell = 0
+nmap <silent><nowait> <space>c :AsyncTaskEdit<cr>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
 nnoremap <leader>H :execute ":AsyncRun ack -i " . expand("<cword>")<cr>
