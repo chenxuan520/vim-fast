@@ -10,6 +10,10 @@ chenxuan
 
 2. github:[GitHub - chenxuan520/vim-fast](https://github.com/chenxuan520/vim-fast)
 
+## 配置效果
+
+![](https://picx.zhimg.com/v2-465040e3e32df418808b886729a1815f_1440w.jpg?source=172ae18b)
+
 ## 项目说明
 
 1. 仓库基于Vimplus
@@ -20,7 +24,11 @@ chenxuan
 
 4. 增加对go和python的支持,目前支持C++,go,python
 
-5. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux,其他系统可以使用vimplus!**
+5. 添加了快捷键说明,在使用VIM时候随时查找对应快捷键
+
+6. 完善了一些地方,详情见下文QA
+
+7. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux,其他系统可以使用vimplus!,同时非常希望大家可以提mr来完善仓库**
 
 ## 安装
 
@@ -80,7 +88,7 @@ chenxuan
 
 [Vimplus](https://gitee.com/chxuan/vimplus.git)
 
-## 杂谈
+## QA
 
 1. 为什么不直接用Vimplus
    
@@ -89,6 +97,22 @@ chenxuan
    - YCM体验没有coc好,而且coc安装更加简单
    
    - 更换了一些插件,使得界面更加美观和更加流畅
+
+2. 和其他的区别
+   
+   - 主要是其他大部分直接从github拉取,对国内服务器安装不友好,因此做了这个所有插件都不需要github的
+   
+   - 配置文件非常少,Vimrc只有400行,插件加载更加快速
+   
+   - 内置了快捷键文档查询,避免了配置了不知道怎么用的现象
+   
+   - 插件数量适中,目前31个,避免加载太慢
+   
+   - 颜色支持丰富,支持20余种主题
+
+3. 有nvim版本吗
+   
+   - nvim可以通过nvim.sh安装,lua配置版本还需要一点时间
 
 ## 希望
 
