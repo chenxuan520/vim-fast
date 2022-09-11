@@ -1,98 +1,95 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " chenxuan's vim config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 通用设置
+" base config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader = ","      " 定义<leader>键
-set nocompatible         " 设置不兼容原始vi模式
-filetype on              " 设置开启文件类型侦测
-filetype plugin on       " 设置加载对应文件类型的插件
-set noeb                 " 关闭错误的提示
-syntax enable            " 开启语法高亮功能
-syntax on                " 自动语法高亮
-set t_Co=256             " 开启256色支持
-set cmdheight=1          " 设置命令行的高度
-set showcmd              " select模式下显示选中的行数
-set ruler                " 总是显示光标位置
-set laststatus=2         " 总是显示状态栏
-set number               " 开启行号显示
-set cursorline           " 高亮显示当前行
-set whichwrap+=<,>,h,l   " 设置光标键跨行
-set ttimeoutlen=0        " 设置<ESC>键响应时间
-set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
-set noshowmode			 " 设置不打开底部insert
-set hidden               " 设置允许在未保存切换buffer
+let mapleader = ","      " use ',' as leader
+set nocompatible         " set not compatible with vi
+filetype on              " set file type detection
+filetype plugin on       " set load plugin by file type
+set noeb                 " turn off error syntax prompts
+syntax enable            " highlight enable
+syntax on                " highlight auto
+set t_Co=256             " open 256 color
+set cmdheight=1          " set command height
+set showcmd              " show select line nums in visual
+set ruler                " cursor position displayed
+set laststatus=2         " show status
+set number               " show line number
+set cursorline           " highlight current line
+set whichwrap+=<,>,h,l   " set the cursor key across rows
+set ttimeoutlen=0        " set <ESC> response time
+set virtualedit=block,onemore   " allows the cursor appear after last character
+set noshowmode			 " disenable bottom mode displayed 'insert'
+set hidden               " allows toggle buffers in unsaved
+" set mouse=a              " set mouse enable
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 代码缩进和排版
+" code indent and typesetting config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set autoindent           " 设置自动缩进
-set cindent              " 设置使用C/C++语言的自动缩进方式
-set cinoptions=g0,:0,N-s,(0    " 设置C/C++语言的具体缩进方式
-set smartindent          " 智能的选择对其方式
-filetype indent on       " 自适应不同语言的智能缩进
-set noexpandtab			 " 设置禁止空格替换tab,tab党
-set tabstop=4            " 设置编辑时制表符占用空格数
-set shiftwidth=4         " 设置格式化时制表符占用空格数
-set softtabstop=4        " 设置4个空格为制表符
-set smarttab             " 在行和段开始处使用制表符
-set nowrap               " 禁止折行
-set backspace=2          " 使用回车键正常处理indent,eol,start等
-set sidescroll=10        " 设置向右滚动字符数
-set nofoldenable         " 禁用折叠代码
+set autoindent           " set auto indent
+set cindent              " set indent by c/cpp
+set cinoptions=g0,:0,N-s,(0    " set c/cpp indent way
+set smartindent          " smart choose indent way
+filetype indent on       " intelligent indent for different languages
+set noexpandtab			 " set forbidden space to replace tab
+set tabstop=4            " number of spaces used by tabs when editing
+set shiftwidth=4         " number of spaces tab occupies when formatting
+set softtabstop=4        " set 4 spaces as tabs
+set smarttab             " use tabs at the beginning of lines and segments
+set nowrap               " disable devide a line to two
+set backspace=2          " use enter key to normally handle input, eol, start, etc
+set sidescroll=10        " sets the number of characters to scroll to the right
+set nofoldenable         " disables folding code
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 代码补全
+" code inside completion config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set wildmenu             " vim自身命名行模式智能补全
-set completeopt-=preview " 补全时不显示窗口，只显示补全列表
+set wildmenu             " vim itself named line pattern intelligent completion
+set completeopt-=preview " completion window is not displayed when completed, only list is displayed
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 搜索设置
+" search config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set hlsearch            " 高亮显示搜索结果
-set incsearch           " 开启实时搜索功能
-set ignorecase          " 搜索时大小写不敏感
-" set smartcase			" 搜索智能匹配大小写
+set hlsearch            " highlight search results
+set incsearch           " turn on real-time search
+set ignorecase          " search is not case sensitive
+set smartcase			" search smart match case
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 缓存设置
+" cache config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nobackup            " 设置不备份
-set noswapfile          " 禁止生成临时文件
-set autoread            " 文件在vim之外修改过，自动重新读入
-set autowrite           " 设置自动保存
-set confirm             " 在处理未保存或只读文件的时候，弹出确认
+set nobackup            " set no back up
+set noswapfile          " disable create temp file
+set autoread            " if file change by others,load it auto
+set autowrite           " set auto save
+set confirm             " if quit without save,make comfirm
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 编码设置
+" encode config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set langmenu=zh_CN.UTF-8
-set helplang=cn
-set termencoding=utf-8
-set encoding=utf8
-set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
+set langmenu=zh_CN.UTF-8 " set langmenu encode utf-8
+set helplang=cn          " set helplang chinese
+set termencoding=utf-8   " set term encode
+set encoding=utf8        " set encode
+set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030 " set detect encode of file
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gvim/macvim设置
+" gvim/macvimi config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
-    let system = system('uname -s')
-    if system == "Darwin\n"
-        set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " 设置字体
-    else
-        set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 14      " 设置字体
-    endif
-    set guioptions-=m           " 隐藏菜单栏
-    set guioptions-=T           " 隐藏工具栏
-    set guioptions-=L           " 隐藏左侧滚动条
-    set guioptions-=r           " 隐藏右侧滚动条
-    set guioptions-=b           " 隐藏底部滚动条
-    set showtabline=0           " 隐藏Tab栏
-    set guicursor=n-v-c:ver5    " 设置光标为竖线
+	set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 14      " set fonts in gvim
+    set guioptions-=m           " hide the menu bar
+    set guioptions-=T           " hide tool bar
+    set guioptions-=L           " hide left scroll bar
+    set guioptions-=r           " hide right scroll bar
+    set guioptions-=b           " hide bottom scroll bar
+    set showtabline=0           " hide tab bar
+    set guicursor=n-v-c:ver5    " set cursor to a vertical line
+	" set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " set fonts in macvim
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 卸载默认插件UnPlug
+" uninstall plug function
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:deregister(repo)
   let repo = substitute(a:repo, '[\/]\+$', '', '')
@@ -150,7 +147,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 " text obj
 Plug 'kana/vim-textobj-user'
-" funtion info inline
+" funtion info in statusline
 Plug 'Shougo/echodoc.vim'
 " enhance c-f/b and c-d/u
 Plug 'terryma/vim-smooth-scroll'
@@ -277,7 +274,7 @@ let g:NERDTreeHighlightFoldersFullName = 1
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
 let g:NERDTreeWinSize=22
-" Exit Vim if NERDTree is the only window remaining in the only tab.
+" exit vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
@@ -385,16 +382,24 @@ nnoremap <space>S :SessionSave<cr>
 nnoremap <space>s :SessionLoad<cr>
 
 " leaderF
+" find file
 nnoremap <leader>F :LeaderfFile .<cr>
-nnoremap <leader>b :LeaderfBuffer<cr>
 nnoremap <space>f :LeaderfFile .<cr>
+" recent file
 nnoremap <space>F :LeaderfMru<cr>
+" fund buffer
+nnoremap <leader>b :LeaderfBuffer<cr>
 nnoremap <space>b :LeaderfBuffer<cr>
+" funtion list
 nnoremap <space>t :LeaderfFunction<cr>
+" enhance inside funtion
 nnoremap <space>h :LeaderfHelp<cr>
-nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>: :LeaderfCommand<cr>
 nnoremap <space>/ :LeaderfLine<cr>
+" find key word
+nnoremap <space>a :Leaderf rg -i<cr>
+nnoremap <space>A :execute ":Leaderf rg -i " . expand("<cword>")<cr>
+" find color
 nnoremap <F1> :LeaderfColorscheme<cr>
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_PreviewInPopup = 1
