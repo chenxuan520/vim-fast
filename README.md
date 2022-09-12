@@ -2,7 +2,9 @@
 
 ### 修改人
 
-chenxuan
+**chenxuan**
+
+- [README](./README.en.md) in English
 
 ## 仓库地址
 
@@ -14,21 +16,45 @@ chenxuan
 
 ![](https://picx.zhimg.com/v2-465040e3e32df418808b886729a1815f_1440w.jpg?source=172ae18b)
 
+## 为什么制作
+
+- 之前一直使用[Vimplus](https://gitee.com/chxuan/vimplus.git),不过Vimplus出现几个问题
+  
+  1. Vimplus很久没有更新了,挺多issue没有解决的
+  
+  2. 目前主流补全方案是lsp,Vimplus使用的YCM有点老了,而且需要自己编译
+  
+  3. 有的插件已经有个更加好的替换方案
+  
+  4. github访问太慢,导致插件下载太慢,对新手不友好
+
+- 对于其他的配置,有的存在github访问问题,有的因为太过复杂,使得配置文件基本和原来的.vimrc相差太远,使得虽然全面,当时配置更加复杂了
+
+- 基于以上的问题,我想基于Vimplus进行创作,使得它更加好
+
+## 项目特点
+
+1. 基于Vimplus,使得所有配置文件都在.vimrc中,配置更加简单和直观
+
+2. 插件精简化,精选出了31个插件,使得打开速度得到提高
+
+3. 插件压缩包放在gitee上,使得插件下载的速度得到提高,对新手友好化
+
+4. 配置文件极少,只有400余行,注释详细,使得更加容易阅读和修改
+
+5. 添加了功能快捷键的查找,避免了出现快捷键忘记
+
+6. 支持C/C++,Go,python语言一键配置(欢迎大家提mr添加功能)
+
+7. 使用coc代替YCM,更好的补全体验
+
+8. 支持更加多样化的主题,更好的编程体验
+
 ## 项目说明
 
-1. 仓库基于Vimplus
+1. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux,其他系统可以使用vimplus!,同时非常希望大家可以提mr来完善仓库,或者提出issue说明需求的系统**
 
-2. 解决插件本地安装太慢问题
-
-3. 用coc 替换YCM,获得更加流畅的补全体验
-
-4. 增加对go和python的支持,目前支持C++,go,python
-
-5. 添加了快捷键说明,在使用VIM时候随时查找对应快捷键
-
-6. 完善了一些地方,详情见下文QA
-
-7. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux,其他系统可以使用vimplus!,同时非常希望大家可以提mr来完善仓库**
+2. 该项目基于[Vimplus](https://gitee.com/chxuan/vimplus.git)
 
 ## 安装
 
@@ -84,39 +110,28 @@ chenxuan
    
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
 
-## 源仓库
+## Vimplus仓库
 
 [Vimplus](https://gitee.com/chxuan/vimplus.git)
 
 ## QA
 
-1. 为什么不直接用Vimplus
+1. 有nvim版本吗
    
-   - 下载插件依赖github,网络不好下载太慢了,对VIM新手不友好
-   
-   - YCM体验没有coc好,而且coc安装更加简单
-   
-   - 更换了一些插件,使得界面更加美观和更加流畅
+   - nvim可以暂时通过nvim.sh安装,lua配置版本还需要点时间
 
-2. 和其他的区别
+2. 我的系统没有支持
    
-   - 主要是其他大部分直接从github拉取,对国内服务器安装不友好,因此做了这个所有插件都不需要github的
-   
-   - 配置文件非常少,Vimrc只有400行,插件加载更加快速
-   
-   - 内置了快捷键文档查询,避免了配置了不知道怎么用的现象
-   
-   - 插件数量适中,目前31个,避免加载太慢
-   
-   - 颜色支持丰富,支持20余种主题
+   - 可以提出issue或者自己制作提出mr
 
-3. 有nvim版本吗
-   
-   - nvim可以通过nvim.sh安装,lua配置版本还需要一点时间
+## 帮助
+
+1. [插件快捷键说明](./key.md)
+2. [Vim一些按键帮助](./help.md)
 
 ## 希望
 
-- 由于个人能力有限,希望大家可以给自己的linux写一份install.sh,然后提mr,非常感谢
+- 由于个人能力有限,希望大家可以给自己的系统写一份install.sh,然后提mr,非常感谢
 
 ---
 
