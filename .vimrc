@@ -1,6 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " chenxuan's vim config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " base config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ","      " use ',' as leader
@@ -23,6 +25,7 @@ set virtualedit=block,onemore   " allows the cursor appear after last character
 set noshowmode			 " disenable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
 " set mouse=a              " set mouse enable
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code indent and typesetting config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -234,6 +237,16 @@ nnoremap <c-down> <c-w>-
 nnoremap <c-left> <c-w><
 nnoremap <c-right> <c-w>>
 
+" change window in normal
+nnoremap <s-up> <c-w>k
+nnoremap <s-down> <c-w>j
+nnoremap <s-left> <c-w>h
+nnoremap <s-right> <c-w>l
+
+" quick fix
+nnoremap [c :cnext<cr>
+nnoremap ]c :cprevious<cr>
+
 " set themes
 set background=dark
 
@@ -304,8 +317,8 @@ nmap <leader>r <Plug>(coc-rename)
 " coc find wrong
 nmap <silent><F3> <Plug>(coc-diagnostic-prev)
 nmap <silent><F4> <Plug>(coc-diagnostic-next)
-nmap <silent><leader><leader>W <Plug>(coc-diagnostic-prev)
-nmap <silent><leader><leader>w <Plug>(coc-diagnostic-next)
+nmap <silent>[w <Plug>(coc-diagnostic-prev)
+nmap <silent>]w <Plug>(coc-diagnostic-next)
 nnoremap <silent><nowait> <space>w :<C-u>CocList diagnostics<cr>
 " coc text obj
 xmap if <Plug>(coc-funcobj-i)
@@ -402,6 +415,7 @@ nnoremap <space>A :execute ":Leaderf rg -i " . expand("<cword>")<cr>
 " find color
 nnoremap <F1> :LeaderfColorscheme<cr>
 let g:Lf_WindowPosition = 'popup'
+let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
 let g:Lf_WildIgnore = {
             \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
@@ -426,6 +440,11 @@ noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 nnoremap <leader>g :GV<cr>
 nnoremap <leader>G :GV!<cr>
 nnoremap <leader>gg :GV?<cr>
+
+" clever f
+" nnoremap \ ,
+" map \ <Plug>(clever-f-repeat-back)
+map ; <Plug>(clever-f-repeat-forward)
 
 " asyncrun
 let g:asyncrun_open = 6
