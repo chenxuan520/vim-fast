@@ -30,9 +30,9 @@
 | `F6`                        | 调试:打断点               |
 | `F7`                        | 调试:下一步               |
 | `F8`                        | 调试:进入                |
-| `[c`                        | quickfix next        |
-| `]c`                        | quickfix last        |
-| `\c`                        | quickfix close       |
+| `[q`                        | quickfix next        |
+| `]q`                        | quickfix last        |
+| `\q`                        | quickfix close       |
 
 ## 插件相关
 

@@ -244,9 +244,9 @@ nnoremap <s-left> <c-w>h
 nnoremap <s-right> <c-w>l
 
 " quick fix
-nnoremap [c :cnext<cr>
-nnoremap ]c :cprevious<cr>
-nnoremap \c :cclose<cr>
+nnoremap [q :cnext<cr>
+nnoremap ]q :cprevious<cr>
+nnoremap \q :cclose<cr>
 
 " set themes
 set background=dark
