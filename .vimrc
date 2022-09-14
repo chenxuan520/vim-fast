@@ -246,6 +246,7 @@ nnoremap <s-right> <c-w>l
 " quick fix
 nnoremap [c :cnext<cr>
 nnoremap ]c :cprevious<cr>
+nnoremap \c :cclose<cr>
 
 " set themes
 set background=dark
@@ -444,12 +445,13 @@ nnoremap <leader>gg :GV?<cr>
 " clever f
 " nnoremap \ ,
 " map \ <Plug>(clever-f-repeat-back)
-map ; <Plug>(clever-f-repeat-forward)
+map <silent><nowait> ; <Plug>(clever-f-repeat-forward)
 
 " asyncrun
 let g:asyncrun_open = 6
 let g:asyncrun_bell = 0
 nmap <silent><nowait> <space>c :AsyncTaskEdit<cr>
+nmap <space>; :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
 nnoremap <leader>H :execute ":AsyncRun ack -i " . expand("<cword>")<cr>
