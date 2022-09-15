@@ -454,4 +454,3 @@ nmap <silent><nowait> <space>c :AsyncTaskEdit<cr>
 nmap <space>; :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
-nnoremap <leader>H :execute ":AsyncRun ack -i " . expand("<cword>")<cr>
