@@ -198,8 +198,8 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "
 
 " termdebug
 let g:termdebug_wide=1
-nnoremap <leader><leader>d :packadd termdebug<CR>:Termdebug<space>
-nnoremap <F5> :packadd termdebug<CR>:Termdebug<space>
+nnoremap <leader><leader>d :set mouse=a<cr>:packadd termdebug<cr>:Termdebug<space>
+nnoremap <F5> :set mouse=a<cr>:packadd termdebug<cr>:Termdebug<space>
 nnoremap <F6> :Break<cr>
 nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
@@ -450,6 +450,7 @@ map <silent><nowait> ; <Plug>(clever-f-repeat-forward)
 let g:asyncrun_open = 6
 let g:asyncrun_bell = 0
 nmap <silent><nowait> <space>c :AsyncTaskEdit<cr>
+nmap <space>C :AsyncTask<space>
 nmap <space>; :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
