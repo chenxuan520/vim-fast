@@ -180,7 +180,7 @@ nnoremap <leader><leader>c :PlugClean<cr>
 " vim-buffer
 nnoremap <silent> <c-p> :bp<cr>
 nnoremap <silent> <c-n> :bn<cr>
-nnoremap <silent> <c-w> :w<cr>
+nnoremap <silent> <c-m> :w<cr>
 nnoremap <silent> <leader>d :bd<cr>
 
 " insert model to move cursor
