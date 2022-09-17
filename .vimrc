@@ -247,6 +247,7 @@ nnoremap <s-right> <c-w>l
 nnoremap [q :cnext<cr>
 nnoremap ]q :cprevious<cr>
 nnoremap \q :cclose<cr>
+nnoremap =q :copen<cr>
 
 " set themes
 set background=dark
@@ -307,7 +308,7 @@ endfunction
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)
 nmap <silent>gu <Plug>(coc-definition)
-nmap <silent>gt <Plug>(coc-type-definition)
+nmap <silent>gU <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <leader>ff <Plug>(coc-fix-current)
@@ -396,7 +397,6 @@ nnoremap <space>s :SessionLoad<cr>
 
 " leaderF
 " find file
-nnoremap <leader>F :LeaderfFile .<cr>
 nnoremap <space>f :LeaderfFile .<cr>
 " recent file
 nnoremap <space>F :LeaderfMru<cr>
@@ -409,6 +409,7 @@ nnoremap <space>t :LeaderfFunction<cr>
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>: :LeaderfCommand<cr>
 nnoremap <space>/ :LeaderfLine<cr>
+nnoremap <space>? :LeaderfLineAll<cr>
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>A :execute ":Leaderf rg -i " . expand("<cword>")<cr>
