@@ -106,6 +106,7 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <c-p> :bp<cr>
 nnoremap <silent> <c-n> :bn<cr>
+nnoremap <silent> <c-w> :w<cr>
 nnoremap <silent> <leader>d :bd<cr>
 
 " 插入模式下的光标移动
@@ -167,3 +168,15 @@ nnoremap <c-up> <c-w>+
 nnoremap <c-down> <c-w>-
 nnoremap <c-left> <c-w><
 nnoremap <c-right> <c-w>>
+
+" change window in normal
+nnoremap <s-up> <c-w>k
+nnoremap <s-down> <c-w>j
+nnoremap <s-left> <c-w>h
+nnoremap <s-right> <c-w>l
+
+" quick fix
+nnoremap [q :cnext<cr>
+nnoremap ]q :cprevious<cr>
+nnoremap \q :cclose<cr>
+nnoremap =q :copen<cr>
