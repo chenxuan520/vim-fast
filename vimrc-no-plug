@@ -180,3 +180,10 @@ nnoremap [q :cnext<cr>
 nnoremap ]q :cprevious<cr>
 nnoremap \q :cclose<cr>
 nnoremap =q :copen<cr>
+
+" set mouse
+nnoremap <silent><nowait>=m :set mouse=a<cr>
+nnoremap <silent><nowait>\m :set mouse=""<cr>
+
+" set themes
+set background=dark
