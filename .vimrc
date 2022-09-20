@@ -254,6 +254,12 @@ nnoremap =q :copen<cr>
 nnoremap <silent><nowait>=m :set mouse=a<cr>
 nnoremap <silent><nowait>\m :set mouse=""<cr>
 
+" set alias
+iab ;e 1697772321@qq.com
+iab ;n chenxuan
+nnoremap \a :iabc<cr>
+nnoremap =a :ab<cr>
+
 " set themes
 set background=dark
 
