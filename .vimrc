@@ -119,7 +119,6 @@ Plug 'Yggdroot/LeaderF'
 Plug 'easymotion/vim-easymotion'
 " enhance the /
 Plug 'haya14busa/incsearch.vim'
-Plug 'junegunn/vim-slash'
 " pair auto
 Plug 'jiangmiao/auto-pairs'
 " file tree left
@@ -318,7 +317,7 @@ endfunction
 " coc find define
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)
-nmap <silent>gu <Plug>(coc-definition)
+nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gU <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
