@@ -193,7 +193,7 @@ vmap <leader><leader>y "+y
 nnoremap <leader><leader>p "+p
 vnoremap <leader><leader>p "+p
 
-" load the file last edit
+" load the file last edit pos
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
 
 " termdebug
@@ -317,7 +317,7 @@ endfunction
 " coc find define
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)
-nmap <silent>gd <Plug>(coc-definition)
+nmap <silent>gu <Plug>(coc-definition)
 nmap <silent>gU <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
