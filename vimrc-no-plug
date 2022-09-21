@@ -52,7 +52,7 @@ set completeopt-=preview " 补全时不显示窗口，只显示补全列表
 set hlsearch            " 高亮显示搜索结果
 set incsearch           " 开启实时搜索功能
 set ignorecase          " 搜索时大小写不敏感
-" set smartcase			" 搜索智能匹配大小写
+set smartcase			" 搜索智能匹配大小写
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 缓存设置
@@ -184,6 +184,24 @@ nnoremap =q :copen<cr>
 " set mouse
 nnoremap <silent><nowait>=m :set mouse=a<cr>
 nnoremap <silent><nowait>\m :set mouse=""<cr>
+
+" show indent line
+nnoremap <silent><nowait>=i :set list lcs=tab:¦\<space> <cr>
+nnoremap <silent><nowait>\i :set nolist<cr>
+
+" set spell
+nnoremap <silent><nowait>=s :set spell<cr>
+nnoremap <silent><nowait>\s :set nospell<cr>
+" z= is list of change
+
+" delete <space> in end of line
+nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr>
+
+" set alias
+iab ;e 1697772321@qq.com
+iab ;n chenxuan
+nnoremap \a :iabc<cr>
+nnoremap =a :ab<cr>
 
 " set themes
 set background=dark

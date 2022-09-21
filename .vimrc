@@ -103,11 +103,11 @@ endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" plug list 
+" plug list
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
 
-" begin vim 
+" begin vim
 Plug 'chenxuan520/my-vim-dashboard'
 Plug 'chxuan/prepare-code'
 " function list
@@ -162,7 +162,7 @@ Plug 'honza/vim-snippets'
 Plug 'skywind3000/asynctasks.vim'
 Plug 'skywind3000/asyncrun.vim'
 
-call plug#end()  
+call plug#end()
 
 
 " load vim default plugin
@@ -254,6 +254,18 @@ nnoremap =q :copen<cr>
 nnoremap <silent><nowait>=m :set mouse=a<cr>
 nnoremap <silent><nowait>\m :set mouse=""<cr>
 
+" show indent line
+nnoremap <silent><nowait>=i :set list lcs=tab:¦\<space> <cr>
+nnoremap <silent><nowait>\i :set nolist<cr>
+
+" set spell
+nnoremap <silent><nowait>=s :set spell<cr>
+nnoremap <silent><nowait>\s :set nospell<cr>
+" z= is list of change
+
+" delete <space> in end of line
+nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr>
+
 " set alias
 iab ;e 1697772321@qq.com
 iab ;n chenxuan
@@ -295,8 +307,8 @@ nnoremap <silent> <leader>n :NERDTreeToggle<cr>
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
-let g:NERDTreeHighlightFolders = 1         
-let g:NERDTreeHighlightFoldersFullName = 1 
+let g:NERDTreeHighlightFolders = 1
+let g:NERDTreeHighlightFoldersFullName = 1
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
 let g:NERDTreeWinSize=22
@@ -415,9 +427,9 @@ nnoremap <space>F :LeaderfMru<cr>
 " fund buffer
 nnoremap <leader>b :LeaderfBuffer<cr>
 nnoremap <space>b :LeaderfBuffer<cr>
-" funtion list
+" function list
 nnoremap <space>t :LeaderfFunction<cr>
-" enhance inside funtion
+" enhance inside function
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>: :LeaderfCommand<cr>
 nnoremap <space>/ :LeaderfLine<cr>
