@@ -22,7 +22,7 @@ set cursorline           " highlight current line
 set whichwrap+=<,>,h,l   " set the cursor key across rows
 set ttimeoutlen=0        " set <ESC> response time
 set virtualedit=block,onemore   " allows the cursor appear after last character
-set noshowmode			 " disenable bottom mode displayed 'insert'
+set noshowmode			 " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
 " set mouse=a              " set mouse enable
 
@@ -39,10 +39,11 @@ set tabstop=4            " number of spaces used by tabs when editing
 set shiftwidth=4         " number of spaces tab occupies when formatting
 set softtabstop=4        " set 4 spaces as tabs
 set smarttab             " use tabs at the beginning of lines and segments
-set nowrap               " disable devide a line to two
+set nowrap               " disable divide a line to two
 set backspace=2          " use enter key to normally handle input, eol, start, etc
 set sidescroll=10        " sets the number of characters to scroll to the right
 set nofoldenable         " disables folding code
+" set scrolloff=5          " set cursor line to bottom
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code inside completion config
@@ -65,13 +66,13 @@ set nobackup            " set no back up
 set noswapfile          " disable create temp file
 set autoread            " if file change by others,load it auto
 set autowrite           " set auto save
-set confirm             " if quit without save,make comfirm
+set confirm             " if quit without save,make confirm
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " encode config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set langmenu=zh_CN.UTF-8 " set langmenu encode utf-8
-set helplang=cn          " set helplang chinese
+set helplang=cn          " set helplang Chinese
 set termencoding=utf-8   " set term encode
 set encoding=utf8        " set encode
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030 " set detect encode of file
@@ -149,7 +150,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 " text obj
 Plug 'kana/vim-textobj-user'
-" funtion info in statusline
+" function info in statusline
 Plug 'Shougo/echodoc.vim'
 " enhance c-f/b and c-d/u
 Plug 'terryma/vim-smooth-scroll'
@@ -157,7 +158,7 @@ Plug 'terryma/vim-smooth-scroll'
 Plug 'rhysd/clever-f.vim'
 " code snippets
 Plug 'honza/vim-snippets'
-" project maneage
+" project message
 Plug 'skywind3000/asynctasks.vim'
 Plug 'skywind3000/asyncrun.vim'
 
