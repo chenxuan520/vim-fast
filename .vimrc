@@ -221,6 +221,7 @@ func SetComment()
 endfunc
 nnoremap <Leader>c :call SetComment()<CR>
 
+
 " yank and paste
 nnoremap <Leader>p "0p
 vnoremap <Leader>p "0p
@@ -251,7 +252,16 @@ nnoremap \q :cclose<cr>
 nnoremap =q :copen<cr>
 
 " set mouse
-nnoremap <silent><nowait>=m :set mouse=a<cr>
+func MouseConfig()
+	set mouse=a
+	set mousemodel=popup
+	" you can define menu self
+	nnoremenu PopUp.Paste "+p
+	vnoremenu PopUp.Yank "+y
+	nnoremenu PopUp.Back\ pos <c-o><cr>
+	nnoremenu PopUp.Next\ pos <c-i><cr>
+endfunc
+nnoremap <silent><nowait>=m :call MouseConfig()<cr>
 nnoremap <silent><nowait>\m :set mouse=""<cr>
 
 " show indent line
@@ -367,6 +377,8 @@ nmap <silent><nowait> <space><space>c :CocConfig<cr>
 nmap <silent><nowait> <space>l :CocList extensions<cr>
 " coc help
 nnoremap <silent> K :call ShowDocumentation()<CR>
+" coc mouse
+nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
 
 function! ShowDocumentation()
   if CocAction('hasProvider', 'hover')
