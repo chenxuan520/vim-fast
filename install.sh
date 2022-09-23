@@ -22,8 +22,9 @@ function install_plug()
 {
 	mkdir ~/.vim/plugged
 	tar -zxvf ${PWD}/vim.tar.gz -C ~/.vim/plugged/
-	sudo curl -sL install-node.now.sh | sudo bash
+	# sudo curl -sL install-node.now.sh | sudo bash
 	# curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
+	./nodejs.sh
 	npm config set registry https://registry.npmmirror.com
 	# https://registry.npmjs.org/
 	# npm install -g yarn
