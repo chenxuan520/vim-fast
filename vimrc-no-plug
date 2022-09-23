@@ -1,6 +1,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "chenxuan的个人Vim配置(无插件版本)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 通用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ","      " 定义<leader>键
@@ -22,6 +24,7 @@ set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
 set noshowmode			 " 设置不打开底部insert
 set hidden               " 设置允许在未保存切换buffer
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -39,6 +42,7 @@ set nowrap               " 禁止折行
 set backspace=2          " 使用回车键正常处理indent,eol,start等
 set sidescroll=10        " 设置向右滚动字符数
 set nofoldenable         " 禁用折叠代码
+" set scrolloff=5          " 设置底部距离
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码补全
@@ -182,7 +186,18 @@ nnoremap \q :cclose<cr>
 nnoremap =q :copen<cr>
 
 " set mouse
-nnoremap <silent><nowait>=m :set mouse=a<cr>
+func MouseConfig()
+	set mouse=a
+	set mousemodel=popup
+	" you can define menu self
+	nnoremenu PopUp.Paste\ Text "+p
+	vnoremenu PopUp.Yank\ Text "+y
+	vnoremenu PopUp.Del\ Text d
+	nnoremenu PopUp.Back\ Pos <c-o><cr>
+	nnoremenu PopUp.Next\ Pos <c-i><cr>
+endfunc
+" call MouseConfig() " default disable mouse
+nnoremap <silent><nowait>=m :call MouseConfig()<cr>
 nnoremap <silent><nowait>\m :set mouse=""<cr>
 
 " show indent line

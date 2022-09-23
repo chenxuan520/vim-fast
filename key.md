@@ -33,6 +33,10 @@
 | `[q`                        | quickfix next        |
 | `]q`                        | quickfix last        |
 | `\q`                        | quickfix close       |
+| `=m`                        | 打开鼠标功能               |
+| `\m`                        | 关闭鼠标功能               |
+| `=i`                        | 打开缩进线显示              |
+| `\i`                        | 关闭缩进线显示              |
 
 ## 插件相关
 
