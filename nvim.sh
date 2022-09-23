@@ -8,7 +8,7 @@ function main(){
 	type nvim
 	if [ $? == 1 ];then
 		sudo apt update
-		sudo apt install neovim
+		sudo apt install -y neovim
 	fi
 	rm ~/.config/nvim/init.vim
 	mkdir ~/.config/nvim

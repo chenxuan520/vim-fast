@@ -279,7 +279,7 @@ nnoremap <silent><nowait>\s :set nospell<cr>
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr>
 
 " set alias
-iab ;e 1697772321@qq.com
+iab ;e 1607772321@qq.com
 iab ;n chenxuan
 nnoremap \a :iabc<cr>
 nnoremap =a :ab<cr>
