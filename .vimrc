@@ -82,13 +82,13 @@ set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030 " set detect encode of f
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
 	set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 14      " set fonts in gvim
-    set guioptions-=m           " hide the menu bar
-    set guioptions-=T           " hide tool bar
-    set guioptions-=L           " hide left scroll bar
-    set guioptions-=r           " hide right scroll bar
-    set guioptions-=b           " hide bottom scroll bar
-    set showtabline=0           " hide tab bar
-    set guicursor=n-v-c:ver5    " set cursor to a vertical line
+	set guioptions-=m           " hide the menu bar
+	set guioptions-=T           " hide tool bar
+	set guioptions-=L           " hide left scroll bar
+	set guioptions-=r           " hide right scroll bar
+	set guioptions-=b           " hide bottom scroll bar
+	set showtabline=0           " hide tab bar
+	set guicursor=n-v-c:ver5    " set cursor to a vertical line
 	" set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " set fonts in macvim
 endif
 
@@ -96,9 +96,9 @@ endif
 " uninstall plug function
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:deregister(repo)
-  let repo = substitute(a:repo, '[\/]\+$', '', '')
-  let name = fnamemodify(repo, ':t:s?\.git$??')
-  call remove(g:plugs, name)
+	let repo = substitute(a:repo, '[\/]\+$', '', '')
+	let name = fnamemodify(repo, ':t:s?\.git$??')
+	call remove(g:plugs, name)
 endfunction
 command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 
@@ -199,8 +199,8 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "
 
 " termdebug
 let g:termdebug_wide=1
-nnoremap <leader><leader>d :set mouse=a<cr>:packadd termdebug<cr>:Termdebug<space>
-nnoremap <F5> :set mouse=a<cr>:packadd termdebug<cr>:Termdebug<space>
+nnoremap <leader><leader>d :call MouseConfig()<cr>:packadd termdebug<cr>:Termdebug<space>
+nnoremap <F5> :call MouseConfig()<cr>:packadd termdebug<cr>:Termdebug<space>
 nnoremap <F6> :Break<cr>
 nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
@@ -254,13 +254,13 @@ nnoremap =q :copen<cr>
 " set mouse
 func MouseConfig()
 	set mouse=a
-	set mousemodel=popup
+	set mousemodel=popup_setpos
 	" you can define menu self
-	nnoremenu PopUp.Paste\ Text "+p
 	vnoremenu PopUp.Yank\ Text "+y
 	vnoremenu PopUp.Del\ Text d
-	nnoremenu PopUp.Back\ Pos <c-o><cr>
-	nnoremenu PopUp.Next\ Pos <c-i><cr>
+	nnoremenu PopUp.Paste\ Text "+p
+	nnoremenu PopUp.Back\ Pos <c-o>zz<cr>
+	nnoremenu PopUp.Next\ Pos <c-i>zz<cr>
 endfunc
 " call MouseConfig() " default disable mouse
 nnoremap <silent><nowait>=m :call MouseConfig()<cr>
@@ -304,7 +304,7 @@ let g:airline_theme= "tokyonight"
 let g:airline_powerline_fonts = 1
 let g:airline_extensions = ['tabline', 'coc']
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+	let g:airline_symbols = {}
 endif
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
@@ -330,14 +330,14 @@ autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTa
 " coc.nvim
 " coc tab
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ CheckBackspace() ? "\<TAB>" :
-      \ coc#refresh()
+			\ pumvisible() ? "\<C-n>" :
+			\ CheckBackspace() ? "\<TAB>" :
+			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 " coc find define
 nmap <leader>u <Plug>(coc-definition)
@@ -378,16 +378,17 @@ nmap <leader><leader>f :Format<cr>
 nmap <silent><nowait> <space><space>c :CocConfig<cr>
 nmap <silent><nowait> <space>l :CocList extensions<cr>
 " coc help
-nnoremap <silent> K :call ShowDocumentation()<CR>
+nnoremap <silent> K :call ShowDocumentation()<cr>
 " coc mouse
 nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
+nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
 
 function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
+	if CocAction('hasProvider', 'hover')
+		call CocActionAsync('doHover')
+	else
+		call feedkeys('K', 'in')
+	endif
 endfunction
 
 
@@ -457,9 +458,9 @@ let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
 let g:Lf_WildIgnore = {
-            \ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
-            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
-            \}
+			\ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
+			\ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+			\}
 let g:Lf_UseCache = 0
 
 " echodoc.vim
