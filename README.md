@@ -19,48 +19,50 @@
 ## 为什么制作
 
 - 之前一直使用[Vimplus](https://gitee.com/chxuan/vimplus.git),不过Vimplus出现几个问题
-
+  
   1. Vimplus很久没有更新了,挺多issue没有解决的
-
+  
   2. 目前主流补全方案是lsp,Vimplus使用的YCM有点老了,而且需要自己编译
-
+  
   3. 有的插件已经有个更加好的替换方案
-
+  
   4. github访问太慢,导致插件下载太慢,对新手不友好
 
 - 对于其他的配置,
-
+  
   - 有的存在github访问问题,对VIM新手不友好,对服务器配置也不够友好
-
+  
   - 有的因为太过复杂,使得配置文件基本和原来的.vimrc相差太远,甚至使用了不同格式的配置文件,这样使得后期自己定制VIM变得很麻烦,而且太过冗余
-
+  
   - 有的完全使用lua,使得VIM不兼容问题
 
 - 基于以上的问题,我想基于Vimplus进行创作,使得它更加好
 
 ## 项目特点
 
-1. 基于Vimplus,使得所有配置文件都在.vimrc中,400 余行的配置文件更加简单和直观,同时也避免了多个配置文件冗余
+1. **正常3分钟从新的linux主机安装好VIM配置(包括lsp之类),3分钟解决所有问题**
 
-2. 插件精简化,精选出了30个插件,使得打开速度得到提高
+2. 基于Vimplus,使得所有配置文件都在.vimrc中,400 余行的配置文件更加简单和直观,同时也避免了多个配置文件冗余
 
-3. 插件压缩包放在gitee上,使得插件下载的速度得到提高,对新手友好化,提供shell脚本一键配置插件
+3. 插件精简化,精选出了30个插件,使得打开速度得到提高
 
-4. 添加了基于功能的快捷键的查找,避免了出现快捷键忘记
+4. 插件压缩包放在gitee上,使得插件下载的速度得到提高,对新手友好化,提供shell脚本一键配置插件
 
-5. 完善了鼠标的支持,使得新手更加友好
+5. 添加了基于功能的快捷键的查找,避免了出现快捷键忘记
 
-6. 支持C/C++,Go,python语言一键配置(欢迎大家提mr添加功能)
+6. 完善了鼠标的支持,使得新手更加友好
 
-7. 使用coc代替YCM,更好的补全体验
+7. 支持C/C++,Go,python语言一键配置(欢迎大家提mr添加功能)
 
-8. 支持更加多样化的主题,更好的编程体验
+8. 使用coc代替YCM,更好的补全体验
 
-9. 提供shell脚本实现定制化Vim
+9. 支持更加多样化的主题(超过10种),更好的视觉体验
 
-10. 中文文档详细,对新手更加友好
+10. 提供shell脚本实现定制化Vim
 
-11. 提供中文VIM手册的一键下载[(基于Vimcdoc)](https://github.com/yianwillis/vimcdoc)
+11. 中文文档详细,对新手更加友好
+
+12. 提供中文VIM手册的一键下载配置[(基于Vimcdoc)](https://github.com/yianwillis/vimcdoc)
 
 ## 项目文件夹
 
@@ -78,13 +80,13 @@
 
 - install_without_sudo.sh 在没有root和sudo下安装(需要提前下载好apt包)
 
-- cpp/go/python .sh 三种语言的lsp以及coc安装,运行install.sh后
+- cpp/go/python .sh 三种语言的lsp以及coc安装,运行install.sh后按需调用
 
 - update.sh 拉取vim-fast最新配置
 
 - uninstall.sh 卸载vim-fast
 
-- plug.sh 下载并安装最新所有插件(使用gitee,更加快速)
+- plug.sh 下载并安装最新所有插件(,自动调用,使用gitee,更加快速)
 
 - doc_zh.sh 下载安装vim中文文档
 
@@ -92,19 +94,25 @@
 
 - nvim.sh 一键迁移到nvim
 
+- nodejs.sh nodejs安装脚本,会自动调用
+
 ## 其他文件
 
 - .vimrc VIM配置文件
 
 - vimrc-no-plug 不包含插件和主题的VIM配置
 
-- vim.tar.gz 部分旧插件(用于没网情况)
-
 ## 项目说明
 
 1. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux,其他系统可以使用vimplus!,同时非常希望大家可以提mr来完善仓库,或者提出issue说明需求的系统**
 
 2. 该项目基于[Vimplus](https://gitee.com/chxuan/vimplus.git)
+
+## 视频及文章
+
+- [bilibili](https://www.bilibili.com/video/BV1RV4y1K7Le/)
+
+- [zhihu](https://zhuanlan.zhihu.com/p/524286962)
 
 ## 安装
 
@@ -129,35 +137,35 @@
 #### C++
 
 1. ./cpp.sh
-
+   
    ![](https://pic1.zhimg.com/80/v2-8f63e192e0b96e7514fd89112f0bbbb4_720w.png)
 
 2. 出现下图配置成功
-
+   
    ![](https://pic2.zhimg.com/80/v2-3116e456f0df668740f16dabb7eb50d9_720w.jpg)
 
 #### Python
 
 1. ./python.sh
-
+   
    ![](https://pic4.zhimg.com/80/v2-f4024d6b0b3ac1563753ff06485f6203_720w.png)
 
 2. 出现这个为安装python补全成功
-
+   
    ![](https://pic2.zhimg.com/80/v2-acbb90f61bbe85985e5619382ece1235_720w.jpg)
 
 #### Go
 
 1. ./go.sh
-
+   
    ![](https://pic2.zhimg.com/80/v2-a9f92770ec5d7ff5ad891e20cb9dfb49_720w.png)
 
 2. 刚编辑文件时需要等待一会下载，大概两分钟
-
+   
    ![](https://pic1.zhimg.com/80/v2-fe683bb1bae4bbf75e447528cdfecf18_720w.png)
 
 3. 出现这个为安装go补全成功
-
+   
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
 
 ## Vimplus仓库
@@ -167,12 +175,16 @@
 ## QA
 
 1. 有nvim版本吗
-
+   
    - nvim可以暂时通过nvim.sh安装,lua配置版本还需要点时间
 
 2. 我的系统没有支持
-
+   
    - 可以提出issue或者自己制作提出mr
+
+3. PlugInstall 出现# unsafe repository git config --global --add safe.directory
+   
+   - git config --global --add safe.directory "*"
 
 ## 帮助
 
@@ -182,6 +194,12 @@
 ## 希望
 
 - 由于个人能力有限,希望大家可以给自己的系统写一份install.sh,然后提mr,非常感谢
+
+## 后记
+
+- 使用VIM其实不应该作为开箱即用的ide,但是刚开始什么都没有的界面劝退了大多数人,因此我制作了这个仓库带你用最少的时间把VIM打造成IDE,但是让配置文件尽量简单化
+
+- 当你可能熟悉VIM之后可能会觉得我设置的快捷键反人类,那个时候你可以自己去定制一切,VIM的一切都是可以定制的,当你自己去编辑.vimrc的时候,VIM就会成为你最称手的兵器
 
 ---
 
