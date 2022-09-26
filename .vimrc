@@ -346,7 +346,7 @@ nmap <silent>gu <Plug>(coc-definition)
 nmap <silent>gU <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
-nmap <leader>ff <Plug>(coc-fix-current)
+nmap <leader>qf <Plug>(coc-fix-current)
 " coc refactor code
 nmap <space>r <Plug>(coc-refactor)
 nmap <leader>r <Plug>(coc-rename)
