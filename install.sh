@@ -93,6 +93,17 @@ function install_prepare_software_on_debian()
 	sudo apt-get install -y zip curl git wget ctags ripgrep
 	sudo apt-get install -y build-essential python python-dev python3-dev fontconfig libfile-next-perl ack
 	sudo apt-get install -y universal-ctags || sudo apt-get install -y exuberant-ctags
+	sudo apt-get install -y vim cmake build-essential python python-dev python3-dev fontconfig libfile-next-perl ack git
+}
+
+# 安装tmux必备软件
+function install_prepare_software_on_tmux()
+{
+	pkg update
+	pkg install -y vim
+	pkg install -y zip curl git wget ctags ripgrep
+	pkg install -y build-essential python python-dev python3-dev fontconfig libfile-next-perl ack-grep ack
+	pkg install -y universal-ctags || sudo apt-get install -y exuberant-ctags
 }
 
 
@@ -234,14 +245,6 @@ function backup_vimrc_and_vim()
 	backup_vim_dir
 }
 
-# 安装debian必备软件
-function install_prepare_software_on_debian()
-{
-	sudo apt-get update
-	sudo apt-get install -y vim cmake build-essential python python-dev python3-dev fontconfig libfile-next-perl ack git
-	sudo apt-get install -y universal-ctags || sudo apt-get install -y exuberant-ctags
-}
-
 # 在ubuntu上安装vimplus
 function install_vimplus_on_ubuntu()
 {
@@ -255,6 +258,13 @@ function install_vimplus_on_debian()
 {
 	backup_vimrc_and_vim
 	install_prepare_software_on_debian
+	begin_install_vimplus
+}
+
+function install_vimplus_on_tmux()
+{
+	backup_vimrc_and_vim
+	install_prepare_software_on_tmux
 	begin_install_vimplus
 }
 
@@ -301,7 +311,7 @@ function main(){
 	if [ ${type} == "Linux" ]; then
 		tp=$(uname -a)
 		if [[ $tp =~ "Android" ]]; then
-			echo "Android no support"
+			install_vimplus_on_tmux
 		else
 			install_vimplus_on_linux
 		fi
