@@ -4,7 +4,7 @@ PKGNAME=node-${NODEVERSION}-linux-x64.tar.xz
 URL=https://nodejs.org/dist/${NODEVERSION}/${PKGNAME}
 PREFIX=/usr/local/
 wget https://nodejs.org/dist/${NODEVERSION}/${PKGNAME}
-tar xf ${PKGNAME} \
+sudo tar xf ${PKGNAME} \
 	--exclude CHANGELOG.md \
 	--exclude LICENSE \
 	--exclude README.md \

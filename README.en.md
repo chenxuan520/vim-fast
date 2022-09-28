@@ -4,7 +4,7 @@
 
 **chenxuan**
 
-- [README](./README.md) 中文
+- [README](./README.en.md) in English
 
 ## Warehouse Address
 
@@ -19,21 +19,21 @@
 ## Why made
 
 - I have been using [Vimplus](https://gitee.com/chxuan/vimplus.git) before, but there are several problems with Vimplus
-  
+
   1. Vimplus has not been updated for a long time, and many issues have not been resolved
-  
+
   2. The current mainstream completion solution is lsp, the YCM used by Vimplus is a bit old, and it needs to be compiled by itself
-  
+
   3. Some plugins already have a better alternative
-  
+
   4. The access to github is too slow, resulting in slow download of plugins and unfriendly to novices
 
 - For other configurations,
-  
+
   - Some have github access problems, are not friendly to VIM newbies, and are not friendly enough to server configuration
-  
+
   - Some configuration files are too far from the original .vimrc because they are too complicated, and even use configuration files in different formats, which makes customizing VIM in the later stage very troublesome and too redundant
-  
+
   - Some use lua completely, making VIM incompatibility problems
 
 - Based on the above questions, I want to create based on Vimplus to make it better
@@ -137,35 +137,35 @@
 #### C++
 
 1. ./cpp.sh
-   
+
    ![](https://pic1.zhimg.com/80/v2-8f63e192e0b96e7514fd89112f0bbbb4_720w.png)
 
 2. The following figure appears, the configuration is successful
-   
+
    ![](https://pic2.zhimg.com/80/v2-3116e456f0df668740f16dabb7eb50d9_720w.jpg)
 
 #### Python
 
 1. ./python.sh
-   
+
    ![](https://pic4.zhimg.com/80/v2-f4024d6b0b3ac1563753ff06485f6203_720w.png)
 
 2. When this appears, the installation of python is completed successfully
-   
+
    ![](https://pic2.zhimg.com/80/v2-acbb90f61bbe85985e5619382ece1235_720w.jpg)
 
 #### Go
 
 1. ./go.sh
-   
+
    ![](https://pic2.zhimg.com/80/v2-a9f92770ec5d7ff5ad891e20cb9dfb49_720w.png)
 
 2. When you just edit the file, you need to wait for a while to download, about two minutes
-   
+
    ![](https://pic1.zhimg.com/80/v2-fe683bb1bae4bbf75e447528cdfecf18_720w.png)
 
 3. When this appears, the installation of go completion is successful
-   
+
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
 
 ## Vimplus repository
@@ -175,16 +175,26 @@
 ## QA
 
 1. Is there an nvim version?
-   
+
    - nvim can be temporarily installed through nvim.sh, the lua configuration version will take some time
 
 2. My system is not supported
-   
+
    - You can submit an issue or make your own mr
 
 3. PlugInstall appears # unsafe repository git config --global --add safe.directory
-   
+
    - git config --global --add safe.directory "*"
+
+4. xshell, tmux open color confusion
+
+   - "Tools" -> "Options" -> "Advanced" -> "Use True Color" in xshell, restart xshell after opening
+
+   - tmux can only switch the theme to onedark, and close termguicolors, set let g:onedark_termcolors=256
+
+5. Do you need root or sudo privileges?
+
+   - If you have installed vim-fast before this machine or the corresponding software has been installed, you do not need sudo, otherwise you need to install the software package with sudo
 
 ## help
 
