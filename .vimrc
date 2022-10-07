@@ -123,8 +123,8 @@ Plug 'haya14busa/incsearch.vim'
 " pair auto
 Plug 'jiangmiao/auto-pairs'
 " file tree left
-Plug 'preservim/nerdtree'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight', {'on': 'NERDTreeToggle'}
 " easy align
 Plug 'godlygeek/tabular'
 " change surround quick
@@ -209,18 +209,6 @@ nnoremap <F8> :Step<cr>
 tnoremap <c-\> <c-\><c-n>
 nnoremap <Leader><Leader>T :term<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
-
-" fast add comment for cpp
-func SetComment()
-	call append(line("."),'/***********************************************')
-	call append(line(".")+1,'* Author: chenxuan-1607772321@qq.com')
-	call append(line(".")+2,'* change time:'.strftime("%Y-%m-%d %H:%M:%S"))
-	call append(line(".")+3,'* description:')
-	call append(line(".")+4,'* example: ')
-	call append(line(".")+5,'***********************************************/')
-endfunc
-nnoremap <Leader>c :call SetComment()<CR>
-
 
 " yank and paste
 nnoremap <Leader>p "0p
