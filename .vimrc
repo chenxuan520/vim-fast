@@ -207,7 +207,7 @@ nnoremap <F8> :Step<cr>
 
 " term console
 tnoremap <c-\> <c-\><c-n>
-nnoremap <Leader><Leader>T :term<CR>
+nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
 
 " yank and paste
@@ -311,7 +311,7 @@ let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
-let g:NERDTreeWinSize=22
+let g:NERDTreeWinSize=18
 " exit vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | :bn | endif
 
