@@ -245,10 +245,13 @@ func MouseConfig()
 	set mousemodel=popup_setpos
 	" you can define menu self
 	vnoremenu PopUp.Yank\ Text "+y
+	vnoremenu PopUp.Cut\ Text "+d
 	vnoremenu PopUp.Del\ Text d
 	nnoremenu PopUp.Paste\ Text "+p
 	nnoremenu PopUp.Back\ Pos <c-o>zz<cr>
 	nnoremenu PopUp.Next\ Pos <c-i>zz<cr>
+	nnoremenu PopUp.Back\ Buf :bp<cr>
+	nnoremenu PopUp.Next\ Buf :bn<cr>
 endfunc
 " call MouseConfig() " default disable mouse
 nnoremap <silent><nowait>=m :call MouseConfig()<cr>
