@@ -248,6 +248,7 @@ func MouseConfig()
 	vnoremenu PopUp.Cut\ Text "+d
 	vnoremenu PopUp.Del\ Text d
 	nnoremenu PopUp.Paste\ Text "+p
+	nnoremenu PopUp.Select\ All ggVG
 	nnoremenu PopUp.Back\ Pos <c-o>zz<cr>
 	nnoremenu PopUp.Next\ Pos <c-i>zz<cr>
 	nnoremenu PopUp.Back\ Buf :bp<cr>
@@ -293,7 +294,7 @@ colorscheme tokyonight
 " airline
 let g:airline_theme= "tokyonight"
 let g:airline_powerline_fonts = 1
-let g:airline_extensions = ['tabline', 'coc']
+let g:airline_extensions = ['tabline' , 'coc']
 if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
