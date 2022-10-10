@@ -22,9 +22,8 @@ set cursorline           " highlight current line
 set whichwrap+=<,>,h,l   " set the cursor key across rows
 set ttimeoutlen=0        " set <ESC> response time
 set virtualedit=block,onemore   " allows the cursor appear after last character
-set noshowmode			 " disable bottom mode displayed 'insert'
+set noshowmode           " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
-" set mouse=a              " set mouse enable
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code indent and typesetting config
@@ -34,7 +33,7 @@ set cindent              " set indent by c/cpp
 set cinoptions=g0,:0,N-s,(0    " set c/cpp indent way
 set smartindent          " smart choose indent way
 filetype indent on       " intelligent indent for different languages
-set noexpandtab			 " set forbidden space to replace tab
+set noexpandtab          " set forbidden space to replace tab
 set tabstop=4            " number of spaces used by tabs when editing
 set shiftwidth=4         " number of spaces tab occupies when formatting
 set softtabstop=4        " set 4 spaces as tabs
@@ -43,6 +42,9 @@ set nowrap               " disable divide a line to two
 set backspace=2          " use enter key to normally handle input, eol, start, etc
 set sidescroll=10        " sets the number of characters to scroll to the right
 set nofoldenable         " disables folding code
+set list lcs=tab:¦\      " default show indent line
+set sidescroll=1         " set move line when cursor too right
+set sidescrolloff=4      " set curor line to right
 " set scrolloff=5          " set cursor line to bottom
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -57,7 +59,7 @@ set completeopt-=preview " completion window is not displayed when completed, on
 set hlsearch            " highlight search results
 set incsearch           " turn on real-time search
 set ignorecase          " search is not case sensitive
-set smartcase			" search smart match case
+set smartcase           " search smart match case
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " cache config
@@ -233,6 +235,12 @@ nnoremap <s-down> <c-w>j
 nnoremap <s-left> <c-w>h
 nnoremap <s-right> <c-w>l
 
+" change window location
+nnoremap <c-s-up> <c-w>K
+nnoremap <c-s-down> <c-w>J
+nnoremap <c-s-left> <c-w>H
+nnoremap <c-s-right> <c-w>L
+
 " quick fix
 nnoremap [q :cnext<cr>
 nnoremap ]q :cprevious<cr>
@@ -244,17 +252,21 @@ func MouseConfig()
 	set mouse=a
 	set mousemodel=popup_setpos
 	" you can define menu self
+	" visual model
 	vnoremenu PopUp.Yank\ Text "+y
 	vnoremenu PopUp.Cut\ Text "+d
-	vnoremenu PopUp.Del\ Text d
+	vnoremenu PopUp.Del\ Text "_d
+	" normal model
 	nnoremenu PopUp.Paste\ Text "+p
 	nnoremenu PopUp.Select\ All ggVG
 	nnoremenu PopUp.Back\ Pos <c-o>zz<cr>
 	nnoremenu PopUp.Next\ Pos <c-i>zz<cr>
 	nnoremenu PopUp.Back\ Buf :bp<cr>
 	nnoremenu PopUp.Next\ Buf :bn<cr>
+	nnoremenu PopUp.-Sep- :<cr>
+	nnoremenu PopUp.Close\ Mouse :set mouse=""<cr>
 endfunc
-" call MouseConfig() " default disable mouse
+call MouseConfig() " default set mouse enable
 nnoremap <silent><nowait>=m :call MouseConfig()<cr>
 nnoremap <silent><nowait>\m :set mouse=""<cr>
 
@@ -454,6 +466,7 @@ let g:Lf_WildIgnore = {
 			\ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
 			\}
 let g:Lf_UseCache = 0
+" c-] open in vertical,c-x open in split,c-t open in a tab,c-\ ask for open
 
 " echodoc.vim
 let g:echodoc_enable_at_startup = 1

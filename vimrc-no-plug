@@ -42,6 +42,9 @@ set nowrap               " 禁止折行
 set backspace=2          " 使用回车键正常处理indent,eol,start等
 set sidescroll=10        " 设置向右滚动字符数
 set nofoldenable         " 禁用折叠代码
+set list lcs=tab:¦\      " 设置默认开启对齐线
+set sidescroll=1         " 设置向右滑动距离
+set sidescrolloff=4      " 设置右部距离
 " set scrolloff=5          " 设置底部距离
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -179,6 +182,12 @@ nnoremap <s-down> <c-w>j
 nnoremap <s-left> <c-w>h
 nnoremap <s-right> <c-w>l
 
+" change window location
+nnoremap <c-s-up> <c-w>K
+nnoremap <c-s-down> <c-w>J
+nnoremap <c-s-left> <c-w>H
+nnoremap <c-s-right> <c-w>L
+
 " quick fix
 nnoremap [q :cnext<cr>
 nnoremap ]q :cprevious<cr>
@@ -190,17 +199,21 @@ func MouseConfig()
 	set mouse=a
 	set mousemodel=popup_setpos
 	" you can define menu self
+	" visual model
 	vnoremenu PopUp.Yank\ Text "+y
 	vnoremenu PopUp.Cut\ Text "+d
-	vnoremenu PopUp.Del\ Text d
+	vnoremenu PopUp.Del\ Text "_d
+	" normal model
 	nnoremenu PopUp.Paste\ Text "+p
 	nnoremenu PopUp.Select\ All ggVG
 	nnoremenu PopUp.Back\ Pos <c-o>zz<cr>
 	nnoremenu PopUp.Next\ Pos <c-i>zz<cr>
 	nnoremenu PopUp.Back\ Buf :bp<cr>
 	nnoremenu PopUp.Next\ Buf :bn<cr>
+	nnoremenu PopUp.-Sep- :<cr>
+	nnoremenu PopUp.Close\ Mouse :set mouse=""<cr>
 endfunc
-" call MouseConfig() " default disable mouse
+call MouseConfig() " default set mouse enable
 nnoremap <silent><nowait>=m :call MouseConfig()<cr>
 nnoremap <silent><nowait>\m :set mouse=""<cr>
 
