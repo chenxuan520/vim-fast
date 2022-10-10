@@ -60,6 +60,13 @@ function print_logo()
 	color="$(tput setaf 6)"
 	normal="$(tput sgr0)"
 	printf "${color}"
+	echo '       _            __          _   '
+	echo '      (_)          / _|        | |  '
+	echo '__   ___ _ __ ___ | |_ __ _ ___| |_ '
+	echo '\ \ / / | "_ " _ \|  _/ _" / __| __|'
+	echo ' \ V /| | | | | | | || (_| \__ \ |_ '
+	echo '  \_/ |_|_| |_| |_|_| \__,_|___/\__|'
+	echo ''
 	echo 'install ok'
 	echo 'Just enjoy it!'
 	echo 'p.s. Follow me at https://github.com/chenxuan520.'
@@ -319,10 +326,10 @@ function main(){
 		echo "Not support platform type: "${type}
 	fi
 
-	end=`get_now_timestamp`
-	second=`expr ${end} - ${begin}`
-	min=`expr ${second} / 60`
-	echo "It takes "${min}" minutes."
+end=`get_now_timestamp`
+second=`expr ${end} - ${begin}`
+min=`expr ${second} / 60`
+echo "It takes "${min}" minutes."
 }
 
 main
