@@ -26,6 +26,8 @@
 | `<ctrl+l>`(insert model)           | 插入模式下右移              |
 | `<leader><leader>t`                | 打开终端                 |
 | `<leader><leader>T`                | 水平打开终端               |
+| `<shift+up/down/left/right>`       | 移动光标窗口               |
+| `<ctrl+shift+up/down/left/right>`  | 更改窗口布局               |
 | `<ctrl+up/down/left/right>`        | 改变窗口大小               |
 | `<leader><leader>d`,`F5`           | 打开调试窗口               |
 | `F6`                               | 调试:打断点               |
@@ -36,6 +38,8 @@
 | `\q`                               | quickfix close       |
 | `=m`                               | 打开鼠标功能               |
 | `\m`                               | 关闭鼠标功能               |
+| `=s`                               | 打开拼写检查               |
+| `\s`                               | 关闭拼写检查               |
 | `=i`                               | 打开缩进线显示              |
 | `\i`                               | 关闭缩进线显示              |
 | `;n`(insert model)                 | 插入姓名                 |

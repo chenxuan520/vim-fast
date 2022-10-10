@@ -38,9 +38,9 @@
 
 ## Project features
 
-1. ** It takes 3 minutes to install the VIM configuration (including LSPS) from the new Linux host and 3 minutes to resolve all problems **
+1. **It takes 3 minutes to install the VIM configuration (including LSPS) from the new Linux host and 3 minutes to resolve all problems**
 
-2. Based on Vimplus, all configuration files are stored in. Vimrc. The configuration file with more than 400 lines is simple and intuitive, and redundancy of multiple configuration files is avoided
+2. Based on Vimplus, all configuration files are stored in. Vimrc. The configuration file with more than 500 lines is simple and intuitive, and redundancy of multiple configuration files is avoided
 
 3. Simplify the plug-ins, and select 30 plug-ins to improve the opening speed
 
