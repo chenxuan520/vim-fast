@@ -7,12 +7,12 @@
 - [README](./README.en.md) in English
 
 ```shell
-       _            __          _   
-      (_)          / _|        | |  
-__   ___ _ __ ___ | |_ __ _ ___| |_ 
-\ \ / / | "_ " _ \|  _/ _" / __| __|
- \ V /| | | | | | | || (_| \__ \ |_ 
-  \_/ |_|_| |_| |_|_| \__,_|___/\__|  
+echo '       _            __          _   '
+echo '      (_)          / _|        | |  '
+echo '__   ___ _ __ ___ | |_ __ _ ___| |_ '
+echo '\ \ / / | "_ " _ \|  _/ _" / __| __|'
+echo ' \ V /| | | | | | | || (_| \__ \ |_ '
+echo '  \_/ |_|_| |_| |_|_| \__,_|___/\__|'
 ```
 
 ## Warehouse Address
@@ -221,7 +221,7 @@ __   ___ _ __ ___ | |_ __ _ ___| |_
      > 
      > let g:dashboard_custom_header=[
      > 
-     > Put the contents of the result here (remove the first and last lines, add \ in front of each line)
+     > Put the contents of the result here (remove the first and last lines, add \\ in front of each line)
      > 
      > ]
 
