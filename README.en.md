@@ -6,6 +6,15 @@
 
 - [README](./README.en.md) in English
 
+```shell
+       _            __          _   
+      (_)          / _|        | |  
+__   ___ _ __ ___ | |_ __ _ ___| |_ 
+\ \ / / | "_ " _ \|  _/ _" / __| __|
+ \ V /| | | | | | | || (_| \__ \ |_ 
+  \_/ |_|_| |_| |_|_| \__,_|___/\__|  
+```
+
 ## Warehouse Address
 
 1. gitee:[vim-fast: A easy vim config](https://gitee.com/mirrorvim/vim-fast)
