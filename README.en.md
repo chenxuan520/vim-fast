@@ -1,12 +1,12 @@
-# Vim Quick configuration
+# Vim quick configuration
 
-### producer
+### Producer
 
 **chenxuan**
 
 - [README](./README.en.md) in English
 
-## Warehouse address
+## Warehouse Address
 
 1. gitee:[vim-fast: A easy vim config](https://gitee.com/mirrorvim/vim-fast)
 
@@ -16,115 +16,123 @@
 
 ![](https://picx.zhimg.com/v2-465040e3e32df418808b886729a1815f_1440w.jpg?source=172ae18b)
 
-## Why is it made
+## Why made
 
-- have been used before [Vimplus](https://gitee.com/chxuan/vimplus.git), but Vimplus appear a few problems
-1. Vimplus has not been updated for a long time, and many issues have not been solved
+- I have been using [Vimplus](https://gitee.com/chxuan/vimplus.git) before, but there are several problems with Vimplus
+  
+  1. Vimplus has not been updated for a long time, and many issues have not been resolved
+  
+  2. The current mainstream completion solution is lsp, the YCM used by Vimplus is a bit old, and it needs to be compiled by itself
+  
+  3. Some plugins already have a better alternative
+  
+  4. The access to github is too slow, resulting in slow download of plugins and unfriendly to novices
 
-2. The current mainstream completion scheme is LSP. The YCM used by Vimplus is a little old and needs to be compiled by itself
-
-3. Some plugins already have a better replacement
-
-4. Github access is too slow, resulting in slow plug-in download, which is not friendly to beginners
 - For other configurations,
-
-- Some have Github access issues, are not friendly to new VIM users, and are not friendly to server configuration
-
-- Some configuration files are so complex that they are basically different from the original. Vimrc, and even use different configuration files, which makes it cumbersome and redundant to customize VIM later
-
-- Some use Lua entirely, making VIM incompatible
+  
+  - Some have github access problems, are not friendly to VIM newbies, and are not friendly enough to server configuration
+  
+  - Some configuration files are too far from the original .vimrc because they are too complicated, and even use configuration files in different formats, which makes customizing VIM in the later stage very troublesome and too redundant
+  
+  - Some use lua completely, making VIM incompatibility problems
 
 - Based on the above questions, I want to create based on Vimplus to make it better
 
-## Project features
+## Project Features
 
-1. **It takes 3 minutes to install the VIM configuration (including LSPS) from the new Linux host and 3 minutes to resolve all problems**
+1. **normally 3 minutes to install the VIM configuration (including lsp and the like) from the new linux host, and 3 minutes to solve all problems**
 
-2. Based on Vimplus, all configuration files are stored in. Vimrc. The configuration file with more than 500 lines is simple and intuitive, and redundancy of multiple configuration files is avoided
+2. Based on Vimplus, all configuration files are in .vimrc, the configuration file with more than 500 lines is simpler and more intuitive, and it also avoids the redundancy of multiple configuration files
 
-3. Simplify the plug-ins, and select 30 plug-ins to improve the opening speed
+3. The plug-ins are simplified, and 30 plug-ins have been selected to improve the opening speed
 
-4. The plug-in compression package is placed on Gitee, which improves the speed of plug-in download and makes it friendly to beginners. One-click configuration of plug-in is provided by shell script
+4. The plug-in compressed package is placed on gitee, which improves the download speed of the plug-in, is friendly to novices, and provides a shell script to configure the plug-in with one click.
 
-5. Added a function based shortcut key search to avoid forgetting the shortcut key
+5. Added function-based shortcut key search to avoid shortcut key forgetting
 
-6. Improved the ** mouse support to make it more novice friendly
+6. Improved **mouse support**, making it more friendly for novices
 
-7. Support C/C++,Go, Python one-click configuration (welcome to mention Mr To add more language support)
+7. Support C/C++, Go, python language one-click configuration (welcome to add more language support to mr)
 
-8. Use COC instead of YCM for better completion experience
+8. Use coc instead of YCM for a better completion experience
 
-9. Support more diverse themes (more than 10) for better visual experience
+9. Support more diverse themes (more than 10), better visual experience
 
-10. Provide shell scripts to achieve customized Vim
+10. Provide shell script to customize Vim
 
-11. The Chinese documents are detailed and more friendly to beginners
+11. Detailed Chinese documentation, more friendly to novices
 
-12. Provide one-click download configuration of VIM manual in Chinese [(based on Vimcdoc)](https://github.com/yianwillis/vimcdoc)
+12. Provide one-click download configuration of Chinese VIM manual [(based on Vimcdoc)](https://github.com/yianwillis/vimcdoc)
 
-## Project folder
+## project folder
 
-- autoload plug-in Plug. vim: allows you to install plug-ins
+- autoload plug-in plug.vim, providing plug-in installation
 
-- Fonts folder, pre-download, reduce the download time
+- fonts font folder, pre-download, reduce download time
 
--Colors Themes folder, which provides more than 10 themes
+- colors theme folder, providing more than 10 themes
 
-- doc Help document
+- doc help documentation
 
-- Old Vimplus file (not recommended)
+- vimscript Some useful VIM scripts
+
+- old Vimplus legacy files (not recommended)
 
 ## shell script
 
-- install.sh Indicates the installation script. Run it first to install Vim-fast
+- install.sh installation script, first run, install vim-fast
 
-- install_without_sudo.sh Install without root and sudo (the apt package must be downloaded in advance)
+- install_without_sudo.sh is installed without root and sudo (the apt package needs to be downloaded in advance)
 
-- CPP /go/ python.sh Installs LSPS and COC in three languages. Run install.sh to invoke LSPS and COC as required
+- cpp/go/python .sh lsp and coc installation in three languages, run install.sh and call on demand
 
-- update.sh Displays the latest configuration of Vim-fast
+- update.sh pulls the latest configuration of vim-fast
 
-- Uninstall. sh uninstalls Vim-fast
+- uninstall.sh uninstall vim-fast
 
-- plug.sh downloads and installs all the latest plug-ins (automatically called, using Gitee, faster)
+- plug.sh downloads and installs the latest all plug-ins (automatically invoked, using gitee, faster)
 
-- doc_zh.sh Downloads and installs the VIM file
+- doc_zh.sh Download and install vim Chinese documentation
 
-- self.sh Customizes the name and email in. Vimrc as its own
+- self.sh customize the name and email in .vimrc to your own
 
-- nvim.sh One-click migration to NVIM
+- nvim.sh one-click migration to nvim
 
-- nodejs.sh nodejs installation script, which is automatically invoked
+- nodejs.sh nodejs installation script, it will be called automatically
 
 ## Other files
 
--.vimrc VIM configuration file
+- .vimrc VIM configuration file
 
-- vimrc-no-plug does not contain VIM configuration for plug-ins and themes
+- vimrc-no-plug does not include VIM configuration for plugins and themes
 
-## Project Description
+## project instruction
 
-1. * *! Currently only Ubuntu, Debian, and other Ubuntu Linux systems are supported. Other systems can use VIMPLus! At the same time, we really hope that you can propose Mr To improve the warehouse, or issue the system ** to explain the demand
+1. **! Currently only supports ubuntu, debian, and other ubuntu-based linux, other systems can use vimplus! At the same time, I very much hope that you can improve the warehouse by mentioning mr, or put forward system requirements for issue description**
 
 2. The project is based on [Vimplus](https://gitee.com/chxuan/vimplus.git)
 
-## Video and article
+## Videos and Articles
 
 - [bilibili](https://space.bilibili.com/322142755)
-1. [install](https://www.bilibili.com/video/BV1RV4y1K7Le/)
+  
+  1. [Installation](https://www.bilibili.com/video/BV1RV4y1K7Le/)
+  
+  2. [Configuration details](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
+  
+  3. Update ing
 
-2. [configuration steps](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
 - [zhihu](https://zhuanlan.zhihu.com/p/524286962)
 
-## to install
+## Install
 
-1. git clone  [https://gitee.com/mirrorvim/vim-fast](https://link.zhihu.com/?target=https%3A//gitee.com/mirrorvim/vim-fast)
+1. git clone [https://gitee.com/mirrorvim/vim-fast](https://link.zhihu.com/?target=https%3A//gitee.com/mirrorvim/vim-fast)
 
 2. cd vim-fast && ./install.sh
 
-3. To Press enter after ![](https://pic3.zhimg.com/80/v2-c8683440682115dcb5c95c78f93c52b2_720w.png)
+3. When ![](https://pic3.zhimg.com/80/v2-c8683440682115dcb5c95c78f93c52b2_720w.png) appears, press Enter
 
-4. If the following figure is displayed, the installation is complete
+4. The following figure appears, the installation is complete
 
 5. ![](https://pic1.zhimg.com/80/v2-e6ced21db995500235c706af87ab5410_720w.jpg)
 
@@ -133,72 +141,96 @@
 #### C++
 
 1. ./cpp.sh
+   
+   ![](https://pic1.zhimg.com/80/v2-8f63e192e0b96e7514fd89112f0bbbb4_720w.png)
 
-![](https://pic1.zhimg.com/80/v2-8f63e192e0b96e7514fd89112f0bbbb4_720w.png)
-
-2. The following figure shows that the configuration is successful
-
-![](https://pic2.zhimg.com/80/v2-3116e456f0df668740f16dabb7eb50d9_720w.jpg)
+2. The following figure appears, the configuration is successful
+   
+   ![](https://pic2.zhimg.com/80/v2-3116e456f0df668740f16dabb7eb50d9_720w.jpg)
 
 #### Python
 
 1. ./python.sh
+   
+   ![](https://pic4.zhimg.com/80/v2-f4024d6b0b3ac1563753ff06485f6203_720w.png)
 
-![](https://pic4.zhimg.com/80/v2-f4024d6b0b3ac1563753ff06485f6203_720w.png)
-
-2. If this is displayed, Python is successfully installed
-
-![](https://pic2.zhimg.com/80/v2-acbb90f61bbe85985e5619382ece1235_720w.jpg)
+2. When this appears, the installation of python is completed successfully
+   
+   ![](https://pic2.zhimg.com/80/v2-acbb90f61bbe85985e5619382ece1235_720w.jpg)
 
 #### Go
 
 1. ./go.sh
+   
+   ![](https://pic2.zhimg.com/80/v2-a9f92770ec5d7ff5ad891e20cb9dfb49_720w.png)
 
-![](https://pic2.zhimg.com/80/v2-a9f92770ec5d7ff5ad891e20cb9dfb49_720w.png)
+2. When you just edit the file, you need to wait for a while to download, about two minutes
+   
+   ![](https://pic1.zhimg.com/80/v2-fe683bb1bae4bbf75e447528cdfecf18_720w.png)
 
-2. When you just edit a file, you need to wait for a while to download it, about two minutes
+3. When this appears, the installation of go completion is successful
+   
+   ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
 
-![](https://pic1.zhimg.com/80/v2-fe683bb1bae4bbf75e447528cdfecf18_720w.png)
-
-3. If this message appears, GO installation is completed successfully
-
-![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
-
-## Vimplus warehouse
+## Vimplus repository
 
 [Vimplus](https://gitee.com/chxuan/vimplus.git)
 
 ## QA
 
-1. Is there an NVIM version
-- NVIm can be temporarily installed using nvim.sh. It takes some time to configure the LuA version
-2. My system has no support
-- You can issue or make your own Mr
-3. In the PlugInstall command, # unsafe Repository git config --global --add safe.directory is displayed
-- git config --global --add safe.directory "*"
-4. Xshell, Tmux open color confusion
-- xshell "tools" - > "options" - > "advanced" - > "use of color," open after the restart xshell
+1. Is there an nvim version?
+   
+   - nvim can be temporarily installed through nvim.sh, the lua configuration version will take some time
 
--Tmux currently can only switch the theme to OnEDArk, turn off Termguicolors, and set let G :onedark_termcolors=256
+2. My system is not supported
+   
+   - You can submit an issue or make your own mr
 
-5. Check whether the root or sudo permission is required
-- If VIM-FAST has been installed before or all the corresponding software has been installed, SUdo is not required. Otherwise, the SUDO installation package is required
+3. PlugInstall appears # unsafe repository git config --global --add safe.directory
+   
+   - git config --global --add safe.directory "*"
+
+4. xshell, tmux open color confusion
+   
+   - "Tools" -> "Options" -> "Advanced" -> "Use True Color" in xshell, restart xshell after opening
+   
+   - tmux can only switch the theme to onedark, and close termguicolors, set let g:onedark_termcolors=256
+
+5. Do you need root or sudo privileges?
+   
+   - If you have installed vim-fast before this machine or the corresponding software has been installed, you do not need sudo, otherwise you need to install the software package with sudo
+
+6. I want to customize the dashboard content when Vim starts
+   
+   - Get pattern representation [Spring Boot banner online generation tool](https://www.bootschool.net/ascii)
+   
+   - Get Vim form [NvDashboardHeaderMaker](https://xflea.github.io/nv-dashboard-header-maker/)
+   
+   - Modify custom headers
+     
+     > put in .vimrc
+     > 
+     > let g:dashboard_custom_header=[
+     > 
+     > Put the contents of the result here (remove the first and last lines, add \ in front of each line)
+     > 
+     > ]
 
 ## help
 
-1. [Plug-in shortcut Key Description](./doc/key.md)
+1. [Plugin shortcut key description](./doc/key.md)
 2. [Vim some key help](./doc/help.md)
 
 ## hope
 
--Due to my limited ability, I hope you can write a install.sh for your own system and then mention Mr, thank you very much
+- Due to limited personal ability, I hope you can write a copy of install.sh for your own system, and then mention mr, thank you very much
 
-## afterword.
+## Afterword
 
-- VIM should not be used as an IDE out of the box, but the initial interface with nothing dissuade most people, so I made this repository to get you to build VIM into an IDE in the least amount of time, but keep the configuration files as simple as possible
+- Using VIM should not actually be used as an IDE out of the box, but the interface with nothing at the beginning discouraged most people, so I made this repository to take you to make VIM an IDE in the least amount of time, but let the configuration Keep documents as simple as possible
 
-- When you are familiar with VIM, you may feel that the shortcut keys I set are anti-human, at that time you can customize everything, everything in VIM can be customized, when you edit. Vimrc,VIM will become your most powerful weapon
+- When you may be familiar with VIM, you may think that the shortcut keys I set are anti-human. At that time, you can customize everything by yourself, and everything in VIM can be customized. When you edit .vimrc yourself, VIM will become your best weapon
 
 ---
 
-- If this warehouse works for you, you can get a star
+- If this repository is useful to you, you can give a star

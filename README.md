@@ -6,8 +6,6 @@
 
 - [README](./README.en.md) in English
 
-
-
 ## 仓库地址
 
 1. gitee:[vim-fast: A easy vim config](https://gitee.com/mirrorvim/vim-fast)
@@ -201,6 +199,28 @@
 5. 是否需要root或者sudo权限
    
    - 如果在本机之前安装过vim-fast或者对应的软件已经全部安装好了,可以不需要sudo,否则需要sudo安装软件包
+
+6. 我想要自定义Vim启动时候dashboard内容
+   
+   - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii)
+   
+   - 获取Vim形式[NvDashboardHeaderMaker](https://xflea.github.io/nv-dashboard-header-maker/)
+   
+   - 修改自定义头部
+     
+     > 放到.vimrc
+     > 
+     > let g:dashboard_custom_header=[
+     > 
+     >     将结果中的内容放到这里(除去第一行和最后一行,每行前面加\)
+     > 
+     > ]
+
+7. 出现E1208: -complete used without allowing argumentsPress ENTER or type command to continue
+   
+   - 进入coc.nvim 插件目录然后git reset --hard v0.0.81
+   
+   - 或者编辑coc.vim 这个出错的文件,把438行删除也可以
 
 ## 帮助
 

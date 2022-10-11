@@ -235,6 +235,9 @@ nnoremap <silent><nowait>\s :set nospell<cr>
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr>
 
+" run macro in visual model
+vnoremap @ :normal @
+
 " set alias
 iab ;e 1607772321@qq.com
 iab ;n chenxuan
