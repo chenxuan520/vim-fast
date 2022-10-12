@@ -254,7 +254,7 @@ nnoremap \q :cclose<cr>
 nnoremap =q :copen<cr>
 
 " set mouse
-func MouseConfig()
+func s:MouseConfig()
 	set mouse=a
 	set mousemodel=popup_setpos
 	" you can define menu self
@@ -272,8 +272,8 @@ func MouseConfig()
 	nnoremenu PopUp.-Sep- :<cr>
 	nnoremenu PopUp.Close\ Mouse :set mouse=""<cr>
 endfunc
-call MouseConfig() " default set mouse enable
-nnoremap <silent><nowait>=m :call MouseConfig()<cr>
+call <sid>MouseConfig() " default set mouse enable
+nnoremap <silent><nowait>=m :call <sid>MouseConfig()<cr>
 nnoremap <silent><nowait>\m :set mouse=""<cr>
 
 " show indent line
@@ -296,6 +296,15 @@ iab ;e 1607772321@qq.com
 iab ;n chenxuan
 nnoremap \a :iabc<cr>
 nnoremap =a :ab<cr>
+
+" set function to choose select area
+func s:GetSelectArea()
+	let temp = @s
+	norm! gv"sy
+	let l:str = @s
+	let @s = temp
+	return l:str
+endfunc
 
 " set background color
 set background=dark
@@ -460,12 +469,14 @@ nnoremap <space>b :LeaderfBuffer<cr>
 nnoremap <space>t :LeaderfFunction<cr>
 " enhance inside function
 nnoremap <space>h :LeaderfHelp<cr>
+vnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
 nnoremap <space>: :LeaderfCommand<cr>
 nnoremap <space>/ :LeaderfLine<cr>
 nnoremap <space>? :LeaderfLineAll<cr>
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
-nnoremap <space>A :execute ":Leaderf rg -i " . expand("<cword>")<cr>
+vnoremap <space>a :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr>
+nnoremap <space>A :Leaderf rg -i --cword<cr>
 " find color
 nnoremap <F1> :LeaderfColorscheme<cr>
 let g:Lf_WindowPosition = 'popup'
