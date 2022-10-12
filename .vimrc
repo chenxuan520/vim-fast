@@ -117,7 +117,6 @@ call plug#begin('~/.vim/plugged')
 
 " begin vim
 Plug 'chenxuan520/my-vim-dashboard'
-Plug 'chxuan/prepare-code'
 " function list
 Plug 'preservim/tagbar', {'tag':'2.2'}
 " auto complete
@@ -148,7 +147,7 @@ Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 Plug 'chenxuan520/vim-go-highlight', {'for':'go'}
 " for python highlight
 Plug 'vim-python/python-syntax', {'for':'py'}
-" line of bottom
+" statusline of bottom
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " file devicon
@@ -168,6 +167,7 @@ Plug 'rhysd/clever-f.vim'
 Plug 'honza/vim-snippets'
 " project message
 Plug 'skywind3000/asynctasks.vim'
+" run shell in async
 Plug 'skywind3000/asyncrun.vim'
 
 call plug#end()
@@ -312,6 +312,9 @@ colorscheme tokyonight
 " let g:onedark_termcolors=256
 " colorscheme onedark
 
+" set prepare code when new file
+autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh execute ":call FtpluginSetPreCode()"
+
 " airline
 let g:airline_theme= "tokyonight"
 let g:airline_powerline_fonts = 1
@@ -323,9 +326,6 @@ let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
-
-" prepare-code
-let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
 
 " nerdtree
 nnoremap <silent> <leader>n :NERDTreeToggle<cr>
