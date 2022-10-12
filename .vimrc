@@ -207,8 +207,8 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "
 
 " termdebug
 let g:termdebug_wide=1
-nnoremap <leader><leader>d :call MouseConfig()<cr>:packadd termdebug<cr>:Termdebug<space>
-nnoremap <F5> :call MouseConfig()<cr>:packadd termdebug<cr>:Termdebug<space>
+nnoremap <leader><leader>d :packadd termdebug<cr>:Termdebug<space>
+nnoremap <F5> :packadd termdebug<cr>:Termdebug<space>
 nnoremap <F6> :Break<cr>
 nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
@@ -467,9 +467,11 @@ nnoremap <leader>b :LeaderfBuffer<cr>
 nnoremap <space>b :LeaderfBuffer<cr>
 " function list
 nnoremap <space>t :LeaderfFunction<cr>
-" enhance inside function
+" find for help
 nnoremap <space>h :LeaderfHelp<cr>
+nnoremap <space>H :Leaderf help --input key:<cr>
 vnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
+" enhance inside function
 nnoremap <space>: :LeaderfCommand<cr>
 nnoremap <space>/ :LeaderfLine<cr>
 nnoremap <space>? :LeaderfLineAll<cr>
