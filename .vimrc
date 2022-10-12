@@ -314,6 +314,7 @@ colorscheme tokyonight
 
 " set prepare code when new file
 autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh execute ":call VimFastSetPreCode()"
+nnoremap <silent> <leader>C :call VimFastSetPreCode()<cr>
 
 " airline
 let g:airline_theme= "tokyonight"

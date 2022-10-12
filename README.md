@@ -1,4 +1,6 @@
-# Vim快速配置
+# Vim-Fast
+
+- 一个**超级快速**的Vim配置脚本
 
 ### 制作人
 
@@ -7,12 +9,12 @@
 - [README](./README.en.md) in English
 
 ```shell
-echo '       _            __          _   '
-echo '      (_)          / _|        | |  '
-echo '__   ___ _ __ ___ | |_ __ _ ___| |_ '
-echo '\ \ / / | "_ " _ \|  _/ _" / __| __|'
-echo ' \ V /| | | | | | | || (_| \__ \ |_ '
-echo '  \_/ |_|_| |_| |_|_| \__,_|___/\__|'
+'       _            __          _   '
+'      (_)          / _|        | |  '
+'__   ___ _ __ ___ | |_ __ _ ___| |_ '
+'\ \ / / | "_ " _ \|  _/ _" / __| __|'
+' \ V /| | | | | | | || (_| \__ \ |_ '
+'  \_/ |_|_| |_| |_|_| \__,_|___/\__|'
 ```
 
 ## 仓库地址
@@ -143,7 +145,7 @@ echo '  \_/ |_|_| |_| |_|_| \__,_|___/\__|'
 
 4. 出现下图，安装完成
 
-5. ![](https://pic1.zhimg.com/80/v2-e6ced21db995500235c706af87ab5410_720w.jpg)
+5. ![](https://pic2.zhimg.com/v2-3b7939b834020c3e01d17e27c8381491_r.jpg)
 
 6. 对于不同语言执行不同脚本
 
@@ -187,49 +189,53 @@ echo '  \_/ |_|_| |_| |_|_| \__,_|___/\__|'
 
 ## QA
 
-1. 有nvim版本吗
-   
-   - nvim可以暂时通过nvim.sh安装,lua配置版本还需要点时间
+- 有nvim版本吗
+  
+  - nvim可以暂时通过nvim.sh安装,lua配置版本还需要点时间
 
-2. 我的系统没有支持
-   
-   - 可以提出issue或者自己制作提出mr
+- 我的系统没有支持
+  
+  - 可以提出issue或者自己制作提出mr
 
-3. PlugInstall 出现# unsafe repository git config --global --add safe.directory
-   
-   - git config --global --add safe.directory "*"
+- PlugInstall 出现# unsafe repository git config --global --add safe.directory
+  
+  - git config --global --add safe.directory "*"
 
-4. xshell,tmux 打开的颜色混乱
-   
-   - xshell中 “工具” -> “选项” -> “高级”->"使用本色",打开后重启xshell
-   
-   - tmux 目前只能切换主题为onedark,并关闭termguicolors,设置let g:onedark_termcolors=256
+- xshell,tmux 打开的颜色混乱
+  
+  - xshell中 “工具” -> “选项” -> “高级”->"使用本色",打开后重启xshell
+  
+  - tmux 目前只能切换主题为onedark,并关闭termguicolors,设置let g:onedark_termcolors=256
 
-5. 是否需要root或者sudo权限
-   
-   - 如果在本机之前安装过vim-fast或者对应的软件已经全部安装好了,可以不需要sudo,否则需要sudo安装软件包
+- 是否需要root或者sudo权限
+  
+  - 如果在本机之前安装过vim-fast或者对应的软件已经全部安装好了,可以不需要sudo,否则需要sudo安装软件包
 
-6. 我想要自定义Vim启动时候dashboard内容
-   
-   - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii)
-   
-   - 获取Vim形式[NvDashboardHeaderMaker](https://xflea.github.io/nv-dashboard-header-maker/)
-   
-   - 修改自定义头部
-     
-     > 放到.vimrc
-     > 
-     > let g:dashboard_custom_header=[
-     > 
-     >     将结果中的内容放到这里(除去第一行和最后一行,每行前面加\\)
-     > 
-     > ]
+- 我想要自定义Vim启动时候dashboard内容
+  
+  - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii)
+  
+  - 获取Vim形式[NvDashboardHeaderMaker](https://xflea.github.io/nv-dashboard-header-maker/)
+  
+  - 修改自定义头部
+    
+    > 放到.vimrc
+    > 
+    > let g:dashboard_custom_header=[
+    > 
+    >     将结果中的内容放到这里(除去第一行和最后一行,每行前面加\\)
+    > 
+    > ]
 
-7. 出现E1208: -complete used without allowing argumentsPress ENTER or type command to continue
-   
-   - 进入coc.nvim 插件目录然后git reset --hard v0.0.81
-   
-   - 或者编辑coc.vim 这个出错的文件,把438行删除也可以
+- 出现E1208: -complete used without allowing argumentsPress ENTER or type command to continue
+  
+  - 进入coc.nvim 插件目录然后git reset --hard v0.0.81
+  
+  - 或者编辑coc.vim 这个出错的文件,把438行删除也可以
+
+- Vim 特定文件预先生成的代码我想要修改
+  
+  - 在`~/.vim/ftplugin`找到对应文件的文件夹,修改comment.vim的内容即可
 
 ## 帮助
 

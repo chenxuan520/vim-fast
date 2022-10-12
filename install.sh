@@ -326,10 +326,10 @@ function main(){
 		echo "Not support platform type: "${type}
 	fi
 
-end=`get_now_timestamp`
-second=`expr ${end} - ${begin}`
-min=`expr ${second} / 60`
-echo "It takes "${min}" minutes."
+	end=`get_now_timestamp`
+	second=`expr ${end} - ${begin}`
+	min=`expr ${second} / 60`
+	echo "It takes "${min}" minutes."
 }
 
 main
