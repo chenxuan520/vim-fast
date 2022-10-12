@@ -8,7 +8,7 @@ func s:SetComment()
 	call append(line(".")+5,'***********************************************/')
 endfunc
 " set preparecode in buffernew
-func FtpluginSetPreCode()
+func VimFastSetPreCode()
 	call append(line(".")-1,'#include <iostream>')
 	call append(line(".")-1,'#include <vector>')
 	call append(line(".")-1,'#include <string>')

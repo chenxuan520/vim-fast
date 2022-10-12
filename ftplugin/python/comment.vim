@@ -6,7 +6,7 @@ func s:SetComment()
 	call append(line(".")+3,'# example: ')
 endfunc
 " set preparecode in buffernew
-func FtpluginSetPreCode()
+func VimFastSetPreCode()
 	call append(line(".")-1,'#!/usr/bin/env python')
 	call append(line(".")-1,'# coding=utf-8')
 endfunc

@@ -1,4 +1,4 @@
 " set preparecode in buffernew
-func FtpluginSetPreCode()
+func VimFastSetPreCode()
 	call append(line(".")-1,'#!/bin/bash')
 endfunc
