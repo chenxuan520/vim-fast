@@ -6,7 +6,7 @@ func s:SetComment()
 	call append(line(".")+3,'// example: ')
 endfunc
 " set preparecode in buffernew
-func VimFastSetPreCode()
+func! VimFastSetPreCode()
 	call append(line(".")-1,'package ' . split(expand('%:p'),'/')[-2])
 endfunc
 nnoremap <Leader>c :call <SID>SetComment()<CR>
