@@ -28,7 +28,7 @@ set cursorline           " 高亮显示当前行
 set whichwrap+=<,>,h,l   " 设置光标键跨行
 set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
-set noshowmode			 " 设置不打开底部insert
+set noshowmode           " 设置不打开底部insert
 set hidden               " 设置允许在未保存切换buffer
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -39,7 +39,7 @@ set cindent              " 设置使用C/C++语言的自动缩进方式
 set cinoptions=g0,:0,N-s,(0    " 设置C/C++语言的具体缩进方式
 set smartindent          " 智能的选择对其方式
 filetype indent on       " 自适应不同语言的智能缩进
-set noexpandtab			 " 设置禁止空格替换tab,tab党
+set noexpandtab          " 设置禁止空格替换tab,tab党
 set tabstop=4            " 设置编辑时制表符占用空格数
 set shiftwidth=4         " 设置格式化时制表符占用空格数
 set softtabstop=4        " 设置4个空格为制表符
@@ -49,7 +49,7 @@ set backspace=2          " 使用回车键正常处理indent,eol,start等
 set sidescroll=10        " 设置向右滚动字符数
 set nofoldenable         " 禁用折叠代码
 set list lcs=tab:¦\      " 设置默认开启对齐线
-set sidescroll=1         " 设置向右滑动距离
+set sidescroll=0         " 设置向右滑动距离
 set sidescrolloff=4      " 设置右部距离
 " set scrolloff=5          " 设置底部距离
 
@@ -246,3 +246,40 @@ nnoremap =a :ab<cr>
 
 " set themes
 set background=dark
+
+" set statusline
+function GetMode()
+    let m = mode()
+    if m == 'R'
+        return 'Replace'
+    elseif m == 'v'
+        return 'Visual'
+    elseif m == 'i'
+        return 'Insert'
+    elseif m == 'c'
+        return 'Command'
+    elseif m == 't'
+        return 'Terminal'
+    else
+        return 'Normal'
+    endif
+endfunction
+
+set statusline=%1*\ %{GetMode()}\
+set statusline+=%2*\ %F%m%r%h%w%=\
+set statusline+=%3*\ %Y\ \|\
+set statusline+=%4*%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}\
+set statusline+=%5*[%4l:%-4v]\
+set statusline+=%6*%3p%%\ \≣\
+set statusline+=%7*%LL\
+
+" 设置netrw-------------------------------------
+let g:netrw_banner = 0         " 设置是否显示横幅
+let g:netrw_liststyle = 3      " 设置目录列表样式：树形
+let g:netrw_browse_split = 4   " 在之前的窗口编辑文件
+let g:netrw_altv = 1           " 水平分割时，文件浏览器始终显示在左边
+let g:netrw_winsize = 15       " 设置文件浏览器窗口宽度为15%
+set fillchars=vert:\⎜          "
+highlight VertSplit guibg=#333333 guifg=#666666
+
+nnoremap <leader>n :Lexplore<CR>    " 打开或关闭目录树

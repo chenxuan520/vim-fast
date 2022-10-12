@@ -49,7 +49,7 @@ set backspace=2          " use enter key to normally handle input, eol, start, e
 set sidescroll=10        " sets the number of characters to scroll to the right
 set nofoldenable         " disables folding code
 set list lcs=tab:¦\      " default show indent line
-set sidescroll=1         " set move line when cursor too right
+set sidescroll=0         " set move line when cursor too right
 set sidescrolloff=4      " set curor line to right
 " set scrolloff=5          " set cursor line to bottom
 
