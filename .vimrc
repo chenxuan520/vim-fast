@@ -114,6 +114,10 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plug list
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" if your network is not good,change it to mirror
+" let g:plug_url_format="https://git::@github.com/%s.git"
+
 call plug#begin('~/.vim/plugged')
 
 " begin vim
