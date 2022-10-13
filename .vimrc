@@ -463,7 +463,7 @@ nnoremap <space>s :SessionLoad<cr>
 
 " leaderF
 " find file
-nnoremap <space>f :LeaderfFile .<cr>
+nnoremap <space>f :LeaderfFile<cr>
 " recent file
 nnoremap <space>F :LeaderfMru<cr>
 " fund buffer
@@ -485,6 +485,11 @@ vnoremap <space>a :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
 " find color
 nnoremap <F1> :LeaderfColorscheme<cr>
+" set leaderf work dir
+nnoremap <silent><nowait>=l :let g:Lf_WorkingDirectoryMode = 'ac'<cr>
+nnoremap <silent><nowait>\l :let g:Lf_WorkingDirectoryMode = 'c'<cr>
+" set leaderf options
+" let g:Lf_WorkingDirectoryMode = 'ac'
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
