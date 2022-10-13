@@ -19,6 +19,7 @@ set noeb                 " turn off error syntax prompts
 syntax enable            " highlight enable
 syntax on                " highlight auto
 set t_Co=256             " open 256 color
+set vb t_vb=             " set no bell
 set cmdheight=1          " set command height
 set showcmd              " show select line nums in visual
 set ruler                " cursor position displayed
@@ -290,6 +291,9 @@ nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr>
 
 " run macro in visual model
 vnoremap @ :normal @
+
+" use select area to replace
+vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
 
 " set alias
 iab ;e 1607772321@qq.com

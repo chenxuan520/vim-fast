@@ -19,6 +19,7 @@ set noeb                 " 关闭错误的提示
 syntax enable            " 开启语法高亮功能
 syntax on                " 自动语法高亮
 set t_Co=256             " 开启256色支持
+set vb t_vb=             " 设置不要响铃
 set cmdheight=1          " 设置命令行的高度
 set showcmd              " select模式下显示选中的行数
 set ruler                " 总是显示光标位置
@@ -238,6 +239,9 @@ nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr>
 " run macro in visual model
 vnoremap @ :normal @
 
+" use select area to replace
+vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
+
 " set alias
 iab ;e 1607772321@qq.com
 iab ;n chenxuan
@@ -273,13 +277,13 @@ set statusline+=%5*[%4l:%-4v]\
 set statusline+=%6*%3p%%\ \≣\
 set statusline+=%7*%LL\
 
-" 设置netrw-------------------------------------
+" set netrw-------------------------------------
 let g:netrw_banner = 0         " 设置是否显示横幅
 let g:netrw_liststyle = 3      " 设置目录列表样式：树形
 let g:netrw_browse_split = 4   " 在之前的窗口编辑文件
 let g:netrw_altv = 1           " 水平分割时，文件浏览器始终显示在左边
 let g:netrw_winsize = 15       " 设置文件浏览器窗口宽度为15%
 set fillchars=vert:\⎜          "
+nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#333333 guifg=#666666
 
-nnoremap <leader>n :Lexplore<CR>    " 打开或关闭目录树
