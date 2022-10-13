@@ -30,21 +30,21 @@
 ## 为什么制作
 
 - 之前一直使用[Vimplus](https://gitee.com/chxuan/vimplus.git),不过Vimplus出现几个问题
-  
+
   1. Vimplus很久没有更新了,挺多issue没有解决的
-  
+
   2. 目前主流补全方案是lsp,Vimplus使用的YCM有点老了,而且需要自己编译
-  
+
   3. 有的插件已经有个更加好的替换方案
-  
+
   4. github访问太慢,导致插件下载太慢,对新手不友好
 
 - 对于其他的配置,
-  
+
   - 有的存在github访问问题,对VIM新手不友好,对服务器配置也不够友好
-  
+
   - 有的因为太过复杂,使得配置文件基本和原来的.vimrc相差太远,甚至使用了不同格式的配置文件,这样使得后期自己定制VIM变得很麻烦,而且太过冗余
-  
+
   - 有的完全使用lua,使得VIM不兼容问题
 
 - 基于以上的问题,我想基于Vimplus进行创作,使得它更加好
@@ -126,11 +126,11 @@
 ## 视频及文章
 
 - [bilibili](https://space.bilibili.com/322142755)
-  
+
   1. [安装](https://www.bilibili.com/video/BV1RV4y1K7Le/)
-  
+
   2. [配置详解](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
-  
+
   3. 更新ing
 
 - [zhihu](https://zhuanlan.zhihu.com/p/524286962)
@@ -152,35 +152,35 @@
 #### C++
 
 1. ./cpp.sh
-   
+
    ![](https://pic1.zhimg.com/80/v2-8f63e192e0b96e7514fd89112f0bbbb4_720w.png)
 
 2. 出现下图配置成功
-   
+
    ![](https://pic2.zhimg.com/80/v2-3116e456f0df668740f16dabb7eb50d9_720w.jpg)
 
 #### Python
 
 1. ./python.sh
-   
+
    ![](https://pic4.zhimg.com/80/v2-f4024d6b0b3ac1563753ff06485f6203_720w.png)
 
 2. 出现这个为安装python补全成功
-   
+
    ![](https://pic2.zhimg.com/80/v2-acbb90f61bbe85985e5619382ece1235_720w.jpg)
 
 #### Go
 
 1. ./go.sh
-   
+
    ![](https://pic2.zhimg.com/80/v2-a9f92770ec5d7ff5ad891e20cb9dfb49_720w.png)
 
 2. 刚编辑文件时需要等待一会下载，大概两分钟
-   
+
    ![](https://pic1.zhimg.com/80/v2-fe683bb1bae4bbf75e447528cdfecf18_720w.png)
 
 3. 出现这个为安装go补全成功
-   
+
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
 
 ## Vimplus仓库
@@ -189,53 +189,45 @@
 
 ## QA
 
-- 有nvim版本吗
-  
-  - nvim可以暂时通过nvim.sh安装,lua配置版本还需要点时间
+1. 有nvim版本吗
 
-- 我的系统没有支持
-  
-  - 可以提出issue或者自己制作提出mr
+   - nvim可以暂时通过nvim.sh安装,lua配置版本还需要点时间
 
-- PlugInstall 出现# unsafe repository git config --global --add safe.directory
-  
-  - git config --global --add safe.directory "*"
+2. 我的系统没有支持
 
-- xshell,tmux 打开的颜色混乱
-  
-  - xshell中 “工具” -> “选项” -> “高级”->"使用本色",打开后重启xshell
-  
-  - tmux 目前只能切换主题为onedark,并关闭termguicolors,设置let g:onedark_termcolors=256
+   - 可以提出issue或者自己制作提出mr
 
-- 是否需要root或者sudo权限
-  
-  - 如果在本机之前安装过vim-fast或者对应的软件已经全部安装好了,可以不需要sudo,否则需要sudo安装软件包
+3. PlugInstall 出现# unsafe repository git config --global --add safe.directory
 
-- 我想要自定义Vim启动时候dashboard内容
-  
-  - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii)
-  
-  - 获取Vim形式[NvDashboardHeaderMaker](https://xflea.github.io/nv-dashboard-header-maker/)
-  
-  - 修改自定义头部
-    
-    > 放到.vimrc
-    > 
-    > let g:dashboard_custom_header=[
-    > 
-    >     将结果中的内容放到这里(除去第一行和最后一行,每行前面加\\)
-    > 
-    > ]
+   - git config --global --add safe.directory "*"
 
-- 出现E1208: -complete used without allowing argumentsPress ENTER or type command to continue
-  
-  - 进入coc.nvim 插件目录然后git reset --hard v0.0.81
-  
-  - 或者编辑coc.vim 这个出错的文件,把438行删除也可以
+4. xshell,tmux 打开的颜色混乱
 
-- Vim 特定文件预先生成的代码我想要修改
-  
-  - 在`~/.vim/ftplugin`找到对应文件的文件夹,修改comment.vim的内容即可
+   - xshell中 “工具” -> “选项” -> “高级”->"使用本色",打开后重启xshell
+
+   - tmux 目前只能切换主题为onedark,并关闭termguicolors,设置let g:onedark_termcolors=256
+
+5. 是否需要root或者sudo权限
+
+   - 如果在本机之前安装过vim-fast或者对应的软件已经全部安装好了,可以不需要sudo,否则需要sudo安装软件包
+
+6. 我想要自定义Vim启动时候dashboard内容
+
+   - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii),选择类型为`ANSI Shadow`
+
+   - 获取Vim形式[vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html)(花了一点自己时间做的,因为不怎么写前端,画面比较差)
+
+   - 将得到的结果复制到.vimrc中
+
+7. 出现E1208: -complete used without allowing argumentsPress ENTER or type command to continue
+
+   - 进入coc.nvim 插件目录然后git reset --hard v0.0.81
+
+   - 或者编辑coc.vim 这个出错的文件,把438行删除也可以
+
+8. Vim 特定文件预先生成的代码我想要修改
+
+   - 在`~/.vim/ftplugin`找到对应文件的文件夹,修改comment.vim的内容即可
 
 ## 帮助
 

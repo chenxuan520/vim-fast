@@ -6,6 +6,8 @@
 
 **chenxuan**
 
+- [README](./README.en.md) in English
+
 ```shell
 '       _            __          _   '
 '      (_)          / _|        | |  '
@@ -28,21 +30,21 @@
 ## Why it was made
 
 - I've been using [Vimplus](https://gitee.com/chxuan/vimplus.git) before, but Vimplus has a few problems
-  
+
   1. Vimplus has not been updated for a long time, and many issues have not been resolved
-  
+
   2. the current mainstream complementary solution is lsp, Vimplus use of YCM is a bit old, and need to compile their own
-  
+
   3. some plugins already have a better replacement solution
-  
+
   4. github access is too slow, resulting in slow download of plugins, not friendly to newcomers
 
 - For other configurations,
-  
+
   - Some have github access problems, which is not VIM newbie friendly, and not server configuration friendly
-  
+
   - Some are too complex, making the configuration file basically too far from the original .vimrc, or even use a different format of the configuration file, which makes the later customization of VIM becomes very troublesome, and too redundant
-  
+
   - Some completely use lua, making the VIM incompatible problems
 
 - Based on the above problems, I would like to create a project based on Vimplus to make it even better.
@@ -124,11 +126,11 @@
 ## Videos and articles
 
 - [bilibili](https://space.bilibili.com/322142755)
-  
+
   1. [Installation](https://www.bilibili.com/video/BV1RV4y1K7Le/)
-  
+
   2. [Configuration in detail](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
-  
+
   3. updateing
 
 - [zhihu](https://zhuanlan.zhihu.com/p/524286962)
@@ -150,35 +152,35 @@
 #### C++
 
 1. ./cpp.sh
-   
+
    ![](https://pic1.zhimg.com/80/v2-8f63e192e0b96e7514fd89112f0bbbb4_720w.png)
 
 2. The following configuration appears successfully
-   
+
    ![](https://pic2.zhimg.com/80/v2-3116e456f0df668740f16dabb7eb50d9_720w.jpg)
 
 #### Python
 
 1. ./python.sh
-   
+
    ![](https://pic4.zhimg.com/80/v2-f4024d6b0b3ac1563753ff06485f6203_720w.png)
 
 2. This is a successful installation of python
-   
+
    ![](https://pic2.zhimg.com/80/v2-acbb90f61bbe85985e5619382ece1235_720w.jpg)
 
 #### Go
 
 1. ./go.sh
-   
+
    ![](https://pic2.zhimg.com/80/v2-a9f92770ec5d7ff5ad891e20cb9dfb49_720w.png)
 
 2. When you first edit the file you need to wait a little while for it to download, about two minutes
-   
+
    ![](https://pic1.zhimg.com/80/v2-fe683bb1bae4bbf75e447528cdfecf18_720w.png)
 
 3. This means that the installation of go completes successfully
-   
+
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
 
 ## Vimplus repository
@@ -187,53 +189,45 @@
 
 ## QA
 
-- Is there an nvim version?
-  
-  - nvim can be installed via nvim.sh for now, the lua configuration version will take some time
+1. is there an nvim version?
 
-- My system doesn't support it.
-  
-  - You can raise an issue or make your own mr
+   - nvim can be installed via nvim.sh for now, the lua configuration version will take some time
 
-- PlugInstall appears # unsafe repository git config --global --add safe.directory
-  
-  - git config --global --add safe.directory "*"
+2. my system doesn't support it
 
-- xshell,tmux opens with confusing colours
-  
-  - xshell in "Tools" -> "Options" -> "Advanced" -> "Use natural colours", turn it on and restart xshell
-  
-  - tmux can currently only switch the theme to onedark and turn off termguicolors, set let g:onedark_termcolors=256
+   - You can raise an issue or make your own mr
 
-- Do you need root or sudo access?
-  
-  - If vim-fast has been installed on the machine before or the corresponding software is already installed, you don't need sudo, otherwise you need sudo to install the package
+3. plugInstall appears # unsafe repository git config --global --add safe.directory
 
-- I want to customize the dashboard content when Vim starts
-  
-  - Get the pattern representation [Spring Boot banner online generation tool](https://www.bootschool.net/ascii)
-  
-  - Get the Vim form [NvDashboardHeaderMaker](https://xflea.github.io/nv-dashboard-header-maker/)
-  
-  - Modify the custom header
-    
-    > Put in .vimrc
-    > 
-    > let g:dashboard_custom_header=[
-    > 
-    > Put the contents of the result here (excluding the first and last lines, preceding each line with \)
-    > 
-    > ]
+   - git config --global --add safe.directory "*"
 
-- E1208: -complete used without allowing argumentsPress ENTER or type command to continue
-  
-  - Go to the coc.nvim plugin directory and git reset --hard v0.0.81
-  
-  - Or edit coc.vim to remove line 438 from the error file
+4. xshell,tmux opens with confusing colours
 
-- I want to change the pre-generated code for a specific Vim file
-  
-  - Find the corresponding file in `~/.vim/ftplugin` and change the contents of comment.vim
+   - xshell "tools" -> "options" -> "advanced" -> "use natural colours", turn it on and restart xshell
+
+   - tmux currently only switches the theme to onedark and turns off termguicolors, set let g:onedark_termcolors=256
+
+5. Do you need root or sudo privileges?
+
+   - If vim-fast has been installed on the machine before or if all the corresponding software is already installed, you don't need sudo, otherwise you need sudo to install the package.
+
+6. I want to customize the dashboard content when Vim starts
+
+   - Get the pattern representation [Spring Boot banner online generation tool](https://www.bootschool.net/ascii), choose the type 'ANSI Shadow'
+
+   - Get the Vim form [vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html) (took a bit of time to do this myself, as I don't write much front-end and the graphics are rather poor)
+
+   - Copy the result to .vimrc
+
+7. appears E1208: -complete used without allowing argumentsPress ENTER or type command to continue
+
+   - Go into the coc.nvim plugin directory and git reset --hard v0.0.81
+
+   - Or edit coc.vim to remove line 438 from the error file
+
+8. I want to change the pre-generated code for a specific Vim file
+
+   - Find the corresponding file in `~/.vim/ftplugin` and change the contents of comment.vim
 
 ## Help
 
@@ -246,10 +240,10 @@
 
 ## Postscript
 
-- Using VIM should not really be used as an IDE out of the box, but at first the nothing interface discourages most people, so I have created this repository to take you through the process of making VIM an IDE in the least amount of time, but keeping the configuration files as simple as possible.
+- Using VIM should not really be used as an out-of-the-box ide, but at first the nothing interface discourages most people, so I have created this repository to take you through the VI in the least amount of time.
 
 - When you are familiar with VIM, you may feel that the shortcuts I have set are anti-human, at that time you can customize everything yourself, everything in VIM is customizable, when you edit .vimrc yourself, VIM will become your best weapon!
 
 ---
 
-- If this repository is useful to you, you can give a star
+- If this repository is useful to you, you can give a star!

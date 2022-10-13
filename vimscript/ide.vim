@@ -1,3 +1,4 @@
+" This file is not fully completed
 set mouse=a
 execute ":bo term ++rows=7"
 execute "normal \<c-w>k"
