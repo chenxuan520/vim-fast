@@ -25,6 +25,7 @@ set showcmd              " show select line nums in visual
 set ruler                " cursor position displayed
 set laststatus=2         " show status
 set number               " show line number
+set relativenumber       " show relativenumber
 set cursorline           " highlight current line
 set whichwrap+=<,>,h,l   " set the cursor key across rows
 set ttimeoutlen=0        " set <ESC> response time
@@ -138,8 +139,10 @@ Plug 'jiangmiao/auto-pairs'
 " file tree left
 Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight', {'on': 'NERDTreeToggle'}
+" quick choose area
+Plug 'gcmt/wildfire.vim', {'on': [ '<Plug>(wildfire-fuel)', '<Plug>(wildfire-quick-select)'] }
 " easy align
-Plug 'godlygeek/tabular'
+Plug 'godlygeek/tabular', {'on':'Tab'}
 " change surround quick
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -203,13 +206,13 @@ imap <c-k> <UP>
 imap <c-l> <RIGHT>
 
 " yank to system
-vmap <leader><leader>y "+y
+vnoremap <leader><leader>y "+y
 " paste to system
 nnoremap <leader><leader>p "+p
 vnoremap <leader><leader>p "+p
 
 " load the file last edit pos
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 
 " termdebug
 let g:termdebug_wide=1
@@ -303,6 +306,13 @@ nnoremap <leader>s :%s/<c-r><c-w>/
 
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>
+
+" sudo to write file
+cnoremap w!! w !sudo tee % >/dev/null
+
+" set cursor middle
+nnoremap <c-o> <c-o>zz
+nnoremap <c-i> <c-i>zz
 
 " set alias
 iab ;e 1607772321@qq.com
@@ -539,3 +549,10 @@ nmap <space>; :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
 
+" wildfire config
+nmap - <Plug>(wildfire-fuel)
+vmap - <Plug>(wildfire-fuel)
+nmap <backspace> <Plug>(wildfire-water)
+vmap <backspace> <Plug>(wildfire-water)
+nmap <leader>- <Plug>(wildfire-quick-select)
+let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "i`", "ip"]
