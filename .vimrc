@@ -31,6 +31,7 @@ set ttimeoutlen=0        " set <ESC> response time
 set virtualedit=block,onemore   " allows the cursor appear after last character
 set noshowmode           " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
+set background=dark      " set background color
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code indent and typesetting config
@@ -116,7 +117,7 @@ command! -nargs=1 -bar UnPlug call s:deregister(<args>)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " if your network is not good,change it to mirror
-" let g:plug_url_format="https://git::@github.com/%s.git"
+" let g:plug_url_format="https://git::@gitclone.com/github.com/%s.git"
 
 call plug#begin('~/.vim/plugged')
 
@@ -298,6 +299,10 @@ vnoremap @ :normal @
 
 " use select area to replace
 vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
+nnoremap <leader>s :%s/<c-r><c-w>/
+
+" indent buffer
+nnoremap <silent><nowait> =e gg=G<c-o><c-o>
 
 " set alias
 iab ;e 1607772321@qq.com
@@ -313,9 +318,6 @@ func s:GetSelectArea()
 	let @s = temp
 	return l:str
 endfunc
-
-" set background color
-set background=dark
 
 " plug config setting
 
@@ -399,8 +401,8 @@ xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 " coc code action
 nmap <leader>a  <Plug>(coc-codeaction)
+xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>l  <Plug>(coc-codelens-action)
-xmap <silent><leader>s  <Plug>(coc-codeaction-selected)
 " coc format
 command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organizeImport')
@@ -462,6 +464,7 @@ let g:go_highlight_string_spellcheck = 1
 " let g:go_highlight_variable_assignments = 1
 
 " dashboard
+" let g:slash_auto_middle=0
 nnoremap <space>S :SessionSave<cr>
 nnoremap <space>s :SessionLoad<cr>
 
@@ -535,3 +538,4 @@ nmap <space>C :AsyncTask<space>
 nmap <space>; :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
+

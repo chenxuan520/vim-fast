@@ -31,6 +31,7 @@ set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
 set noshowmode           " 设置不打开底部insert
 set hidden               " 设置允许在未保存切换buffer
+set background=dark      " 设置背景默认黑色
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
@@ -241,15 +242,16 @@ vnoremap @ :normal @
 
 " use select area to replace
 vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
+nnoremap <leader>s :%s/<c-r><c-w>/
+
+" indent buffer
+nnoremap <silent><nowait> =e gg=G<c-o><c-o>
 
 " set alias
 iab ;e 1607772321@qq.com
 iab ;n chenxuan
 nnoremap \a :iabc<cr>
 nnoremap =a :ab<cr>
-
-" set themes
-set background=dark
 
 " set statusline
 function GetMode()
