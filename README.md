@@ -246,4 +246,44 @@
 
 ---
 
+### Vim学习资料推荐
+
+- Vim视频介绍
+
+  1.  [合适快速入门,原视频来自慕课](https://www.bilibili.com/video/BV1NG4y1p74h/)
+
+  2. [我见过最好的VIM教程,原视频来自油管](https://www.bilibili.com/video/BV1pE411y7nj/)
+
+- Vim 书籍推荐
+
+  1. **VIM实用技巧** (超级好的VIM书籍)
+
+  2. VIM8 文本处理实战(也还行)
+
+- 学习[vimscript](./vimscript/README.md)(除非要求很高否则没必要)
+
+---
+
+### Vim学习路线推荐
+
+1. 找到一个一定要用VIM的理由(不然用不下去的)
+
+   - 找一个最简单的VIM教程,把VIM作为普通编辑器用
+
+2. 找到一个简单(**非常重要**)并且开箱即用的配置(比如该仓库)[视频](https://www.bilibili.com/video/BV1RV4y1K7Le/)
+
+   - 将VIM运用到日常
+
+   - 等用到一定程度看VIM视频
+
+3. 读懂vimrc配置内容(可控性)[视频](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
+
+   - 开始看VIM书籍
+
+4. 开始自己定制属于自己的VIM
+
+   - 了解vimscript 简单语法配置
+
+---
+
 - 如果这个仓库对你有用,可以给个星星

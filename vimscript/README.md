@@ -16,4 +16,4 @@
 
 7. [文档 - 章节目录 - [ 笨方法学Vimscript ] - 手册网](https://www.shouce.ren/api/view/a/9653)
 
-
+8. [Introduction | learnvimscriptthehardway](https://huhuang03.gitbooks.io/learnvimscriptthehardway/content/)

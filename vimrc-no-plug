@@ -255,6 +255,10 @@ cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
 
+" set split window
+nnoremap <silent><nowait>_ :vsp<cr>
+nnoremap <silent><nowait>+ :sp<cr>
+
 " set alias
 iab ;e 1607772321@qq.com
 iab ;n chenxuan
