@@ -104,16 +104,6 @@ if has("gui_running")
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" uninstall plug function
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! s:deregister(repo)
-	let repo = substitute(a:repo, '[\/]\+$', '', '')
-	let name = fnamemodify(repo, ':t:s?\.git$??')
-	call remove(g:plugs, name)
-endfunction
-command! -nargs=1 -bar UnPlug call s:deregister(<args>)
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plug list
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -226,6 +216,10 @@ nnoremap <F8> :Step<cr>
 tnoremap <c-\> <c-\><c-n>
 nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
+
+" term task
+let g:Term_task_run="lazygit"
+nnoremap <silent><Leader><Leader>l :tabe<cr>:execute ":vert term ++curwin ++close " . g:Term_task_run<CR>
 
 " yank and paste
 nnoremap <Leader>p "0p

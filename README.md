@@ -30,21 +30,21 @@
 ## 为什么制作
 
 - 之前一直使用[Vimplus](https://gitee.com/chxuan/vimplus.git),不过Vimplus出现几个问题
-
+  
   1. Vimplus很久没有更新了,挺多issue没有解决的
-
+  
   2. 目前主流补全方案是lsp,Vimplus使用的YCM有点老了,而且需要自己编译
-
+  
   3. 有的插件已经有个更加好的替换方案
-
+  
   4. github访问太慢,导致插件下载太慢,对新手不友好
 
 - 对于其他的配置,
-
+  
   - 有的存在github访问问题,对VIM新手不友好,对服务器配置也不够友好
-
+  
   - 有的因为太过复杂,使得配置文件基本和原来的.vimrc相差太远,甚至使用了不同格式的配置文件,这样使得后期自己定制VIM变得很麻烦,而且太过冗余
-
+  
   - 有的完全使用lua,使得VIM不兼容问题
 
 - 基于以上的问题,我想基于Vimplus进行创作,使得它更加好
@@ -126,11 +126,11 @@
 ## 视频及文章
 
 - [bilibili](https://space.bilibili.com/322142755)
-
+  
   1. [安装](https://www.bilibili.com/video/BV1RV4y1K7Le/)
-
+  
   2. [配置详解](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
-
+  
   3. 更新ing
 
 - [zhihu](https://zhuanlan.zhihu.com/p/524286962)
@@ -152,35 +152,35 @@
 #### C++
 
 1. ./cpp.sh
-
+   
    ![](https://pic1.zhimg.com/80/v2-8f63e192e0b96e7514fd89112f0bbbb4_720w.png)
 
 2. 出现下图配置成功
-
+   
    ![](https://pic2.zhimg.com/80/v2-3116e456f0df668740f16dabb7eb50d9_720w.jpg)
 
 #### Python
 
 1. ./python.sh
-
+   
    ![](https://pic4.zhimg.com/80/v2-f4024d6b0b3ac1563753ff06485f6203_720w.png)
 
 2. 出现这个为安装python补全成功
-
+   
    ![](https://pic2.zhimg.com/80/v2-acbb90f61bbe85985e5619382ece1235_720w.jpg)
 
 #### Go
 
 1. ./go.sh
-
+   
    ![](https://pic2.zhimg.com/80/v2-a9f92770ec5d7ff5ad891e20cb9dfb49_720w.png)
 
 2. 刚编辑文件时需要等待一会下载，大概两分钟
-
+   
    ![](https://pic1.zhimg.com/80/v2-fe683bb1bae4bbf75e447528cdfecf18_720w.png)
 
 3. 出现这个为安装go补全成功
-
+   
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
 
 ## Vimplus仓库
@@ -190,43 +190,43 @@
 ## QA
 
 1. 有nvim版本吗
-
+   
    - nvim可以暂时通过nvim.sh安装,lua配置版本还需要点时间
 
 2. 我的系统没有支持
-
+   
    - 可以提出issue或者自己制作提出mr
 
 3. PlugInstall 出现# unsafe repository git config --global --add safe.directory
-
+   
    - git config --global --add safe.directory "*"
 
 4. xshell,tmux 打开的颜色混乱
-
+   
    - xshell中 “工具” -> “选项” -> “高级”->"使用本色",打开后重启xshell
-
+   
    - tmux 目前只能切换主题为onedark,并关闭termguicolors,设置let g:onedark_termcolors=256
 
 5. 是否需要root或者sudo权限
-
+   
    - 如果在本机之前安装过vim-fast或者对应的软件已经全部安装好了,可以不需要sudo,否则需要sudo安装软件包
 
 6. 我想要自定义Vim启动时候dashboard内容
-
+   
    - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii),选择类型为`ANSI Shadow`
-
+   
    - 获取Vim形式[vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html)(花了一点自己时间做的,因为不怎么写前端,画面比较差)
-
+   
    - 将得到的结果复制到.vimrc中
 
 7. 出现E1208: -complete used without allowing argumentsPress ENTER or type command to continue
-
+   
    - 进入coc.nvim 插件目录然后git reset --hard v0.0.81
-
+   
    - 或者编辑coc.vim 这个出错的文件,把438行删除也可以
 
 8. Vim 特定文件预先生成的代码我想要修改
-
+   
    - 在`~/.vim/ftplugin`找到对应文件的文件夹,修改comment.vim的内容即可
 
 ## 帮助
@@ -249,15 +249,15 @@
 ### Vim学习资料推荐
 
 - Vim视频介绍
-
-  1.  [合适快速入门,原视频来自慕课](https://www.bilibili.com/video/BV1NG4y1p74h/)
-
+  
+  1. [合适快速入门,原视频来自慕课](https://www.bilibili.com/video/BV1NG4y1p74h/)
+  
   2. [我见过最好的VIM教程,原视频来自油管](https://www.bilibili.com/video/BV1pE411y7nj/)
 
 - Vim 书籍推荐
-
+  
   1. **VIM实用技巧** (超级好的VIM书籍)
-
+  
   2. VIM8 文本处理实战(也还行)
 
 - 学习[vimscript](./vimscript/README.md)(除非要求很高否则没必要)
@@ -267,21 +267,21 @@
 ### Vim学习路线推荐
 
 1. 找到一个一定要用VIM的理由(不然用不下去的)
-
-   - 找一个最简单的VIM教程,把VIM作为普通编辑器用
+   
+   - 找一个最简单的VIM教程(比如[这个](https://www.bilibili.com/video/BV13t4y1t7Wg/)),把VIM作为普通编辑器用
 
 2. 找到一个简单(**非常重要**)并且开箱即用的配置(比如该仓库)[视频](https://www.bilibili.com/video/BV1RV4y1K7Le/)
-
+   
    - 将VIM运用到日常
-
+   
    - 等用到一定程度看VIM视频
 
 3. 读懂vimrc配置内容(可控性)[视频](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
-
+   
    - 开始看VIM书籍
 
 4. 开始自己定制属于自己的VIM
-
+   
    - 了解vimscript 简单语法配置
 
 ---
