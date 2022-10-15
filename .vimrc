@@ -216,10 +216,11 @@ nnoremap <F8> :Step<cr>
 tnoremap <c-\> <c-\><c-n>
 nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
+nnoremap <space><space>t :tabe<cr>:vert term ++curwin ++close<space>
 
 " term task
 let g:Term_task_run="lazygit"
-nnoremap <silent><Leader><Leader>l :tabe<cr>:execute ":vert term ++curwin ++close " . g:Term_task_run<CR>
+nnoremap <space>g :tabe<cr>:execute ":vert term ++curwin ++close " . g:Term_task_run<CR>
 
 " yank and paste
 nnoremap <Leader>p "0p
@@ -340,7 +341,7 @@ colorscheme tokyonight
 " colorscheme onedark
 
 " set prepare code when new file
-autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh execute ":call VimFastSetPreCode()"
+autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,CMakeLists.txt execute ":call VimFastSetPreCode()"
 nnoremap <silent> <leader>C :call VimFastSetPreCode()<cr>
 
 " airline
