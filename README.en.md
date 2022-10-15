@@ -99,7 +99,7 @@
 
 - update.sh to pull the latest configuration of vim-fast
 
-- uninstall.sh uninstall vim-fast
+- uninstall.sh to uninstall vim-fast
 
 - plug.sh download and install all the latest plugins (,automatically called, use gitee, faster)
 
@@ -119,7 +119,7 @@
 
 ## Project description
 
-1. **!Currently only ubuntu, debian, and other ubuntu linux are supported, other systems can use vimplus!**
+1. **! Currently only ubuntu, debian, and other ubuntu linux are supported, other systems can use vimplus!
 
 2. the project is based on [Vimplus](https://gitee.com/chxuan/vimplus.git)
 
@@ -207,18 +207,14 @@
 
    - tmux currently only switches the theme to onedark and turns off termguicolors, set let g:onedark_termcolors=256
 
-5. Do you need root or sudo privileges?
-
-   - If vim-fast has been installed on the machine before or if all the corresponding software is already installed, you don't need sudo, otherwise you need sudo to install the package.
-
+5. Do you need root or sudo access?
+- If vim-fast has been installed on the machine before or if all the corresponding software is already installed, you don't need sudo, otherwise you need sudo to install the package.
 6. I want to customize the dashboard content when Vim starts
+- Get the pattern representation [Spring Boot banner online generation tool](https://www.bootschool.net/ascii), choose the type 'ANSI Shadow'
 
-   - Get the pattern representation [Spring Boot banner online generation tool](https://www.bootschool.net/ascii), choose the type 'ANSI Shadow'
+- Get the Vim form [vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html) (took a bit of time to do this myself, as I don't write much front-end and the graphics are rather poor)
 
-   - Get the Vim form [vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html) (took a bit of time to do this myself, as I don't write much front-end and the graphics are rather poor)
-
-   - Copy the result to .vimrc
-
+- Copy the result to .vimrc
 7. appears E1208: -complete used without allowing argumentsPress ENTER or type command to continue
 
    - Go into the coc.nvim plugin directory and git reset --hard v0.0.81
@@ -240,10 +236,54 @@
 
 ## Postscript
 
-- Using VIM should not really be used as an out-of-the-box ide, but at first the nothing interface discourages most people, so I have created this repository to take you through the VI in the least amount of time.
+- Using VIM should not really be used as an IDE out of the box, but at first the nothing interface discourages most people, so I have created this repository to take you through the process of making VIM an IDE in the least amount of time, but keeping the configuration files as simple as possible.
 
 - When you are familiar with VIM, you may feel that the shortcuts I have set are anti-human, at that time you can customize everything yourself, everything in VIM is customizable, when you edit .vimrc yourself, VIM will become your best weapon!
 
+---Vimrc is your best weapon.
+
+### Vim learning materials recommended
+
+- Introduction to Vim videos
+
+  1. [Suitable for a quick start, original video from MU](https://www.bilibili.com/video/BV1NG4y1p74h/)
+
+  2. [The best Vim tutorial I've ever seen, original video from the oil pipe](https://www.bilibili.com/video/BV1pE411y7nj/)
+
+- Vim book recommendations
+
+  1. **VIM Practical Tips** (Superb VIM book)
+
+  2. VIM8 Text Processing in Action (also ok)
+
+- Learn [vimscript](./vimscript/README.md) (not necessary unless very demanding)
+
 ---
 
-- If this repository is useful to you, you can give a star!
+### Vim learning route recommendations
+
+1. find a reason why you must use VIM (otherwise you won't be able to use it)
+
+   - Find the simplest VIM tutorial (e.g. [this](https://www.bilibili.com/video/BV13t4y1t7Wg/)) and use VIM as a general editor
+
+2. find a simple (**very important**) and out-of-the-box configuration (such as this repository) [video](https://www.bilibili.com/video/BV1RV4y1K7Le/)
+
+   - Putting VIM to work on a daily basis
+
+   - Watch the VIM video when you get to a certain point
+
+3. read vimrc configuration content (controllability) [video](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
+
+   - Start reading VIM books
+
+4. start to customize your own VIM
+
+   - Understand vimscript Simple syntax configuration
+
+---
+
+![](https://www.yundongfang.com/wp-content/uploads/2021/03/Vim-Text-Editor-logo.png)
+
+---
+
+- If this repository is useful to you, give it a star

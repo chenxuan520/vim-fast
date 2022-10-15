@@ -108,16 +108,6 @@ if has("gui_running")
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 卸载默认插件UnPlug
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! s:deregister(repo)
-	let repo = substitute(a:repo, '[\/]\+$', '', '')
-	let name = fnamemodify(repo, ':t:s?\.git$??')
-	call remove(g:plugs, name)
-endfunction
-command! -nargs=1 -bar UnPlug call s:deregister(<args>)
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-buffer
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nnoremap <silent> <c-p> :bp<cr>
@@ -300,4 +290,3 @@ let g:netrw_winsize = 15       " 设置文件浏览器窗口宽度为15%
 set fillchars=vert:\⎜          "
 nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#333333 guifg=#666666
-
