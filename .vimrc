@@ -108,7 +108,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " if your network is not good,change it to mirror
-" let g:plug_url_format="https://git::@gitclone.com/github.com/%s.git"
+" let g:plug_url_format="https://git::@gitee.com/%s.git"
 
 call plug#begin('~/.vim/plugged')
 
@@ -509,6 +509,7 @@ nnoremap <silent><nowait>\l :let g:Lf_WorkingDirectoryMode = 'c'<cr>
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
+let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>']}
 let g:Lf_WildIgnore = {
 			\ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
 			\ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
@@ -542,8 +543,8 @@ map <silent><nowait> ; <Plug>(clever-f-repeat-forward)
 " asyncrun
 let g:asyncrun_open = 6
 let g:asyncrun_bell = 0
-nmap <silent><nowait> <space>c :AsyncTaskEdit<cr>
-nmap <space>C :AsyncTask<space>
+nmap <silent><nowait> <space>C :AsyncTaskEdit<cr>
+nmap <space>c :AsyncTask<space>
 nmap <space>; :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
