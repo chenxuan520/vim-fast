@@ -139,6 +139,11 @@ nnoremap <F8> :Step<cr>
 " term console
 nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
+nnoremap <silent><space><space>t :tabe<cr>:vert term ++curwin ++close<cr>
+
+" term task
+let g:Term_task_run="lazygit"
+nnoremap <silent><space>g :tabe<cr>:execute ":vert term ++curwin ++close " . g:Term_task_run<CR>
 
 " fast add comment
 func SetComment()
@@ -282,11 +287,11 @@ set statusline+=%6*%3p%%\ \≣\
 set statusline+=%7*%LL\
 
 " set netrw-------------------------------------
-let g:netrw_banner = 0         " 设置是否显示横幅
-let g:netrw_liststyle = 3      " 设置目录列表样式：树形
-let g:netrw_browse_split = 4   " 在之前的窗口编辑文件
-let g:netrw_altv = 1           " 水平分割时，文件浏览器始终显示在左边
-let g:netrw_winsize = 15       " 设置文件浏览器窗口宽度为15%
-set fillchars=vert:\⎜          "
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 15
+set fillchars=vert:\⎜ 
 nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#333333 guifg=#666666
