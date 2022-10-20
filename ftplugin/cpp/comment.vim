@@ -9,14 +9,19 @@ func s:SetComment()
 endfunc
 " set preparecode in buffernew
 func! VimFastSetPreCode()
-	call append(line(".")-1,'#include <iostream>')
-	call append(line(".")-1,'#include <vector>')
-	call append(line(".")-1,'#include <string>')
-	call append(line(".")-1,'#include <unordered_map>')
-	call append(line(".")-1,'using namespace std;')
-	call append(line(".")+0,'int main()')
-	call append(line(".")+1,'{')
-	call append(line(".")+2,'	return 0;')
-	call append(line(".")+3,'}')
+	let s:filename=split(expand('%:p'),'\.')[-1]
+	if s:filename=='cpp'
+		call append(line(".")-1,'#include <iostream>')
+		call append(line(".")-1,'#include <vector>')
+		call append(line(".")-1,'#include <string>')
+		call append(line(".")-1,'#include <unordered_map>')
+		call append(line(".")-1,'using namespace std;')
+		call append(line(".")+0,'int main()')
+		call append(line(".")+1,'{')
+		call append(line(".")+2,'	return 0;')
+		call append(line(".")+3,'}')
+	else
+		call append(line(".")-1,'#pragma once')
+	endif
 endfunc
 nnoremap <Leader>c :call <SID>SetComment()<CR>

@@ -164,8 +164,6 @@ Plug 'terryma/vim-smooth-scroll'
 Plug 'rhysd/clever-f.vim'
 " code snippets
 Plug 'honza/vim-snippets'
-" project message
-Plug 'skywind3000/asynctasks.vim'
 " run shell in async
 Plug 'skywind3000/asyncrun.vim'
 
@@ -216,11 +214,12 @@ nnoremap <F8> :Step<cr>
 tnoremap <c-\> <c-\><c-n>
 nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
-nnoremap <silent><space><space>t :tabe<cr>:vert term ++curwin ++close<cr>
+" term project use
+let g:Term_default_run='bash'
+nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " . g:Term_default_run<cr>
 
-" term task
-let g:Term_task_run="lazygit"
-nnoremap <silent><space>g :tabe<cr>:execute ":vert term ++curwin ++close " . g:Term_task_run<CR>
+" lazygit
+nnoremap <silent><space>g :tabe<cr>:vert term ++curwin ++close lazygit<cr>
 
 " yank and paste
 nnoremap <Leader>p "0p
@@ -290,10 +289,15 @@ nnoremap <silent><nowait>\s :set nospell<cr>
 " z= is list of change
 
 " delete <space> in end of line
-nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr>
+nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 
 " run macro in visual model
 vnoremap @ :normal @
+
+" read diff config for diff project
+command! -nargs=1 TaskRun :call term#Term_task_run(<f-args>)
+nnoremap <space>c :TaskRun<space>
+nnoremap <silent><space>C :call term#Term_config_edit()<cr>
 
 " use select area to replace
 vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
@@ -312,6 +316,23 @@ nnoremap <c-i> <c-i>zz
 " set split window
 nnoremap <silent><nowait>_ :vsp<cr>
 nnoremap <silent><nowait>+ :sp<cr>
+
+" edit file
+nnoremap e :edit<space>
+
+" reset wrong enter
+inoremap <c-b> <c-[>vbe<right>di
+
+" change } pos
+nnoremap L $i<c-m><esc>k$
+
+" scroll in other window
+nnoremap \\u <c-w>p<c-u><c-w>p
+nnoremap \\d <c-w>p<c-d><c-w>p
+
+" delete file
+command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
+" use cd to change dir
 
 " set alias
 iab ;e 1607772321@qq.com
@@ -341,7 +362,7 @@ colorscheme tokyonight
 " colorscheme onedark
 
 " set prepare code when new file
-autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,CMakeLists.txt execute ":call VimFastSetPreCode()"
+autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
 nnoremap <silent> <leader>C :call VimFastSetPreCode()<cr>
 
 " airline
@@ -376,6 +397,7 @@ inoremap <silent><expr> <TAB>
 			\ CheckBackspace() ? "\<TAB>" :
 			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 
 function! CheckBackspace() abort
 	let col = col('.') - 1
@@ -487,6 +509,7 @@ nnoremap <leader>b :LeaderfBuffer<cr>
 nnoremap <space>b :LeaderfBuffer<cr>
 " function list
 nnoremap <space>t :LeaderfFunction<cr>
+nnoremap <space>T :LeaderfFunctionAll<cr>
 " find for help
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>H :Leaderf help --input key:<cr>
@@ -509,7 +532,7 @@ nnoremap <silent><nowait>\l :let g:Lf_WorkingDirectoryMode = 'c'<cr>
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
-let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>']}
+let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>'],'<C-K>':['<C-P>','<C-K>'],'<C-P>':['<C-L>']}
 let g:Lf_WildIgnore = {
 			\ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
 			\ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
@@ -543,8 +566,6 @@ map <silent><nowait> ; <Plug>(clever-f-repeat-forward)
 " asyncrun
 let g:asyncrun_open = 6
 let g:asyncrun_bell = 0
-nmap <silent><nowait> <space>C :AsyncTaskEdit<cr>
-nmap <space>c :AsyncTask<space>
 nmap <space>; :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
