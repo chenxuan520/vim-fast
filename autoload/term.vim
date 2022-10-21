@@ -23,7 +23,6 @@ func! s:FindRoot()
 		endif
 	endwhile
 	if strridx(s:gitdir,"/")==-1
-		echo "cannot find git dir"
 		return ""
 	endif
 	return s:gitdir
@@ -43,8 +42,8 @@ function! s:Term_read(name)
 		endif
 
 		let s:path=expand('%:p:h')
-		if has_key(s:task,'path')&&s:task['path']=='root'
-			let s:path=s:FindRoot()
+		if has_key(s:task,'path')
+			let s:path=s:task['path']
 		endif
 		let s:options['cwd']=s:path
 
@@ -52,8 +51,15 @@ function! s:Term_read(name)
 			execute s:task['pre_script']
 		endif
 
+		if has_key(s:task,'end_script')
+			let g:asyncrun_exit=s:task['end_script']
+		else
+			let g:asyncrun_exit=""
+		endif
+
 		if has_key(s:task,'quickfix')&&s:task['quickfix']
 			call asyncrun#run("",s:options,s:task['command'])
+
 			return
 		endif
 
@@ -72,7 +78,7 @@ function! s:Term_read(name)
 			call term_start(s:task['command'],s:options)
 		endif
 
-		if has_key(s:task,'end_scrpit')&&s:task['end_script']!=''
+		if has_key(s:task,'end_script')&&s:task['end_script']!=''
 			execute s:task['end_script']
 		endif
 
@@ -101,4 +107,9 @@ endfunction
 " read diff config for diff project
 func! term#Term_config_edit()
 	execute ":edit ".s:FindConfigWay()
+endfunc
+
+" read from git dir
+func! term#Term_get_dir()
+	return s:FindRoot()
 endfunc

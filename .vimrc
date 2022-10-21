@@ -298,6 +298,11 @@ vnoremap @ :normal @
 command! -nargs=1 TaskRun :call term#Term_task_run(<f-args>)
 nnoremap <space>c :TaskRun<space>
 nnoremap <silent><space>C :call term#Term_config_edit()<cr>
+" auto read project file
+" let s:fileway=term#Term_get_dir() . '/.config.vim'
+" if filereadable(s:fileway)
+" 	execute 'source ' . s:fileway
+" endif
 
 " use select area to replace
 vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
@@ -362,8 +367,7 @@ colorscheme tokyonight
 " colorscheme onedark
 
 " set prepare code when new file
-autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
-nnoremap <silent> <leader>C :call VimFastSetPreCode()<cr>
+autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
 
 " airline
 let g:airline_theme= "tokyonight"
