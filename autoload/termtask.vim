@@ -7,7 +7,6 @@ func! s:FindConfigWay()
 		endif
 	endwhile
 	if strridx(s:gitdir,"/")==-1
-		echo "cannot find git dir"
 		return ""
 	endif
 	let s:gitdir=s:gitdir."/.config.vim"
@@ -39,6 +38,7 @@ function! s:Term_read(name)
 
 		if !has_key(s:task,'command')
 			echo 'command is null'
+			return
 		endif
 
 		let s:path=expand('%:p:h')
@@ -57,16 +57,18 @@ function! s:Term_read(name)
 			let g:asyncrun_exit=""
 		endif
 
+		if has_key(s:task,'close')&&s:task['close']
+			let g:asyncrun_exit="cclose|" . g:asyncrun_exit
+		endif
+		if has_key(s:task,'close')&&s:task['close']
+			let s:options['term_finish']='close'
+		endif
+
 		if has_key(s:task,'quickfix')&&s:task['quickfix']
 			call asyncrun#run("",s:options,s:task['command'])
 
 			return
 		endif
-
-		if has_key(s:task,'close')&&s:task['close']
-			let s:options['term_finish']='close'
-		endif
-
 
 		if has_key(s:task,'type')&&s:task['type']=='tab'
 			execute ':tabe'
@@ -86,7 +88,7 @@ function! s:Term_read(name)
 	endfor
 endfunction
 
-function! term#Term_task_run(name)
+function! termtask#Term_task_run(name)
 	if filereadable(s:FindConfigWay())
 		execute ":source ". s:gitdir
 		echo "load success"
@@ -105,11 +107,16 @@ function! term#Term_task_run(name)
 endfunction
 
 " read diff config for diff project
-func! term#Term_config_edit()
-	execute ":edit ".s:FindConfigWay()
+func! termtask#Term_config_edit()
+	let s:git_dir=s:FindConfigWay()
+	if s:git_dir!=""
+		execute ":edit ".s:FindConfigWay()
+	else
+		echo "can not find .git dir"
+	endif
 endfunc
 
 " read from git dir
-func! term#Term_get_dir()
+func! termtask#Term_get_dir()
 	return s:FindRoot()
 endfunc

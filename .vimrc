@@ -295,9 +295,9 @@ nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 vnoremap @ :normal @
 
 " read diff config for diff project
-command! -nargs=1 TaskRun :call term#Term_task_run(<f-args>)
+command! -nargs=1 TaskRun :call termtask#Term_task_run(<f-args>)
 nnoremap <space>c :TaskRun<space>
-nnoremap <silent><space>C :call term#Term_config_edit()<cr>
+nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " auto read project file
 " let s:fileway=term#Term_get_dir() . '/.config.vim'
 " if filereadable(s:fileway)
@@ -309,7 +309,7 @@ vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
 nnoremap <leader>s :%s/<c-r><c-w>/
 
 " indent buffer
-nnoremap <silent><nowait> =e gg=G<c-o><c-o>
+nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
 
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
