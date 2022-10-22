@@ -296,6 +296,7 @@ vnoremap @ :normal @
 
 " read diff config for diff project
 command! -nargs=1 TaskRun :call termtask#Term_task_run(<f-args>)
+command! -nargs=0 TaskList :call termtask#Term_task_list()
 nnoremap <space>c :TaskRun<space>
 nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " auto read project file

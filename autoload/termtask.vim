@@ -1,3 +1,11 @@
+"======================================================================
+"
+" termtask
+"
+" Created by chenxuan on 2022.10.18
+"
+"======================================================================
+
 func! s:FindConfigWay()
 	let s:gitdir=getcwd()."/"
 	while strridx(s:gitdir,"/")!=-1
@@ -119,4 +127,24 @@ endfunc
 " read from git dir
 func! termtask#Term_get_dir()
 	return s:FindRoot()
+endfunc
+
+" get task list
+func! termtask#Term_task_list()
+	if filereadable(s:FindConfigWay())
+		execute ":source ". s:gitdir
+	else
+		echo "no config file"
+		return
+	endif
+
+	let s:list=[]
+	for s:task in g:Term_project_task
+		if has_key(s:task,'name')
+			let s:list=add(s:list,s:task['name'])
+		endif
+	endfor
+
+	echo 'now task:'
+	echo s:list
 endfunc

@@ -73,7 +73,9 @@
 
 11. 中文文档详细,对新手更加友好
 
-12. 提供中文VIM手册的一键下载配置[(基于Vimcdoc)](https://github.com/yianwillis/vimcdoc)
+12. **内置了一个简单完整的任务管理系统,方便建立一键编译运行系统**
+
+13. 提供中文VIM手册的一键下载配置[(基于Vimcdoc)](https://github.com/yianwillis/vimcdoc)
 
 ## 项目文件夹
 
