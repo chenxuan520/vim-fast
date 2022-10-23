@@ -212,6 +212,7 @@ nnoremap <F8> :Step<cr>
 
 " term console
 tnoremap <c-\> <c-\><c-n>
+tnoremap <c-o> printf '\033]51;["drop", "%s/%s"]\007' $PWD<space>
 nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
 " term project use
