@@ -211,13 +211,15 @@ nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
 
 " term console
+func! Tapi_EditFile(bufnum,arglist)
+	execute ":wincmd p"
+	execute ":edit " . a:arglist[0]
+endfunc
 tnoremap <c-\> <c-\><c-n>
-tnoremap <c-o> printf '\033]51;["drop", "%s/%s"]\007' $PWD<space>
+tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
 nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
-" term project use
-let g:Term_default_run='bash'
-nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " . g:Term_default_run<cr>
+nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
 
 " lazygit
 nnoremap <silent><space>g :tabe<cr>:vert term ++curwin ++close lazygit<cr>
@@ -339,6 +341,7 @@ nnoremap \\d <c-w>p<c-d><c-w>p
 
 " delete file
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
+command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
 " use cd to change dir
 
 " set alias
