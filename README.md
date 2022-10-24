@@ -73,7 +73,7 @@
 
 11. 中文文档详细,对新手更加友好
 
-12. **内置了一个简单完整的任务管理系统,方便建立一键编译运行系统**
+12. [**内置了一个简单完整的任务管理系统,方便建立一键编译运行系统**](https://github.com/chenxuan520/termtask.vim)
 
 13. 提供中文VIM手册的一键下载配置[(基于Vimcdoc)](https://github.com/yianwillis/vimcdoc)
 
@@ -133,7 +133,9 @@
 
   2. [配置详解](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
 
-  3. 更新ing
+  3. [自定义VIM配置](https://www.bilibili.com/video/BV1Y84y1q79F/)
+
+  4. 更新ing
 
 - [zhihu](https://zhuanlan.zhihu.com/p/524286962)
 

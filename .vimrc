@@ -297,7 +297,7 @@ nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 " run macro in visual model
 vnoremap @ :normal @
 
-" read diff config for diff project
+" termtask project config
 command! -nargs=1 TaskRun :call termtask#Term_task_run(<f-args>)
 command! -nargs=0 TaskList :call termtask#Term_task_list()
 nnoremap <space>c :TaskRun<space>
@@ -339,7 +339,7 @@ nnoremap L $i<c-m><esc>k$
 nnoremap \\u <c-w>p<c-u><c-w>p
 nnoremap \\d <c-w>p<c-d><c-w>p
 
-" delete file
+" ctrl file
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
 " use cd to change dir

@@ -119,7 +119,7 @@
 
 ## Project description
 
-1. **! Currently only ubuntu, debian, and other ubuntu linux are supported, other systems can use vimplus!
+1. **! Currently only ubuntu, debian, and other ubuntu linux are supported, other systems can use vimplus!**
 
 2. the project is based on [Vimplus](https://gitee.com/chxuan/vimplus.git)
 
