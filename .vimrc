@@ -151,7 +151,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " file devicon
 Plug 'ryanoasis/vim-devicons'
-" Git control
+" git control
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 " text obj
@@ -241,11 +241,13 @@ nnoremap <c-down> <c-w>-
 nnoremap <c-left> <c-w><
 nnoremap <c-right> <c-w>>
 
-" change window in normal
-nnoremap <s-up> <c-w>k
-nnoremap <s-down> <c-w>j
-nnoremap <s-left> <c-w>h
-nnoremap <s-right> <c-w>l
+" change window pos in normal
+nnoremap <c-k> <c-w>k
+nnoremap <c-j> <c-w>j
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+" quit the window
+nnoremap Q <c-w>q
 
 " change window location
 nnoremap <c-s-up> <c-w>K
@@ -336,8 +338,8 @@ inoremap <c-b> <c-[>vbe<right>di
 nnoremap L $i<c-m><esc>k$
 
 " scroll in other window
-nnoremap \\u <c-w>p<c-u><c-w>p
-nnoremap \\d <c-w>p<c-d><c-w>p
+nnoremap <s-up> <c-w>p<c-u><c-w>p
+nnoremap <s-down> <c-w>p<c-d><c-w>p
 
 " ctrl file
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
@@ -372,7 +374,7 @@ colorscheme tokyonight
 " colorscheme onedark
 
 " set prepare code when new file
-autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
+autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
 
 " airline
 let g:airline_theme= "tokyonight"
