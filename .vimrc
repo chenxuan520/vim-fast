@@ -246,8 +246,6 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-j> <c-w>j
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
-" quit the window
-nnoremap Q <c-w>q
 
 " change window location
 nnoremap <c-s-up> <c-w>K
@@ -325,8 +323,8 @@ nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
 
 " set split window
-nnoremap <silent><nowait>_ :vsp<cr>
-nnoremap <silent><nowait>+ :sp<cr>
+nnoremap <silent><nowait>_ :vsp<cr>:bn<cr>
+nnoremap <silent><nowait>+ :sp<cr>:bn<cr>
 
 " edit file
 nnoremap e :edit<space>
