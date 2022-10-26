@@ -415,8 +415,8 @@ endfunction
 " coc find define
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)
-nmap <silent>gu <Plug>(coc-definition)
-nmap <silent>gU <Plug>(coc-type-definition)
+nmap <silent>gd <Plug>(coc-definition)
+nmap <silent>gD <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
 nmap <leader>qf <Plug>(coc-fix-current)
