@@ -26,5 +26,5 @@ func! VimFastSetPreCode()
 endfunc
 nnoremap <Leader>c :call <SID>SetComment()<CR>
 
-iab include #include "
-iab pra #pragma once
+iab <buffer>include #include "
+iab <buffer>pra #pragma once

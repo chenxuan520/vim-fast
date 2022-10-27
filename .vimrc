@@ -313,6 +313,7 @@ nnoremap <leader>s :%s/<c-r><c-w>/
 
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
+onoremap ae :<c-u>normal! ggVG<cr>
 
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
@@ -397,7 +398,10 @@ let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
 let g:NERDTreeWinSize=18
 " exit vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | :bn | endif
+augroup NerdTree
+	autocmd!
+	autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | :bn | endif
+augroup END
 
 " coc.nvim
 " coc tab
