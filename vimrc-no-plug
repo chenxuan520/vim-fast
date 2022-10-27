@@ -181,10 +181,10 @@ nnoremap <c-left> <c-w><
 nnoremap <c-right> <c-w>>
 
 " change window in normal
-nnoremap <s-up> <c-w>k
-nnoremap <s-down> <c-w>j
-nnoremap <s-left> <c-w>h
-nnoremap <s-right> <c-w>l
+nnoremap <c-k> <c-w>k
+nnoremap <c-j> <c-w>j
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 
 " change window location
 nnoremap <c-s-up> <c-w>K
@@ -253,6 +253,29 @@ nnoremap <c-i> <c-i>zz
 " set split window
 nnoremap <silent><nowait>_ :vsp<cr>
 nnoremap <silent><nowait>+ :sp<cr>
+
+" edit file
+nnoremap e :edit<space>
+
+" reset wrong enter
+inoremap <c-b> <c-[>vbe<right>di
+
+" change } pos
+nnoremap L $i<c-m><esc>k$
+
+" add empty line
+nnoremap H O<c-[>j
+nnoremap M o<c-[>k
+"
+" scroll in other window
+nnoremap <s-up> <c-w>p<c-u><c-w>p
+nnoremap <s-down> <c-w>p<c-d><c-w>p
+
+" ctrl file
+command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
+command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
+cab Rename Rename <c-r>=expand('%:p:h')<cr>/
+" use cd to change dir
 
 " set alias
 iab ;e 1607772321@qq.com

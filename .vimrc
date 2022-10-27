@@ -335,6 +335,10 @@ inoremap <c-b> <c-[>vbe<right>di
 " change } pos
 nnoremap L $i<c-m><esc>k$
 
+" add empty line
+nnoremap H O<c-[>j
+nnoremap M o<c-[>k
+
 " scroll in other window
 nnoremap <s-up> <c-w>p<c-u><c-w>p
 nnoremap <s-down> <c-w>p<c-d><c-w>p
@@ -373,7 +377,10 @@ colorscheme tokyonight
 " colorscheme onedark
 
 " set prepare code when new file
-autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
+augroup PreCode
+	autocmd!
+	autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
+augroup END
 
 " airline
 let g:airline_theme= "tokyonight"
