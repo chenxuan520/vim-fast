@@ -137,6 +137,21 @@ nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
 
 " term console
+func! Tapi_EditFile(bufnum,arglist)
+	execute ":wincmd p"
+	execute ":edit " . a:arglist[0]
+	if len(a:arglist)>1
+		call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")
+	endif
+endfunc
+tnoremap <c-\> <c-\><c-n>
+tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
+tnoremap <c-l> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
+nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
+nnoremap <Leader><Leader>t :vert term<CR>
+nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
+
+" term console
 nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:vert term ++curwin ++close<cr>
