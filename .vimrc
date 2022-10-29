@@ -538,10 +538,13 @@ nnoremap <space>T :LeaderfFunctionAll<cr>
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>H :Leaderf help --input key:<cr>
 vnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
-" enhance inside function
+" enhance cmd
 nnoremap <space>: :LeaderfCommand<cr>
+" enhance find
 nnoremap <space>/ :LeaderfLine<cr>
+vnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr>
 nnoremap <space>? :LeaderfLineAll<cr>
+vnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectArea()<cr>
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
 vnoremap <space>a :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr>
