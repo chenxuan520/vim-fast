@@ -156,8 +156,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 " text obj
 Plug 'kana/vim-textobj-user'
-" function info in statusline
-Plug 'Shougo/echodoc.vim'
 " enhance c-f/b and c-d/u
 Plug 'terryma/vim-smooth-scroll'
 " enhance f/t
@@ -464,7 +462,7 @@ command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organ
 nmap <leader><leader>f :Format<cr>
 " coc config
 nmap <silent><nowait> <space><space>c :CocConfig<cr>
-nmap <silent><nowait> <space>l :CocList extensions<cr>
+nmap <silent><nowait> <space><space>l :CocList extensions<cr>
 " coc help
 nnoremap <silent> K :call ShowDocumentation()<cr>
 " coc mouse
@@ -546,6 +544,8 @@ nnoremap <space>? :LeaderfLineAll<cr>
 nnoremap <space>a :Leaderf rg -i<cr>
 vnoremap <space>a :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
+" recall
+nnoremap <space>l :Leaderf --recall<cr>
 " find color
 nnoremap <F1> :LeaderfColorscheme<cr>
 " set leaderf work dir
@@ -563,9 +563,6 @@ let g:Lf_WildIgnore = {
 			\}
 let g:Lf_UseCache = 0
 " c-] open in vertical,c-x open in split,c-t open in a tab,c-\ ask for open
-
-" echodoc.vim
-let g:echodoc_enable_at_startup = 1
 
 " tabular
 nnoremap <leader>T :Tab /
