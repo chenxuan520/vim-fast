@@ -316,6 +316,7 @@ nnoremap <leader>s :%s/<c-r><c-w>/
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
 onoremap ae :<c-u>normal! ggVG<cr>
+nnoremap <leader>e ggVG
 
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null

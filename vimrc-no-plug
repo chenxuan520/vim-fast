@@ -68,7 +68,7 @@ set completeopt-=preview " 补全时不显示窗口，只显示补全列表
 set hlsearch            " 高亮显示搜索结果
 set incsearch           " 开启实时搜索功能
 set ignorecase          " 搜索时大小写不敏感
-set smartcase			" 搜索智能匹配大小写
+set smartcase           " 搜索智能匹配大小写
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 缓存设置
@@ -257,6 +257,8 @@ nnoremap <leader>s :%s/<c-r><c-w>/
 
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>
+onoremap ae :<c-u>normal! ggVG<cr>
+nnoremap <leader>e ggVG
 
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
@@ -297,6 +299,10 @@ iab ;e 1607772321@qq.com
 iab ;n chenxuan
 nnoremap \a :iabc<cr>
 nnoremap =a :ab<cr>
+
+" set colorscheme
+set termguicolors
+colorscheme desert
 
 " set statusline
 function GetMode()
