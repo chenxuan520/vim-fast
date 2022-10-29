@@ -66,15 +66,28 @@ function! s:Term_read(name)
 		endif
 
 		if has_key(s:task,'close')&&s:task['close']
-			let g:asyncrun_exit="cclose|" . g:asyncrun_exit
+			if s:task['close']==1
+				let g:asyncrun_exit="cclose|" . g:asyncrun_exit
+			elseif s:task['close']==2
+				let g:asyncrun_exit="if g:asyncrun_code==0|cclose|endif|" . g:asyncrun_exit
+			endif
 		endif
 		if has_key(s:task,'close')&&s:task['close']
-			let s:options['term_finish']='close'
+			if s:task['close']==1
+				let s:options['term_finish']='close'
+			elseif s:task['close']==2
+				let s:options['hidden']=1
+				let s:options['term_finish']='open'
+			endif
 		endif
 
 		if has_key(s:task,'quickfix')&&s:task['quickfix']
+			if has_key(s:task,'type')&&s:task['type']=='tab'
+				let s:options['pos']='tab'
+			elseif has_key(s:task,'type')&&s:task['type']=='vsplit'
+				let s:options['pos']='left'
+			endif
 			call asyncrun#run("",s:options,s:task['command'])
-
 			return
 		endif
 

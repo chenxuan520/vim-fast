@@ -278,6 +278,8 @@ func s:MouseConfig()
 	nnoremenu PopUp.Next\ Buf :bn<cr>
 	nnoremenu PopUp.-Sep- :<cr>
 	nnoremenu PopUp.Close\ Mouse :set mouse=""<cr>
+	" term model
+	tlnoremenu PopUp.Exit\ Term exit<cr>
 endfunc
 call <sid>MouseConfig() " default set mouse enable
 nnoremap <silent><nowait>=m :call <sid>MouseConfig()<cr>
@@ -420,7 +422,6 @@ inoremap <silent><expr> <TAB>
 			\ CheckBackspace() ? "\<TAB>" :
 			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 
 function! CheckBackspace() abort
 	let col = col('.') - 1
