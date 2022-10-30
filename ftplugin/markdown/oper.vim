@@ -1,4 +1,6 @@
-fun! s:AddTitle()
+func! s:AddTitle()
+	let s:old=col('.')-1
+
 	execute "normal! ^"
 	let col = col('.') - 1
 	let s:char= getline('.')[col]
@@ -7,10 +9,13 @@ fun! s:AddTitle()
 	else
 		execute "normal! i#\ "
 	endif
-	execute "normal! $"
-endfun
+
+	execute "normal! 0".s:old."l"
+endfunc
 
 func! s:AddSub()
+	let s:old=col('.')-1
+
 	execute "normal! ^"
 	let col = col('.') - 1
 	let s:char= getline('.')[col]
@@ -19,10 +24,18 @@ func! s:AddSub()
 	else
 		execute "normal! i-\ "
 	endif
-	execute "normal! $"
+
+	execute "normal! 0".s:old."l"
+endfunc
+
+func! s:Code()
+	call append(line('v')-1,'```')
+	call append(line('.'),'```')
 endfunc
 
 func! s:Refence()
+	let s:old=col('.')-1
+
 	execute "normal! ^"
 	let col = col('.') - 1
 	let s:char= getline('.')[col]
@@ -31,7 +44,8 @@ func! s:Refence()
 	else
 		execute "normal! i>\ "
 	endif
-	execute "normal! $"
+
+	execute "normal! 0".s:old."l"
 endfunc
 
 func! s:Bold(ch)
@@ -51,16 +65,21 @@ func! s:Bold(ch)
 endfunc
 
 func! s:Number()
+	let s:old=col('.')-1
+
 	let s:get=getchar()
 	execute "normal! ^"
 	if s:get==38
 		execute "normal! 3x"
+		let s:old=s:old-3
 	elseif s:get==35
 		execute "normal! x"
+		let s:old=s:old-1
 	else
 		execute "normal! i".(str2nr(s:get)-48).".\ "
 	endif
-	execute "normal! $"
+
+	execute "normal! 0".s:old."l"
 endfunc
 
 func! s:Paste()
@@ -89,6 +108,8 @@ func! s:Paste()
 endfunc
 
 func! s:Enter()
+	let s:old=col('.')-1
+
 	execute "normal! ^"
 	let s:char=""
 	let s:i=col('.')-1
@@ -109,7 +130,7 @@ func! s:Enter()
 		let @s=(s:char+1).". "
 	endif
 
-	execute "normal! $"
+	execute "normal! 0".s:old."l"
 endfunc
 
 nnoremap <silent><buffer>#         : call <sid>AddTitle()<cr><right>
@@ -130,8 +151,10 @@ vnoremap <silent><buffer>`     :call <sid>Bold('`')<cr>
 vnoremap <silent><buffer><c-i> :call <sid>Bold('`')<cr>
 nnoremap <silent><buffer>`     viw:call <sid>Bold('`')<cr>
 
+vnoremap <silent><buffer><leader>` :<c-u>call <sid>Code()<cr>
+
 nnoremap <silent><buffer>o     :call <sid>Enter()<cr>o<c-r>s
-inoremap <silent><buffer><c-m> <c-o>:call <sid>Enter()<cr><cr><c-r>s
+inoremap <silent><buffer><c-m> <c-o>:call <sid>Enter()<cr><c-m><c-r>s
 
 nnoremap <silent><buffer><leader><leader>p :call <sid>Paste()<cr>
 

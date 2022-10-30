@@ -77,6 +77,8 @@
 
 13. 提供中文VIM手册的一键下载配置[(基于Vimcdoc)](https://github.com/yianwillis/vimcdoc)
 
+14. 内置markdown快捷插件
+
 ## 项目文件夹
 
 - autoload 插件plug.vim,提供插件的安装
@@ -236,6 +238,7 @@
 ## 帮助
 
 1. [插件快捷键说明](./doc/key.md)
+
 2. [Vim一些按键帮助](./doc/help.md)
 
 ## 希望
