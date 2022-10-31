@@ -294,6 +294,10 @@ command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang
 cab Rename Rename <c-r>=expand('%:p:h')<cr>/
 " use cd to change dir
 
+" select move
+vnoremap <silent><up>   : move '<-2<cr>gv
+vnoremap <silent><down> : move '>+1<cr>gv
+
 " set alias
 iab ;e 1607772321@qq.com
 iab ;n chenxuan
@@ -322,13 +326,13 @@ function GetMode()
     endif
 endfunction
 
-set statusline=%1*\ %{GetMode()}\
-set statusline+=%2*\ %F%m%r%h%w%=\
-set statusline+=%3*\ %Y\ \|\
-set statusline+=%4*%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}\
-set statusline+=%5*[%4l:%-4v]\
-set statusline+=%6*%3p%%\ \≣\
-set statusline+=%7*%LL\
+set statusline=%1*\ %{GetMode()}
+set statusline+=%2*\ %F%m%r%h%w%=
+set statusline+=%3*\ %Y\ |
+set statusline+=%4*%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}
+set statusline+=%5*[%4l:%-3v]
+set statusline+=%6*%3p%%
+set statusline+=%7*%LL
 
 " set netrw-------------------------------------
 let g:netrw_banner = 0

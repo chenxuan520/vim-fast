@@ -354,6 +354,10 @@ command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang
 cab Rename Rename <c-r>=expand('%:p:h')<cr>/
 " use cd to change dir
 
+" select move
+vnoremap <silent><up>   : move '<-2<cr>gv
+vnoremap <silent><down> : move '>+1<cr>gv
+
 " set alias
 iab ;e 1607772321@qq.com
 iab ;n chenxuan
