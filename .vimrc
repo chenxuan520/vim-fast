@@ -479,7 +479,6 @@ function! ShowDocumentation()
 	endif
 endfunction
 
-
 " tagbar
 let g:tagbar_width = 22
 nnoremap <silent> <leader>t :TagbarToggle<cr>
@@ -567,7 +566,7 @@ let g:Lf_WildIgnore = {
 			\ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
 			\}
 let g:Lf_UseCache = 0
-" c-] open in vertical,c-x open in split,c-t open in a tab,c-\ ask for open
+" c-] open in vertical,c-x open in split,c-t open in a tab,c-\ ask for open,D to delete buffer
 
 " tabular
 nnoremap <leader>T :Tab /

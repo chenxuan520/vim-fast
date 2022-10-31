@@ -151,7 +151,7 @@
 
 #### C++
 
-1. ./cpp.sh
+1. ./shell/cpp.sh
 
    ![](https://pic1.zhimg.com/80/v2-8f63e192e0b96e7514fd89112f0bbbb4_720w.png)
 
@@ -161,7 +161,7 @@
 
 #### Python
 
-1. ./python.sh
+1. ./shell/python.sh
 
    ![](https://pic4.zhimg.com/80/v2-f4024d6b0b3ac1563753ff06485f6203_720w.png)
 
@@ -171,7 +171,7 @@
 
 #### Go
 
-1. ./go.sh
+1. ./shell/go.sh
 
    ![](https://pic2.zhimg.com/80/v2-a9f92770ec5d7ff5ad891e20cb9dfb49_720w.png)
 
