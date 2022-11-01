@@ -224,6 +224,7 @@ nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close 
 
 " lazygit
 nnoremap <silent><space>g :tabe<cr>:vert term ++curwin ++close lazygit<cr>
+nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
 
 " yank and paste
 nnoremap <Leader>p "0p
@@ -247,6 +248,10 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-j> <c-w>j
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+nnoremap <s-up>    <c-w>k
+nnoremap <s-down>  <c-w>j
+nnoremap <s-left>  <c-w>h
+nnoremap <s-right> <c-w>l
 
 " change window location
 nnoremap <c-s-up> <c-w>K
@@ -332,7 +337,7 @@ nnoremap <silent><nowait>_ :vsp<cr>:bn<cr>
 nnoremap <silent><nowait>+ :sp<cr>:bn<cr>
 
 " edit file
-nnoremap e :edit<space>
+nnoremap e :edit<space><c-r>=getcwd()<cr>/
 
 " reset wrong enter
 inoremap <c-b> <c-[>vbe<right>di
@@ -345,8 +350,8 @@ nnoremap H O<c-[>j
 nnoremap M o<c-[>k
 
 " scroll in other window
-nnoremap <s-up> <c-w>p<c-u><c-w>p
-nnoremap <s-down> <c-w>p<c-d><c-w>p
+nnoremap \u <c-w>p<c-u><c-w>p
+nnoremap \d <c-w>p<c-d><c-w>p
 
 " ctrl file system
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif

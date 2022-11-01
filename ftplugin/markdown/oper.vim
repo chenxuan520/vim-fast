@@ -108,11 +108,17 @@ func! s:Paste()
 endfunc
 
 func! s:Enter()
-	let s:old=col('.')-1
-
-	execute "normal! ^"
+	let s:str=getline('.')
 	let s:char=""
-	let s:i=col('.')-1
+	let s:i=0
+
+	for s:ch in str2list(s:str)
+		if s:ch!=char2nr(' ')&&s:ch!=char2nr('\t')
+			break
+		endif
+		let s:i=s:i+1
+	endfor
+
 	while s:i<strlen(getline('.'))
 		let s:char=s:char . getline('.')[s:i]
 		if getline('.')[s:i]<'0'||getline('.')[s:i]>'9'
@@ -130,7 +136,6 @@ func! s:Enter()
 		let @s=(s:char+1).". "
 	endif
 
-	execute "normal! 0".s:old."l"
 endfunc
 
 nnoremap <silent><buffer>#         : call <sid>AddTitle()<cr><right>

@@ -208,13 +208,17 @@
    - tmux currently only switches the theme to onedark and turns off termguicolors, set let g:onedark_termcolors=256
 
 5. Do you need root or sudo access?
+
 - If vim-fast has been installed on the machine before or if all the corresponding software is already installed, you don't need sudo, otherwise you need sudo to install the package.
+
 6. I want to customize the dashboard content when Vim starts
+
 - Get the pattern representation [Spring Boot banner online generation tool](https://www.bootschool.net/ascii), choose the type 'ANSI Shadow'
 
 - Get the Vim form [vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html) (took a bit of time to do this myself, as I don't write much front-end and the graphics are rather poor)
 
 - Copy the result to .vimrc
+
 7. appears E1208: -complete used without allowing argumentsPress ENTER or type command to continue
 
    - Go into the coc.nvim plugin directory and git reset --hard v0.0.81
@@ -228,6 +232,7 @@
 ## Help
 
 1. [plugin shortcut description](./doc/key.md)
+
 2. [Vim keystroke help](./doc/help.md)
 
 ## Hope
