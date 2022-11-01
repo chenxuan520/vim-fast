@@ -60,3 +60,7 @@ function LightlineBufferlineFilter(buffer)
   return getbufvar(a:buffer, '&buftype') !=# 'terminal'
 endfunction
 let g:lightline#bufferline#buffer_filter = "LightlineBufferlineFilter"
+
+call plug#begin('~/.vim/plugged')
+Plug 'airblade/vim-gitgutter'
+call plug#end()

@@ -348,10 +348,14 @@ nnoremap M o<c-[>k
 nnoremap <s-up> <c-w>p<c-u><c-w>p
 nnoremap <s-down> <c-w>p<c-d><c-w>p
 
-" ctrl file
+" ctrl file system
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
 cab Rename Rename <c-r>=expand('%:p:h')<cr>/
+command! -nargs=1 -bang -complete=file Mkdir echo mkdir(<f-args>)
+cab Mkdir Mkdir <c-r>=expand('%:p:h')<cr>/
+command! -nargs=1 -bang -complete=file Rmdir echo delete(<f-args>,"d")
+cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
 " use cd to change dir
 
 " select move

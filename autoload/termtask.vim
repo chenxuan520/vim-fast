@@ -70,14 +70,10 @@ function! s:Term_read(name)
 				let g:asyncrun_exit="cclose|" . g:asyncrun_exit
 			elseif s:task['close']==2
 				let g:asyncrun_exit="if g:asyncrun_code==0|cclose|endif|" . g:asyncrun_exit
-			endif
-		endif
-		if has_key(s:task,'close')&&s:task['close']
-			if s:task['close']==1
-				let s:options['term_finish']='close'
-			elseif s:task['close']==2
-				let s:options['hidden']=1
-				let s:options['term_finish']='open'
+			elseif s:task['close']==3
+				let s:height=get(g:,"asyncrun_open",6)
+				unlet g:asyncrun_open
+				let g:asyncrun_exit="let g:asyncrun_open = ".s:height."|copen|" . g:asyncrun_exit
 			endif
 		endif
 
@@ -87,8 +83,21 @@ function! s:Term_read(name)
 			elseif has_key(s:task,'type')&&s:task['type']=='vsplit'
 				let s:options['pos']='left'
 			endif
+
 			call asyncrun#run("",s:options,s:task['command'])
 			return
+		endif
+
+		if has_key(s:task,'close')&&s:task['close']
+			if s:task['close']==1
+				let s:options['term_finish']='close'
+			elseif s:task['close']==2
+				let s:task['command']='bash -c "'.s:task['command'].' || bash"'
+				let s:options['term_finish']='close'
+			elseif s:task['close']==3
+				let s:options['hidden']=1
+				let s:options['term_finish']='open'
+			endif
 		endif
 
 		if has_key(s:task,'type')&&s:task['type']=='tab'
