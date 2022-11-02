@@ -311,7 +311,7 @@ command! -nargs=0 TaskList :call termtask#Term_task_list()
 nnoremap <space>c :TaskRun<space>
 nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " auto read project file
-" let s:fileway=term#Term_get_dir() . '/.config.vim'
+" let s:fileway=termtask#Term_get_dir() . '/.config.vim'
 " if filereadable(s:fileway)
 " 	execute 'source ' . s:fileway
 " endif
