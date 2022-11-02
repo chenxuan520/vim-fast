@@ -72,7 +72,7 @@ function! s:Term_read(name)
 				let g:asyncrun_exit="if g:asyncrun_code==0|cclose|endif|" . g:asyncrun_exit
 			elseif s:task['close']==3
 				let s:height=get(g:,"asyncrun_open",6)
-				unlet g:asyncrun_open
+				let g:asyncrun_open=0
 				let g:asyncrun_exit="let g:asyncrun_open = ".s:height."|copen|" . g:asyncrun_exit
 			endif
 		endif
