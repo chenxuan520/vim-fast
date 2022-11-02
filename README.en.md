@@ -145,7 +145,7 @@
 
 4. The following image appears and the installation is complete
 
-5. ![](https://pic2.zhimg.com/v2-3b7939b834020c3e01d17e27c8381491_r.jpg)
+5. ![](https://pic4.zhimg.com/80/v2-7d5e78a2fbd546f19002673ed432a8ff_720w.jpg)
 
 6. Execute different scripts for different languages
 
