@@ -21,16 +21,20 @@ function copy_files()
 function install_plug()
 {
 	mkdir ~/.vim/plugged
-	tar -zxvf ${PWD}/vim.tar.gz -C ~/.vim/plugged/
+	./shell/plug.sh
 	# curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
-	npm config set registry https://registry.npmmirror.com
-	# https://registry.npmjs.org/
-	# npm install -g yarn
-	git clone -b release https://gitee.com/zgpio/coc.nvim.git ~/.vim/plugged/coc.nvim
-	# cd ~/.vim/plugged/coc.nvim
-	# yarn install
-	# yarn build
-	vim -c "PlugInstall" -c "q" -c "q"
+
+	type node
+	if [ $? == 1 ];then
+		npm config set registry https://registry.npmmirror.com
+		# https://registry.npmjs.org/
+		# npm install -g yarn
+		git clone -b release https://gitee.com/zgpio/coc.nvim.git ~/.vim/plugged/coc.nvim
+		# cd ~/.vim/plugged/coc.nvim
+		# yarn install
+		# yarn build
+	fi
+
 	chmod 664 ~/.viminfo
 }
 
@@ -82,5 +86,5 @@ function begin_install_vimplus()
 function main(){
 	begin_install_vimplus
 }
- 
+
 main

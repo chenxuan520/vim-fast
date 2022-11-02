@@ -5,4 +5,4 @@ if [ $? == 1 ];then
 fi
 git clone https://gitee.com/mirrorvim/vim-fast
 cd vim-fast
-sudo ./install.sh
+./install.sh

@@ -53,27 +53,31 @@
 
 1. **Normal 3 minutes to install a good VIM configuration from a new linux host (including lsp and so on), 3 minutes to solve all the problems**
 
-2. based on Vimplus, so that all configuration files are in .vimrc, more than 600 lines of configuration files more simple and intuitive, but also to avoid multiple configuration files redundant
+2. based on Vimplus, so that all configuration files are in .vimrc, 600 lines of configuration files more simple and intuitive, but also to avoid multiple redundant configuration files
 
 3. the plug-ins are streamlined and simplified, with a selection of 30 plug-ins to improve opening speed
 
 4. the plug-in archive is placed on gitee, making the download speed of plug-ins improved, friendly to newcomers, providing shell scripts for one-click configuration of plug-ins
 
-5. added function-based shortcut key search, to avoid forgetting the shortcut key
+5. added function-based shortcut key search, to avoid forgetting the shortcut key, through the \<space\>H open
 
 6. improved **mouse support**, making it more novice friendly
 
-7. support C/C++, Go, python language one click configuration (welcome to add more language support)
+7. support C/C++, Go, python language one-click configuration (welcome to add more language support)
 
 8. use coc instead of YCM, better completing experience
 
 9. support more diverse themes (more than 10 kinds), better visual experience
 
-10. provide shell scripts to customize Vim
+10. provide shell script to customize Vim
 
 11. detailed Chinese documentation, more friendly to newcomers
 
-12. provide Chinese VIM manual one-click download configuration [(based on Vimcdoc)](https://github.com/yianwillis/vimcdoc)
+12. [**Built in a simple and complete task management system, easy to build a one-click compile and run system**](https://github.com/chenxuan520/termtask.vim)
+
+13. provide Chinese VIM manuals for one-click download configuration [(based on Vimcdoc)](https://github.com/yianwillis/vimcdoc)
+
+14. built-in markdown shortcut plugin
 
 ## Project folder
 
@@ -93,23 +97,27 @@
 
 - install.sh install script, run first, to install vim-fast
 
-- install_without_sudo.sh install without root and sudo (need to download apt package in advance)
+- install_without_sudo.sh install without root and sudo (need to download packages in advance)
 
-- cpp/go/python .sh install lsp and coc for all three languages, run install.sh and call it as needed
+- update.sh pulls the latest vim-fast configuration
 
-- update.sh to pull the latest configuration of vim-fast
+- uninstall.sh Uninstall vim-fast
 
-- uninstall.sh to uninstall vim-fast
+- shell/cpp/go/python.sh install lsp and coc for all three languages, run install.sh and call it as needed
 
-- plug.sh download and install all the latest plugins (,automatically called, use gitee, faster)
+- shell/plug.sh download and install all the latest plugins (,auto-call, use gitee, faster)
 
-- doc_zh.sh download and install vim Chinese documentation
+- shell/doc_zh.sh download and install vim Chinese documentation
 
-- self.sh customize the name and email in .vimrc to your own
+- shell/self.sh customize the name and email in .vimrc to your own
 
-- nvim.sh migrate to nvim with one click
+- shell/nodejs.sh nodejs install script, will be called automatically
 
-- nodejs.sh nodejs installation script, which will be called automatically
+- shell/color.sh adds a Vim theme
+
+- shell/coc_plug.sh Recommended coc plugin installation
+
+- nvim.sh One click migration to nvim
 
 ## Other files
 
@@ -129,13 +137,19 @@
 
   1. [Installation](https://www.bilibili.com/video/BV1RV4y1K7Le/)
 
-  2. [Configuration in detail](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
+  2. [Configuration Details](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
 
-  3. updateing
+  3. [Custom VIM Configuration](https://www.bilibili.com/video/BV1Y84y1q79F/)
+
+  4. updateing
 
 - [zhihu](https://zhuanlan.zhihu.com/p/524286962)
 
-## Install
+## Installation
+
+> The first two steps can be simplified to
+>
+> curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/webinstall.sh |bash
 
 1. git clone [https://gitee.com/mirrorvim/vim-fast](https://link.zhihu.com/?target=https%3A//gitee.com/mirrorvim/vim-fast)
 
@@ -183,13 +197,17 @@
 
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
 
+### Easy to install plugin-free version
+
+   > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash
+
 ## Vimplus repository
 
 [Vimplus](https://gitee.com/chxuan/vimplus.git)
 
 ## QA
 
-1. is there an nvim version?
+1. is there a version of nvim?
 
    - nvim can be installed via nvim.sh for now, the lua configuration version will take some time
 
@@ -207,17 +225,17 @@
 
    - tmux currently only switches the theme to onedark and turns off termguicolors, set let g:onedark_termcolors=256
 
-5. Do you need root or sudo access?
+Do you need root or sudo access?
 
-- If vim-fast has been installed on the machine before or if all the corresponding software is already installed, you don't need sudo, otherwise you need sudo to install the package.
+   - If vim-fast has been installed on the machine before or if all the corresponding software is already installed, you don't need sudo, otherwise you need sudo to install the package.
 
-6. I want to customize the dashboard content when Vim starts
+I want to customize the dashboard content when Vim starts
 
-- Get the pattern representation [Spring Boot banner online generation tool](https://www.bootschool.net/ascii), choose the type 'ANSI Shadow'
+   - Get the pattern representation [Spring Boot banner online generation tool](https://www.bootschool.net/ascii), choose the type 'ANSI Shadow'
 
-- Get the Vim form [vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html) (took a bit of time to do this myself, as I don't write much front-end and the graphics are rather poor)
+   - Get the Vim form [vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html) (took a bit of time to do this myself, as I don't write much front-end and the graphics are rather poor)
 
-- Copy the result to .vimrc
+   - Copy the result to .vimrc
 
 7. appears E1208: -complete used without allowing argumentsPress ENTER or type command to continue
 

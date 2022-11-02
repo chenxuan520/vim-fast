@@ -59,7 +59,7 @@
 
 4. 插件压缩包放在gitee上,使得插件下载的速度得到提高,对新手友好化,提供shell脚本一键配置插件
 
-5. 添加了基于功能的快捷键的查找,避免了出现快捷键忘记
+5. 添加了基于功能的快捷键的查找,避免了出现快捷键忘记,通过\<space\>H打开
 
 6. 完善了**鼠标的支持**,使得新手更加友好
 
@@ -97,23 +97,27 @@
 
 - install.sh 安装脚本,首先运行,安装vim-fast
 
-- install_without_sudo.sh 在没有root和sudo下安装(需要提前下载好apt包)
-
-- cpp/go/python .sh 三种语言的lsp以及coc安装,运行install.sh后按需调用
+- install_without_sudo.sh 在没有root和sudo下安装(需要提前下载好软件包)
 
 - update.sh 拉取vim-fast最新配置
 
 - uninstall.sh 卸载vim-fast
 
-- plug.sh 下载并安装最新所有插件(,自动调用,使用gitee,更加快速)
+- shell/cpp/go/python.sh 三种语言的lsp以及coc安装,运行install.sh后按需调用
 
-- doc_zh.sh 下载安装vim中文文档
+- shell/plug.sh 下载并安装最新所有插件(,自动调用,使用gitee,更加快速)
 
-- self.sh 将.vimrc中姓名和email定制为自己的
+- shell/doc_zh.sh 下载安装vim中文文档
+
+- shell/self.sh 将.vimrc中姓名和email定制为自己的
+
+- shell/nodejs.sh nodejs安装脚本,会自动调用
+
+- shell/color.sh 添加Vim主题
+
+- shell/coc_plug.sh 推荐的coc插件安装
 
 - nvim.sh 一键迁移到nvim
-
-- nodejs.sh nodejs安装脚本,会自动调用
 
 ## 其他文件
 
@@ -192,6 +196,10 @@
 3. 出现这个为安装go补全成功
 
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
+
+### 简易安装无插件版本
+
+   > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash
 
 ## Vimplus仓库
 
