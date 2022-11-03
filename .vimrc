@@ -132,7 +132,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight', {'on': 'NERDTreeToggle'}
 " quick choose area
 Plug 'gcmt/wildfire.vim', {'on': [ '<Plug>(wildfire-fuel)', '<Plug>(wildfire-quick-select)'] }
 " easy align
-Plug 'godlygeek/tabular', {'on':'Tab'}
+Plug 'godlygeek/tabular', {'on':'Tabularize'}
 " change surround quick
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -579,8 +579,8 @@ let g:Lf_UseCache = 0
 " c-] open in vertical,c-x open in split,c-t open in a tab,c-\ ask for open,D to delete buffer
 
 " tabular
-nnoremap <leader>T :Tab /
-vnoremap <leader>T :Tab /
+nnoremap <leader>T :Tabularize /
+vnoremap <leader>T :Tabularize /
 
 " vim-smooth-scroll
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>

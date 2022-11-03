@@ -1,4 +1,16 @@
 
+"======================================================================
+"
+" termtask
+"
+" Created by chenxuan on 2022.11.02
+"
+"======================================================================
+
+if get(g:,"markdown_simple_disable",0)
+	finish
+endif
+
 func! s:Format()
 	let s:i=2
 	let s:code=0

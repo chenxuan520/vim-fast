@@ -1,3 +1,19 @@
+
+"======================================================================
+"
+" termtask
+"
+" Created by chenxuan on 2022.11.02
+"
+"======================================================================
+
+if get(g:,"markdown_simple_disable",0)
+	finish
+endif
+
+let b:indent=get(g:,"markdown_simple_indent",nr2char(9))
+let b:table_flag=get(g:,"markdown_simple_table_flag",";;")
+
 func! s:AddTitle()
 	let s:old=col('.')-1
 
@@ -107,13 +123,13 @@ func! s:Paste()
 	execute "normal! F]"
 endfunc
 
-func! s:Enter()
+func! s:Enter(ch)
 	let s:str=getline('.')
 	let s:char=""
 	let s:i=0
 
 	for s:ch in str2list(s:str)
-		if s:ch!=char2nr(' ')&&s:ch!=char2nr('\t')
+		if s:ch!=char2nr(' ')&&s:ch!=9
 			break
 		endif
 		let s:i=s:i+1
@@ -127,20 +143,63 @@ func! s:Enter()
 		let s:i=s:i+1
 	endwhile
 
+	if s:char=='|'&&getline('.')[col('$')-2]!='|'
+		call setline(line('.'),getline('.').'|')
+	endif
+
 	let @s=""
+	if a:ch=='o'
+		let @s=b:indent
+	endif
+
 	if s:char=='-'
-		let @s='- '
+		let @s=@s.'- '
 	elseif s:char=='>'
 		let @s='> '
 	elseif s:char=='|'
 		if exists('g:plugs')&&has_key(g:plugs,'tabular')
-			execute ":Tab /|"
+			execute ":Tabularize /|"
 			execute "normal! $l"
 		endif
+		let @s='|'
 	elseif s:char[0]>0&&s:char[0]<=9
 		let @s=(s:char+1).". "
+	else
+		let @s=""
 	endif
 
+endfunc
+
+func! s:Backspace()
+	let s:str=getline('.')
+	let s:char=""
+	let s:i=col('.')-2
+	let s:delete=1
+	let s:tab=0
+
+	while s:i>0
+		if s:str[s:i]==nr2char(9)
+			let s:tab=1
+			break
+		elseif s:str[s:i]==' '||s:str[s:i]=='-'||s:str[s:i]=='|'||
+					\s:str[s:i]=='>'||s:str[s:i]=='.'||
+					\(s:str[s:i]>='0'&&s:str[s:i]<='9')
+			let s:delete+=1
+		else
+			break
+		endif
+		let s:i-=1
+	endwhile
+
+	if s:tab
+		let s:delete-=1
+	endif
+
+	if s:delete>0
+		execute "normal ".s:delete."X"
+	else
+		execute "normal X"
+	endif
 endfunc
 
 nnoremap <silent><buffer>#         : call <sid>AddTitle()<cr><right>
@@ -163,10 +222,17 @@ nnoremap <silent><buffer>`     viw:call <sid>Bold('`')<cr>
 
 vnoremap <silent><buffer><leader>` :<c-u>call <sid>Code()<cr>
 
-nnoremap <silent><buffer>o     :call <sid>Enter()<cr>o<c-r>s
-inoremap <silent><buffer><c-m> <c-o>:call <sid>Enter()<cr><c-m><c-r>s
+nnoremap <silent><buffer>o     :call <sid>Enter('o')<cr>o<c-r>s
+inoremap <silent><buffer><c-m> <c-o>:call <sid>Enter('')<cr><c-m><c-r>s
+
+inoremap <silent><buffer><c-\>   <c-o>:call <sid>Backspace()<cr>
+
+if b:table_flag!=""
+	execute ":inoremap <silent><buffer>".b:table_flag." \\|"
+endif
 
 nnoremap <silent><buffer><leader><leader>p :call <sid>Paste()<cr>
+nnoremap <silent><buffer>"+p :call <sid>Paste()<cr>
 
 nnoremap <silent><buffer>> >>
 nnoremap <silent><buffer>< <<
