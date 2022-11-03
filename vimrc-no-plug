@@ -146,7 +146,7 @@ func! Tapi_EditFile(bufnum,arglist)
 endfunc
 tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
-tnoremap <c-l> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
+tnoremap <c-i> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
 nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
@@ -276,10 +276,7 @@ nnoremap <silent><nowait>_ :vsp<cr>
 nnoremap <silent><nowait>+ :sp<cr>
 
 " edit file
-nnoremap e :edit<space>
-
-" reset wrong enter
-inoremap <c-b> <c-[>vbe<right>di
+nnoremap e :edit<space><c-r>=getcwd()<cr>/
 
 " change } pos
 nnoremap L $i<c-m><esc>k$

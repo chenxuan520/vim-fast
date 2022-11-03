@@ -33,6 +33,7 @@ func! s:Format()
 			call append(s:i-1,'')
 			let s:i=s:i+1
 		endif
+
 		let s:i=s:i+1
 	endwhile
 endfunc
