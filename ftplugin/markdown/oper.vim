@@ -132,6 +132,11 @@ func! s:Enter()
 		let @s='- '
 	elseif s:char=='>'
 		let @s='> '
+	elseif s:char=='|'
+		if exists('g:plugs')&&has_key(g:plugs,'tabular')
+			execute ":Tab /|"
+			execute "normal! $l"
+		endif
 	elseif s:char[0]>0&&s:char[0]<=9
 		let @s=(s:char+1).". "
 	endif
