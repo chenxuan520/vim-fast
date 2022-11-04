@@ -77,7 +77,9 @@
 
 13. 提供中文VIM手册的一键下载配置[(基于Vimcdoc)](https://github.com/yianwillis/vimcdoc)
 
-14. 内置markdown快捷插件
+14. [**内置markdown快捷插件**](https://github.com/chenxuan520/markdown-simple.vim)
+
+15. 对markdown文件提供ibus输入法的切换操作(默认自带)
 
 ## 项目文件夹
 
@@ -91,7 +93,7 @@
 
 - vimscript 一些有用的VIM脚本
 
-- old Vimplus旧版文件(不推荐)
+- old Vimplus旧版文件(不推荐,仅供参考)
 
 ## shell脚本
 

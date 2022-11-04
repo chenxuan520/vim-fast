@@ -316,6 +316,11 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " 	execute 'source ' . s:fileway
 " endif
 
+" ici to tran
+let g:term_cmd='~/.local/bin/ici'
+vnoremap <silent><leader>i :call termtask#Term_cmd_exec('v')<cr>
+nnoremap <silent><leader>i :call termtask#Term_cmd_exec('')<cr>
+
 " use select area to replace
 vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
 nnoremap <leader>s :%s/<c-r><c-w>/

@@ -170,3 +170,18 @@ func! termtask#Term_task_list()
 	echo 'now task:'
 	echo s:list
 endfunc
+
+" set cmd task
+func! termtask#Term_cmd_exec(mode)
+	if a:mode=='v'
+		norm! gv"sy
+	else
+		let @s=expand('<cword>')
+	endif
+	let s:cmd=get(g:,"term_cmd","")
+	if s:cmd==""
+		echo "cmd no define"
+		return
+	endif
+	echo system(s:cmd.' '.@s)
+endfunc
