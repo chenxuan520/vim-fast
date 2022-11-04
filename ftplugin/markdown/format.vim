@@ -20,7 +20,7 @@ func! s:Format()
 		let s:ch=''
 
 		for s:ch in str2list(s:str)
-			if s:ch!=char2nr(' ')&&s:ch!=char2nr('\t')
+			if s:ch!=char2nr(' ')&&s:ch!=9
 				if s:ch==char2nr('`')
 					if s:code==0
 						let s:code=1

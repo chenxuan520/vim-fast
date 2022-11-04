@@ -37,11 +37,15 @@ func! s:AddSub()
 	let s:char= getline('.')[col]
 	if s:char=='-'
 		execute "normal! 2x"
+		let s:old-=3
 	else
 		execute "normal! i-\ "
+		let s:old+=1
 	endif
 
-	execute "normal! 0".s:old."l"
+	if s:old>0
+		execute "normal! 0".s:old."l"
+	endif
 endfunc
 
 func! s:Code()
@@ -150,6 +154,7 @@ func! s:Enter(ch)
 	let @s=""
 	if a:ch=='io'
 		let @s=b:indent
+		return
 	endif
 
 	if s:char=='-'
