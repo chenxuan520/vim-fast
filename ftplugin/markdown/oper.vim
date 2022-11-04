@@ -148,7 +148,7 @@ func! s:Enter(ch)
 	endif
 
 	let @s=""
-	if a:ch=='o'
+	if a:ch=='io'
 		let @s=b:indent
 	endif
 
@@ -222,7 +222,8 @@ nnoremap <silent><buffer>`     viw:call <sid>Bold('`')<cr>
 
 vnoremap <silent><buffer><leader>` :<c-u>call <sid>Code()<cr>
 
-nnoremap <silent><buffer>o     :call <sid>Enter('o')<cr>o<c-r>s
+nnoremap <silent><buffer>o         :call <sid>Enter('o')<cr>o<c-r>s
+nnoremap <silent><buffer><leader>o :call <sid>Enter('io')<cr>o<c-r>s
 inoremap <silent><buffer><c-m> <c-o>:call <sid>Enter('')<cr><c-m><c-r>s
 
 inoremap <silent><buffer><c-\>   <c-o>:call <sid>Backspace()<cr>
