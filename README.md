@@ -249,6 +249,10 @@
 
    - 在`~/.vim/ftplugin`找到对应文件的文件夹,修改comment.vim的内容即可
 
+9. 控制台图标混乱
+
+  - 设置控制台的字体,打开首选项,设置字体为 `DroidSansMono Nerd Font Book`
+
 ## 帮助
 
 1. [插件快捷键说明](./doc/key.md)

@@ -191,6 +191,9 @@ func! s:Backspace()
 		let s:i-=1
 	endwhile
 
+	if s:i==0&&s:str[s:i]==nr2char(9)
+		let s:delete-=1
+	endif
 	if s:tab
 		let s:delete-=1
 	endif

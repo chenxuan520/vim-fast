@@ -117,7 +117,7 @@ Plug 'chenxuan520/my-vim-dashboard'
 " function list
 Plug 'preservim/tagbar', {'tag':'2.2'}
 " auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release','tag': '0.0.80'}
+Plug 'neoclide/coc.nvim', {'branch': 'release','tag': '0.0.81'}
 " find anything
 Plug 'Yggdroot/LeaderF'
 " quick move mouse
@@ -449,7 +449,7 @@ nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gD <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
-nmap <leader>qf <Plug>(coc-fix-current)
+nmap <leader>qq <Plug>(coc-fix-current)
 " coc refactor code
 nmap <space>r <Plug>(coc-refactor)
 nmap <leader>r <Plug>(coc-rename)
