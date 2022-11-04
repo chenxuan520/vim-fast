@@ -8,4 +8,4 @@ if [ ! -d "~/.vim/colors" ];then
 fi
 cd ~/.vim/colors
 wget https://gitee.com/mirrorvim/vim-fast/raw/master/colors/tokyonight.vim
-sed "s/desert/tokyonight/g" ~/.vimrc
+sed -i "s/desert/tokyonight/g" ~/.vimrc

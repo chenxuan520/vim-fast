@@ -152,6 +152,8 @@
 > 第一第二步可以简化为
 >
 > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/webinstall.sh |bash
+>
+> (在安装完毕后如果遇到输出混乱的问题,可以直接关闭终端重启就可以了)
 
 1. git clone [https://gitee.com/mirrorvim/vim-fast](https://link.zhihu.com/?target=https%3A//gitee.com/mirrorvim/vim-fast)
 

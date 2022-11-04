@@ -253,3 +253,5 @@ vnoremenu <silent> PopUp.Code\ Text   : call <sid>Bold('`')<cr>
 
 iab <buffer>! ![]()<left>
 iab <buffer>] []()<left>
+
+set conceallevel=3
