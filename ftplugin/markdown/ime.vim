@@ -8,9 +8,12 @@ if system('ibus engine') =~ 'No engine is set'
 endif
 let g:ibus_normal=system('ibus engine')
 let g:ibus_status=''
-augroup ibus
-	au!
-	au InsertEnter *.md call ibus#ReloadStatus()
-	au InsertLeave *.md call ibus#SaveStatus()
-	au BufDelete   *.md au! ibus|call ibus#ReloadStatus()
-augroup END
+let g:ibus_enable=get(g:,'ibus_enable',1)
+if g:ibus_enable
+	augroup ibus
+		au!
+		au InsertEnter *.md call ibus#ReloadStatus()
+		au InsertLeave *.md call ibus#SaveStatus()
+		au BufDelete   *.md au! ibus|call ibus#ReloadStatus()|let g:AutoPairsMapBS=1
+	augroup END
+endif

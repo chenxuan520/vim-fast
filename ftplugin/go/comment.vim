@@ -7,6 +7,11 @@ func s:SetComment()
 endfunc
 " set preparecode in buffernew
 func! VimFastSetPreCode()
+	if expand('%')=='main.go'
+		call append(line(".")-1,'package main')
+		return
+	endif
+
 	call append(line(".")-1,'package ' . split(expand('%:p'),'/')[-2])
 endfunc
 nnoremap <Leader>c :call <SID>SetComment()<CR>

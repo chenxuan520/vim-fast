@@ -45,7 +45,7 @@ function! s:Term_read(name)
 		endif
 
 		if !has_key(s:task,'command')
-			echo 'command is null'
+			echom s:task['name'].' command is null'
 			return
 		endif
 
@@ -129,8 +129,6 @@ function! termtask#Term_task_run(name)
 	for s:task in g:Term_project_task
 		if has_key(s:task,'key')&&has_key(s:task,'name')&&s:task['key']!=''
 			execute ":nnoremap " . s:task['key'] . ' :call <sid>Term_read("' . s:task['name'] . '")<cr>'
-		else
-			echo "task is no completed"
 		endif
 	endfor
 	call <sid>Term_read(a:name)

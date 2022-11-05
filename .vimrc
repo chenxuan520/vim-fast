@@ -218,6 +218,7 @@ endfunc
 tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
 tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
+tnoremap <c-z> exit<cr>
 nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
 nnoremap <Leader><Leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
@@ -320,6 +321,9 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 let g:term_cmd='~/.local/bin/ici'
 vnoremap <silent><leader>i :call termtask#Term_cmd_exec('v')<cr>
 nnoremap <silent><leader>i :call termtask#Term_cmd_exec('')<cr>
+
+" ibus enable
+let g:ibus_enable=1
 
 " use select area to replace
 vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
