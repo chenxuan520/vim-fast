@@ -14,6 +14,6 @@ if g:ibus_enable
 		au!
 		au InsertEnter *.md call ibus#ReloadStatus()
 		au InsertLeave *.md call ibus#SaveStatus()
-		au BufDelete   *.md au! ibus|call ibus#ReloadStatus()|let g:AutoPairsMapBS=1
+		au BufDelete   *.md au! ibus|call ibus#ReloadStatus()
 	augroup END
 endif

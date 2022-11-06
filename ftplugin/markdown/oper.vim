@@ -14,10 +14,11 @@ endif
 let b:indent=get(g:,"markdown_simple_indent",nr2char(9))
 let b:table_flag=get(g:,"markdown_simple_table_flag",";;")
 
-let g:ibus_enable=get(g:,'ibus_enable',0)
-if g:ibus_enable
-	let g:AutoPairsMapBS=0
-endif
+let g:AutoPairsMapBS=0
+augroup mdpair
+	au!
+	au BufLeave *.md let g:AutoPairsMapBS=1|au! mdpair
+augroup END
 
 func! s:AddTitle()
 	let s:old=col('.')-1
@@ -159,7 +160,7 @@ func! g:VimFastEnter(ch)
 	let @s=""
 	if a:ch=='io'
 		let @s=b:indent
-		return
+		return "\<cr>".@s
 	elseif a:ch=='ke'
 		let @s=b:indent
 	endif
@@ -237,11 +238,11 @@ nnoremap <silent><buffer><leader>> : call <sid>Refence()<cr>
 vnoremap <silent><buffer><leader>~ : call <sid>Bold('~~')<cr>
 
 vnoremap <silent><buffer>*     :call <sid>Bold('*')<cr>
+vnoremap <silent><buffer><c-i> :call <sid>Bold('*')<cr>
 vnoremap <silent><buffer><c-b> :call <sid>Bold('**')<cr>
 nnoremap <silent><buffer>*     viw:call <sid>Bold('*')<cr>
 
 vnoremap <silent><buffer>`     :call <sid>Bold('`')<cr>
-vnoremap <silent><buffer><c-i> :call <sid>Bold('`')<cr>
 nnoremap <silent><buffer>`     viw:call <sid>Bold('`')<cr>
 
 vnoremap <silent><buffer><leader>` :<c-u>call <sid>Code()<cr>
@@ -250,10 +251,17 @@ nnoremap <silent><buffer>o         :call g:VimFastEnter('o')<cr>o<c-r>s
 nnoremap <silent><buffer><leader>o :call g:VimFastEnter('io')<cr>o<c-r>s
 
 inoremap <silent><buffer><c-m>      <c-r>=g:VimFastEnter('')<cr>
+inoremap <silent><buffer>\<cr>      <c-r>=g:VimFastEnter('io')<cr>
 inoremap <silent><buffer><kenter>   <c-r>=g:VimFastEnter('ke')<cr>
 
 inoremap <expr><silent><buffer><c-\>  <sid>Backspace()
 inoremap <expr><silent><buffer><bs>   <sid>Backspace()
+
+inoremap <silent><buffer>- -<space>
+inoremap <silent><buffer>> ><space>
+for s:i in [1,2,3,4,5,6,7,8,9]
+	execute "inoremap <silent><buffer>".s:i.". ".s:i.". "
+endfor
 
 if b:table_flag!=""
 	execute ":inoremap <silent><buffer>".b:table_flag." \\|"
