@@ -286,6 +286,9 @@ nnoremap L $i<c-m><esc>k$
 nnoremap H O<c-[>j
 nnoremap M o<c-[>k
 
+" add space
+nnoremap <leader><space> i<space><right><c-[>
+
 " scroll in other window
 nnoremap \u <c-w>p<c-u><c-w>p
 nnoremap \d <c-w>p<c-d><c-w>p
@@ -303,6 +306,8 @@ cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
 " select move
 vnoremap <silent><up>   : move '<-2<cr>gv
 vnoremap <silent><down> : move '>+1<cr>gv
+vnoremap <silent><right> y<c-w>lp
+vnoremap <silent><left>  y<c-w>lp
 
 " set alias
 iab ;e 1607772321@qq.com

@@ -37,12 +37,16 @@ endfunc
 
 function! s:Term_read(name)
 	let s:options={}
+	let s:exist=0
+
 	for s:task in g:Term_project_task
 		if a:name!=""
 			if !has_key(s:task,'name')||s:task['name']!=a:name
 				continue
 			endif
 		endif
+
+		let s:exist=1
 
 		if !has_key(s:task,'command')
 			echom s:task['name'].' command is null'
@@ -116,6 +120,11 @@ function! s:Term_read(name)
 
 		break
 	endfor
+
+	if !s:exist
+		echo 'no this task name'
+	endif
+
 endfunction
 
 function! termtask#Term_task_run(name)
