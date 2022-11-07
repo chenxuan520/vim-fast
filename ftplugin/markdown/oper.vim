@@ -191,6 +191,17 @@ func! s:Backspace()
 	let s:delete=1
 	let s:tab=0
 
+	let s:pair=getline('.')[col('.')-1]
+	let s:pair_l=getline('.')[col('.')-2]
+	if (s:pair==')'&&s:pair_l=='(')||
+		\ (s:pair==']'&&s:pair_l=='[')||
+		\ (s:pair=='}'&&s:pair_l=='{')||
+		\ (s:pair=='"'&&s:pair_l=='"')||
+		\ (s:pair=="'"&&s:pair_l=="'")||
+		\ (s:pair=='`'&&s:pair_l=='`')
+		return "\<right>\<bs>\<bs>"
+	endif
+
 	while s:i>0
 		if s:str[s:i]==nr2char(9)
 			let s:tab=1
@@ -263,6 +274,12 @@ for s:i in [1,2,3,4,5,6,7,8,9]
 	execute "inoremap <silent><buffer>".s:i.". ".s:i.". "
 endfor
 
+let s:head='#'
+for s:i in [1,2,3,4,5]
+	execute "iab <silent><buffer>h".s:i." ".s:head
+	let s:head=s:head.'#'
+endfor
+
 if b:table_flag!=""
 	execute ":inoremap <silent><buffer>".b:table_flag." \\|"
 endif
@@ -278,7 +295,7 @@ vnoremenu <silent> PopUp.Italic\ Text : call <sid>Bold('*')<cr>
 vnoremenu <silent> PopUp.Line\ Text   : call <sid>Bold('~~')<cr>
 vnoremenu <silent> PopUp.Code\ Text   : call <sid>Bold('`')<cr>
 
-iab <buffer>! ![]()<left>
-iab <buffer>] []()<left>
+inoremap <silent><buffer> !<space> ![]()<left>
+inoremap <silent><buffer> ]<space> []()<left>
 
 set conceallevel=3
