@@ -17,7 +17,7 @@ let b:table_flag=get(g:,"markdown_simple_table_flag",";;")
 let g:AutoPairsMapBS=0
 augroup mdpair
 	au!
-	au BufLeave *.md let g:AutoPairsMapBS=1|au! mdpair
+	au BufLeave *.md let g:AutoPairsMapBS=1|let conceallevel=0|au! mdpair
 augroup END
 
 func! s:AddTitle()

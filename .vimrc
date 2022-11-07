@@ -358,6 +358,15 @@ nnoremap M o<c-[>k
 " add space
 nnoremap <leader><space> i<space><right><c-[>
 
+" jump >
+func! s:Judge()
+	if getline('.')[col('.')-1]=='>'
+		return "\<right>"
+	endif
+	return ">"
+endfunc
+inoremap <expr><silent>> <sid>Judge()
+
 " scroll in other window
 nnoremap \u <c-w>p<c-u><c-w>p
 nnoremap \d <c-w>p<c-d><c-w>p
