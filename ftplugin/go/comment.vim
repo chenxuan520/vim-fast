@@ -14,4 +14,4 @@ func! VimFastSetPreCode()
 
 	call append(line(".")-1,'package ' . split(expand('%:p'),'/')[-2])
 endfunc
-nnoremap <Leader>c :call <SID>SetComment()<CR>
+nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>

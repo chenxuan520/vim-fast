@@ -10,4 +10,4 @@ func! VimFastSetPreCode()
 	call append(line(".")-1,'#!/usr/bin/env python')
 	call append(line(".")-1,'# coding=utf-8')
 endfunc
-nnoremap <Leader>c :call <SID>SetComment()<CR>
+nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>

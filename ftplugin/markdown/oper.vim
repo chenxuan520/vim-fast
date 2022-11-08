@@ -165,7 +165,7 @@ func! g:VimFastEnter(ch)
 		let @s=b:indent
 	endif
 
-	if s:char=='-'
+	if s:char=='-'&&getline('.')[s:i+1]!='-'
 		let @s=@s.'- '
 	elseif s:char=='>'
 		let @s='> '
@@ -198,7 +198,9 @@ func! s:Backspace()
 		\ (s:pair=='}'&&s:pair_l=='{')||
 		\ (s:pair=='"'&&s:pair_l=='"')||
 		\ (s:pair=="'"&&s:pair_l=="'")||
-		\ (s:pair=='`'&&s:pair_l=='`')
+		\ (s:pair=='`'&&s:pair_l=='`')||
+		\ (s:pair=='~'&&s:pair_l=='~')||
+		\ (s:pair=='*'&&s:pair_l=='*')
 		return "\<right>\<bs>\<bs>"
 	endif
 
@@ -238,6 +240,33 @@ func! s:Backspace()
 	return
 endfunc
 
+func! s:DivLine(ch)
+	let s:pair=getline('.')[col('.')-2]
+	let s:pair_l=getline('.')[col('.')-3]
+
+	if s:pair==' '&&s:pair_l==a:ch
+		return "\<bs>".a:ch."\<space>"
+	endif
+	return a:ch."\<space>"
+endfunc
+
+func! s:Move()
+	let s:str=getline('.')
+	let s:i=1
+	while s:str[col('.')-2+s:i]=='*'||
+		\ s:str[col('.')-2+s:i]=='~'||
+		\ s:str[col('.')-2+s:i]==']'||
+		\ s:str[col('.')-2+s:i]==')'
+		let s:i+=1
+	endwhile
+	let s:result=""
+	while s:i>0
+		let s:result=s:result."\<right>"
+		let s:i-=1
+	endwhile
+	return s:result
+endfunc
+
 nnoremap <silent><buffer>#         : call <sid>AddTitle()<cr><right>
 
 nnoremap <silent><buffer>-         : call <sid>AddSub()<cr><right>
@@ -268,8 +297,11 @@ inoremap <silent><buffer><kenter>   <c-r>=g:VimFastEnter('ke')<cr>
 inoremap <expr><silent><buffer><c-\>  <sid>Backspace()
 inoremap <expr><silent><buffer><bs>   <sid>Backspace()
 
-inoremap <silent><buffer>- -<space>
-inoremap <silent><buffer>> ><space>
+inoremap <expr><silent><buffer><c-l> <sid>Move()
+inoremap <expr><silent><buffer>- <sid>DivLine('-')
+inoremap <expr><silent><buffer>> <sid>DivLine('>')
+inoremap <silent><buffer>* **<left>
+inoremap <silent><buffer>~~ ~~~~<left><left>
 for s:i in [1,2,3,4,5,6,7,8,9]
 	execute "inoremap <silent><buffer>".s:i.". ".s:i.". "
 endfor
@@ -277,6 +309,7 @@ endfor
 let s:head='#'
 for s:i in [1,2,3,4,5]
 	execute "iab <silent><buffer>h".s:i." ".s:head
+	execute "iab <silent><buffer>H".s:i." ".s:head
 	let s:head=s:head.'#'
 endfor
 

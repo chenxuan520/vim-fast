@@ -24,7 +24,7 @@ func! VimFastSetPreCode()
 		call append(line(".")-1,'#pragma once')
 	endif
 endfunc
-nnoremap <Leader>c :call <SID>SetComment()<CR>
+nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>
 
 iab <buffer>include #include "
 iab <buffer>pra #pragma once
