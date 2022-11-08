@@ -59,8 +59,10 @@ set sidescrolloff=4      " 设置右部距离
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码补全
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set wildmenu             " vim自身命名行模式智能补全
-set completeopt-=preview " 补全时不显示窗口，只显示补全列表
+set wildmenu                 " vim自身命名行模式智能补全
+set completeopt=menu,preview " 补全时不显示窗口，只显示补全列表
+set omnifunc=syntaxcomplete#Complete
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 搜索设置
@@ -114,6 +116,9 @@ nnoremap <silent> <c-p> :bp<cr>
 nnoremap <silent> <c-n> :bn<cr>
 nnoremap <silent> <c-m> :w<cr>
 nnoremap <silent> <leader>d :bd<cr>
+
+" reload .vimrc
+nnoremap <leader><leader>s :source $MYVIMRC<cr>
 
 " 插入模式下的光标移动
 imap <c-j> <DOWN>
@@ -346,13 +351,13 @@ function GetMode()
     endif
 endfunction
 
-set statusline=%1*\ %{GetMode()}
-set statusline+=%2*\ %F%m%r%h%w%=
+set statusline=%1*\ %{GetMode()}
+set statusline+=%2*\ %F\ %m%r%h%w%=
 set statusline+=%3*\ %Y\ |
 set statusline+=%4*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}
-set statusline+=%5*¦[%4l:%-4L]
+set statusline+=%5*¦☰\ %l/%-L
 set statusline+=%6*%3p%%\ ¦
-set statusline+=%7*\ %v\ ¦
+set statusline+=%7*:%v\ ¦
 
 " set netrw-------------------------------------
 let g:netrw_banner = 0
@@ -360,6 +365,6 @@ let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 15
-set fillchars=vert:\⎜ 
+set fillchars=vert:\⎜
 nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#333333 guifg=#666666
