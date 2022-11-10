@@ -140,7 +140,9 @@ function! termtask#Term_task_run(name)
 			execute ":nnoremap " . s:task['key'] . ' :call <sid>Term_read("' . s:task['name'] . '")<cr>'
 		endif
 	endfor
-	call <sid>Term_read(a:name)
+	if a:name!=''
+		call <sid>Term_read(a:name)
+	endif
 endfunction
 
 " read diff config for diff project

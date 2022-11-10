@@ -59,10 +59,9 @@ set sidescrolloff=4      " 设置右部距离
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码补全
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set wildmenu                 " vim自身命名行模式智能补全
-set completeopt=menu,preview " 补全时不显示窗口，只显示补全列表
+set wildmenu                          " vim自身命名行模式智能补全
+set completeopt=menu,preview,noselect " 补全时不显示窗口，只显示补全列表
 set omnifunc=syntaxcomplete#Complete
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 搜索设置
@@ -119,11 +118,24 @@ nnoremap <silent> <leader>d :bd<cr>
 
 " reload .vimrc
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
+nnoremap <leader><leader>S :source <c-r>=expand('%:p')<cr><cr>
 
 " 插入模式下的光标移动
 imap <c-j> <DOWN>
 imap <c-k> <UP>
 imap <c-l> <RIGHT>
+
+" 插入移动
+inoremap <c-e> <c-[>$i
+inoremap <c-a> <c-[>^i
+
+" 定位装置
+nnoremap { /{<cr>:noh<cr>va{<c-g>
+vnoremap { <c-[>/{<cr>:noh<cr>va{<c-g>
+nnoremap } /{<cr>NN:noh<cr>va}<c-g>
+vnoremap } <c-[>/{<cr>NN:noh<cr>va}<c-g>
+inoremap <c-\> <c-[>/{<cr>:noh<cr>va{<c-g>
+
 
 " 复制当前选中到系统剪切板
 vmap <leader><leader>y "+y
@@ -283,6 +295,10 @@ nnoremap <silent><nowait>+ :sp<cr>
 
 " edit file
 nnoremap e :edit<space><c-r>=getcwd()<cr>/
+nnoremap E :edit<space><c-r>=expand('%:p:h')<cr>/
+
+" open : quick
+nnoremap <space>; :
 
 " change } pos
 nnoremap L $i<c-m><esc>k$
@@ -328,6 +344,9 @@ iab ;e 1607772321@qq.com
 iab ;n chenxuan
 nnoremap \a :iabc<cr>
 nnoremap =a :ab<cr>
+
+" config complete
+inoremap / /<c-x><c-f>
 
 " set colorscheme
 set termguicolors

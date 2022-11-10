@@ -174,6 +174,7 @@ runtime macros/matchit.vim
 
 " reload .vimrc
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
+nnoremap <leader><leader>S :source <c-r>=expand('%:p')<cr><cr>
 
 " install and clean plug
 nnoremap <leader><leader>i :PlugInstall<cr>
@@ -189,6 +190,17 @@ nnoremap <silent> <leader>d :bd<cr>
 imap <c-j> <DOWN>
 imap <c-k> <UP>
 imap <c-l> <RIGHT>
+
+" move in insert
+inoremap <c-e> <c-[>$i
+inoremap <c-a> <c-[>^i
+
+" find next {}
+nnoremap { /{<cr>:noh<cr>va{<c-g>
+vnoremap { <c-[>/{<cr>:noh<cr>va{<c-g>
+nnoremap } /{<cr>NN:noh<cr>va}<c-g>
+vnoremap } <c-[>/{<cr>NN:noh<cr>va}<c-g>
+inoremap <c-\> <c-[>/{<cr>:noh<cr>va{<c-g>
 
 " yank to system
 vnoremap <leader><leader>y "+y
@@ -307,8 +319,9 @@ nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 vnoremap @ :normal @
 
 " termtask project config
-command! -nargs=1 TaskRun :call termtask#Term_task_run(<f-args>)
+command! -nargs=1 TaskRun  :call termtask#Term_task_run(<f-args>)
 command! -nargs=0 TaskList :call termtask#Term_task_list()
+command! -nargs=0 TaskLoad :call termtask#Term_task_run('')
 nnoremap <space>c :TaskRun<space>
 nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " auto read project file
@@ -326,7 +339,7 @@ nnoremap <silent><leader>i :call termtask#Term_cmd_exec('')<cr>
 let g:ibus_enable=1
 
 " use select area to replace
-vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
+xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
 nnoremap <leader>s :%s/<c-r><c-w>/
 
 " indent buffer
@@ -347,6 +360,10 @@ nnoremap <silent><nowait>+ :sp<cr>:bn<cr>
 
 " edit file
 nnoremap e :edit<space><c-r>=getcwd()<cr>/
+nnoremap E :edit<space><c-r>=expand('%:p:h')<cr>/
+
+" open : quick
+nnoremap <space>; :
 
 " change } pos
 nnoremap L $i<c-m><esc>k$
@@ -382,10 +399,10 @@ cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
 " use cd to change dir
 
 " select move
-vnoremap <silent><up>   : move '<-2<cr>gv
-vnoremap <silent><down> : move '>+1<cr>gv
-vnoremap <silent><right> y<c-w>lp
-vnoremap <silent><left>  y<c-w>lp
+xnoremap <silent><up>   : move '<-2<cr>gv
+xnoremap <silent><down> : move '>+1<cr>gv
+xnoremap <silent><right> y<c-w>lp
+xnoremap <silent><left>  y<c-w>lp
 
 " set alias
 iab ;e 1607772321@qq.com
@@ -570,8 +587,6 @@ nnoremap <space>T :LeaderfFunctionAll<cr>
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>H :Leaderf help --input key:<cr>
 vnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
-" enhance cmd
-nnoremap <space>: :LeaderfCommand<cr>
 " enhance find
 nnoremap <space>/ :LeaderfLine<cr>
 vnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr>
@@ -624,14 +639,14 @@ map <silent><nowait> ; <Plug>(clever-f-repeat-forward)
 " asyncrun
 let g:asyncrun_open = 6
 let g:asyncrun_bell = 0
-nmap <space>; :AsyncRun<space>
+nmap <space>: :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
 
 " wildfire config
 nmap - <Plug>(wildfire-fuel)
-vmap - <Plug>(wildfire-fuel)
+xmap - <Plug>(wildfire-fuel)
 nmap <backspace> <Plug>(wildfire-water)
-vmap <backspace> <Plug>(wildfire-water)
+xmap <backspace> <Plug>(wildfire-water)
 nmap <leader>- <Plug>(wildfire-quick-select)
 let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "i`", "ip"]
