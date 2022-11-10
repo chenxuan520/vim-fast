@@ -129,12 +129,34 @@ imap <c-l> <RIGHT>
 inoremap <c-e> <c-[>$i
 inoremap <c-a> <c-[>^i
 
+" 插入模式删除
+inoremap <c-d> <c-[>ddi
+
 " 定位装置
 nnoremap { /{<cr>:noh<cr>va{<c-g>
 vnoremap { <c-[>/{<cr>:noh<cr>va{<c-g>
-nnoremap } /{<cr>NN:noh<cr>va}<c-g>
-vnoremap } <c-[>/{<cr>NN:noh<cr>va}<c-g>
-inoremap <c-\> <c-[>/{<cr>:noh<cr>va{<c-g>
+nnoremap } /{<cr>:noh<cr>NNva}<c-g>
+vnoremap } <c-[>/{<cr>:noh<cr>NNva}<c-g>
+inoremap <c-f> <c-[>/{<cr>:noh<cr>va{<c-g>
+vnoremap <c-f> <c-[>/{<cr>:noh<cr>va{<c-g>
+vnoremap <c-b> <c-[>/{<cr>:noh<cr>NNva}<c-g>
+inoremap <expr><c-b> <sid>CtrlB()
+func s:CtrlB()
+	if pumvisible()
+		return "\<c-n>"
+	elseif getline('.')[col('.')-2]==nr2char(9)
+		let s:pos=col('.')
+		let s:result=""
+		while s:pos!=0
+			let s:result=s:result."\<bs>"
+			let s:pos-=1
+		endwhile
+		return s:result
+	else
+		return "\<c-[>/}\<cr>:noh\<cr>NNva}\<c-g>"
+	endif
+endfunc
+
 
 
 " 复制当前选中到系统剪切板

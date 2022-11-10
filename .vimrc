@@ -195,12 +195,33 @@ imap <c-l> <RIGHT>
 inoremap <c-e> <c-[>$i
 inoremap <c-a> <c-[>^i
 
+" delete line
+inoremap <c-d> <c-[>ddi
+
 " find next {}
 nnoremap { /{<cr>:noh<cr>va{<c-g>
 vnoremap { <c-[>/{<cr>:noh<cr>va{<c-g>
-nnoremap } /{<cr>NN:noh<cr>va}<c-g>
-vnoremap } <c-[>/{<cr>NN:noh<cr>va}<c-g>
-inoremap <c-\> <c-[>/{<cr>:noh<cr>va{<c-g>
+nnoremap } /{<cr>:noh<cr>NNva}<c-g>
+vnoremap } <c-[>/{<cr>:noh<cr>NNva}<c-g>
+inoremap <c-f> <c-[>/{<cr>:noh<cr>va{<c-g>
+vnoremap <c-f> <c-[>/{<cr>:noh<cr>va{<c-g>
+vnoremap <c-b> <c-[>/{<cr>:noh<cr>NNva}<c-g>
+inoremap <expr><c-b> <sid>CtrlB()
+func s:CtrlB()
+	if pumvisible()
+		return "\<c-n>"
+	elseif getline('.')[col('.')-2]==nr2char(9)
+		let s:pos=col('.')
+		let s:result=""
+		while s:pos!=0
+			let s:result=s:result."\<bs>"
+			let s:pos-=1
+		endwhile
+		return s:result
+	else
+		return "\<c-[>/}\<cr>:noh\<cr>NNva}\<c-g>"
+	endif
+endfunc
 
 " yank to system
 vnoremap <leader><leader>y "+y
@@ -332,7 +353,7 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 
 " ici to tran
 let g:term_cmd='~/.local/bin/ici'
-vnoremap <silent><leader>i :call termtask#Term_cmd_exec('v')<cr>
+xnoremap <silent><leader>i :call termtask#Term_cmd_exec('v')<cr>
 nnoremap <silent><leader>i :call termtask#Term_cmd_exec('')<cr>
 
 " ibus enable
@@ -586,15 +607,15 @@ nnoremap <space>T :LeaderfFunctionAll<cr>
 " find for help
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>H :Leaderf help --input key:<cr>
-vnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
 " enhance find
 nnoremap <space>/ :LeaderfLine<cr>
-vnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr>
 nnoremap <space>? :LeaderfLineAll<cr>
-vnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectArea()<cr>
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
-vnoremap <space>a :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr>
+xnoremap <space>a :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
 " recall
 nnoremap <space>l :Leaderf --recall<cr>
@@ -618,13 +639,13 @@ let g:Lf_UseCache = 0
 
 " tabular
 nnoremap <leader>T :Tabularize /
-vnoremap <leader>T :Tabularize /
+xnoremap <leader>T :Tabularize /
 
 " vim-smooth-scroll
-noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+nnoremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+nnoremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 " gv
 nnoremap <leader>g :GV<cr>
