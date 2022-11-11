@@ -610,15 +610,15 @@ nnoremap <space>H :Leaderf help --input key:<cr>
 xnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
 " enhance find
 nnoremap <space>/ :LeaderfLine<cr>
-xnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr><tab>
 nnoremap <space>? :LeaderfLineAll<cr>
-xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectArea()<cr><tab>
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
-xnoremap <space>a :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr>
+xnoremap <space>a :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr><tab>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
 " recall
-nnoremap <space>l :Leaderf --recall<cr>
+nnoremap <space>l :Leaderf --recall<cr><tab>
 " find color
 nnoremap <F1> :LeaderfColorscheme<cr>
 " set leaderf work dir
