@@ -131,6 +131,7 @@ inoremap <c-a> <c-[>^i
 
 " 插入模式删除
 inoremap <c-d> <c-[>ddi
+snoremap <c-d> <c-[>ddi
 
 " 定位装置
 nnoremap { /{<cr>:noh<cr>va{<c-g>
@@ -212,11 +213,31 @@ endfunc
 nnoremap <Leader>c :call SetComment()<CR>
 
 " set pair baket
-inoremap ( ()<LEFT>
-inoremap [ []<LEFT>
-inoremap { {}<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ` ``<left>
+
+" set backspace
+inoremap <expr><bs> <sid>Backspace()
+func! s:Backspace()
+	let s:pair=getline('.')[col('.')-1]
+	let s:pair_l=getline('.')[col('.')-2]
+	if (s:pair==')'&&s:pair_l=='(')||
+		\ (s:pair==']'&&s:pair_l=='[')||
+		\ (s:pair=='}'&&s:pair_l=='{')||
+		\ (s:pair=='"'&&s:pair_l=='"')||
+		\ (s:pair=="'"&&s:pair_l=="'")||
+		\ (s:pair=='`'&&s:pair_l=='`')||
+		\ (s:pair=='~'&&s:pair_l=='~')||
+		\ (s:pair=='*'&&s:pair_l=='*')
+		return "\<right>\<bs>\<bs>"
+	else
+		return "\<bs>"
+	endif
+endfunc
 
 " yank and paste
 nnoremap <Leader>p "0p
@@ -356,10 +377,10 @@ cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
 " use cd to change dir
 
 " select move
-vnoremap <silent><up>   : move '<-2<cr>gv
-vnoremap <silent><down> : move '>+1<cr>gv
-vnoremap <silent><right> y<c-w>lp
-vnoremap <silent><left>  y<c-w>lp
+vnoremap <silent><up>   :move '<-2<cr>gv
+vnoremap <silent><down> :move '>+1<cr>gv
+xnoremap <silent><right> y<c-w>lvpgv
+xnoremap <silent><left>  y<c-w>hvpgv
 
 " set alias
 iab ;e 1607772321@qq.com

@@ -197,6 +197,7 @@ inoremap <c-a> <c-[>^i
 
 " delete line
 inoremap <c-d> <c-[>ddi
+snoremap <c-d> <c-[>ddi
 
 " find next {}
 nnoremap { /{<cr>:noh<cr>va{<c-g>
@@ -420,10 +421,10 @@ cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
 " use cd to change dir
 
 " select move
-xnoremap <silent><up>   : move '<-2<cr>gv
-xnoremap <silent><down> : move '>+1<cr>gv
-xnoremap <silent><right> y<c-w>lp
-xnoremap <silent><left>  y<c-w>lp
+xnoremap <silent><up>   :move '<-2<cr>gv
+xnoremap <silent><down> :move '>+1<cr>gv
+xnoremap <silent><right> y<c-w>lvpgv
+xnoremap <silent><left>  y<c-w>hvpgv
 
 " set alias
 iab ;e 1607772321@qq.com
@@ -555,9 +556,9 @@ let g:tagbar_width = 22
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " incsearch.vim
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
+nmap /  <Plug>(incsearch-forward)
+nmap ?  <Plug>(incsearch-backward)
+nmap g/ <Plug>(incsearch-stay)
 
 " vim-easymotion
 let g:EasyMotion_smartcase = 1
