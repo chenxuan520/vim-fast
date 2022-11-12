@@ -126,8 +126,10 @@ imap <c-k> <UP>
 imap <c-l> <RIGHT>
 
 " 插入移动
-inoremap <c-e> <c-[>$i
+inoremap <c-e> <c-[>$<right>i
 inoremap <c-a> <c-[>^i
+inoremap <c-y> <c-[>lWi
+inoremap <c-t> <c-[>Bi
 
 " 插入模式删除
 inoremap <c-d> <c-[>ddi
@@ -166,7 +168,10 @@ vmap <leader><leader>y "+y
 nnoremap <leader><leader>p "+p
 
 " 打开文件自动定位到最后编辑的位置
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
+augroup ReadPost
+	au!
+	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
+augroup END
 
 " termdebug
 nnoremap <leader><leader>d :set mouse=a<cr>:packadd termdebug<cr>:Termdebug<space>
@@ -366,6 +371,9 @@ inoremap <expr><silent>> <sid>Judge()
 nnoremap \u <c-w>p<c-u><c-w>p
 nnoremap \d <c-w>p<c-d><c-w>p
 
+" redraw the screen
+nnoremap <silent>\\l :redr!<cr>
+
 " ctrl file system
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
@@ -379,8 +387,8 @@ cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
 " select move
 vnoremap <silent><up>   :move '<-2<cr>gv
 vnoremap <silent><down> :move '>+1<cr>gv
-xnoremap <silent><right> y<c-w>lvpgv
-xnoremap <silent><left>  y<c-w>hvpgv
+xnoremap <silent><right> y<c-w>lo<c-[>Vpgv
+xnoremap <silent><left>  y<c-w>ho<c-[>Vpgv
 
 " set alias
 iab ;e 1607772321@qq.com

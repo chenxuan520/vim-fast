@@ -192,8 +192,10 @@ imap <c-k> <UP>
 imap <c-l> <RIGHT>
 
 " move in insert
-inoremap <c-e> <c-[>$i
+inoremap <c-e> <c-[>$<right>i
 inoremap <c-a> <c-[>^i
+inoremap <c-y> <c-[>lWi
+inoremap <c-t> <c-[>Bi
 
 " delete line
 inoremap <c-d> <c-[>ddi
@@ -231,7 +233,10 @@ nnoremap <leader><leader>p "+p
 vnoremap <leader><leader>p "+p
 
 " load the file last edit pos
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
+augroup ReadPost
+	au!
+	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
+augroup END
 
 " termdebug
 let g:termdebug_wide=1
@@ -407,8 +412,11 @@ endfunc
 inoremap <expr><silent>> <sid>Judge()
 
 " scroll in other window
-nnoremap \u <c-w>p<c-u><c-w>p
-nnoremap \d <c-w>p<c-d><c-w>p
+nnoremap <silent>\u <c-w>p<c-u><c-w>p
+nnoremap <silent>\d <c-w>p<c-d><c-w>p
+
+" redraw the screen
+nnoremap <silent>\\l :redr!<cr>
 
 " ctrl file system
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
@@ -423,8 +431,8 @@ cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
 " select move
 xnoremap <silent><up>   :move '<-2<cr>gv
 xnoremap <silent><down> :move '>+1<cr>gv
-xnoremap <silent><right> y<c-w>lvpgv
-xnoremap <silent><left>  y<c-w>hvpgv
+xnoremap <silent><right> y<c-w>lo<c-[>Vpgv
+xnoremap <silent><left>  y<c-w>ho<c-[>Vpgv
 
 " set alias
 iab ;e 1607772321@qq.com
