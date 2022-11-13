@@ -79,7 +79,7 @@
 
 14. [**内置markdown快捷插件**](https://github.com/chenxuan520/markdown-simple.vim)
 
-15. 对markdown文件提供ibus输入法的切换操作(默认自带)
+15. 对markdown文件提供ibus输入法的切换操作(默认自带),预览markdown(使用插件)
 
 ## 项目文件夹
 

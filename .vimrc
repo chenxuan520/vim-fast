@@ -621,10 +621,11 @@ nnoremap <space>b :LeaderfBuffer<cr>
 " function list
 nnoremap <space>t :LeaderfFunction<cr>
 nnoremap <space>T :LeaderfFunctionAll<cr>
+xnoremap <space>t :<c-u>execute ":Leaderf function --all --input " . <sid>GetSelectArea()<cr><tab>
 " find for help
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>H :Leaderf help --input key:<cr>
-xnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr><tab>
 " enhance find
 nnoremap <space>/ :LeaderfLine<cr>
 xnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr><tab>
@@ -632,8 +633,9 @@ nnoremap <space>? :LeaderfLineAll<cr>
 xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectArea()<cr><tab>
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
-xnoremap <space>a :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr><tab>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
+xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr><tab>
+xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr><tab>
 " recall
 nnoremap <space>l :Leaderf --recall<cr><tab>
 " find color
