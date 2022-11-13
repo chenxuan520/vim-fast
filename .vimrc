@@ -89,7 +89,7 @@ set encoding=utf8        " set encode
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030 " set detect encode of file
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" gvim/macvimi config
+" gvim/macvim config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
 	set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 14      " set fonts in gvim
@@ -100,6 +100,12 @@ if has("gui_running")
 	set guioptions-=b           " hide bottom scroll bar
 	set showtabline=0           " hide tab bar
 	set guicursor=n-v-c:ver5    " set cursor to a vertical line
+	" gui alt map
+	inoremap <silent><a-W> <c-[>lWi
+	inoremap <silent><a-B> <c-[>Bi
+	inoremap <silent><a-d> <c-[>dawi
+	nnoremap <silent><a-u> <c-w>p<c-u><c-w>p
+	nnoremap <silent><a-d> <c-w>p<c-d><c-w>p
 	" set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " set fonts in macvim
 endif
 

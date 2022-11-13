@@ -93,12 +93,7 @@ set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 " gvim/macvim设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("gui_running")
-	let system = system('uname -s')
-	if system == "Darwin\n"
-		set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " 设置字体
-	else
-		set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 14      " 设置字体
-	endif
+	set guifont=DroidSansMono\ Nerd\ Font\ Regular\ 14      " 设置字体
 	set guioptions-=m           " 隐藏菜单栏
 	set guioptions-=T           " 隐藏工具栏
 	set guioptions-=L           " 隐藏左侧滚动条
@@ -106,6 +101,13 @@ if has("gui_running")
 	set guioptions-=b           " 隐藏底部滚动条
 	set showtabline=0           " 隐藏Tab栏
 	set guicursor=n-v-c:ver5    " 设置光标为竖线
+	" gui alt map
+	inoremap <silent><a-W> <c-[>lWi
+	inoremap <silent><a-B> <c-[>Bi
+	inoremap <silent><a-d> <c-[>dawi
+	nnoremap <silent><a-u> <c-w>p<c-u><c-w>p
+	nnoremap <silent><a-d> <c-w>p<c-d><c-w>p
+	" set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " set fonts in macvim
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -231,13 +233,13 @@ func! s:Backspace()
 	let s:pair=getline('.')[col('.')-1]
 	let s:pair_l=getline('.')[col('.')-2]
 	if (s:pair==')'&&s:pair_l=='(')||
-		\ (s:pair==']'&&s:pair_l=='[')||
-		\ (s:pair=='}'&&s:pair_l=='{')||
-		\ (s:pair=='"'&&s:pair_l=='"')||
-		\ (s:pair=="'"&&s:pair_l=="'")||
-		\ (s:pair=='`'&&s:pair_l=='`')||
-		\ (s:pair=='~'&&s:pair_l=='~')||
-		\ (s:pair=='*'&&s:pair_l=='*')
+				\ (s:pair==']'&&s:pair_l=='[')||
+				\ (s:pair=='}'&&s:pair_l=='{')||
+				\ (s:pair=='"'&&s:pair_l=='"')||
+				\ (s:pair=="'"&&s:pair_l=="'")||
+				\ (s:pair=='`'&&s:pair_l=='`')||
+				\ (s:pair=='~'&&s:pair_l=='~')||
+				\ (s:pair=='*'&&s:pair_l=='*')
 		return "\<right>\<bs>\<bs>"
 	else
 		return "\<bs>"
@@ -405,20 +407,20 @@ colorscheme desert
 
 " set statusline
 function GetMode()
-    let m = mode()
-    if m == 'R'
-        return 'Replace'
-    elseif m == 'v'
-        return 'Visual'
-    elseif m == 'i'
-        return 'Insert'
-    elseif m == 'c'
-        return 'Command'
-    elseif m == 't'
-        return 'Terminal'
-    else
-        return 'Normal'
-    endif
+	let m = mode()
+	if m == 'R'
+		return 'Replace'
+	elseif m == 'v'
+		return 'Visual'
+	elseif m == 'i'
+		return 'Insert'
+	elseif m == 'c'
+		return 'Command'
+	elseif m == 't'
+		return 'Terminal'
+	else
+		return 'Normal'
+	endif
 endfunction
 
 set statusline=%1*\ %{GetMode()}

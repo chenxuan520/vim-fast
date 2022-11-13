@@ -208,7 +208,7 @@ func! s:Backspace()
 		if s:str[s:i]==nr2char(9)
 			let s:tab=1
 			break
-		elseif s:str[s:i]==' '||s:str[s:i]=='-'||s:str[s:i]=='|'||
+		elseif s:str[s:i]==' '||s:str[s:i]=='-'||
 					\s:str[s:i]=='>'||s:str[s:i]=='.'||
 					\(s:str[s:i]>='0'&&s:str[s:i]<='9')
 			let s:delete+=1
@@ -329,6 +329,6 @@ vnoremenu <silent> PopUp.Line\ Text   : call <sid>Bold('~~')<cr>
 vnoremenu <silent> PopUp.Code\ Text   : call <sid>Bold('`')<cr>
 
 inoremap <silent><buffer> !<space> ![]()<left>
-inoremap <silent><buffer> ]<space> []()<left>
+inoremap <silent><buffer> ]<space>  []()<left>
 
 set conceallevel=3
