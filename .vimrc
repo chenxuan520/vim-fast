@@ -170,6 +170,8 @@ Plug 'rhysd/clever-f.vim'
 Plug 'honza/vim-snippets'
 " run shell in async
 Plug 'skywind3000/asyncrun.vim'
+" markdown preview
+Plug 'iamcco/markdown-preview.nvim', {'for':'markdown','do':'cd app && yarn install'}
 
 call plug#end()
 
@@ -686,3 +688,6 @@ nmap <backspace> <Plug>(wildfire-water)
 xmap <backspace> <Plug>(wildfire-water)
 nmap <leader>- <Plug>(wildfire-quick-select)
 let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "i`", "ip"]
+
+" markdown preview
+nmap <space><space>p <Plug>MarkdownPreviewToggle
