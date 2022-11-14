@@ -31,12 +31,20 @@ function install_plug()
 		# npm install -g yarn
 		npm install -g yarn
 		yarn config set registry 'https://registry.npm.taobao.org'
+
 		git clone https://gitee.com/zgpio/markdown-preview.nvim.git ~/.vim/plugged/markdown-preview.nvim
+		cd ~/.vim/plugged/markdown-preview.nvim/app
+		yarn install
 
 		git clone -b release https://gitee.com/zgpio/coc.nvim.git ~/.vim/plugged/coc.nvim
+		cd ~/.vim/plugged/coc.nvim
+		git reset --hard v0.0.81
+
 		# cd ~/.vim/plugged/coc.nvim
 		# yarn install
 		# yarn build
+		vim -c "PlugInstall" -c "q" -c "q"
+		chmod 664 ~/.viminfo
 	fi
 
 	chmod 664 ~/.viminfo

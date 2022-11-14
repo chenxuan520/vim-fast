@@ -152,6 +152,8 @@ Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 Plug 'chenxuan520/vim-go-highlight', {'for':'go'}
 " for python highlight
 Plug 'vim-python/python-syntax', {'for':'py'}
+" markdown preview
+Plug 'iamcco/markdown-preview.nvim', {'for':'markdown'}
 " statusline of bottom
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -170,8 +172,6 @@ Plug 'rhysd/clever-f.vim'
 Plug 'honza/vim-snippets'
 " run shell in async
 Plug 'skywind3000/asyncrun.vim'
-" markdown preview
-Plug 'iamcco/markdown-preview.nvim', {'for':'markdown','do':'cd app && yarn install'}
 
 call plug#end()
 
@@ -195,9 +195,9 @@ nnoremap <silent> <c-m> :w<cr>
 nnoremap <silent> <leader>d :bd<cr>
 
 " insert model to move cursor
-imap <c-j> <DOWN>
-imap <c-k> <UP>
-imap <c-l> <RIGHT>
+imap <c-j> <down>
+imap <c-k> <up>
+imap <c-l> <right>
 
 " move in insert
 inoremap <c-e> <c-[>$<right>i
@@ -667,9 +667,9 @@ nnoremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 nnoremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 " gv
-nnoremap <leader>g :GV<cr>
-nnoremap <leader>G :GV!<cr>
-nnoremap <leader>gg :GV?<cr>
+nnoremap <leader>g         :GV<cr>
+nnoremap <leader>G         :GV!<cr>
+nnoremap <leader><leader>g :GV?<cr>
 
 " clever f
 " nnoremap \ ,

@@ -33,6 +33,8 @@ function install_plug()
 	yarn config set registry 'https://registry.npm.taobao.org'
 
 	git clone https://gitee.com/zgpio/markdown-preview.nvim.git ~/.vim/plugged/markdown-preview.nvim
+	cd ~/.vim/plugged/markdown-preview.nvim/app
+	yarn install
 
 	git clone -b release https://gitee.com/zgpio/coc.nvim.git ~/.vim/plugged/coc.nvim
 	cd ~/.vim/plugged/coc.nvim
