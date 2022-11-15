@@ -404,6 +404,10 @@ xnoremap <silent><c-k>   :move '<-2<cr>gv
 xnoremap <silent><c-l>   y<c-w>lo<c-[>Vpgv
 xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
 
+" set fold auto
+nnoremap =z :set fdm=indent<cr>:set fen<cr>
+nnoremap \z :set fdm=manual<cr>:set nofen<cr>
+
 " set alias
 iab ;e 1607772321@qq.com
 iab ;n chenxuan

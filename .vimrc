@@ -456,6 +456,10 @@ xnoremap <silent><c-k>   :move '<-2<cr>gv
 xnoremap <silent><c-l>   y<c-w>lo<c-[>Vpgv
 xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
 
+" set fold auto
+nnoremap =z :set fdm=indent<cr>:set fen<cr>
+nnoremap \z :set fdm=manual<cr>:set nofen<cr>
+
 " set alias
 iab ;e 1607772321@qq.com
 iab ;n chenxuan
@@ -651,7 +655,7 @@ xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectA
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
-xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr><tab>
+xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr>
 xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr><tab>
 " recall
 nnoremap <space>l :Leaderf --recall<cr><tab>
