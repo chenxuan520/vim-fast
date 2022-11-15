@@ -348,6 +348,10 @@ nnoremap <silent><nowait>=s :set spell<cr>
 nnoremap <silent><nowait>\s :set nospell<cr>
 " z= is list of change
 
+" set fold auto
+nnoremap <silent><nowait>=z :set fdm=indent<cr>:set fen<cr>
+nnoremap <silent><nowait>\z :set fdm=manual<cr>:set nofen<cr>
+
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 
@@ -392,6 +396,8 @@ cnoremap w!! w !sudo tee % >/dev/null
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
 cnoremap <c-d> <del>
+cnoremap <c-h> <left>
+cnoremap <c-l> <right>
 cnoremap <c-t> <s-left>
 cnoremap <c-y> <s-right>
 
@@ -404,8 +410,9 @@ nnoremap <silent><nowait>_ :vsp<cr>:bn<cr>
 nnoremap <silent><nowait>+ :sp<cr>:bn<cr>
 
 " edit file
-nnoremap e :edit<space><c-r>=getcwd()<cr>/
-nnoremap E :edit<space><c-r>=expand('%:p:h')<cr>/
+nnoremap e         :edit<space><c-r>=getcwd()<cr>/
+nnoremap E         :edit<space><c-r>=expand('%     : p : h')<cr>/
+nnoremap <leader>e :edit<space>
 
 " open : quick
 nnoremap <space>; :
@@ -455,10 +462,6 @@ xnoremap <silent><c-j>   :move '>+1<cr>gv
 xnoremap <silent><c-k>   :move '<-2<cr>gv
 xnoremap <silent><c-l>   y<c-w>lo<c-[>Vpgv
 xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
-
-" set fold auto
-nnoremap =z :set fdm=indent<cr>:set fen<cr>
-nnoremap \z :set fdm=manual<cr>:set nofen<cr>
 
 " set alias
 iab ;e 1607772321@qq.com
