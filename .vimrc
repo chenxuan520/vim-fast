@@ -198,9 +198,10 @@ nnoremap <silent> <leader>d :bd<cr>
 imap <c-j> <down>
 imap <c-k> <up>
 imap <c-l> <right>
+imap <c-h> <left>
 
 " move in insert
-inoremap <c-e> <c-[>$<right>i
+inoremap <c-e> <end>
 inoremap <c-a> <c-[>^i
 inoremap <c-y> <c-[>lWi
 inoremap <c-t> <c-[>Bi
@@ -379,11 +380,20 @@ nnoremap <leader>s :%s/<c-r><c-w>/
 
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
-onoremap ae :<c-u>normal! ggVG<cr>
-nnoremap <leader>e ggVG
+onoremap <silent>ie :<c-u>normal! ggVG<cr>
+xnoremap <silent>ie :<c-u>normal! ggVG<cr>
+onoremap <silent>ae :<c-u>normal! ggVG<cr>
+xnoremap <silent>ae :<c-u>normal! ggVG<cr>
 
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
+
+" cmd emacs model
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+cnoremap <c-d> <del>
+cnoremap <c-t> <s-left>
+cnoremap <c-y> <s-right>
 
 " set cursor middle
 nnoremap <c-o> <c-o>zz
@@ -437,10 +447,14 @@ cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
 " use cd to change dir
 
 " select move
-xnoremap <silent><up>   :move '<-2<cr>gv
-xnoremap <silent><down> :move '>+1<cr>gv
+xnoremap <silent><up>    :move '<-2<cr>gv
+xnoremap <silent><down>  :move '>+1<cr>gv
 xnoremap <silent><right> y<c-w>lo<c-[>Vpgv
 xnoremap <silent><left>  y<c-w>ho<c-[>Vpgv
+xnoremap <silent><c-j>   :move '>+1<cr>gv
+xnoremap <silent><c-k>   :move '<-2<cr>gv
+xnoremap <silent><c-l>   y<c-w>lo<c-[>Vpgv
+xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
 
 " set alias
 iab ;e 1607772321@qq.com
@@ -570,6 +584,9 @@ endfunction
 " tagbar
 let g:tagbar_width = 22
 nnoremap <silent> <leader>t :TagbarToggle<cr>
+
+" auto pair
+let g:AutoPairsMapCh = 0
 
 " incsearch.vim
 nmap /  <Plug>(incsearch-forward)

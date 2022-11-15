@@ -96,7 +96,7 @@ function install_prepare_software_on_ubuntu()
 	sudo apt-get update
 	sudo apt-get install -y vim
 	sudo apt-get install -y zip curl git wget ctags ripgrep
-	sudo apt-get install -y build-essential python python-dev python3-dev fontconfig libfile-next-perl ack-grep ack
+	sudo apt-get install -y build-essential python python-dev python3-dev fontconfig ack-grep ack
 	sudo apt-get install -y universal-ctags || sudo apt-get install -y exuberant-ctags
 }
 # 安装debian必备软件
@@ -105,9 +105,9 @@ function install_prepare_software_on_debian()
 	sudo apt-get update
 	sudo apt-get install -y vim
 	sudo apt-get install -y zip curl git wget ctags ripgrep
-	sudo apt-get install -y build-essential python python-dev python3-dev fontconfig libfile-next-perl ack
+	sudo apt-get install -y build-essential python python-dev python3-dev fontconfig ack
 	sudo apt-get install -y universal-ctags || sudo apt-get install -y exuberant-ctags
-	sudo apt-get install -y vim cmake build-essential python python-dev python3-dev fontconfig libfile-next-perl ack git
+	sudo apt-get install -y vim cmake build-essential python python-dev python3-dev fontconfig ack git
 }
 
 # 安装tmux必备软件

@@ -53,7 +53,7 @@
 
 1. **Normal 3 minutes to install a good VIM configuration from a new linux host (including lsp and so on), 3 minutes to solve all the problems**
 
-2. based on Vimplus, so that all configuration files are in .vimrc, 600 lines of configuration files more simple and intuitive, but also to avoid multiple redundant configuration files
+2. based on Vimplus, so that all configuration files are in .vimrc, 700 lines of configuration files more simple and intuitive, but also to avoid multiple redundant configuration files
 
 3. the plug-ins are streamlined and simplified, with a selection of 30 plug-ins to improve opening speed
 

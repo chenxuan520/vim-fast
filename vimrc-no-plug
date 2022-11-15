@@ -123,12 +123,13 @@ nnoremap <leader><leader>s :source $MYVIMRC<cr>
 nnoremap <leader><leader>S :source <c-r>=expand('%:p')<cr><cr>
 
 " 插入模式下的光标移动
-imap <c-j> <DOWN>
-imap <c-k> <UP>
-imap <c-l> <RIGHT>
+imap <c-j> <down>
+imap <c-k> <up>
+imap <c-l> <right>
+imap <c-h> <left>
 
 " 插入移动
-inoremap <c-e> <c-[>$<right>i
+inoremap <c-e> <end>
 inoremap <c-a> <c-[>^i
 inoremap <c-y> <c-[>lWi
 inoremap <c-t> <c-[>Bi
@@ -335,6 +336,13 @@ nnoremap <leader>e ggVG
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
 
+" cmd emacs model
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+cnoremap <c-d> <del>
+cnoremap <c-t> <s-left>
+cnoremap <c-y> <s-right>
+
 " set cursor middle
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
@@ -387,10 +395,14 @@ cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
 " use cd to change dir
 
 " select move
-vnoremap <silent><up>   :move '<-2<cr>gv
-vnoremap <silent><down> :move '>+1<cr>gv
+xnoremap <silent><up>    :move '<-2<cr>gv
+xnoremap <silent><down>  :move '>+1<cr>gv
 xnoremap <silent><right> y<c-w>lo<c-[>Vpgv
 xnoremap <silent><left>  y<c-w>ho<c-[>Vpgv
+xnoremap <silent><c-j>   :move '>+1<cr>gv
+xnoremap <silent><c-k>   :move '<-2<cr>gv
+xnoremap <silent><c-l>   y<c-w>lo<c-[>Vpgv
+xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
 
 " set alias
 iab ;e 1607772321@qq.com
