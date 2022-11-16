@@ -371,6 +371,8 @@ nnoremap <silent><leader>i :call termtask#Term_cmd_exec('')<cr>
 
 " ibus enable
 let g:ibus_enable=1
+" md fold enable
+let g:markdown_fold_enable=1
 
 " use select area to replace
 xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/

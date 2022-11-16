@@ -51,3 +51,4 @@ func! s:Format()
 endfunc
 
 nnoremap <buffer><silent> <leader><leader>f :call <sid>Format()<cr>
+nnoremap <buffer><silent> <leader><leader>F :g/^\s*$/d<cr>:noh<cr>

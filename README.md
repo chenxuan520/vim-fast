@@ -7,7 +7,6 @@
 **chenxuan**
 
 - [README](./README.en.md) in English
-
 ```shell
 '       _            __          _   '
 '      (_)          / _|        | |  '
@@ -81,6 +80,8 @@
 
 15. 对markdown文件提供ibus输入法的切换操作(默认自带),预览markdown(使用插件)
 
+16. 和ici以及lazygit集成,无需额外插件,即可实现翻译和git管理
+
 ## 项目文件夹
 
 - autoload 插件plug.vim,提供插件的安装
@@ -148,7 +149,6 @@
 - [zhihu](https://zhuanlan.zhihu.com/p/524286962)
 
 ## 安装
-
 > 第一第二步可以简化为
 >
 > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/webinstall.sh |bash
@@ -202,8 +202,13 @@
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
 
 ### 简易安装无插件版本
-
    > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash
+
+## 外部工具集成
+
+1. [lazygit](https://github.com/jesseduffield/lazygit),需要安装lazygit,使得在shell中可以直接调用shell.按下 空格+g 触发
+
+2. [ici翻译](https://github.com/Flowerowl/ici)`pip install ici`,并修改.vimrc中ici的路径,在普通模式或者可视化模式按下 ,i 翻译单词
 
 ## Vimplus仓库
 

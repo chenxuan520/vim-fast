@@ -279,6 +279,32 @@ func! s:Move()
 	return s:result
 endfunc
 
+func! s:FindHead(direction)
+
+	let s:i=line('.')
+	if a:direction=='up'
+		let s:i-=1
+		while s:i>=0
+			let s:str=getline(s:i)
+			if match(s:str,'^\s*#')>=0
+				call setpos('.',[0,s:i,0,0])
+				return
+			endif
+			let s:i-=1
+		endwhile
+	else
+		let s:i+=1
+		while s:i<=line('$')
+			let s:str=getline(s:i)
+			if match(s:str,'^\s*#')>=0
+				call setpos('.',[0,s:i,0,0])
+				return
+			endif
+			let s:i+=1
+		endwhile
+	endif
+endfunc
+
 nnoremap <silent><buffer>#         : call <sid>AddTitle()<cr><right>
 
 nnoremap <silent><buffer>-         : call <sid>AddSub()<cr><right>
@@ -309,6 +335,9 @@ inoremap <silent><buffer><kenter>   <c-r>=g:VimFastEnter('ke')<cr>
 inoremap <expr><silent><buffer><c-\>  <sid>Backspace()
 inoremap <expr><silent><buffer><bs>   <sid>Backspace()
 inoremap <silent><buffer><c-h> <bs>
+
+nnoremap <silent><buffer> ]] :call <sid>FindHead('next')<cr>
+nnoremap <silent><buffer> [[ :call <sid>FindHead('up')<cr>
 
 inoremap <expr><silent><buffer><c-l> <sid>Move()
 inoremap <expr><silent><buffer>- <sid>DivLine('-')

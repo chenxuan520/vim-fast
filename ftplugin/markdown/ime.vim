@@ -14,6 +14,6 @@ if g:ibus_enable
 		au!
 		au InsertEnter *.md call ibus#ReloadStatus()
 		au InsertLeave *.md call ibus#SaveStatus()
-		au BufDelete   *.md au! ibus|call ibus#ReloadStatus()
+		au BufDelete   *.md call ibus#ReloadStatus()|au! ibus
 	augroup END
 endif
