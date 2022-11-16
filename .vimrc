@@ -322,8 +322,10 @@ func s:MouseConfig()
 	nnoremenu PopUp.Select\ All ggVG
 	nnoremenu PopUp.Back\ Pos <c-o>zz<cr>
 	nnoremenu PopUp.Next\ Pos <c-i>zz<cr>
-	nnoremenu PopUp.Back\ Buf :bp<cr>
-	nnoremenu PopUp.Next\ Buf :bn<cr>
+	" fold
+	nnoremenu PopUp.Open\ Fold  zO
+	nnoremenu PopUp.Close\ Fold zC
+	" close
 	nnoremenu PopUp.-Sep- :<cr>
 	nnoremenu PopUp.Close\ Mouse :set mouse=""<cr>
 	" term model
@@ -345,6 +347,8 @@ nnoremap <silent><nowait>\s :set nospell<cr>
 " set fold auto
 nnoremap <silent><nowait>=z :set fdm=indent<cr>:set fen<cr>
 nnoremap <silent><nowait>\z :set fdm=manual<cr>:set nofen<cr>
+nnoremap <silent><nowait>=o zO
+nnoremap <silent><nowait>\o zC
 
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
