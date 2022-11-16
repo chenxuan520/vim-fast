@@ -190,6 +190,7 @@ func! s:Backspace()
 	let s:i=col('.')-2
 	let s:delete=1
 	let s:tab=0
+	let s:space=0
 
 	let s:pair=getline('.')[col('.')-1]
 	let s:pair_l=getline('.')[col('.')-2]
@@ -208,10 +209,17 @@ func! s:Backspace()
 		if s:str[s:i]==nr2char(9)
 			let s:tab=1
 			break
-		elseif s:str[s:i]==' '||s:str[s:i]=='-'||
+		elseif s:str[s:i]=='-'||
 					\s:str[s:i]=='>'||s:str[s:i]=='.'||
 					\(s:str[s:i]>='0'&&s:str[s:i]<='9')
 			let s:delete+=1
+		elseif s:str[s:i]==' '
+			if s:space==0
+				let s:space=1
+				let s:delete+=1
+			else
+				break
+			endif
 		else
 			break
 		endif
@@ -224,6 +232,10 @@ func! s:Backspace()
 		let s:delete-=1
 	endif
 	if s:tab
+		let s:delete-=1
+	endif
+
+	if s:i==0&&s:str[s:i]==' '&&s:delete>1
 		let s:delete-=1
 	endif
 
@@ -296,13 +308,14 @@ inoremap <silent><buffer><kenter>   <c-r>=g:VimFastEnter('ke')<cr>
 
 inoremap <expr><silent><buffer><c-\>  <sid>Backspace()
 inoremap <expr><silent><buffer><bs>   <sid>Backspace()
+inoremap <silent><buffer><c-h> <bs>
 
 inoremap <expr><silent><buffer><c-l> <sid>Move()
 inoremap <expr><silent><buffer>- <sid>DivLine('-')
 inoremap <expr><silent><buffer>> <sid>DivLine('>')
 inoremap <silent><buffer>* **<left>
 inoremap <silent><buffer>~~ ~~~~<left><left>
-for s:i in [1,2,3,4,5,6,7,8,9]
+for s:i in [0,1,2,3,4,5,6,7,8,9]
 	execute "inoremap <silent><buffer>".s:i.". ".s:i.". "
 endfor
 

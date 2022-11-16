@@ -101,12 +101,6 @@ if has("gui_running")
 	set guioptions-=b           " 隐藏底部滚动条
 	set showtabline=0           " 隐藏Tab栏
 	set guicursor=n-v-c:ver5    " 设置光标为竖线
-	" gui alt map
-	inoremap <silent><a-W> <c-[>lWi
-	inoremap <silent><a-B> <c-[>Bi
-	inoremap <silent><a-d> <c-[>dawi
-	nnoremap <silent><a-u> <c-w>p<c-u><c-w>p
-	nnoremap <silent><a-d> <c-w>p<c-d><c-w>p
 	" set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " set fonts in macvim
 endif
 
@@ -333,9 +327,17 @@ vnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
 nnoremap <leader>s :%s/<c-r><c-w>/
 
 " indent buffer
-nnoremap <silent><nowait> =e gg=G<c-o><c-o>
-onoremap ae :<c-u>normal! ggVG<cr>
-nnoremap <leader>e ggVG
+nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
+onoremap <silent>ie :<c-u>normal! ggVG<cr>
+xnoremap <silent>ie :<c-u>normal! ggVG<cr>
+onoremap <silent>ae :<c-u>normal! ggVG<cr>
+xnoremap <silent>ae :<c-u>normal! ggVG<cr>
+
+" object line
+onoremap <silent>il :<c-u>normal! ^v$BE<cr>
+xnoremap <silent>il :<c-u>normal! ^v$<cr><left>
+onoremap <silent>al :<c-u>normal! 0v$<cr>
+xnoremap <silent>al :<c-u>normal! 0v$<cr>
 
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null

@@ -100,12 +100,6 @@ if has("gui_running")
 	set guioptions-=b           " hide bottom scroll bar
 	set showtabline=0           " hide tab bar
 	set guicursor=n-v-c:ver5    " set cursor to a vertical line
-	" gui alt map
-	inoremap <silent><a-W> <c-[>lWi
-	inoremap <silent><a-B> <c-[>Bi
-	inoremap <silent><a-d> <c-[>dawi
-	nnoremap <silent><a-u> <c-w>p<c-u><c-w>p
-	nnoremap <silent><a-d> <c-w>p<c-d><c-w>p
 	" set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " set fonts in macvim
 endif
 
@@ -388,6 +382,12 @@ onoremap <silent>ie :<c-u>normal! ggVG<cr>
 xnoremap <silent>ie :<c-u>normal! ggVG<cr>
 onoremap <silent>ae :<c-u>normal! ggVG<cr>
 xnoremap <silent>ae :<c-u>normal! ggVG<cr>
+
+" object line
+onoremap <silent>il :<c-u>normal! ^v$BE<cr>
+xnoremap <silent>il :<c-u>normal! ^v$<cr><left>
+onoremap <silent>al :<c-u>normal! 0v$<cr>
+xnoremap <silent>al :<c-u>normal! 0v$<cr>
 
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
