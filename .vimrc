@@ -156,8 +156,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 " text obj
 Plug 'kana/vim-textobj-user'
-" enhance c-f/b and c-d/u
-Plug 'terryma/vim-smooth-scroll'
 " enhance f/t
 Plug 'rhysd/clever-f.vim'
 " code snippets
@@ -343,8 +341,8 @@ nnoremap <silent><nowait>\s :set nospell<cr>
 " z= is list of change
 
 " set fold auto
-nnoremap <silent><nowait>=z :set fdm=indent<cr>:set fen<cr>
-nnoremap <silent><nowait>\z :set fdm=manual<cr>:set nofen<cr>
+nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
+nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
 nnoremap <silent><nowait>=o zO
 nnoremap <silent><nowait>\o zC
 
