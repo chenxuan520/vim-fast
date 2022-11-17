@@ -349,8 +349,8 @@ nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
 nnoremap <silent><nowait>\n :setlocal relativenumber<cr>
 
 " set fold auto
-nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
-nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
+nnoremap <silent><nowait>=z :set fdm=indent<cr>:set fen<cr>
+nnoremap <silent><nowait>\z :set fdm=manual<cr>:set nofen<cr>
 nnoremap <silent><nowait>=o zO
 nnoremap <silent><nowait>\o zC
 
