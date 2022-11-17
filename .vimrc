@@ -336,9 +336,17 @@ nnoremap <silent><nowait>=i :set list lcs=tab:¦\<space> <cr>
 nnoremap <silent><nowait>\i :set nolist<cr>
 
 " set spell
-nnoremap <silent><nowait>=s :set spell<cr>
-nnoremap <silent><nowait>\s :set nospell<cr>
+nnoremap <silent><nowait>=s :setlocal spell<cr>
+nnoremap <silent><nowait>\s :setlocal nospell<cr>
 " z= is list of change
+
+" set wrap
+nnoremap <silent><nowait>=r :setlocal wrap<cr>
+nnoremap <silent><nowait>\r :setlocal nowrap<cr>
+
+" set line number
+nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
+nnoremap <silent><nowait>\n :setlocal relativenumber<cr>
 
 " set fold auto
 nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
