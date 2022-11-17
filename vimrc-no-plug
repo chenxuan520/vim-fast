@@ -116,6 +116,9 @@ nnoremap <silent> <leader>d :bd<cr>
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
 nnoremap <leader><leader>S :source <c-r>=expand('%:p')<cr><cr>
 
+" update self
+command! UpdateSelf call system('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')|qa
+
 " 插入模式下的光标移动
 imap <c-j> <down>
 imap <c-k> <up>
@@ -156,8 +159,6 @@ func s:CtrlB()
 		return "\<c-[>/}\<cr>:noh\<cr>NNva}\<c-g>"
 	endif
 endfunc
-
-
 
 " 复制当前选中到系统剪切板
 vmap <leader><leader>y "+y
@@ -202,17 +203,6 @@ nnoremap <silent><space><space>t :tabe<cr>:vert term ++curwin ++close<cr>
 " term task
 let g:Term_task_run="lazygit"
 nnoremap <silent><space>g :tabe<cr>:execute ":vert term ++curwin ++close " . g:Term_task_run<CR>
-
-" fast add comment
-func SetComment()
-	call append(line("."),'/***********************************************')
-	call append(line(".")+1,'* Author: chenxuan-1607772321@qq.com')
-	call append(line(".")+2,'* change time:'.strftime("%Y-%m-%d %H:%M:%S"))
-	call append(line(".")+3,'* description:')
-	call append(line(".")+4,'* example: ')
-	call append(line(".")+5,'***********************************************/')
-endfunc
-nnoremap <Leader>c :call SetComment()<CR>
 
 " set pair baket
 inoremap ( ()<left>

@@ -206,6 +206,10 @@
 ### 简易安装无插件版本
    > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash
 
+## 更新
+
+   - ./update.sh
+
 ## 外部工具集成
 
 1. [lazygit](https://github.com/jesseduffield/lazygit),需要安装lazygit,使得在shell中可以直接调用shell.按下 空格+g 触发
