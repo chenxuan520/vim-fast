@@ -90,6 +90,17 @@ func! s:Bold(ch)
 	call cursor(line('.'),col+1)
 endfunc
 
+func! s:BlodLink(begin,end)
+	let temp = @s
+	norm! gv"sy
+	let s:str = @s
+	let @s = temp
+	let col = col('.')
+
+	execute ":s/".s:str."/".a:begin.s:str.a:end."/"
+	call cursor(line('.'),col+1)
+endfunc
+
 func! s:Number()
 	let s:old=col('.')-1
 
@@ -280,8 +291,8 @@ func! s:Move()
 endfunc
 
 func! s:FindHead(direction)
-
 	let s:i=line('.')
+
 	if a:direction=='up'
 		let s:i-=1
 		while s:i>=0
@@ -323,6 +334,9 @@ nnoremap <silent><buffer>*     viw:call <sid>Bold('*')<cr>
 vnoremap <silent><buffer>`     :call <sid>Bold('`')<cr>
 nnoremap <silent><buffer>`     viw:call <sid>Bold('`')<cr>
 
+vnoremap <silent><buffer><c-l> :call <sid>BlodLink('[',']()')<cr>f]f)
+nnoremap <silent><buffer><c-l> viw:call <sid>BlodLink('[',']()')<cr>f]f)
+
 vnoremap <silent><buffer><leader>` :<c-u>call <sid>Code()<cr>
 
 nnoremap <silent><buffer>o         :call g:VimFastEnter('o')<cr>o<c-r>s
@@ -336,8 +350,8 @@ inoremap <expr><silent><buffer><c-\>  <sid>Backspace()
 inoremap <expr><silent><buffer><bs>   <sid>Backspace()
 inoremap <silent><buffer><c-h> <bs>
 
-nnoremap <silent><buffer> ]] :call <sid>FindHead('next')<cr>
-nnoremap <silent><buffer> [[ :call <sid>FindHead('up')<cr>
+nnoremap <silent><buffer> ]] :call <sid>FindHead('next')<cr>zz
+nnoremap <silent><buffer> [[ :call <sid>FindHead('up')<cr>zz
 
 inoremap <expr><silent><buffer><c-l> <sid>Move()
 inoremap <expr><silent><buffer>- <sid>DivLine('-')
@@ -365,12 +379,13 @@ nnoremap <silent><buffer>"+p :call <sid>Paste()<cr>
 nnoremap <silent><buffer>> >>
 nnoremap <silent><buffer>< <<
 
-vnoremenu <silent> PopUp.Bold\ Text   : call <sid>Bold('**')<cr>
-vnoremenu <silent> PopUp.Italic\ Text : call <sid>Bold('*')<cr>
-vnoremenu <silent> PopUp.Line\ Text   : call <sid>Bold('~~')<cr>
-vnoremenu <silent> PopUp.Code\ Text   : call <sid>Bold('`')<cr>
+vnoremenu <silent> PopUp.Bold\ Text   :call <sid>Bold('**')<cr>
+vnoremenu <silent> PopUp.Italic\ Text :call <sid>Bold('*')<cr>
+vnoremenu <silent> PopUp.Line\ Text   :call <sid>Bold('~~')<cr>
+vnoremenu <silent> PopUp.Code\ Text   :call <sid>Bold('`')<cr>
+vnoremenu <silent> PopUp.Link\ Text   :call <sid>BlodLink('[',']()')<cr>f]f)
 
 inoremap <silent><buffer> !<space> ![]()<left>
 inoremap <silent><buffer> ]<space>  []()<left>
 
-set conceallevel=3
+setlocal conceallevel=3

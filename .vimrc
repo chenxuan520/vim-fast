@@ -129,8 +129,6 @@ Plug 'jiangmiao/auto-pairs'
 " file tree left
 Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight', {'on': 'NERDTreeToggle'}
-" quick choose area
-Plug 'gcmt/wildfire.vim', {'on': [ '<Plug>(wildfire-fuel)', '<Plug>(wildfire-quick-select)'] }
 " easy align
 Plug 'godlygeek/tabular', {'on':'Tabularize'}
 " change surround quick
@@ -712,14 +710,6 @@ let g:asyncrun_bell = 0
 nmap <space>: :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
-
-" wildfire config
-nmap - <Plug>(wildfire-fuel)
-xmap - <Plug>(wildfire-fuel)
-nmap <backspace> <Plug>(wildfire-water)
-xmap <backspace> <Plug>(wildfire-water)
-nmap <leader>- <Plug>(wildfire-quick-select)
-let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "i`", "ip"]
 
 " markdown preview
 nmap <space><space>p <Plug>MarkdownPreviewToggle

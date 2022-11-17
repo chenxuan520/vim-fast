@@ -1,4 +1,8 @@
 
+if get(g:,"markdown_simple_disable",0)
+	finish
+endif
+
 let s:mdfoldEnable=get(g:,"markdown_fold_enable",1)
 
 func! g:VimFastFoldExpr()
@@ -18,10 +22,8 @@ func! g:VimFastFoldExpr()
 	endif
 endfunc
 
-if s:mdfoldEnable
-	augroup mdfold
-		au!
-		au BufEnter   *.md set foldexpr=VimFastFoldExpr()|set fdm=expr|set fen
-		au BufLeave   *.md set fdm=manual|set foldexpr="0"|set nofen|au! mdfold
-	augroup END
-endif
+setlocal foldexpr=VimFastFoldExpr()
+setlocal fdm=expr
+setlocal fen
+
+nnoremap <silent><buffer><nowait>=z :setlocal fdm=expr<cr>:setlocal fen<cr>

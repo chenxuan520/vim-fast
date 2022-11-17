@@ -1,3 +1,13 @@
+
+if get(g:,"markdown_simple_disable",0)
+	finish
+endif
+
+" ibus enable
+let g:ibus_enable=get(g:,'ibus_enable',0)
+if !g:ibus_enable
+	finish
+endif
 "ibus no exist
 if !executable('ibus')
 	finish
@@ -8,7 +18,6 @@ if system('ibus engine') =~ 'No engine is set'
 endif
 let g:ibus_normal=system('ibus engine')
 let g:ibus_status=''
-let g:ibus_enable=get(g:,'ibus_enable',1)
 if g:ibus_enable
 	augroup ibus
 		au!
