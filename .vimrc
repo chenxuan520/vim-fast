@@ -399,6 +399,12 @@ xnoremap <silent>il :<c-u>normal! ^v$<cr><left>
 onoremap <silent>al :<c-u>normal! 0v$<cr>
 xnoremap <silent>al :<c-u>normal! 0v$<cr>
 
+" object argc
+onoremap <silent>aa :<c-u>call obj#GetArgc('T','f')<cr>
+onoremap <silent>ia :<c-u>call obj#GetArgc('T','t')<cr>
+xnoremap <silent>aa :<c-u>call obj#GetArgc('T','f')<cr>
+xnoremap <silent>ia :<c-u>call obj#GetArgc('T','t')<cr>
+
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
 
@@ -421,7 +427,7 @@ nnoremap <silent><nowait>+ :sp<cr>:bn<cr>
 
 " edit file
 nnoremap e         :edit<space><c-r>=getcwd()<cr>/
-nnoremap E         :edit<space><c-r>=expand('%     : p : h')<cr>/
+nnoremap E         :edit<space><c-r>=expand('%:p:h')<cr>/
 nnoremap <leader>e :edit<space>~/
 
 " open : quick

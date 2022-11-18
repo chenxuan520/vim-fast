@@ -341,6 +341,39 @@ xnoremap <silent>il :<c-u>normal! ^v$<cr><left>
 onoremap <silent>al :<c-u>normal! 0v$<cr>
 xnoremap <silent>al :<c-u>normal! 0v$<cr>
 
+" object argc
+onoremap <silent>aa :<c-u>call <sid>GetArgc('T','f')<cr>
+onoremap <silent>ia :<c-u>call <sid>GetArgc('T','t')<cr>
+xnoremap <silent>aa :<c-u>call <sid>GetArgc('T','f')<cr>
+xnoremap <silent>ia :<c-u>call <sid>GetArgc('T','t')<cr>
+func! s:GetArgc(one,two)
+	let s:pos=col('.')|let s:begin=''|let s:end=''|let s:i=s:pos-1|let s:one=a:one|let s:two=a:two
+	while s:i>0
+		if getline('.')[s:i]=='('||getline('.')[s:i]==','
+			let s:begin=getline('.')[s:i]
+			break
+		endif
+		let s:i-=1
+	endwhile
+	let s:i=s:pos
+	while s:i<col('$')
+		if getline('.')[s:i]==')'||getline('.')[s:i]==','
+			let s:end=getline('.')[s:i]
+			if s:begin==','&&s:two=='f'&&s:end!=','
+				let s:one='F'
+			endif
+			if s:end==')'
+				let s:two='t'
+			endif
+			break
+		endif
+		let s:i+=1
+	endwhile
+	if s:begin!=''&&s:end!=''
+		execute "normal! ".s:one.s:begin."v".s:two.s:end
+	endif
+endfunc
+
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
 
@@ -363,7 +396,7 @@ nnoremap <silent><nowait>+ :sp<cr>:bn<cr>
 
 " edit file
 nnoremap e         :edit<space><c-r>=getcwd()<cr>/
-nnoremap E         :edit<space><c-r>=expand('%     : p : h')<cr>/
+nnoremap E         :edit<space><c-r>=expand('%:p:h')<cr>/
 nnoremap <leader>e :edit<space>~/
 
 " open : quick
