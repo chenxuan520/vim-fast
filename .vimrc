@@ -422,7 +422,7 @@ nnoremap <silent><nowait>+ :sp<cr>:bn<cr>
 " edit file
 nnoremap e         :edit<space><c-r>=getcwd()<cr>/
 nnoremap E         :edit<space><c-r>=expand('%     : p : h')<cr>/
-nnoremap <leader>e :edit<space>
+nnoremap <leader>e :edit<space>~/
 
 " open : quick
 nnoremap <space>; :

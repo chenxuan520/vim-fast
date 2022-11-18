@@ -95,7 +95,7 @@ function install_prepare_software_on_ubuntu()
 {
 	sudo apt-get update
 	sudo apt-get install -y vim
-	sudo apt-get install -y zip curl git wget ctags ripgrep
+	sudo apt-get install -y zip curl git wget ctags ripgrep fzf
 	sudo apt-get install -y build-essential python python-dev python3-dev fontconfig ack-grep ack
 	sudo apt-get install -y universal-ctags || sudo apt-get install -y exuberant-ctags
 }
@@ -104,7 +104,7 @@ function install_prepare_software_on_debian()
 {
 	sudo apt-get update
 	sudo apt-get install -y vim
-	sudo apt-get install -y zip curl git wget ctags ripgrep
+	sudo apt-get install -y zip curl git wget ctags ripgrep fzf
 	sudo apt-get install -y build-essential python python-dev python3-dev fontconfig ack
 	sudo apt-get install -y universal-ctags || sudo apt-get install -y exuberant-ctags
 	sudo apt-get install -y vim cmake build-essential python python-dev python3-dev fontconfig ack git

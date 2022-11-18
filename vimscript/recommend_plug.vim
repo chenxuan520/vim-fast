@@ -64,3 +64,15 @@ let g:lightline#bufferline#buffer_filter = "LightlineBufferlineFilter"
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 call plug#end()
+
+" fzf
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf.vim'
+call plug#end()
+" add it to ~/.vimrc
+" fd() {
+"   local dir
+"   dir=$(find ${1:-.} -path '*/\.*' -prune \
+"                   -o -type d -print 2> /dev/null | fzf +m --layout=reverse) &&
+"   cd "$dir"
+" }

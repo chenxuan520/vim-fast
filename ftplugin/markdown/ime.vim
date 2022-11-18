@@ -13,10 +13,10 @@ if !executable('ibus')
 	finish
 endif
 "ibus isn't running
-if system('ibus engine') =~ 'No engine is set'
-	finish
-endif
-let g:ibus_normal=system('ibus engine')
+" if system('ibus engine') =~ 'No engine is set'
+" 	finish
+" endif
+" let g:ibus_normal=system('ibus engine')
 let g:ibus_status=''
 if g:ibus_enable
 	augroup ibus

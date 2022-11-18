@@ -56,7 +56,7 @@
 
 3. 插件精简化,精选出了30个插件,使得打开速度得到提高
 
-4. 插件压缩包放在gitee上,使得插件下载的速度得到提高,对新手友好化,提供shell脚本一键配置插件
+4. **插件压缩包放在gitee上,使得插件下载的速度得到提高**,对新手友好化,提供shell脚本一键配置插件
 
 5. 添加了基于功能的快捷键的查找,避免了出现快捷键忘记,通过\<space\>H打开
 
@@ -70,7 +70,7 @@
 
 10. 提供shell脚本实现定制化Vim
 
-11. 中文文档详细,对新手更加友好
+11. 项目中文文档详细,对新手更加友好
 
 12. [**内置了一个简单完整的任务管理系统,方便建立一键编译运行系统**](https://github.com/chenxuan520/termtask.vim)
 
@@ -78,7 +78,7 @@
 
 14. [**内置markdown快捷插件**](https://github.com/chenxuan520/markdown-simple.vim)
 
-15. 对markdown文件提供ibus输入法的切换操作(默认自带),预览markdown(使用插件)
+15. 对markdown文件**提供ibus输入法的切换操作**(默认自带),预览[markdown](https://github.com/iamcco/markdown-preview.nvim)(使用插件)
 
 16. 和ici以及lazygit集成,无需额外插件,即可实现翻译和git管理
 
