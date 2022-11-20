@@ -374,6 +374,20 @@ func! s:GetArgc(one,two)
 	endif
 endfunc
 
+" easy to get obj
+onoremap <silent>i, i<
+onoremap <silent>a, a<
+xnoremap <silent>i, i<
+xnoremap <silent>a, a<
+onoremap <silent>i; i"
+onoremap <silent>a; a"
+xnoremap <silent>i; i"
+xnoremap <silent>a; a"
+onoremap <silent>in i{
+onoremap <silent>an a{
+xnoremap <silent>in i{
+xnoremap <silent>an a{
+
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
 

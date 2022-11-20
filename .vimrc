@@ -405,6 +405,20 @@ onoremap <silent>ia :<c-u>call obj#GetArgc('T','t')<cr>
 xnoremap <silent>aa :<c-u>call obj#GetArgc('T','f')<cr>
 xnoremap <silent>ia :<c-u>call obj#GetArgc('T','t')<cr>
 
+" easy to get obj
+onoremap <silent>i, i<
+onoremap <silent>a, a<
+xnoremap <silent>i, i<
+xnoremap <silent>a, a<
+onoremap <silent>i; i"
+onoremap <silent>a; a"
+xnoremap <silent>i; i"
+xnoremap <silent>a; a"
+onoremap <silent>in i{
+onoremap <silent>an a{
+xnoremap <silent>in i{
+xnoremap <silent>an a{
+
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
 
