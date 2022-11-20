@@ -568,7 +568,7 @@ nmap <silent><F3> <Plug>(coc-diagnostic-prev)
 nmap <silent><F4> <Plug>(coc-diagnostic-next)
 nmap <silent>[w <Plug>(coc-diagnostic-prev)
 nmap <silent>]w <Plug>(coc-diagnostic-next)
-nnoremap <silent><nowait> =w :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait>=w :<C-u>CocList diagnostics<cr>
 nnoremap <silent><nowait> <space>w :<C-u>CocList diagnostics<cr>
 " coc text obj
 xmap if <Plug>(coc-funcobj-i)

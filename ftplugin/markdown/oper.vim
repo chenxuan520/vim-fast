@@ -202,6 +202,7 @@ func! s:Backspace()
 	let s:delete=1
 	let s:tab=0
 	let s:space=0
+	let s:is_bs=1
 
 	let s:pair=getline('.')[col('.')-1]
 	let s:pair_l=getline('.')[col('.')-2]
@@ -224,6 +225,7 @@ func! s:Backspace()
 					\s:str[s:i]=='>'||s:str[s:i]=='.'||
 					\(s:str[s:i]>='0'&&s:str[s:i]<='9')
 			let s:delete+=1
+			let s:is_bs=0
 		elseif s:str[s:i]==' '
 			if s:space==0
 				let s:space=1
@@ -236,6 +238,10 @@ func! s:Backspace()
 		endif
 		let s:i-=1
 	endwhile
+
+	if s:is_bs&&s:i!=0
+		return "\<bs>"
+	endif
 
 	let s:result=''
 
@@ -316,6 +322,21 @@ func! s:FindHead(direction)
 	endif
 endfunc
 
+func! s:TableCreate(mode)
+	let s:get=getchar()-48
+	let s:result=''
+	while s:get>0
+		let s:result=s:result.'|{text}'
+		let s:get-=1
+	endwhile
+	let s:result=s:result.'|'
+	if a:mode!=''
+		return s:result
+	endif
+	execute 'normal! i'.s:result
+	execute 'normal! ^'
+endfunc
+
 nnoremap <silent><buffer>#         : call <sid>AddTitle()<cr><right>
 
 nnoremap <silent><buffer>-         : call <sid>AddSub()<cr><right>
@@ -346,9 +367,11 @@ inoremap <silent><buffer><c-m>      <c-r>=g:VimFastEnter('')<cr>
 inoremap <silent><buffer>\<cr>      <c-r>=g:VimFastEnter('io')<cr>
 inoremap <silent><buffer><kenter>   <c-r>=g:VimFastEnter('ke')<cr>
 
-inoremap <expr><silent><buffer><c-\>  <sid>Backspace()
 inoremap <expr><silent><buffer><bs>   <sid>Backspace()
 inoremap <silent><buffer><c-h> <bs>
+
+inoremap <expr><silent><buffer>\t  <sid>TableCreate('i')
+nnoremap <silent><buffer>\t  :call <sid>TableCreate('')<cr>
 
 nnoremap <silent><buffer> ]] :call <sid>FindHead('next')<cr>zz
 nnoremap <silent><buffer> [[ :call <sid>FindHead('up')<cr>zz
