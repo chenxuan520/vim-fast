@@ -265,6 +265,14 @@ nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close 
 nnoremap <silent><space>g :tabe<cr>:vert term ++curwin ++close lazygit<cr>
 nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
 
+" fzf self defile
+func! s:FzfFind()
+	vert call term_start('bash',{'term_finish':"close"})
+	call term_sendkeys(term_list()[0],
+		\'printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down`'."\<cr>")
+endfunc
+nnoremap <silent><space>z :call <sid>FzfFind()<cr>
+
 " yank and paste
 nnoremap <Leader>p "0p
 vnoremap <Leader>p "0p
@@ -699,9 +707,11 @@ nnoremap <silent><nowait>=l :let g:Lf_WorkingDirectoryMode = 'ac'<cr>
 nnoremap <silent><nowait>\l :let g:Lf_WorkingDirectoryMode = 'c'<cr>
 " set leaderf options
 " let g:Lf_WorkingDirectoryMode = 'ac'
+let g:Lf_HideHelp = 1
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
+let g:Lf_PreviewResult = {'Function': 1,'Rg': 1,'Line': 1}
 let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>'],'<C-K>':['<C-P>','<C-K>'],'<C-P>':['<C-L>']}
 let g:Lf_WildIgnore = {
 			\ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],

@@ -69,10 +69,30 @@ call plug#end()
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf.vim'
 call plug#end()
-" add it to ~/.vimrc
+" # find dir
 " fd() {
 "   local dir
-"   dir=$(find ${1:-.} -path '*/\.*' -prune \
-"                   -o -type d -print 2> /dev/null | fzf +m --layout=reverse) &&
+"   dir=$(find ${1:-${HOME}} \( -path '*/\.*' -o -path "*/go/pkg" -o -path "*/node_modules" \) -prune -o -type d -print 2> /dev/null | \
+"     fzf +m --layout=reverse --preview "ls -ah {}") &&
 "   cd "$dir"
 " }
+" # find file to edit
+" fe() {
+"   local file=""
+"   file=`fzf --layout=reverse --preview 'head -64 {}'`
+"   if [ "$file" =  "" ] ;then
+" 	  return
+"   fi
+"   vim $file
+" }
+" # find in vim
+" fv() {
+"   local file=""
+"   file=`fzf --layout=reverse --preview 'head -64 {}' --preview-window=down`
+"   printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD $file
+" }
+" # find history
+" fh() {
+"   eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
+" }
+" alias fzf='fzf --layout=reverse --preview "head -64 {}"'
