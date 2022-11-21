@@ -248,7 +248,9 @@ nnoremap <F8> :Step<cr>
 " term console
 func! Tapi_EditFile(bufnum,arglist)
 	execute ":wincmd p"
-	execute ":edit " . a:arglist[0]
+	if filereadable(a:arglist[0])
+		execute ":edit " . a:arglist[0]
+	endif
 	if len(a:arglist)>1
 		call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")
 	endif
@@ -266,12 +268,12 @@ nnoremap <silent><space>g :tabe<cr>:vert term ++curwin ++close lazygit<cr>
 nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
 
 " fzf self defile
-func! s:FzfFind()
+func! s:FzfFind(command)
 	vert call term_start('bash',{'term_finish':"close"})
-	call term_sendkeys(term_list()[0],
-		\'printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down`'."\<cr>")
+	call term_sendkeys(term_list()[0],a:command."\<cr>")
 endfunc
-nnoremap <silent><space>z :call <sid>FzfFind()<cr>
+nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
+nnoremap <silent><space>Z :call <sid>FzfFind('fd')<cr>
 
 " yank and paste
 nnoremap <Leader>p "0p

@@ -182,7 +182,9 @@ nnoremap <F8> :Step<cr>
 " term console
 func! Tapi_EditFile(bufnum,arglist)
 	execute ":wincmd p"
-	execute ":edit " . a:arglist[0]
+	if filereadable(a:arglist[0])
+		execute ":edit " . a:arglist[0]
+	endif
 	if len(a:arglist)>1
 		call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")
 	endif
