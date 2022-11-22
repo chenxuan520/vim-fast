@@ -80,7 +80,7 @@
 
 15. 对markdown文件**提供ibus输入法的切换操作**(默认自带),预览[markdown](https://github.com/iamcco/markdown-preview.nvim)(使用插件)
 
-16. 和ici以及lazygit集成,无需额外插件,即可实现翻译和git管理
+16. 和ici以及lazygit,fzf集成,无需额外插件,即可实现翻译和git管理
 
 17. 配置好的折叠功能,让代码浏览更加简单
 
@@ -215,6 +215,8 @@
 1. [lazygit](https://github.com/jesseduffield/lazygit),需要安装lazygit,使得在shell中可以直接调用shell.按下 空格+g 触发
 
 2. [ici翻译](https://github.com/Flowerowl/ici)`pip install ici`,并修改.vimrc中ici的路径,在普通模式或者可视化模式按下 ,i 翻译单词
+
+3. [fzf文件搜索](https://github.com/junegunn/fzf/),`sudo apt install fzf`,\<space\>z/Z 触发
 
 ## Vimplus仓库
 

@@ -7,3 +7,5 @@ func! VimFastSetPreCode()
 		autocmd! BufDelete *.sh au! shmode|aug! shmode
 	augroup END
 endfunc
+
+nnoremap <silent><buffer><space>xx :vert term <c-r>=expand('%:p')<cr><cr>

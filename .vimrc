@@ -432,6 +432,10 @@ xnoremap <silent>an a{
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
 
+" quick to change fir
+cnoremap cdn cd <c-r>=expand('%:p:h')<cr>
+cnoremap cdr cd <c-r>=termtask#Term_get_dir()<cr>
+
 " cmd emacs model
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
@@ -700,6 +704,9 @@ nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
 xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr>
 xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr><tab>
+" find tags
+nnoremap <space>j :LeaderfBufTag<cr>
+nnoremap <space>J :LeaderfBufTagAll<cr>
 " recall
 nnoremap <space>l :Leaderf --recall<cr><tab>
 " find color
@@ -713,7 +720,7 @@ let g:Lf_HideHelp = 1
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
-let g:Lf_PreviewResult = {'Function': 1,'Rg': 1,'Line': 1}
+let g:Lf_PreviewResult = {'Function': 1,'Rg': 1,'Line': 1,'BufTag': 1}
 let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>'],'<C-K>':['<C-P>','<C-K>'],'<C-P>':['<C-L>']}
 let g:Lf_WildIgnore = {
 			\ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],

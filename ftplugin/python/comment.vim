@@ -11,3 +11,5 @@ func! VimFastSetPreCode()
 	call append(line(".")-1,'# coding=utf-8')
 endfunc
 nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>
+
+nnoremap <buffer><silent>xx :vert term python3 <c-r>=expand('%:p')<cr><cr>
