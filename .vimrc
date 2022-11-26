@@ -22,6 +22,7 @@ set t_Co=256             " open 256 color
 set vb t_vb=             " set no bell
 set cmdheight=1          " set command height
 set showcmd              " show select line nums in visual
+set textwidth=0          " close auto enter
 set ruler                " cursor position displayed
 set laststatus=2         " show status
 set number               " show line number
@@ -274,6 +275,10 @@ func! s:FzfFind(command)
 endfunc
 nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
 nnoremap <silent><space>Z :call <sid>FzfFind('fd')<cr>
+
+" lf config define
+nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
+nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf .<cr>
 
 " yank and paste
 nnoremap <Leader>p "0p
@@ -683,7 +688,7 @@ nnoremap <space>s :SessionLoad<cr>
 nnoremap <space>f :LeaderfFile<cr>
 " recent file
 nnoremap <space>F :LeaderfMru<cr>
-" fund buffer
+" find buffer
 nnoremap <leader>b :LeaderfBuffer<cr>
 nnoremap <space>b :LeaderfBuffer<cr>
 " function list
@@ -704,7 +709,7 @@ nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
 xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr>
 xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr><tab>
-" find tags
+" jump tags
 nnoremap <space>j :LeaderfBufTag<cr>
 nnoremap <space>J :LeaderfBufTagAll<cr>
 " recall
