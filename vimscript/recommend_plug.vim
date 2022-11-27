@@ -11,11 +11,20 @@ call plug#begin('~/.vim/plugged')
 Plug 'preservim/vim-markdown'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'iamcco/markdown-preview.nvim', {'for':'markdown'}
 call plug#end()
 
 " markdown config
 nmap <leader>mo <Plug>MarkdownPreviewToggle
 nmap <leader>md :GenTocGFM<cr>
+" markdown preview
+nmap <space><space>p <Plug>MarkdownPreviewToggle
+" shell to install markdown preview
+" npm install -g yarn
+" yarn config set registry 'https://registry.npm.taobao.org'
+" git clone https://gitee.com/zgpio/markdown-preview.nvim.git ~/.vim/plugged/markdown-preview.nvim
+" cd ~/.vim/plugged/markdown-preview.nvim/app
+" yarn install
 
 " light line
 call plug#begin('~/.vim/plugged')

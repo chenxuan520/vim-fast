@@ -76,17 +76,24 @@ endfunc
 
 func! s:Bold(ch)
 	let temp = @s
-	norm! gv"sy
+	norm! gv
+	let col = col('.')
+	let temp = col('v')
+	norm! "sy
 	let s:str = @s
 	let @s = temp
-	let col = col('.')
+
+	if temp<col
+		let col=temp
+	endif
 
 	let s:ch=a:ch
 	if a:ch=='~~'
 		let s:ch='\~\~'
 	endif
 
-	execute ":s/".s:str."/".s:ch.s:str.s:ch."/"
+	execute ":s/^\\(.\\{".(col-1)."\\}\\)".s:str."/\\1".s:ch.s:str.s:ch."/"
+	" execute ":s/".s:str."/".s:ch.s:str.s:ch."/"
 	call cursor(line('.'),col+1)
 endfunc
 

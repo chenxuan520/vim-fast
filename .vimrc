@@ -145,18 +145,13 @@ Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 Plug 'chenxuan520/vim-go-highlight', {'for':'go'}
 " for python highlight
 Plug 'vim-python/python-syntax', {'for':'py'}
-" markdown preview
-Plug 'iamcco/markdown-preview.nvim', {'for':'markdown'}
 " statusline of bottom
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 " file devicon
 Plug 'ryanoasis/vim-devicons'
 " git control
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-" text obj
-Plug 'kana/vim-textobj-user'
 " enhance f/t
 Plug 'rhysd/clever-f.vim'
 " code snippets
@@ -760,6 +755,3 @@ let g:asyncrun_bell = 0
 nmap <space>: :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
-
-" markdown preview
-nmap <space><space>p <Plug>MarkdownPreviewToggle
