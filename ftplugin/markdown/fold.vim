@@ -3,7 +3,9 @@ if get(g:,"markdown_simple_disable",0)
 	finish
 endif
 
-let s:mdfoldEnable=get(g:,"markdown_fold_enable",1)
+if !get(g:,"markdown_fold_enable",1)
+	finish
+endif
 
 func! g:VimFastFoldExpr()
 	if line('$')==v:lnum-1

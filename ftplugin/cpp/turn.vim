@@ -30,3 +30,28 @@ nnoremap <silent><buffer><leader>C  :call <sid>HppCppturn()<cr>:e <c-r>=@s<cr><c
 if exists('g:did_coc_loaded')
 	nnoremap <silent><buffer><leader>C :CocCommand clangd.switchSourceHeader<cr>
 endif
+
+func! s:Enter()
+	let s:str=getline('.')
+	let s:col=col('.')-2
+	echo s:str[s:col].'pis'
+	while s:str[s:col]==' '||s:str[s:col]==nr2char(9)
+		let s:col-=1
+		if s:col<=0
+			break
+		endif
+	endwhile
+	if s:col<=0
+		return "\<cr>"
+	endif
+	if s:str[s:col]=='{'||s:str[s:col]==';'||s:str[s:col]=='>'||s:str[0]=='#'
+				" \||s:str[s:col]==')'
+		return "\<cr>"
+	endif
+	echo s:str[s:col].'is'
+	return ";\<cr>"
+endfunc
+
+if get(g:,"cpp_enter",0)
+	inoremap <silent><expr><buffer><c-m> <sid>Enter()
+endif

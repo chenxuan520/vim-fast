@@ -689,7 +689,7 @@ nnoremap <space>b :LeaderfBuffer<cr>
 " function list
 nnoremap <space>t :LeaderfFunction<cr>
 nnoremap <space>T :LeaderfFunctionAll<cr>
-xnoremap <space>t :<c-u>execute ":Leaderf function --all --input " . <sid>GetSelectArea()<cr><tab>
+xnoremap <space>t :<c-u>execute ":Leaderf function --all --input " . <sid>GetSelectArea()<cr>
 " find for help
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>H :Leaderf help --input key:<cr>
@@ -747,7 +747,8 @@ nnoremap <leader><leader>g :GV?<cr>
 " clever f
 " nnoremap \ ,
 " map \ <Plug>(clever-f-repeat-back)
-map <silent><nowait> ; <Plug>(clever-f-repeat-forward)
+nmap <silent><nowait> ; <Plug>(clever-f-repeat-forward)
+xmap <silent><nowait> ; <Plug>(clever-f-repeat-forward)
 
 " asyncrun
 let g:asyncrun_open = 6

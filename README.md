@@ -78,7 +78,7 @@
 
 14. [**内置markdown快捷插件**](https://github.com/chenxuan520/markdown-simple.vim)
 
-15. 对markdown文件**提供ibus输入法的切换操作**(默认自带),预览[markdown](https://github.com/iamcco/markdown-preview.nvim)(使用插件)
+15. 对markdown文件**提供ibus输入法的切换操作**(默认自带),预览markdown(默认自带)
 
 16. 和ici以及lazygit,fzf,lf集成,无需额外插件,即可实现翻译和git管理,文件管理
 

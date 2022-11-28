@@ -352,20 +352,20 @@ nnoremap <silent><buffer>&         : call <sid>Number()<cr>
 
 nnoremap <silent><buffer><leader>> : call <sid>Refence()<cr>
 
-vnoremap <silent><buffer><leader>~ : call <sid>Bold('~~')<cr>
+xnoremap <silent><buffer><leader>~ : call <sid>Bold('~~')<cr>
 
-vnoremap <silent><buffer>*     :call <sid>Bold('*')<cr>
-vnoremap <silent><buffer><c-i> :call <sid>Bold('*')<cr>
-vnoremap <silent><buffer><c-b> :call <sid>Bold('**')<cr>
+xnoremap <silent><buffer>*     :call <sid>Bold('*')<cr>
+xnoremap <silent><buffer><c-i> :call <sid>Bold('*')<cr>
+xnoremap <silent><buffer><c-b> :call <sid>Bold('**')<cr>
 nnoremap <silent><buffer>*     viw:call <sid>Bold('*')<cr>
 
-vnoremap <silent><buffer>`     :call <sid>Bold('`')<cr>
+xnoremap <silent><buffer>`     :call <sid>Bold('`')<cr>
 nnoremap <silent><buffer>`     viw:call <sid>Bold('`')<cr>
 
-vnoremap <silent><buffer><c-l> :call <sid>BlodLink('[',']()')<cr>f]f)
+xnoremap <silent><buffer><c-l> :call <sid>BlodLink('[',']()')<cr>f]f)
 nnoremap <silent><buffer><c-l> viw:call <sid>BlodLink('[',']()')<cr>f]f)
 
-vnoremap <silent><buffer><leader>` :<c-u>call <sid>Code()<cr>
+xnoremap <silent><buffer><leader>` :<c-u>call <sid>Code()<cr>
 
 nnoremap <silent><buffer>o         :call g:VimFastEnter('o')<cr>o<c-r>s
 nnoremap <silent><buffer><leader>o :call g:VimFastEnter('io')<cr>o<c-r>s
