@@ -194,13 +194,13 @@ tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
 tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
 tnoremap <c-z> exit<cr>
-nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
-nnoremap <Leader><Leader>t :vert term<CR>
+nnoremap <leader><leader>T :bo term ++rows=6<CR>
+nnoremap <leader><leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
 
 " term console
-nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
-nnoremap <Leader><Leader>t :vert term<CR>
+nnoremap <leader><leader>T :bo term ++rows=6<CR>
+nnoremap <leader><leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:vert term ++curwin ++close<cr>
 
 " term task
@@ -235,10 +235,10 @@ func! s:Backspace()
 endfunc
 
 " yank and paste
-nnoremap <Leader>p "0p
-vnoremap <Leader>p "0p
-nnoremap <Leader>P "0P
-vnoremap <Leader>P "0P
+nnoremap <leader>p "0p
+vnoremap <leader>p "0p
+nnoremap <leader>P "0P
+vnoremap <leader>P "0P
 
 " vimdiff merge
 command! -nargs=0 Remote :diffg RE

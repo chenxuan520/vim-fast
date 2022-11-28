@@ -255,8 +255,8 @@ tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
 tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
 tnoremap <c-z> exit<cr>
-nnoremap <Leader><Leader>T :bo term ++rows=6<CR>
-nnoremap <Leader><Leader>t :vert term<CR>
+nnoremap <leader><leader>T :bo term ++rows=6<CR>
+nnoremap <leader><leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
 
 " lazygit
@@ -276,10 +276,10 @@ nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('
 nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf .<cr>
 
 " yank and paste
-nnoremap <Leader>p "0p
-vnoremap <Leader>p "0p
-nnoremap <Leader>P "0P
-vnoremap <Leader>P "0P
+nnoremap <leader>p "0p
+vnoremap <leader>p "0p
+nnoremap <leader>P "0P
+vnoremap <leader>P "0P
 
 " vimdiff merge
 command! -nargs=0 Remote :diffg RE
@@ -537,7 +537,7 @@ colorscheme tokyonight
 " set prepare code when new file
 augroup PreCode
 	autocmd!
-	autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
+	autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,*.html,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
 augroup END
 
 " airline
@@ -646,12 +646,12 @@ nmap g/ <Plug>(incsearch-stay)
 
 " vim-easymotion
 let g:EasyMotion_smartcase = 1
-map <leader>w <Plug>(easymotion-bd-w)
+map  <leader>w <Plug>(easymotion-bd-w)
 nmap <leader>w <Plug>(easymotion-overwin-w)
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
-nmap <Leader>j <Plug>(easymotion-j)
-nmap <Leader>k <Plug>(easymotion-k)
+map  <leader>f <Plug>(easymotion-bd-f)
+nmap <leader>f <Plug>(easymotion-overwin-f)
+nmap <leader>j <Plug>(easymotion-j)
+nmap <leader>k <Plug>(easymotion-k)
 
 " python-highlight
 let g:python_highlight_all = 1
@@ -734,10 +734,10 @@ nnoremap <leader>T :Tabularize /
 xnoremap <leader>T :Tabularize /
 
 " vim-smooth-scroll
-nnoremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-nnoremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
-nnoremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-nnoremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+nnoremap <silent><c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+nnoremap <silent><c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+nnoremap <silent><c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+nnoremap <silent><c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
 " gv
 nnoremap <leader>g         :GV<cr>
