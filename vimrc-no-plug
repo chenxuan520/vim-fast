@@ -443,6 +443,9 @@ nnoremap L $i<c-m><esc>k$
 nnoremap H O<c-[>j
 nnoremap M o<c-[>k
 
+" end of line
+nnoremap Q $
+
 " add space
 nnoremap <leader><space> i<space><right><c-[>
 
