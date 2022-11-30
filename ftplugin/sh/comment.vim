@@ -8,4 +8,4 @@ func! VimFastSetPreCode()
 	augroup END
 endfunc
 
-nnoremap <silent><buffer><space>xx :vert term <c-r>=expand('%:p')<cr><cr>
+nnoremap <silent><buffer><space>xx :w<cr>:vert term <c-r>=expand('%:p')<cr><cr>

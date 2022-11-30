@@ -12,4 +12,4 @@ if exists('g:did_coc_loaded')
 	nnoremap <buffer><space>xd :CocCommand go.tags.remove.prompt<cr>
 endif
 
-nnoremap <buffer><space>xx :vert term go run <c-r>=expand('%:p')<cr><cr>
+nnoremap <buffer><space>xx :w<cr>:vert term go run <c-r>=expand('%:p')<cr><cr>

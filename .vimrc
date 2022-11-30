@@ -468,8 +468,9 @@ nnoremap L $i<c-m><esc>k$
 nnoremap H O<c-[>j
 nnoremap M o<c-[>k
 
-" end of line
+" make move easy
 nnoremap Q $
+nnoremap S ^
 
 " add space
 nnoremap <leader><space> i<space><right><c-[>
@@ -635,7 +636,6 @@ function! ShowDocumentation()
 	endif
 endfunction
 
-" tagbar
 let g:tagbar_width = 22
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 

@@ -105,3 +105,8 @@ call plug#end()
 "   eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -E 's/ *[0-9]*\*? *//' | sed -E 's/\\/\\\\/g')
 " }
 " alias fzf='fzf --layout=reverse --preview "head -64 {}"'
+
+" A collection of language packs for Vim.
+call plug#begin('~/.vim/plugged')
+Plug 'sheerun/vim-polyglot'
+call plug#end()
