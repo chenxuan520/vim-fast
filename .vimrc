@@ -364,6 +364,9 @@ nnoremap <silent><nowait>\z :set fdm=manual<cr>:set nofen<cr>
 nnoremap <silent><nowait>=o zO
 nnoremap <silent><nowait>\o zC
 
+" set search noh
+nnoremap <silent><nowait>\h :noh<cr>
+
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 
@@ -620,8 +623,9 @@ command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 nmap <leader><leader>f :Format<cr>
 " coc config
-nmap <silent><nowait> <space><space>c :CocConfig<cr>
-nmap <silent><nowait> <space><space>l :CocList extensions<cr>
+nmap <silent><nowait><space><space>c :CocConfig<cr>
+nmap <silent><nowait><space><space>l :CocList extensions<cr>
+nmap <silent><nowait><space><space>j :CocList outline<cr>
 " coc help
 nnoremap <silent> K :call ShowDocumentation()<cr>
 " coc mouse

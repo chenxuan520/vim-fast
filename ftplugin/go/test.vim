@@ -10,6 +10,11 @@ if exists('g:did_coc_loaded')
 	" tag
 	nnoremap <buffer><space>xa :CocCommand go.tags.add.prompt<cr>
 	nnoremap <buffer><space>xd :CocCommand go.tags.remove.prompt<cr>
+	" auto format
+	augroup GoFormat
+		autocmd!
+		autocmd BufWritePre *.go call CocAction('format')
+	augroup END
 endif
 
 nnoremap <buffer><space>xx :w<cr>:vert term go run <c-r>=expand('%:p')<cr><cr>

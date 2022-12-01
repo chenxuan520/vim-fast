@@ -321,8 +321,11 @@ nnoremap <silent><nowait>\z :set fdm=manual<cr>:set nofen<cr>
 nnoremap <silent><nowait>=o zO
 nnoremap <silent><nowait>\o zC
 
+" set search noh
+nnoremap <silent><nowait>\h :noh<cr>
+
 " delete <space> in end of line
-nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr>
+nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 
 " run macro in visual model
 vnoremap @ :normal @
