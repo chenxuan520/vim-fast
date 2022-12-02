@@ -211,9 +211,26 @@ nnoremap <silent><space>g :tabe<cr>:execute ":vert term ++curwin ++close " . g:T
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ` ``<left>
+
+" jump
+func! s:Judge(ch)
+	if a:ch=='"'||a:ch=="'"||a:ch=='`'
+		if getline('.')[col('.')-1]!=a:ch
+			return a:ch.a:ch."\<left>"
+		endif
+	endif
+	if getline('.')[col('.')-1]==a:ch
+		return "\<right>"
+	endif
+	return a:ch
+endfunc
+inoremap <expr><silent>" <sid>Judge('"')
+inoremap <expr><silent>` <sid>Judge('`')
+inoremap <expr><silent>' <sid>Judge("'")
+inoremap <expr><silent>> <sid>Judge('>')
+inoremap <expr><silent>) <sid>Judge(')')
+inoremap <expr><silent>} <sid>Judge('}')
+inoremap <expr><silent>] <sid>Judge(']')
 
 " set backspace
 inoremap <expr><bs> <sid>Backspace()
@@ -452,15 +469,6 @@ nnoremap S ^
 
 " add space
 nnoremap <leader><space> i<space><right><c-[>
-
-" jump >
-func! s:Judge()
-	if getline('.')[col('.')-1]=='>'
-		return "\<right>"
-	endif
-	return ">"
-endfunc
-inoremap <expr><silent>> <sid>Judge()
 
 " scroll in other window
 nnoremap \u <c-w>p<c-u><c-w>p

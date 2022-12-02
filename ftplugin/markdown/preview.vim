@@ -40,8 +40,9 @@ func! s:MarkdownPreview()
 	if b:header!=''
 		call system('echo "'.b:header.'" > '.s:html)
 	endif
+	echo 'Turn md to html,please wait...'
 	call system(b:pandoc.' '.expand('%:p').' -t html >>'.s:html)
-	call system(b:browser.' '.s:html)
+	call job_start(b:browser.' '.s:html)
 	echo s:html
 endfunc
 
