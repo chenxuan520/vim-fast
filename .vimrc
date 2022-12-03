@@ -315,9 +315,10 @@ nnoremap \q :cclose<cr>
 nnoremap =q :copen<cr>
 
 " set mouse
-func s:MouseConfig()
+func! s:MouseConfig()
 	set mouse=a
 	set mousemodel=popup_setpos
+	unmenu PopUp
 	" you can define menu self
 	" visual model
 	vnoremenu PopUp.Yank\ Text "+y
@@ -326,8 +327,8 @@ func s:MouseConfig()
 	" normal model
 	nnoremenu PopUp.Paste\ Text "+p
 	nnoremenu PopUp.Select\ All ggVG
-	nnoremenu PopUp.Back\ Pos <c-o>zz<cr>
-	nnoremenu PopUp.Next\ Pos <c-i>zz<cr>
+	nnoremenu PopUp.Back\ Pos <c-o>zz
+	nnoremenu PopUp.Next\ Pos <c-i>zz
 	" fold
 	nnoremenu PopUp.Open\ Fold  zO
 	nnoremenu PopUp.Close\ Fold zC
@@ -631,6 +632,21 @@ nnoremap <silent> K :call ShowDocumentation()<cr>
 " coc mouse
 nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
 nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
+function! s:CocMouse()
+	unmenu PopUp
+	nmenu     <silent>PopUp.Coc\ Define    gd
+	nmenu     <silent>PopUp.Coc\ Refer     gr
+	nnoremenu <silent>PopUp.Coc\ Doc       :call ShowDocumentation()<cr>
+	nmenu     <silent>PopUp.Hight\ Word    *
+	nnoremenu <silent>PopUp.Back\ Pos      <c-o>zz
+	nnoremenu <silent>PopUp.Next\ Pos      <c-i>zz
+	nnoremenu <silent>PopUp.Open\ Fold     zO
+	nnoremenu <silent>PopUp.Close\ Fold    zC
+	nnoremenu <silent>PopUp.Fold\ Enable   :set fdm=indent<cr>:set fen<cr>
+	nnoremenu <silent>PopUp.-Sep-          :<cr>
+	nnoremenu <silent>PopUp.Close\ Model\  :call <sid>MouseConfig()<cr>
+endfunction
+nnoremap <expr><silent><nowait>=c <sid>CocMouse()
 
 function! ShowDocumentation()
 	if CocAction('hasProvider', 'hover')

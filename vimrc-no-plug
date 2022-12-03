@@ -302,8 +302,8 @@ func MouseConfig()
 	" normal model
 	nnoremenu PopUp.Paste\ Text "+p
 	nnoremenu PopUp.Select\ All ggVG
-	nnoremenu PopUp.Back\ Pos <c-o>zz<cr>
-	nnoremenu PopUp.Next\ Pos <c-i>zz<cr>
+	nnoremenu PopUp.Back\ Pos <c-o>zz
+	nnoremenu PopUp.Next\ Pos <c-i>zz
 	" fold
 	nnoremenu PopUp.Open\ Fold  zO
 	nnoremenu PopUp.Close\ Fold zC
