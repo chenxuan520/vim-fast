@@ -34,7 +34,6 @@ endif
 func! s:Enter()
 	let s:str=getline('.')
 	let s:col=col('.')-2
-	echo s:str[s:col].'pis'
 	while s:str[s:col]==' '||s:str[s:col]==nr2char(9)
 		let s:col-=1
 		if s:col<=0
@@ -48,7 +47,6 @@ func! s:Enter()
 				" \||s:str[s:col]==')'
 		return "\<cr>"
 	endif
-	echo s:str[s:col].'is'
 	return ";\<cr>"
 endfunc
 

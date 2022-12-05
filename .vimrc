@@ -360,10 +360,11 @@ nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
 nnoremap <silent><nowait>\n :setlocal relativenumber<cr>
 
 " set fold auto
-nnoremap <silent><nowait>=z :set fdm=indent<cr>:set fen<cr>
-nnoremap <silent><nowait>\z :set fdm=manual<cr>:set nofen<cr>
+nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
+nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
 nnoremap <silent><nowait>=o zO
 nnoremap <silent><nowait>\o zC
+nnoremap <silent><nowait><bs> zc
 
 " set search noh
 nnoremap <silent><nowait>\h :noh<cr>
@@ -436,7 +437,7 @@ xnoremap <silent>an a{
 " sudo to write file
 cnoremap w!! w !sudo tee % >/dev/null
 
-" quick to change fir
+" quick to change dir
 cnoremap cdn cd <c-r>=expand('%:p:h')<cr>
 cnoremap cdr cd <c-r>=termtask#Term_get_dir()<cr>
 
