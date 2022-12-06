@@ -60,9 +60,10 @@ set sidescrolloff=4      " 设置右部距离
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码补全
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set wildmenu                          " vim自身命名行模式智能补全
-set completeopt=menu,preview,noselect " 补全时不显示窗口，只显示补全列表
-set omnifunc=syntaxcomplete#Complete
+set wildmenu                             " vim自身命名行模式智能补全
+set completeopt=menuone,preview,noselect " 补全时不显示窗口，只显示补全列表
+set omnifunc=syntaxcomplete#Complete     " 设置全能补全
+set shortmess+=c                         " 设置补全静默
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 搜索设置
@@ -506,6 +507,24 @@ nnoremap =a :ab<cr>
 
 " config complete
 inoremap / /<c-x><c-f>
+function! s:feed_popup()
+	if getline('.')[col('.')-1]=='/'
+		return
+	endif
+	let s:min_complete=2
+	let s:context=strpart(getline('.'), 0, col('.') - 1)
+	let s:match= matchlist(s:context, '\(\k\{' . s:min_complete . ',}\)$')
+	if empty(s:match)
+		return
+	endif
+	silent! call feedkeys("\<c-n>", 'n')
+	redraw
+endfunction
+augroup Complete
+	au!
+	au CursorMovedI <buffer> nested call s:feed_popup()
+augroup END
+
 
 " set colorscheme
 set termguicolors
@@ -537,7 +556,7 @@ set statusline+=%5*¦☰\ %l/%-L
 set statusline+=%6*%3p%%\ ¦
 set statusline+=%7*:%v\ ¦
 
-" set netrw-------------------------------------
+" set netrw
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
@@ -546,3 +565,52 @@ let g:netrw_winsize = 15
 set fillchars=vert:\⎜
 nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#333333 guifg=#666666
+
+" set gcc enable
+func! s:Commentary()
+	let s:num=line('.')
+	let line=getline(s:num)
+	let uncomment=2
+	let [l, r] = split( substitute(substitute(substitute(
+				\ &commentstring, '^$', '%s', ''), '\S\zs%s',' %s', '') ,'%s\ze\S', '%s ', ''), '%s', 1)
+	let line = matchstr(getline(s:num),'\S.*\s\@<!')
+	if l[-1:] ==# ' ' && stridx(line,l) == -1 && stridx(line,l[0:-2]) == 0
+		let l = l[:-2]
+	endif
+	if r[0] ==# ' ' && line[-strlen(r):] != r && line[1-strlen(r):] == r[1:]
+		let r = r[1:]
+	endif
+	if len(line) && (stridx(line,l) || line[strlen(line)-strlen(r) : -1] != r)
+		let uncomment = 0
+	endif
+	let line=getline(s:num)
+	let [l, r] = split( substitute(substitute(substitute(
+				\ &commentstring, '^$', '%s', ''), '\S\zs%s',' %s', '') ,'%s\ze\S', '%s ', ''), '%s', 1)
+	if strlen(r) > 2 && l.r !~# '\\'
+		let line = substitute(line,
+					\'\M' . substitute(l, '\ze\S\s*$', '\\zs\\d\\*\\ze', '') . '\|' . substitute(r, '\S\zs', '\\zs\\d\\*\\ze', ''),
+					\'\=substitute(submatch(0)+1-uncomment,"^0$\\|^-\\d*$","","")','g')
+	endif
+	if uncomment
+		let line = substitute(line,'\S.*\s\@<!','\=submatch(0)[strlen(l):-strlen(r)-1]','')
+	else
+		let line = substitute(line,'^\%('.matchstr(getline(s:num),'^\s*').'\|\s*\)\zs.*\S\@<=','\=l.submatch(0).r','')
+	endif
+	call setline(s:num,line)
+endfunc
+nnoremap <silent><nowait>gcc :call <sid>Commentary()<cr>
+
+" set tabline
+func! TabLine()
+	let s:result=''
+	for buf in getbufinfo({'buflisted':1})
+		let s:name=buf.name
+		if strridx(buf.name,"/")!=-1
+			let s:name=strpart(buf.name,strridx(buf.name,"/")+1)
+		endif
+		let s:result=s:result.s:name.''
+	endfor
+	return s:result
+endfunc
+set showtabline=2
+set tabline=%1*\ %{TabLine()}
