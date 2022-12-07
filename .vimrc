@@ -191,6 +191,7 @@ inoremap <c-e> <end>
 inoremap <c-a> <c-[>^i
 inoremap <c-y> <c-[>lWi
 inoremap <c-t> <c-[>Bi
+inoremap <c-q> <del>
 
 " delete line
 inoremap <c-d> <c-[>ddi
@@ -579,16 +580,18 @@ augroup END
 
 " coc.nvim
 " coc tab
-inoremap <silent><expr> <TAB>
+inoremap <silent><expr><TAB>
 			\ pumvisible() ? "\<C-n>" :
 			\ CheckBackspace() ? "\<TAB>" :
 			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 function! CheckBackspace() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+" c-p
+inoremap <silent><expr><c-p>
+			\ pumvisible()? "\<c-p>" : "\<c-[>"
 " coc find define
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)

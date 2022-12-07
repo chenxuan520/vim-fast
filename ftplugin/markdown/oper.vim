@@ -93,7 +93,6 @@ func! s:Bold(ch)
 	endif
 
 	execute ":s/^\\(.\\{".(col-1)."\\}\\)".s:str."/\\1".s:ch.s:str.s:ch."/"
-	" execute ":s/".s:str."/".s:ch.s:str.s:ch."/"
 	call cursor(line('.'),col+1)
 endfunc
 

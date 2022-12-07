@@ -49,3 +49,11 @@ func! VimFastSetPreCode()
 	call append( line(".")-1,"			\\}," )
 	call append( line(".")-1,"			\\]" )
 endfunc
+
+if expand('%:t')=='.config.vim'
+	augroup TaskLoad
+		au!
+		au BufWritePost .config.vim exec "source ". expand('%:p')
+		au BufDelete .config.vim au! TaskLoad
+	augroup END
+endif

@@ -132,6 +132,7 @@ inoremap <c-e> <end>
 inoremap <c-a> <c-[>^i
 inoremap <c-y> <c-[>lWi
 inoremap <c-t> <c-[>Bi
+inoremap <c-q> <del>
 
 " 插入模式删除
 inoremap <c-d> <c-[>ddi
@@ -528,7 +529,11 @@ augroup END
 
 " set colorscheme
 set termguicolors
-colorscheme desert
+if filereadable(expand('~/.vim/colors/tokyonight.vim'))
+	colorscheme tokyonight
+else
+	colorscheme desert
+endif
 
 " set statusline
 function GetMode()
@@ -548,13 +553,13 @@ function GetMode()
 	endif
 endfunction
 
-set statusline=%1*\ %{GetMode()}
+set statusline=%1*\ %{GetMode()}
 set statusline+=%2*\ %F\ %m%r%h%w%=
 set statusline+=%3*\ %Y\ |
-set statusline+=%4*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}
-set statusline+=%5*¦☰\ %l/%-L
-set statusline+=%6*%3p%%\ ¦
+set statusline+=%4*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}¦
+set statusline+=%1*☰\ %l/%-L%3p%%\ ¦
 set statusline+=%7*:%v\ ¦
+highlight User1 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
 
 " set netrw
 let g:netrw_banner = 0
@@ -608,9 +613,37 @@ func! TabLine()
 		if strridx(buf.name,"/")!=-1
 			let s:name=strpart(buf.name,strridx(buf.name,"/")+1)
 		endif
-		let s:result=s:result.s:name.''
+		if s:name!=expand('%:t')
+			let s:result=s:result.s:name
+		endif
 	endfor
 	return s:result
 endfunc
 set showtabline=2
-set tabline=%1*\ %{TabLine()}
+set tabline=%2*\ %{TabLine()}
+set tabline+=%1*\ %t
+set tabline+=%2*
+
+" vim sourround
+let g:pair_map={
+			\'(':')',
+			\'[':']',
+			\'{':'}',
+			\'"':'"',
+			\"'":"'",
+			\'<':'>',
+			\'`':'`',
+			\}
+func! s:AddSourround()
+	let s:ch=nr2char(getchar())
+	norm! gv"sy
+	let s:str = @s
+	for k in keys(g:pair_map)
+		if s:ch==k||s:ch==g:pair_map[k]
+			execute ":s/^\\(.\\{".(col('.')-1)."\\}\\)".s:str."/\\1".k.s:str.g:pair_map[k]."/"
+			return
+		endif
+	endfor
+	echo s:ch.' unknow pair'
+endfunc
+xnoremap <silent>S :<c-u>call <sid>AddSourround()<cr>
