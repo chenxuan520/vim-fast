@@ -164,9 +164,10 @@ func s:CtrlB()
 endfunc
 
 " 复制当前选中到系统剪切板
-vmap <leader><leader>y "+y
+vnoremap <leader><leader>y "+y
 "将系统剪切板内容粘贴到vim
 nnoremap <leader><leader>p "+p
+vnoremap <leader><leader>p "+p
 
 " 打开文件自动定位到最后编辑的位置
 augroup ReadPost
@@ -327,8 +328,8 @@ nnoremap <silent><nowait>\s :setlocal nospell<cr>
 " z= is list of change
 
 " set wrap
-nnoremap <silent><nowait>=r :setlocal wrap<cr>
-nnoremap <silent><nowait>\r :setlocal nowrap<cr>
+nnoremap <silent><nowait>=r :setlocal wrap<cr>:nnoremap<buffer> j gj<cr>:nnoremap<buffer> k gk<cr>
+nnoremap <silent><nowait>\r :setlocal nowrap<cr>:nunmap<buffer> j<cr>:nunmap<buffer> k<cr>
 
 " set line number
 nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
@@ -538,28 +539,39 @@ endif
 " set statusline
 function GetMode()
 	let m = mode()
+	let s:str=''
+	let s:color='#9ECE6A'
 	if m == 'R'
-		return 'Replace'
+		let s:color='#F7768E'
+		let s:str= 'Replace'
 	elseif m == 'v'
-		return 'Visual'
+		let s:color='#F7768E'
+		let s:str= 'Visual'
 	elseif m == 'i'
-		return 'Insert'
-	elseif m == 'c'
-		return 'Command'
+		let s:color='#7AA2F7'
+		let s:str= 'Insert'
 	elseif m == 't'
-		return 'Terminal'
+		let s:color='#7AA2F7'
+		let s:str= 'Terminal'
 	else
-		return 'Normal'
+		let s:color='#9ECE6A'
+		let s:str= 'Normal'
 	endif
+	exec 'highlight User3 font=#000000 guifg=#1a1b26 guibg='.s:color
+	exec 'highlight User4 font=#000000 guifg='.s:color.' guibg=#232433'
+	redraw
+	return s:str
 endfunction
 
-set statusline=%1*\ %{GetMode()}
-set statusline+=%2*\ %F\ %m%r%h%w%=
-set statusline+=%3*\ %Y\ |
+set statusline=%3*\ %{GetMode()}
+set statusline+=%4*\ %F\ %m%r%h%w%=
+set statusline+=%4*\ %Y\ |
 set statusline+=%4*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}¦
-set statusline+=%1*☰\ %l/%-L%3p%%\ ¦
-set statusline+=%7*:%v\ ¦
+set statusline+=%3*☰\ %l/%-L%3p%%\ ¦:%v\ ¦
 highlight User1 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
+highlight User2 font=#000000 guifg=#9ECE6A guibg=#232433
+highlight User3 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
+highlight User4 font=#000000 guifg=#9ECE6A guibg=#232433
 
 " set netrw
 let g:netrw_banner = 0
@@ -570,6 +582,26 @@ let g:netrw_winsize = 15
 set fillchars=vert:\⎜
 nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#333333 guifg=#666666
+
+" set tabline
+func! TabLine()
+	let s:result=''
+	for buf in getbufinfo({'buflisted':1})
+		let s:name=buf.name
+		if strridx(buf.name,"/")!=-1
+			let s:name=strpart(buf.name,strridx(buf.name,"/")+1)
+		endif
+		if buf.name!=expand('%:p')
+			let s:result=s:result.' '.s:name
+		endif
+	endfor
+	redraw
+	return s:result
+endfunc
+set showtabline=2
+set tabline=%2*\ %{TabLine()}
+set tabline+=%1*\ %t
+set tabline+=%2*
 
 " set gcc enable
 func! s:Commentary()
@@ -605,25 +637,6 @@ func! s:Commentary()
 endfunc
 nnoremap <silent><nowait>gcc :call <sid>Commentary()<cr>
 
-" set tabline
-func! TabLine()
-	let s:result=''
-	for buf in getbufinfo({'buflisted':1})
-		let s:name=buf.name
-		if strridx(buf.name,"/")!=-1
-			let s:name=strpart(buf.name,strridx(buf.name,"/")+1)
-		endif
-		if s:name!=expand('%:t')
-			let s:result=s:result.s:name
-		endif
-	endfor
-	return s:result
-endfunc
-set showtabline=2
-set tabline=%2*\ %{TabLine()}
-set tabline+=%1*\ %t
-set tabline+=%2*
-
 " vim sourround
 let g:pair_map={
 			\'(':')',
@@ -636,14 +649,41 @@ let g:pair_map={
 			\}
 func! s:AddSourround()
 	let s:ch=nr2char(getchar())
+	let s:col=col('.')
 	norm! gv"sy
 	let s:str = @s
 	for k in keys(g:pair_map)
 		if s:ch==k||s:ch==g:pair_map[k]
 			execute ":s/^\\(.\\{".(col('.')-1)."\\}\\)".s:str."/\\1".k.s:str.g:pair_map[k]."/"
+			execute "normal! ".(s:col+1)."l"
 			return
 		endif
 	endfor
 	echo s:ch.' unknow pair'
 endfunc
+func! s:DelSourround()
+	let s:ch=nr2char(getchar())
+	if getline('.')[col('.')-1]!=s:ch
+		echo 'not begin with'.s:ch
+	endif
+	for k in keys(g:pair_map)
+		if s:ch==k
+			execute 'normal! xf'.g:pair_map[k].'x'
+			return
+		endif
+	endfor
+	echo s:ch.' unknow pair'
+endfunc
+func! s:ChangeSourround()
+	let s:ch=nr2char(getchar())
+	let s:two=nr2char(getchar())
+	if getline('.')[col('.')-1]!=s:ch
+		echo 'not begin with'.s:ch
+	endif
+	execute 'normal! r'.s:two.'f'.g:pair_map[s:ch].'r'.g:pair_map[s:two]
+	echo s:ch.' unknow pair'
+endfunc
+
 xnoremap <silent>S :<c-u>call <sid>AddSourround()<cr>
+nnoremap <silent>ds :call <sid>DelSourround()<cr>
+nnoremap <silent>cs :call <sid>ChangeSourround()<cr>

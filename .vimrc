@@ -353,8 +353,8 @@ nnoremap <silent><nowait>\s :setlocal nospell<cr>
 " z= is list of change
 
 " set wrap
-nnoremap <silent><nowait>=r :setlocal wrap<cr>
-nnoremap <silent><nowait>\r :setlocal nowrap<cr>
+nnoremap <silent><nowait>=r :setlocal wrap<cr>:nnoremap<buffer> j gj<cr>:nnoremap<buffer> k gk<cr>
+nnoremap <silent><nowait>\r :setlocal nowrap<cr>:nunmap<buffer> j<cr>:nunmap<buffer> k<cr>
 
 " set line number
 nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
