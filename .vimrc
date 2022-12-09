@@ -632,7 +632,8 @@ nmap <silent><nowait><space><space>c :CocConfig<cr>
 nmap <silent><nowait><space><space>l :CocList extensions<cr>
 nmap <silent><nowait><space><space>j :CocList outline<cr>
 " coc help
-nnoremap <silent> K :call ShowDocumentation()<cr>
+nnoremap <silent> K  :call ShowDocumentation()<cr>
+nnoremap <silent> gh :call ShowDocumentation()<cr>
 " coc mouse
 nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
 nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>

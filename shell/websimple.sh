@@ -7,5 +7,9 @@ if [ ! -d "~/.vim/colors" ];then
   mkdir ~/.vim/colors
 fi
 cd ~/.vim/colors
-wget https://gitee.com/mirrorvim/vim-fast/raw/master/colors/tokyonight.vim
-sed -i "s/desert/tokyonight/g" ~/.vimrc
+file_name="~/.vim/colors/tokyonight.vim"
+if [ $file_name ]; then
+  echo "$file_name exists"
+else
+  wget https://gitee.com/mirrorvim/vim-fast/raw/master/colors/tokyonight.vim
+fi

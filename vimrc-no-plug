@@ -564,9 +564,9 @@ function GetMode()
 endfunction
 
 set statusline=%3*\ %{GetMode()}
-set statusline+=%4*\ %F\ %m%r%h%w%=
-set statusline+=%4*\ %Y\ |
-set statusline+=%4*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}¦
+set statusline+=%4*\ %F\ %m%r%h%w%=
+set statusline+=%3*\ %Y\ |
+set statusline+=%3*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}¦
 set statusline+=%3*☰\ %l/%-L%3p%%\ ¦:%v\ ¦
 highlight User1 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
 highlight User2 font=#000000 guifg=#9ECE6A guibg=#232433
@@ -595,13 +595,17 @@ func! TabLine()
 			let s:result=s:result.' '.s:name
 		endif
 	endfor
-	redraw
+	redrawt
 	return s:result
+endfunc
+func! Redraw()
+	redrawt
+	return 'buffer'
 endfunc
 set showtabline=2
 set tabline=%2*\ %{TabLine()}
 set tabline+=%1*\ %t
-set tabline+=%2*
+set tabline+=%2*%m%r%h%w%=%1*\ buffer
 
 " set gcc enable
 func! s:Commentary()
