@@ -509,8 +509,15 @@ nnoremap =a :ab<cr>
 
 " config complete
 inoremap / /<c-x><c-f>
+let b:cmpX=-1
+let b:cmpY=-1
 function! s:feed_popup()
 	if getline('.')[col('.')-1]=='/'
+		return
+	endif
+	let x = col('.') - 1
+	let y = line('.') - 1
+	if b:cmpX==x&&b:cmpY==y
 		return
 	endif
 	let s:min_complete=2
@@ -520,7 +527,9 @@ function! s:feed_popup()
 		return
 	endif
 	silent! call feedkeys("\<c-n>", 'n')
-	redraw
+	let b:cmpX=x
+	let b:cmpY=y
+	return
 endfunction
 augroup Complete
 	au!
