@@ -325,6 +325,7 @@ func! s:MouseConfig()
 	vnoremenu PopUp.Yank\ Text "+y
 	vnoremenu PopUp.Cut\ Text "+d
 	vnoremenu PopUp.Del\ Text "_d
+	vnoremenu PopUp.Paste\ Text "+p
 	" normal model
 	nnoremenu PopUp.Paste\ Text "+p
 	nnoremenu PopUp.Select\ All ggVG
@@ -380,6 +381,7 @@ vnoremap @ :normal @
 command! -nargs=1 TaskRun  :call termtask#Term_task_run(<f-args>)
 command! -nargs=0 TaskList :call termtask#Term_task_list()
 command! -nargs=0 TaskLoad :call termtask#Term_task_run('')
+nnoremap <space><space>c :TaskRun<cr>
 nnoremap <space>c :TaskRun<space>
 nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " auto read project file
@@ -475,8 +477,8 @@ nnoremap H O<c-[>j
 nnoremap M o<c-[>k
 
 " make move easy
-nnoremap Q $
-nnoremap S ^
+nnoremap <silent><c-e> $
+nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
 
 " add space
 nnoremap <leader><space> i<space><right><c-[>
