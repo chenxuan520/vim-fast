@@ -52,7 +52,7 @@
 
 1. **正常3分钟从新的linux主机安装好VIM配置(包括lsp之类),3分钟解决所有问题**
 
-2. 基于Vimplus,使得所有配置文件都在.vimrc中,700 余行的配置文件更加简单和直观,同时也避免了多个配置文件冗余
+2. 基于Vimplus,使得所有配置文件都在.vimrc中,800 余行的配置文件更加简单和直观,同时也避免了多个配置文件冗余
 
 3. 插件精简化,精选出了24个插件,使得打开速度得到提高
 
@@ -159,7 +159,7 @@
 >
 > (在安装完毕后如果遇到输出混乱的问题,可以直接关闭终端重启就可以了)
 
-1. git clone [https://gitee.com/mirrorvim/vim-fast](https://link.zhihu.com/?target=https%3A//gitee.com/mirrorvim/vim-fast)
+1. git clone [https://gitee.com/mirrorvim/vim-fast](https://gitee.com/mirrorvim/vim-fast)
 
 2. cd vim-fast && ./install.sh
 
