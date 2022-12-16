@@ -1,9 +1,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" __   __   __     __    __     ______   ______     ______     ______
-"/\ \ / /  /\ \   /\ "-./  \   /\  ___\ /\  __ \   /\  ___\   /\__  _\
-"\ \ \"/   \ \ \  \ \ \-./\ \  \ \  __\ \ \  __ \  \ \___  \  \/_/\ \/
-" \ \__|    \ \_\  \ \_\ \ \_\  \ \_\    \ \_\ \_\  \/\_____\    \ \_\
-"  \/_/      \/_/   \/_/  \/_/   \/_/     \/_/\/_/   \/_____/     \/_/
+"  __   __   __     __    __     ______   ______     ______     ______
+" /\ \ / /  /\ \   /\ "-./  \   /\  ___\ /\  __ \   /\  ___\   /\__  _\
+" \ \ \"/   \ \ \  \ \ \-./\ \  \ \  __\ \ \  __ \  \ \___  \  \/_/\ \/
+"  \ \__|    \ \_\  \ \_\ \ \_\  \ \_\    \ \_\ \_\  \/\_____\    \ \_\
+"   \/_/      \/_/   \/_/  \/_/   \/_/     \/_/\/_/   \/_____/     \/_/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " chenxuan's vim config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -381,7 +381,7 @@ vnoremap @ :normal @
 command! -nargs=1 TaskRun  :call termtask#Term_task_run(<f-args>)
 command! -nargs=0 TaskList :call termtask#Term_task_list()
 command! -nargs=0 TaskLoad :call termtask#Term_task_run('')
-nnoremap <space><space>c :TaskRun<cr>
+nnoremap <space><space>C :TaskLoad<cr>
 nnoremap <space>c :TaskRun<space>
 nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " auto read project file
@@ -478,7 +478,9 @@ nnoremap M o<c-[>k
 
 " make move easy
 nnoremap <silent><c-e> $
+nnoremap <silent>Q $
 nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
+nnoremap <silent>S ^
 
 " add space
 nnoremap <leader><space> i<space><right><c-[>
