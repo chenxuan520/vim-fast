@@ -15,6 +15,8 @@ function copy_files()
 
 	rm -rf ~/.vim/autoload
 	ln -s ${PWD}/autoload ~/.vim
+
+	ln -s ${PWD}/coc/coc-settings.json ~/.vim/coc-settings.json
 }
 
 # 安装coc插件

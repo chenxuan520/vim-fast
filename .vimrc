@@ -631,8 +631,8 @@ nmap <silent><F3> <Plug>(coc-diagnostic-prev)
 nmap <silent><F4> <Plug>(coc-diagnostic-next)
 nmap <silent>[w <Plug>(coc-diagnostic-prev)
 nmap <silent>]w <Plug>(coc-diagnostic-next)
-nnoremap <silent><nowait>=w :<C-u>CocList diagnostics<cr>
-nnoremap <silent><nowait> <space>w :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait>=w :<C-u>CocList --normal diagnostics<cr>
+nnoremap <silent><nowait> <space>w :<C-u>CocList --normal diagnostics<cr>
 " coc text obj
 xmap if <Plug>(coc-funcobj-i)
 omap if <Plug>(coc-funcobj-i)
@@ -652,7 +652,7 @@ command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organ
 nmap <leader><leader>f :Format<cr>
 " coc config
 nmap <silent><nowait><space><space>c :CocConfig<cr>
-nmap <silent><nowait><space><space>l :CocList extensions<cr>
+nmap <silent><nowait><space><space>l :CocList --normal extensions<cr>
 nmap <silent><nowait><space><space>j :CocList outline<cr>
 " coc help
 nnoremap <silent> K  :call ShowDocumentation()<cr>
