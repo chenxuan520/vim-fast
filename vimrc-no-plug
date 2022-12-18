@@ -109,10 +109,10 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-buffer
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent> <c-p> :bp<cr>
-nnoremap <silent> <c-n> :bn<cr>
-nnoremap <silent> <c-m> :w<cr>
-nnoremap <silent> <leader>d :bd<cr>
+nnoremap <silent><c-p> :bp<cr>
+nnoremap <silent><c-n> :bn<cr>
+nnoremap <silent><leader>d :bd<cr>
+nnoremap <silent><expr><c-m> expand('%')==''?"\<cr>":":w<cr>"
 
 " reload .vimrc
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
@@ -173,7 +173,22 @@ vnoremap <leader><leader>p "+p
 augroup ReadPost
 	au!
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
+	autocmd BufDelete * if expand('%:p')!=''|let g:map_recent_close[expand('%:p')] =
+				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
+				\|endif
 augroup END
+func! s:GetRecentClose()
+	let s:list=[]
+	for [key,value] in items(g:map_recent_close)
+		let value['filename']=key
+		call insert(s:list,value)
+	endfor
+	let s:func={m1,m2 -> m1['time']>m2['time']?-1:1}
+	call sort(s:list,s:func)
+	call setqflist(s:list,'r')
+	copen
+endfunc
+nnoremap <silent><nowait><space>q :call <sid>GetRecentClose()<cr>
 
 " termdebug
 nnoremap <leader><leader>d :set mouse=a<cr>:packadd termdebug<cr>:Termdebug<space>
@@ -341,7 +356,7 @@ nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
 nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
 nnoremap <silent><nowait>=o zO
 nnoremap <silent><nowait>\o zC
-nnoremap <silent><nowait><bs> zc
+nnoremap <silent><nowait><expr><bs> foldlevel('.')>0?"zc":"\<bs>"
 
 " set search noh
 nnoremap <silent><nowait>\h :noh<cr>

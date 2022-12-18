@@ -175,10 +175,10 @@ nnoremap <leader><leader>i :PlugInstall<cr>
 nnoremap <leader><leader>c :PlugClean<cr>
 
 " vim-buffer
-nnoremap <silent> <c-p> :bp<cr>
-nnoremap <silent> <c-n> :bn<cr>
-nnoremap <silent> <c-m> :w<cr>
-nnoremap <silent> <leader>d :bd<cr>
+nnoremap <silent><c-p> :bp<cr>
+nnoremap <silent><c-n> :bn<cr>
+nnoremap <silent><leader>d :bd<cr>
+nnoremap <silent><expr><c-m> expand('%')==''?"\<cr>":":w<cr>"
 
 " insert model to move cursor
 imap <c-j> <down>
@@ -232,7 +232,22 @@ vnoremap <leader><leader>p "+p
 augroup ReadPost
 	au!
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
+	autocmd BufDelete * if expand('%:p')!=''|let g:map_recent_close[expand('%:p')] =
+				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
+				\|endif
 augroup END
+func! s:GetRecentClose()
+	let s:list=[]
+	for [key,value] in items(g:map_recent_close)
+		let value['filename']=key
+		call insert(s:list,value)
+	endfor
+	let s:func={m1,m2 -> m1['time']>m2['time']?-1:1}
+	call sort(s:list,s:func)
+	call setqflist(s:list,'r')
+	copen
+endfunc
+nnoremap <silent><nowait><space>q :call <sid>GetRecentClose()<cr>
 
 " termdebug
 let g:termdebug_wide=1
@@ -310,8 +325,8 @@ nnoremap <c-s-left> <c-w>H
 nnoremap <c-s-right> <c-w>L
 
 " quick fix
-nnoremap [q :cnext<cr>
-nnoremap ]q :cprevious<cr>
+nnoremap ]q :cnext<cr>
+nnoremap [q :cprevious<cr>
 nnoremap \q :cclose<cr>
 nnoremap =q :copen<cr>
 
@@ -366,7 +381,7 @@ nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
 nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
 nnoremap <silent><nowait>=o zO
 nnoremap <silent><nowait>\o zC
-nnoremap <silent><nowait><bs> zc
+nnoremap <silent><nowait><expr><bs> foldlevel('.')>0?"zc":"\<bs>"
 
 " set search noh
 nnoremap <silent><nowait>\h :noh<cr>
@@ -568,6 +583,7 @@ colorscheme tokyonight
 " colorscheme onedark
 
 " set prepare code when new file
+let g:map_recent_close={}
 augroup PreCode
 	autocmd!
 	autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,*.html,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
@@ -760,6 +776,8 @@ nnoremap <space>j :LeaderfBufTag<cr>
 nnoremap <space>J :LeaderfBufTagAll<cr>
 " recall
 nnoremap <space>l :Leaderf --recall<cr><tab>
+" quickfix jump
+nnoremap <space>Q :Leaderf quickfix<cr>
 " find color
 nnoremap <F1> :LeaderfColorscheme<cr>
 " set leaderf work dir
@@ -772,7 +790,7 @@ let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
 let g:Lf_PreviewResult = {'Function': 1,'Rg': 1,'Line': 1,'BufTag': 1}
-let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>'],'<C-K>':['<C-P>','<C-K>'],'<C-P>':['<C-L>']}
+let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>'],'<C-K>':['<C-P>','<C-K>'],'<C-P>':['<C-L>'],'<HOME>':['<C-A>']}
 let g:Lf_WildIgnore = {
 			\ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
 			\ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
