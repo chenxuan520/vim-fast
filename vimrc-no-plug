@@ -489,6 +489,9 @@ nnoremap <silent>Q $
 nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
 nnoremap <silent>S ^
 
+" enhance c-a
+nnoremap <silent><expr>g<c-a> "r".(getline('.')[col('.')-1]+1)
+
 " add space
 nnoremap <leader><space> i<space><right><c-[>
 
@@ -520,6 +523,7 @@ xnoremap <silent><c-l>   y<c-w>lo<c-[>Vpgv
 xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
 
 " open link
+" is default in vim by gx
 func! s:GotoLink()
 	let s:list=matchstrpos(getline('.'),'https*://\S[^][()]*',0)
 	let s:link=s:list[0]
