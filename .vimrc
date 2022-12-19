@@ -405,6 +405,12 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " 	execute 'source ' . s:fileway
 " endif
 
+" gutter for git
+nnoremap <silent>=g :call gutter#GitGutterAble()<cr>
+nnoremap <silent>\g :call gutter#GitGutterDisable()<cr>
+nnoremap <silent>[g :call gutter#GitGutterChangeTurn(0,line('.'))<cr>
+nnoremap <silent>]g :call gutter#GitGutterChangeTurn(1,line('.'))<cr>
+
 " ici to tran
 let g:term_cmd='~/.local/bin/ici'
 xnoremap <silent><leader>i :call termtask#Term_cmd_exec('v')<cr>
@@ -602,7 +608,7 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
 " nerdtree
-nnoremap <silent> <leader>n :NERDTreeToggle<cr>
+nnoremap <silent><leader>n :NERDTreeToggle<cr>
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1

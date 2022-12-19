@@ -282,7 +282,11 @@ func! s:DivLine(ch)
 	if s:pair==' '&&s:pair_l==a:ch
 		return "\<bs>".a:ch."\<space>"
 	endif
-	return a:ch."\<space>"
+	if match(getline('.'),'\s*$')==0
+		return a:ch."\<space>"
+	else
+		return a:ch
+	endif
 endfunc
 
 func! s:Move()

@@ -86,6 +86,34 @@
 
 18. 内置众多便捷vimscript,方便学习和简化操作
 
+## 内置的Vimscript功能
+
+1. 全文选中,类似插件![Vim-textobj-entire](https://github.com/kana/vim-textobj-entire)
+
+2. markdown,快捷编写,格式化,类似插件![vim-markdown](https://github.com/preservim/vim-markdown)
+
+3. **任务管理**,类似插件![asynvtasks](https://github.com/skywind3000/asynctasks.vim)
+
+4. **git状态显示**,类似插件![vim-gitgutter](https://github.com/airblade/vim-gitgutter)
+
+5. 预先代码插入,类似插件![prepare-code](https://github.com/chxuan/prepare-code)
+
+6. 参数选中,类似插件![vim-textobj-parameter](https://github.com/sgur/vim-textobj-parameter)
+
+7. ibus输入法自动切换,默认markdown文件开启,类似插件![vim-ibus](https://github.com/h-youhei/vim-ibus)
+
+8. lazygit和Vim集成,类似插件![lazygit.nvim](https://github.com/kdheepak/lazygit.nvim)
+
+9. ici翻译,类似插件![ici.vim](https://github.com/Flowerowl/ici.vim)
+
+10. 查看并打开最近关闭的buffer
+
+11. 简单的markdown和html预览
+
+12. fzf简单调用
+
+- 说明:以上功能均内置在Vim-fast,且不会影响Vim启动速度
+
 ## 项目文件夹
 
 - autoload 插件plug.vim,提供插件的安装
