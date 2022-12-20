@@ -806,6 +806,7 @@ let g:Lf_WildIgnore = {
 			\ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
 			\}
 let g:Lf_UseCache = 0
+" f1 to open help menu,f5 to fresh,tab to normal mode
 " c-] open in vertical,c-x open in split,c-t open in a tab,c-\ ask for open,D to delete buffer
 
 " tabular
