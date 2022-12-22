@@ -229,6 +229,7 @@ nnoremap <leader><leader>p "+p
 vnoremap <leader><leader>p "+p
 
 " load the file last edit pos
+let g:map_recent_close={}
 augroup ReadPost
 	au!
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
@@ -503,8 +504,9 @@ nnoremap <silent>Q $
 nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
 nnoremap <silent>S ^
 
-" enhance c-a
-nnoremap <silent><expr>g<c-a> "r".(getline('.')[col('.')-1]+1)
+" enhance c-a and c-x
+nnoremap <silent><expr>g<c-a> getline('.')[col('.')-1]=='9'?"r0":"r".(getline('.')[col('.')-1]+1)
+nnoremap <silent><expr>g<c-x> getline('.')[col('.')-1]=='0'?"r9":"r".(getline('.')[col('.')-1]-1)
 
 " add space
 nnoremap <leader><space> i<space><right><c-[>
@@ -593,7 +595,6 @@ colorscheme tokyonight
 " colorscheme onedark
 
 " set prepare code when new file
-let g:map_recent_close={}
 augroup PreCode
 	autocmd!
 	autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,*.html,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
@@ -787,7 +788,7 @@ nnoremap <space>J :LeaderfBufTagAll<cr>
 " recall
 nnoremap <space>l :Leaderf --recall<cr><tab>
 " quickfix jump
-nnoremap <space>Q :Leaderf quickfix<cr>
+nnoremap <space>Q :Leaderf quickfix<cr><tab>
 " find color
 nnoremap <F1> :LeaderfColorscheme<cr>
 " set leaderf work dir
