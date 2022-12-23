@@ -275,6 +275,7 @@ tnoremap <c-z> exit<cr>
 nnoremap <leader><leader>T :bo term ++rows=6<CR>
 nnoremap <leader><leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
+nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:call term_start("bash",{"cwd":"<c-r>=@s<cr>","curwin":1,"term_finish":"close"})<cr>
 
 " lazygit
 nnoremap <silent><space>g :tabe<cr>:vert term ++curwin ++close lazygit<cr>
@@ -550,10 +551,10 @@ xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
 " open link
 " is default in vim by gx
 func! s:GotoLink()
-	let s:list=matchstrpos(getline('.'),'https*://\S[^][()]*',0)
+	let s:list=matchstrpos(getline('.'),'https*://\S[^][(){}]*',0)
 	let s:link=s:list[0]
 	while s:list[0]!=''&&(s:list[1]>col('.')||s:list[2]<col('.'))
-		let s:list=matchstrpos(getline('.'),'https*://\S[^][()]*',s:list[2])
+		let s:list=matchstrpos(getline('.'),'https*://\S[^][(){}]*',s:list[2])
 	endwhile
 	if s:list[0]!=''
 		let s:link=s:list[0]
@@ -746,10 +747,10 @@ let g:go_highlight_types = 1
 let g:go_highlight_build_constraints =1
 let g:go_highlight_generate_tags =1
 let g:go_highlight_string_spellcheck = 1
-" let g:go_highlight_fields = 1
-" let g:go_highlight_array_whitespace_error = 1
+let g:go_highlight_fields = 1
 " let g:go_highlight_variable_declarations = 1
 " let g:go_highlight_variable_assignments = 1
+" let g:go_highlight_array_whitespace_error = 1
 
 " dashboard
 " let g:slash_auto_middle=0
