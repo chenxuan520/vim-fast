@@ -226,7 +226,9 @@ endfunc
 vnoremap <leader><leader>y "+y
 " paste to system
 nnoremap <leader><leader>p "+p
+nnoremap <leader><leader>P "+P
 vnoremap <leader><leader>p "+p
+vnoremap <leader><leader>P "+P
 
 " load the file last edit pos
 let g:map_recent_close={}
@@ -424,8 +426,8 @@ let g:ibus_enable=1
 let g:markdown_fold_enable=1
 
 " use select area to replace
-xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/<c-r>=@s<cr>/
-nnoremap <leader>s :%s/<c-r><c-w>/
+xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/
+nnoremap <leader>s :%s/\V<c-r><c-w>/
 
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
