@@ -138,7 +138,7 @@ Plug 'tpope/vim-repeat'
 " quick add comment
 Plug 'tpope/vim-commentary'
 " add endif when enter if
-Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-endwise', {'for':'vim'}
 " for cpp highlight
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 " for go highlight
@@ -427,7 +427,6 @@ let g:markdown_fold_enable=1
 
 " use select area to replace
 xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/
-nnoremap <leader>s :%s/\V<c-r><c-w>/
 
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
@@ -638,6 +637,15 @@ inoremap <silent><expr><TAB>
 			\ CheckBackspace() ? "\<TAB>" :
 			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" for coc 0.0.82
+" inoremap <silent><expr> <right> coc#pum#visible() ? coc#pum#confirm()
+" 			\: "\<right>"
+" inoremap <silent><expr> <TAB>
+" 			\ coc#pum#visible() ? coc#pum#next(1):
+" 			\ CheckBackspace() ? "\<TAB>" :
+" 			\ coc#refresh()
+" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
 function! CheckBackspace() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~# '\s'
@@ -676,6 +684,9 @@ omap ac <Plug>(coc-classobj-a)
 nmap <leader>a  <Plug>(coc-codeaction)
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>l  <Plug>(coc-codelens-action)
+" coc select range
+nmap <silent><leader>s <Plug>(coc-range-select)
+xmap <silent><leader>s <Plug>(coc-range-select)
 " coc format
 command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=0 Import :call CocActionAsync('runCommand', 'editor.action.organizeImport')

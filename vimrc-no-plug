@@ -373,7 +373,6 @@ xnoremap @ :normal @
 
 " use select area to replace
 xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/
-nnoremap <leader>s :%s/\V<c-r><c-w>/
 
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz

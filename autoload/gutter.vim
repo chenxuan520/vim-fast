@@ -67,7 +67,7 @@ func! s:SignDefine()
 				\ },
 				\ {
 				\	'name':'gitchange',
-				\	'text':'^',
+				\	'text':'~',
 				\	'texthl':'GitGutterChange',
 				\ },
 				\])
