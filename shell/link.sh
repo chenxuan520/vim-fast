@@ -1,6 +1,10 @@
 #!/bin/bash
-mv ~/.vimrc ~/.vimrc.bak
-mv ~/.gvimrc ~/.gvimrc.bak
+if [ -f ~/.vimrc ]; then
+	mv ~/.vimrc ~/.vimrc.bak
+fi
+if [ -f ~/.gvimrc ]; then
+	mv ~/.gvimrc ~/.gvimrc.bak
+fi
 ln -s ${PWD}/.vimrc ~/.vimrc
 ln -s ${PWD}/.gvimrc ~/.gvimrc
 cp -r ./colors ~/.vim/

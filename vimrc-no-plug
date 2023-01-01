@@ -225,9 +225,17 @@ nnoremap <leader><leader>T :bo term ++rows=6<CR>
 nnoremap <leader><leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:vert term ++curwin ++close<cr>
 
-" term task
-let g:Term_task_run="lazygit"
-nnoremap <silent><space>g :tabe<cr>:execute ":vert term ++curwin ++close " . g:Term_task_run<CR>
+" lazygit
+nnoremap <silent><space>g :tabe<cr>:vert term ++curwin ++close lazygit<cr>
+nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
+
+" fzf self defile
+func! s:FzfFind(command)
+	vert call term_start('bash',{'term_finish':"close"})
+	call term_sendkeys(term_list()[0],a:command."\<cr>")
+endfunc
+nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
+nnoremap <silent><space>Z :call <sid>FzfFind('fd')<cr>
 
 " set pair baket
 inoremap ( ()<left>

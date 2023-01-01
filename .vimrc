@@ -394,7 +394,7 @@ nnoremap <silent><nowait>\h :noh<cr>
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 
 " run macro in visual model
-vnoremap @ :normal @
+xnoremap @ :normal @
 
 " termtask project config
 command! -nargs=1 TaskRun  :call termtask#Term_task_run(<f-args>)
@@ -744,6 +744,7 @@ map  <leader>f <Plug>(easymotion-bd-f)
 nmap <leader>f <Plug>(easymotion-overwin-f)
 nmap <leader>j <Plug>(easymotion-j)
 nmap <leader>k <Plug>(easymotion-k)
+nmap <silent>s <Plug>(easymotion-overwin-f)
 
 " python-highlight
 let g:python_highlight_all = 1

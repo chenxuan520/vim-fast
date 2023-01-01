@@ -154,6 +154,8 @@
 
 - shell/coc_plug.sh 推荐的coc插件安装
 
+- shell/vim_compile.sh vim最新版本编译安装
+
 - nvim.sh 一键迁移到nvim
 
 ## 其他文件
@@ -252,7 +254,7 @@
 
 4. [lf文件管理器](https://github.com/gokcehan/lf/),需要安装lf,\<space\>e/E 触发
 
-## Vimplus仓库
+## Vimplus原仓库
 
 [Vimplus](https://gitee.com/chxuan/vimplus.git)
 
@@ -304,7 +306,7 @@
 
 10. 出现E117,未定义的函数getenv
 
-  - 出现问题原因为VIM版本太低了,可以升级VIM或者去到出问题的行删除该行
+  - 出现问题原因为VIM版本太低了,可以升级VIM(./shell/vim_compile.sh 最新Vim安装)或者去到出问题的行删除该行
 
 11. 使用的主题
 
