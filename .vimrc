@@ -387,6 +387,11 @@ nnoremap <silent><nowait>=o zO
 nnoremap <silent><nowait>\o zC
 nnoremap <silent><nowait><expr><bs> foldlevel('.')>0?"zc":"\<bs>"
 
+" tab ctrl
+nnoremap <silent><nowait>\t :tabc<cr>
+nnoremap <silent><nowait>[t :tabp<cr>
+nnoremap <silent><nowait>]t :tabn<cr>
+
 " set search noh
 nnoremap <silent><nowait>\h :noh<cr>
 
@@ -395,9 +400,6 @@ nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 
 " run macro in visual model
 xnoremap @ :normal @
-
-" get key binding
-nnoremap <leader>h :call findkey#get_key_msg()<cr>
 
 " termtask project config
 command! -nargs=1 TaskRun  :call termtask#Term_task_run(<f-args>)
@@ -411,6 +413,9 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " if filereadable(s:fileway)
 " 	execute 'source ' . s:fileway
 " endif
+
+" get key binding
+nnoremap <leader>h :call findkey#get_key_msg()<cr>
 
 " gutter for git
 nnoremap <silent>=g    :call gutter#GitGutterAble()<cr>

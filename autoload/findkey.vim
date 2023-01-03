@@ -26,12 +26,33 @@ func! findkey#get_key_msg()
 		let timer=timer_start(&timeoutlen+first_extra_time,'CallBack')
 		let temp=getchar()
 		call timer_stop(timer)
-		if temp==13
+		if type(temp)==1
+			" too many left there if need,add self
+			if temp=="\<bs>"
+				let s:input=s:input."<bs>"
+			elseif temp=="\<s-tab>"
+				let s:input=s:input."<s-tab>"
+			elseif temp=="\<leftmouse>"
+				let s:input=s:input."<leftmouse>"
+			elseif temp=="\<c-leftmouse>"
+				let s:input=s:input."<c-leftmouse>"
+			elseif temp=="\<rightmouse>"
+				let s:input=s:input."<rightmouse>"
+			elseif temp=="\<c-rightmouse>"
+				let s:input=s:input."<c-rightmouse>"
+			endif
+		elseif temp==13
 			if s:is_continue
 				let s:input=s:input."<c-m>"
 			endif
+		elseif temp==27
+			let s:is_continue=0
+			echo "cancel operator"
+			return
 		elseif temp<27
 			let s:input=s:input."<c-".nr2char(temp+96).">"
+		elseif temp<30&&temp>27
+			let s:input=s:input."<c-".nr2char(temp+64).">"
 		elseif temp==char2nr(g:mapleader)
 			let s:input=s:input."<leader>"
 		elseif temp==32

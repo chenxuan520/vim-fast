@@ -370,6 +370,11 @@ nnoremap <silent><nowait>=o zO
 nnoremap <silent><nowait>\o zC
 nnoremap <silent><nowait><expr><bs> foldlevel('.')>0?"zc":"\<bs>"
 
+" tab ctrl
+nnoremap <silent><nowait>\t :tabc<cr>
+nnoremap <silent><nowait>[t :tabp<cr>
+nnoremap <silent><nowait>]t :tabn<cr>
+
 " set search noh
 nnoremap <silent><nowait>\h :noh<cr>
 
