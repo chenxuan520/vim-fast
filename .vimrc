@@ -413,10 +413,11 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " endif
 
 " gutter for git
-nnoremap <silent>=g :call gutter#GitGutterAble()<cr>
-nnoremap <silent>\g :call gutter#GitGutterDisable()<cr>
-nnoremap <silent>[g :call gutter#GitGutterChangeTurn(0,line('.'))<cr>
-nnoremap <silent>]g :call gutter#GitGutterChangeTurn(1,line('.'))<cr>
+nnoremap <silent>=g    :call gutter#GitGutterAble()<cr>
+nnoremap <silent>\g    :call gutter#GitGutterDisable()<cr>
+nnoremap <silent>[g    :call gutter#GitGutterChangeTurn(0,line('.'))<cr>
+nnoremap <silent>]g    :call gutter#GitGutterChangeTurn(1,line('.'))<cr>
+nnoremap <silent><c-g> :call gutter#GitGutterDiff()<cr>
 
 " ici to tran
 let g:term_cmd='~/.local/bin/ici'

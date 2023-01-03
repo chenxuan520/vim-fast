@@ -1,8 +1,71 @@
-
+"======================================================================
+"
+" gitguttersimple
+"
+" Created by chenxuan on 2022.12.18
+"
+"======================================================================
+"
 let s:regex = '^@@ -\(\d\+\),\?\(\d*\) +\(\d\+\),\?\(\d*\) @@'
 let s:sign_id=3
-let s:sign_group_name='gutter'
+let s:sign_group_name= 'gutter'
 let b:buffer_gitgutter=[]
+
+func! gutter#GitGutterDiff()
+	let now_line=line('.')
+	if len(b:buffer_gitgutter)==0
+		echo 'git gutter not open yet'
+		return
+	endif
+	let s:lines=system('git diff -U0 '.expand('%:p'))
+	let s:list=split(s:lines,'\n')
+	let result=''
+	let i=0
+	while i<len(s:list)
+		let s:line=s:list[i]
+		let matches = matchlist(s:line, s:regex)
+		if len(matches)>0
+			let new_line     = str2nr(matches[3])
+			let new_change   = (matches[4] == '') ? 1 : str2nr(matches[4])
+			let b:buffer_gitgutter=add(b:buffer_gitgutter,new_line)
+		else
+			let i+=1
+			continue
+		endif
+		if new_line<=now_line&&new_change+new_line>=now_line
+			" let result=s:line
+			echohl GitGutterChange
+			echo s:line
+			echohl NONE
+
+			let j=i+1
+			while j<len(s:list)
+				let s:line=s:list[j]
+				let matches = matchlist(s:line, s:regex)
+				if len(matches)>0
+					break
+				endif
+
+				" let result=result."\n".s:line
+				if match(s:line,"^+")!=-1
+					echohl GitGutterAdd
+				elseif match(s:line,"^-")!=-1
+					echohl GitGutterDelete
+				else
+					echohl GitGutterChange
+				endif
+				echo s:list[j]
+				echohl NONE
+
+				let j+=1
+			endwhile
+			return
+		endif
+		let i+=1
+	endwhile
+	echo "not match result"
+	" echo result
+endfunc
 
 func! gutter#GitGutterAble()
 	" clear

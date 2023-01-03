@@ -28,7 +28,7 @@ func! findkey#get_key_msg()
 		call timer_stop(timer)
 		if temp==13
 			if s:is_continue
-				let s:input=s:input."<cr>"
+				let s:input=s:input."<c-m>"
 			endif
 		elseif temp<27
 			let s:input=s:input."<c-".nr2char(temp+96).">"
