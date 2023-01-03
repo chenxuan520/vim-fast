@@ -396,6 +396,9 @@ nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 " run macro in visual model
 xnoremap @ :normal @
 
+" get key binding
+nnoremap <leader>h :call findkey#get_key_msg()<cr>
+
 " termtask project config
 command! -nargs=1 TaskRun  :call termtask#Term_task_run(<f-args>)
 command! -nargs=0 TaskList :call termtask#Term_task_list()
@@ -527,7 +530,7 @@ nnoremap <silent>\u <c-w>p<c-u><c-w>p
 nnoremap <silent>\d <c-w>p<c-d><c-w>p
 
 " redraw the screen
-nnoremap <silent>\\l :redr!<cr>
+nnoremap <silent>\l :redr!<cr>
 
 " ctrl file system
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif

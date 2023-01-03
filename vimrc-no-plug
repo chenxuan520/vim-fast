@@ -512,7 +512,7 @@ nnoremap \u <c-w>p<c-u><c-w>p
 nnoremap \d <c-w>p<c-d><c-w>p
 
 " redraw the screen
-nnoremap <silent>\\l :redr!<cr>
+nnoremap <silent>\l :redr!<cr>
 
 " ctrl file system
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif

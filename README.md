@@ -108,11 +108,13 @@
 
 9. ici翻译,类似插件[ici.vim](https://github.com/Flowerowl/ici.vim)
 
-10. 查看并打开最近关闭的buffer
+10. 查询按键是否被绑定,\<leader\>h 触发检测
 
-11. 简单的markdown和html预览
+11. 查看并打开最近关闭的buffer
 
-12. fzf简单调用
+12. 简单的markdown和html预览
+
+13. fzf简单调用
 
 - 说明:以上功能均内置在Vim-fast,且不会影响Vim启动速度
 
