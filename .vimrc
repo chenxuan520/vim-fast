@@ -422,6 +422,7 @@ nnoremap <silent>=g    :call gutter#GitGutterAble()<cr>
 nnoremap <silent>\g    :call gutter#GitGutterDisable()<cr>
 nnoremap <silent>[g    :call gutter#GitGutterChangeTurn(0,line('.'))<cr>
 nnoremap <silent>]g    :call gutter#GitGutterChangeTurn(1,line('.'))<cr>
+nnoremap <silent>-g    :call gutter#GitGutterRecover()<cr>
 nnoremap <silent><c-g> :call gutter#GitGutterDiff()<cr>
 
 " ici to tran
