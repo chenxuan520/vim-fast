@@ -161,7 +161,7 @@ func! termtask#Term_get_dir()
 endfunc
 
 " get task list
-func! termtask#Term_task_list()
+func! termtask#Term_task_list(A,C,P)
 	if filereadable(s:FindConfigWay())
 		execute ":source ". s:gitdir
 	else
@@ -176,8 +176,7 @@ func! termtask#Term_task_list()
 		endif
 	endfor
 
-	echo 'now task:'
-	echo s:list
+	return s:list
 endfunc
 
 " set cmd task

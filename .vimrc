@@ -402,8 +402,8 @@ nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 xnoremap @ :normal @
 
 " termtask project config
-command! -nargs=1 TaskRun  :call termtask#Term_task_run(<f-args>)
-command! -nargs=0 TaskList :call termtask#Term_task_list()
+command! -nargs=1 -complete=customlist,termtask#Term_task_list TaskRun  :call termtask#Term_task_run(<f-args>)
+command! -nargs=0 TaskList :echo termtask#Term_task_list('','','')
 command! -nargs=0 TaskLoad :call termtask#Term_task_run('')
 nnoremap <space><space>C :TaskLoad<cr>
 nnoremap <space>c :TaskRun<space>
@@ -423,6 +423,7 @@ nnoremap <silent>\g    :call gutter#GitGutterDisable()<cr>
 nnoremap <silent>[g    :call gutter#GitGutterChangeTurn(0,line('.'))<cr>
 nnoremap <silent>]g    :call gutter#GitGutterChangeTurn(1,line('.'))<cr>
 nnoremap <silent>-g    :call gutter#GitGutterRecover()<cr>
+nnoremap <silent>zg    :call gutter#GitGutterFold()<cr>
 nnoremap <silent><c-g> :call gutter#GitGutterDiff()<cr>
 
 " ici to tran

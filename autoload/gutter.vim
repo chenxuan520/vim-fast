@@ -10,6 +10,7 @@ let s:regex = '^@@ -\(\d\+\),\?\(\d*\) +\(\d\+\),\?\(\d*\) @@'
 let s:sign_id=3
 let s:sign_group_name= 'gutter'
 let b:buffer_gitgutter=[]
+let b:buffer_gitgutter_result=[]
 let b:git_gutter_status=0
 
 func! gutter#GitGutterDiff()
@@ -28,12 +29,11 @@ func! gutter#GitGutterDiff()
 		if len(matches)>0
 			let new_line     = str2nr(matches[3])
 			let new_change   = (matches[4] == '') ? 1 : str2nr(matches[4])
-			let b:buffer_gitgutter=add(b:buffer_gitgutter,new_line)
 		else
 			let i+=1
 			continue
 		endif
-		if new_line<=now_line&&new_change+new_line>=now_line
+		if new_line<=now_line&&new_change+new_line>now_line
 			" let result=s:line
 			echohl GitGutterChange
 			echo s:line
@@ -84,12 +84,11 @@ func! gutter#GitGutterRecover()
 		if len(matches)>0
 			let new_line     = str2nr(matches[3])
 			let new_change   = (matches[4] == '') ? 1 : str2nr(matches[4])
-			let b:buffer_gitgutter=add(b:buffer_gitgutter,new_line)
 		else
 			let i+=1
 			continue
 		endif
-		if new_line<=now_line&&new_change+new_line>=now_line
+		if new_line<=now_line&&new_change+new_line>now_line
 			if new_change>0
 				call deletebufline(bufnr(),new_line,new_change+new_line-1)
 			endif
@@ -138,6 +137,7 @@ func! gutter#GitGutterAble()
 	endif
 	" clear
 	let b:buffer_gitgutter=[]
+	let b:buffer_gitgutter_result=[]
 	call s:ClearSign()
 
 	let g:gitgutter_status=get(g:,'gitgutter_status',0)
@@ -155,6 +155,12 @@ func! gutter#GitGutterAble()
 			let new_line     = str2nr(matches[3])
 			let new_change   = (matches[4] == '') ? 1 : str2nr(matches[4])
 			let b:buffer_gitgutter=add(b:buffer_gitgutter,new_line)
+			let b:buffer_gitgutter_result=add(b:buffer_gitgutter_result,{
+						\"old_line":old_line,
+						\"old_change":old_change,
+						\"new_line":new_line,
+						\"new_change":new_change,
+						\})
 		else
 			echohl WarningMsg
 			echo "get git status wrong,please check exist .git dir and grep cmd is ok"
@@ -189,17 +195,63 @@ endfunc
 func! gutter#GitGutterDisable()
 	call s:ClearSign()
 
-	if b:git_gutter_status
+	if exists("b:git_gutter_status")&&b:git_gutter_status
 		silent au! GitGutterCmd
 		silent augroup! GitGutterCmd
+	else
+		echo "gitgutter not open yet"
 	endif
 
 	let b:git_gutter_status=0
 endfunc
 
+func! FoldExpr()
+	let b:expr_fold_num=get(b:,"expr_fold_num",0)
+	if b:expr_fold_num>=len(b:buffer_gitgutter_result)
+		return 1
+	endif
+	let temp=b:buffer_gitgutter_result[b:expr_fold_num]
+	if v:lnum<temp["new_line"]
+		return 1
+	elseif v:lnum==temp["new_line"]&&temp["new_change"]==0
+		let b:expr_fold_num+=1
+		return 0
+	elseif v:lnum==temp["new_line"]+temp["new_change"]-1
+		let b:expr_fold_num+=1
+		return 0
+	else
+		return 0
+	endif
+endfunc
+func! gutter#GitGutterFold()
+	if len(b:buffer_gitgutter_result)==0
+		echo "gitgutter not open yet"
+		return
+	endif
+	setlocal fdm=expr
+	setlocal fen
+	setlocal foldexpr=FoldExpr()
+endfunc
+
+func! s:HlDefine()
+	if len(b:buffer_gitgutter_result)==0
+		echo "git gutter not open yet"
+		return
+	endif
+	for val in b:buffer_gitgutter_result
+		if has_key(val,"new_line")&&has_key(val,"new_change")
+			let begin=val["new_line"]
+			let end=val["new_line"]+val["new_change"]-1
+			" syn region GitGutterTemp start=begin end=end
+		endif
+	endfor
+	" highlight link GitGutterTemp DiffAdd
+endfunc
+
 func! s:ClearSign()
 	call sign_unplace(s:sign_group_name,{'buffer':expand('%:p')})
 	let b:buffer_gitgutter=[]
+	let b:buffer_gitgutter_result=[]
 endfunc
 
 func! s:SignDefine()
@@ -258,5 +310,7 @@ func! gutter#GitGutterChangeTurn(direct,now)
 				let i-=1
 			endwhile
 		endif
+	else
+		echo "undefine direct"
 	endif
 endfunc

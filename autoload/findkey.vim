@@ -9,7 +9,7 @@ let s:is_continue=1
 
 func! CallBack(timer)
 	let s:is_continue=0
-	echo "detect key ".s:input
+	echo "detect key: ".s:input
 	if s:input!=''
 		exec ":echo 'vis/nor/sel/oper model'|verbose map ".s:input."|echo 'insert/command model'|verbose map! ".s:input
 	else
