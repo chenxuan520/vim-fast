@@ -138,7 +138,7 @@ Plug 'tpope/vim-repeat'
 " quick add comment
 Plug 'tpope/vim-commentary'
 " add endif when enter if
-Plug 'tpope/vim-endwise', {'for':'vim'}
+Plug 'tpope/vim-endwise', {'for':['vim','sh']}
 " for cpp highlight
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 " for go highlight
@@ -418,6 +418,8 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 nnoremap <leader>h :call findkey#get_key_msg()<cr>
 
 " gutter for git
+let g:gitgutter_sign_able=1
+let g:gitgutter_highlight_able=0
 nnoremap <silent>=g    :call gutter#GitGutterAble()<cr>
 nnoremap <silent>\g    :call gutter#GitGutterDisable()<cr>
 nnoremap <silent>[g    :call gutter#GitGutterChangeTurn(0,line('.'))<cr>

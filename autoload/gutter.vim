@@ -6,11 +6,16 @@
 "
 "======================================================================
 "
+" g:gitgutter_sign_able is if show sign,default 1
+"
+" g:gitgutter_highlight_able is if highlight diff,default 1
+
 let s:regex = '^@@ -\(\d\+\),\?\(\d*\) +\(\d\+\),\?\(\d*\) @@'
 let s:sign_id=3
 let s:sign_group_name= 'gutter'
 let b:buffer_gitgutter=[]
 let b:buffer_gitgutter_result=[]
+let b:buffer_gitgutter_highlight=[]
 let b:git_gutter_status=0
 
 func! gutter#GitGutterDiff()
@@ -125,6 +130,55 @@ func! gutter#GitGutterRecover()
 	" echo result
 endfunc
 
+func! s:PlaceSign(new_line,new_change,old_line,old_change)
+	let new_line=a:new_line
+	let new_change=a:new_change
+	let old_line=a:old_change
+	let old_change=a:old_change
+	if new_change>old_change
+		let i=new_change
+		while i>0
+			call sign_place(s:sign_id,s:sign_group_name,'gitadd',expand('%:p'),{'lnum':new_line+i-1,'priority':1})
+			let i-=1
+		endwhile
+	elseif new_change==old_change
+		let i=new_change
+		while i>0
+			call sign_place(s:sign_id,s:sign_group_name,'gitchange',expand('%:p'),{'lnum':new_line+i-1,'priority':1})
+			let i-=1
+		endwhile
+	else
+		call sign_place(s:sign_id,s:sign_group_name,'gitdelete',expand('%:p'),{'lnum':new_line,'priority':1})
+	endif
+endfunc
+
+func! s:PlaceHl(new_line,new_change,old_line,old_change)
+	let new_line=a:new_line
+	let new_change=a:new_change
+	let old_line=a:old_change
+	let old_change=a:old_change
+	let begin=new_line
+	let end=new_line+new_change-1
+	if new_change==0
+		let end+=1
+	endif
+	if new_change>=old_change
+		while end-begin>=8
+			let m=matchaddpos("DiffAdd",range(begin,end))
+			let begin+=8
+			call add(b:buffer_gitgutter_highlight,m)
+		endwhile
+	endif
+	if new_change>old_change
+		let m=matchaddpos("DiffAdd",range(begin,end))
+	elseif new_change==old_change
+		let m=matchaddpos("DiffChange",range(begin,end))
+	else
+		let m=matchaddpos("DiffDelete",range(begin,begin))
+	endif
+	call add(b:buffer_gitgutter_highlight,m)
+endfunc
+
 func! gutter#GitGutterAble()
 	" judge if save
 	if &modified
@@ -136,9 +190,14 @@ func! gutter#GitGutterAble()
 		endif
 	endif
 	" clear
+	call s:ClearSign()
+	call s:ClearHl()
 	let b:buffer_gitgutter=[]
 	let b:buffer_gitgutter_result=[]
-	call s:ClearSign()
+	let b:buffer_gitgutter_highlight=[]
+	" get show options
+	let sign_show=get(g:,"gitgutter_sign_able",1)
+	let hl_show=get(g:,"gitgutter_highlight_able",1)
 
 	let g:gitgutter_status=get(g:,'gitgutter_status',0)
 	if g:gitgutter_status==0
@@ -167,20 +226,11 @@ func! gutter#GitGutterAble()
 			echohl None
 			return
 		endif
-		if new_change>old_change
-			let i=new_change
-			while i>0
-				call sign_place(s:sign_id,s:sign_group_name,'gitadd',expand('%:p'),{'lnum':new_line+i-1,'priority':1})
-				let i-=1
-			endwhile
-		elseif new_change==old_change
-			let i=new_change
-			while i>0
-				call sign_place(s:sign_id,s:sign_group_name,'gitchange',expand('%:p'),{'lnum':new_line+i-1,'priority':1})
-				let i-=1
-			endwhile
-		else
-			call sign_place(s:sign_id,s:sign_group_name,'gitdelete',expand('%:p'),{'lnum':new_line,'priority':1})
+		if sign_show
+			call s:PlaceSign(new_line,new_change,old_line,old_change)
+		endif
+		if hl_show
+			call s:PlaceHl(new_line,new_change,old_line,old_change)
 		endif
 	endfor
 
@@ -194,6 +244,7 @@ endfunc
 
 func! gutter#GitGutterDisable()
 	call s:ClearSign()
+	call s:ClearHl()
 
 	if exists("b:git_gutter_status")&&b:git_gutter_status
 		silent au! GitGutterCmd
@@ -233,19 +284,13 @@ func! gutter#GitGutterFold()
 	setlocal foldexpr=FoldExpr()
 endfunc
 
-func! s:HlDefine()
-	if len(b:buffer_gitgutter_result)==0
-		echo "git gutter not open yet"
-		return
+func! s:ClearHl()
+	if exists("b:buffer_gitgutter_highlight")
+		for m in b:buffer_gitgutter_highlight
+			call matchdelete(m)
+		endfor
 	endif
-	for val in b:buffer_gitgutter_result
-		if has_key(val,"new_line")&&has_key(val,"new_change")
-			let begin=val["new_line"]
-			let end=val["new_line"]+val["new_change"]-1
-			" syn region GitGutterTemp start=begin end=end
-		endif
-	endfor
-	" highlight link GitGutterTemp DiffAdd
+	let b:buffer_gitgutter_highlight=[]
 endfunc
 
 func! s:ClearSign()
