@@ -176,6 +176,15 @@ func! termtask#Term_task_list(A,C,P)
 		endif
 	endfor
 
+	if len(a:A)!=0
+		let temp=[]
+		for task in s:list
+			if match(task,"^".a:A)!=-1
+				let temp=add(temp,task)
+			endif
+		endfor
+		let s:list=temp
+	endif
 	return s:list
 endfunc
 
