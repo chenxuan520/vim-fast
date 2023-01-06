@@ -428,6 +428,16 @@ nnoremap <silent>-g    :call gutter#GitGutterRecover()<cr>
 nnoremap <silent>zg    :call gutter#GitGutterFold()<cr>
 nnoremap <silent><c-g> :call gutter#GitGutterDiff()<cr>
 
+" line cword
+nnoremap <silent><nowait>=f :call <sid>CursorWordOpen()<cr>
+nnoremap <silent><nowait>\f :autocmd! cursorword<cr>:call cursorline#Disable()<cr>
+func! s:CursorWordOpen()
+	augroup cursorword
+		autocmd!
+		autocmd CursorMoved * call cursorline#matchadd()
+	augroup END
+endfunc
+
 " ici to tran
 let g:term_cmd='~/.local/bin/ici'
 xnoremap <silent><leader>i :call termtask#Term_cmd_exec('v')<cr>
