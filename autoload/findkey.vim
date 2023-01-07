@@ -52,7 +52,11 @@ func! findkey#open_file(direct) abort
 endfunc
 
 func! CallBack(timer)
-	let s:is_continue=0
+	if get(g:,"findkey_mode",1)
+		let s:is_continue=0
+	elseif s:is_continue==1
+		return
+	endif
 	if s:direct_file
 		call findkey#open_file(1)
 		return
@@ -74,7 +78,13 @@ func! findkey#get_key_msg(direct)
 	let s:is_continue=1
 	let s:direct_file=a:direct
 	let first_extra_time=300
-	echo 'key code detecting...'
+
+	if get(g:,"findkey_mode",1)
+		echo 'key code detecting...'
+	else
+		echo 'key code detecting(<esc> to end)...'
+	endif
+
 	while s:is_continue
 		let timer=timer_start(&timeoutlen+first_extra_time,'CallBack')
 		let temp=getchar()
@@ -100,7 +110,11 @@ func! findkey#get_key_msg(direct)
 			endif
 		elseif temp==27
 			let s:is_continue=0
-			echo "cancel operator"
+			if !get(g:,"findkey_mode",1)
+				call CallBack(timer)
+			else
+				echo "cancel operator"
+			endif
 			return
 		elseif temp<27
 			let s:input=s:input."<c-".nr2char(temp+96).">"

@@ -420,6 +420,7 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " endif
 
 " get key binding
+let g:findkey_mode=1
 nnoremap <leader>h  :call findkey#get_key_msg(0)<cr>
 nnoremap <silent>-h :call findkey#get_key_msg(1)<cr>
 nnoremap <silent>]h :call findkey#open_file(1)<cr>
@@ -757,6 +758,7 @@ nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " auto pair
 let g:AutoPairsMapCh = 0
+let g:AutoPairsMapCR = 0
 
 " incsearch.vim
 nmap /  <Plug>(incsearch-forward)
