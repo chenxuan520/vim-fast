@@ -363,6 +363,10 @@ nnoremap <silent><nowait>\r :setlocal nowrap<cr>:nunmap<buffer> j<cr>:nunmap<buf
 nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
 nnoremap <silent><nowait>\n :setlocal relativenumber<cr>
 
+" close/open number
+nnoremap <silent><nowait>=N :setlocal norelativenumber<cr>:setlocal nonumber<cr>
+nnoremap <silent><nowait>\N :setlocal relativenumber<cr>:setlocal number<cr>
+
 " set fold auto
 nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
 nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
@@ -377,6 +381,7 @@ nnoremap <silent><nowait>]t :tabn<cr>
 
 " set search noh
 nnoremap <silent><nowait>\h :noh<cr>
+nnoremap <silent><nowait>=h :set hlsearch<cr>
 
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>

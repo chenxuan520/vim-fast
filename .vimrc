@@ -380,6 +380,10 @@ nnoremap <silent><nowait>\r :setlocal nowrap<cr>:nunmap<buffer> j<cr>:nunmap<buf
 nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
 nnoremap <silent><nowait>\n :setlocal relativenumber<cr>
 
+" close/open number
+nnoremap <silent><nowait>=N :setlocal norelativenumber<cr>:setlocal nonumber<cr>
+nnoremap <silent><nowait>\N :setlocal relativenumber<cr>:setlocal number<cr>
+
 " set fold auto
 nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
 nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
@@ -394,6 +398,7 @@ nnoremap <silent><nowait>]t :tabn<cr>
 
 " set search noh
 nnoremap <silent><nowait>\h :noh<cr>
+nnoremap <silent><nowait>=h :set hlsearch<cr>
 
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
@@ -415,7 +420,10 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " endif
 
 " get key binding
-nnoremap <leader>h :call findkey#get_key_msg()<cr>
+nnoremap <leader>h  :call findkey#get_key_msg(0)<cr>
+nnoremap <silent>-h :call findkey#get_key_msg(1)<cr>
+nnoremap <silent>]h :call findkey#open_file(1)<cr>
+nnoremap <silent>[h :call findkey#open_file(0)<cr>
 
 " gutter for git
 let g:gitgutter_sign_able=1
@@ -429,14 +437,10 @@ nnoremap <silent>zg    :call gutter#GitGutterFold()<cr>
 nnoremap <silent><c-g> :call gutter#GitGutterDiff()<cr>
 
 " line cword
-nnoremap <silent><nowait>=f :call <sid>CursorWordOpen()<cr>
-nnoremap <silent><nowait>\f :autocmd! cursorword<cr>:call cursorline#Disable()<cr>
-func! s:CursorWordOpen()
-	augroup cursorword
-		autocmd!
-		autocmd CursorMoved * call cursorline#matchadd()
-	augroup END
-endfunc
+let g:cursorline_delay=0
+nnoremap <silent><nowait>=f :call cursorline#Able()<cr>
+nnoremap <silent><nowait>-f :call cursorline#Toggle()<cr>
+nnoremap <silent><nowait>\f :call cursorline#Disable()<cr>
 
 " ici to tran
 let g:term_cmd='~/.local/bin/ici'

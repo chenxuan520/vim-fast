@@ -38,7 +38,7 @@ func! gutter#GitGutterDiff()
 			let i+=1
 			continue
 		endif
-		if new_line<=now_line&&new_change+new_line>now_line
+		if new_line<=now_line&&new_change+new_line>=now_line
 			" let result=s:line
 			echohl GitGutterChange
 			echo s:line
@@ -93,7 +93,7 @@ func! gutter#GitGutterRecover()
 			let i+=1
 			continue
 		endif
-		if new_line<=now_line&&new_change+new_line>now_line
+		if new_line<=now_line&&new_change+new_line>=now_line
 			if new_change>0
 				call deletebufline(bufnr(),new_line,new_change+new_line-1)
 			endif
@@ -148,7 +148,11 @@ func! s:PlaceSign(new_line,new_change,old_line,old_change)
 			let i-=1
 		endwhile
 	else
-		call sign_place(s:sign_id,s:sign_group_name,'gitdelete',expand('%:p'),{'lnum':new_line,'priority':1})
+		let i=new_change==0?1:new_change
+		while i>0
+			call sign_place(s:sign_id,s:sign_group_name,'gitdelete',expand('%:p'),{'lnum':new_line+i-1,'priority':1})
+			let i-=1
+		endwhile
 	endif
 endfunc
 
@@ -162,19 +166,17 @@ func! s:PlaceHl(new_line,new_change,old_line,old_change)
 	if new_change==0
 		let end+=1
 	endif
-	if new_change>=old_change
-		while end-begin>=8
-			let m=matchaddpos("DiffAdd",range(begin,end))
-			let begin+=8
-			call add(b:buffer_gitgutter_highlight,m)
-		endwhile
-	endif
+	while end-begin>=8
+		let m=matchaddpos("DiffAdd",range(begin,end))
+		let begin+=8
+		call add(b:buffer_gitgutter_highlight,m)
+	endwhile
 	if new_change>old_change
 		let m=matchaddpos("DiffAdd",range(begin,end))
 	elseif new_change==old_change
 		let m=matchaddpos("DiffChange",range(begin,end))
 	else
-		let m=matchaddpos("DiffDelete",range(begin,begin))
+		let m=matchaddpos("DiffDelete",range(begin,end))
 	endif
 	call add(b:buffer_gitgutter_highlight,m)
 endfunc
@@ -247,8 +249,8 @@ func! gutter#GitGutterDisable()
 	call s:ClearHl()
 
 	if exists("b:git_gutter_status")&&b:git_gutter_status
-		silent au! GitGutterCmd
-		silent augroup! GitGutterCmd
+		silent! au! GitGutterCmd
+		silent! augroup! GitGutterCmd
 	else
 		echo "gitgutter not open yet"
 	endif
