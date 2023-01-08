@@ -6,7 +6,7 @@ if [ -f ~/.gvimrc ]; then
 	mv ~/.gvimrc ~/.gvimrc.bak
 fi
 if [ -d ~/.vim/plugged/vim-airline/autoload/airline/extensions ];then
-	mv ${PWD}/vimscript/branch.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
+	cp ${PWD}/vimscript/branch.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
 fi
 ln -s ${PWD}/.vimrc ~/.vimrc
 ln -s ${PWD}/.gvimrc ~/.gvimrc

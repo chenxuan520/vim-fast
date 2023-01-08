@@ -293,7 +293,9 @@ func! s:LazyGitFile(close) abort
 			for line in readfile(s:lazygit_file)
 				let msg=split(line)
 				execute ":edit ".msg[0]
-				call cursor(msg[1],0)
+				if msg[1]!=1
+					call cursor(msg[1],0)
+				endif
 			endfor
 		endif
 	endif
