@@ -279,8 +279,25 @@ nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close 
 nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:call term_start("bash",{"cwd":"<c-r>=@s<cr>","curwin":1,"term_finish":"close"})<cr>
 
 " lazygit
-nnoremap <silent><space>g :tabe<cr>:vert term ++curwin ++close lazygit<cr>
+nnoremap <silent><space>g :call <sid>LazyGitFile(0)<cr>:tabe<cr>:call term_start("lazygit",{"close_cb":"<sid>LazyGitFile","curwin":1,"term_finish":"close"})<cr>
 nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
+func! s:LazyGitFile(close) abort
+	if type(a:close)==0
+		if !exists("s:lazygit_file")||getenv("LAZYGIT_FILE")==v:null
+			let s:lazygit_file=tempname()
+			call setenv("LAZYGIT_FILE",s:lazygit_file)
+		endif
+	else
+		if exists("s:lazygit_file")&&filereadable(expand(s:lazygit_file))&&getenv("LAZYGIT_FILE")==s:lazygit_file&&filereadable(expand(s:lazygit_file))
+			tabclose
+			for line in readfile(s:lazygit_file)
+				let msg=split(line)
+				execute ":edit ".msg[0]
+				call cursor(msg[1],0)
+			endfor
+		endif
+	endif
+endfunc
 
 " fzf self defile
 func! s:FzfFind(command)
@@ -372,8 +389,8 @@ nnoremap <silent><nowait>\s :setlocal nospell<cr>
 " z= is list of change
 
 " set wrap
-nnoremap <silent><nowait>=r :setlocal wrap<cr>:nnoremap<buffer> j gj<cr>:nnoremap<buffer> k gk<cr>
-nnoremap <silent><nowait>\r :setlocal nowrap<cr>:nunmap<buffer> j<cr>:nunmap<buffer> k<cr>
+nnoremap <silent><nowait>=r :setlocal wrap<cr>:noremap<buffer> j gj<cr>:noremap<buffer> k gk<cr>
+nnoremap <silent><nowait>\r :setlocal nowrap<cr>:unmap<buffer> j<cr>:unmap<buffer> k<cr>
 
 " set line number
 nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
@@ -401,6 +418,9 @@ nnoremap <silent><nowait>=h :set hlsearch<cr>
 
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
+
+" select search
+xmap g/ "sy/\V<c-r>=@s<cr><cr>
 
 " run macro in visual model
 xnoremap @ :normal @
@@ -554,7 +574,7 @@ nnoremap <silent>\u <c-w>p<c-u><c-w>p
 nnoremap <silent>\d <c-w>p<c-d><c-w>p
 
 " redraw the screen
-nnoremap <silent>\l :redr!<cr>
+nnoremap <silent>R :redr!<cr>
 
 " ctrl file system
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
@@ -632,10 +652,7 @@ augroup END
 " airline
 let g:airline_theme= "tokyonight"
 let g:airline_powerline_fonts = 1
-let g:airline_extensions = ['tabline' , 'coc']
-if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
-endif
+let g:airline_extensions = ['tabline' , 'coc', 'branch']
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''

@@ -44,6 +44,11 @@ function install_plug()
 	# yarn install
 	# yarn build
 	vim -c "PlugInstall" -c "q" -c "q"
+
+	if [ -d ~/.vim/plugged/vim-airline/autoload/airline/extensions ];then
+		mv ${PWD}/vimscript/branch.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
+	fi
+
 	chmod 664 ~/.viminfo
 }
 
@@ -148,8 +153,8 @@ function get_linux_distro()
 		echo "CentOS"
 	elif grep -Eq "fedora" /etc/*-release; then
 		echo "fedora"
-	elif grep -Eq "openSUSE" /etc/*-release; then 
-		echo "openSUSE" 
+	elif grep -Eq "openSUSE" /etc/*-release; then
+		echo "openSUSE"
 	elif grep -Eq "Arch Linux" /etc/*-release; then
 		echo "ArchLinux"
 	elif grep -Eq "ManjaroLinux" /etc/*-release; then
