@@ -189,24 +189,10 @@ imap <c-h> <left>
 " move in insert
 inoremap <c-e> <end>
 inoremap <c-a> <c-[>^i
-inoremap <c-y> <c-[>lWi
-inoremap <c-t> <c-[>Bi
 inoremap <c-q> <del>
-
-" delete line
-inoremap <c-d> <c-[>ddi
-snoremap <c-d> <c-[>ddi
-
-" find next {}
-nnoremap { /{<cr>:noh<cr>va{<c-g>
-vnoremap { <c-[>/{<cr>:noh<cr>va{<c-g>
-nnoremap } /{<cr>:noh<cr>NNva}<c-g>
-vnoremap } <c-[>/{<cr>:noh<cr>NNva}<c-g>
-inoremap <c-f> <c-[>/{<cr>:noh<cr>va{<c-g>
-vnoremap <c-f> <c-[>/{<cr>:noh<cr>va{<c-g>
-vnoremap <c-b> <c-[>/{<cr>:noh<cr>NNva}<c-g>
+inoremap <c-f> <c-[>lWi
 inoremap <expr><c-b> <sid>CtrlB()
-func s:CtrlB()
+func! s:CtrlB()
 	if pumvisible()
 		return "\<c-n>"
 	elseif getline('.')[col('.')-2]==nr2char(9)
@@ -216,11 +202,24 @@ func s:CtrlB()
 			let s:result=s:result."\<bs>"
 			let s:pos-=1
 		endwhile
+		let s:result=s:result."\<c-n>"
 		return s:result
 	else
-		return "\<c-[>/}\<cr>:noh\<cr>NNva}\<c-g>"
+		return "\<c-[>Bi"
 	endif
 endfunc
+
+" delete line
+inoremap <c-d> <c-[>ddi
+snoremap <c-d> <c-[>ddi
+
+" find next {}
+nnoremap <c-y> /{<cr>:noh<cr>NNva}<c-g>
+nnoremap <c-t> /{<cr>:noh<cr>va{<c-g>
+inoremap <c-y> <c-[>/{<cr>:noh<cr>va{<c-g>
+vnoremap <c-y> <c-[>/{<cr>:noh<cr>va{<c-g>
+vnoremap <c-t> <c-[>/{<cr>:noh<cr>NNva}<c-g>
+inoremap <c-t> <c-[>/}<cr>:noh<cr>NNva}<c-g>
 
 " yank to system
 vnoremap <leader><leader>y "+y
@@ -502,8 +501,8 @@ cnoremap <c-e> <end>
 cnoremap <c-d> <del>
 cnoremap <c-h> <left>
 cnoremap <c-l> <right>
-cnoremap <c-t> <s-left>
-cnoremap <c-y> <s-right>
+cnoremap <c-b> <s-left>
+cnoremap <c-f> <s-right>
 
 " set cursor middle
 nnoremap <c-o> <c-o>zz
@@ -797,6 +796,7 @@ let g:go_highlight_fields = 1
 
 " dashboard
 " let g:slash_auto_middle=0
+" let g:slash_auto_star_middle=0
 nnoremap <space>S :SessionSave<cr>
 nnoremap <space>s :SessionLoad<cr>
 

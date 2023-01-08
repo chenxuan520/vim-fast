@@ -19,6 +19,16 @@ let b:buffer_gitgutter_highlight=[]
 let b:git_gutter_status=0
 
 func! gutter#GitGutterDiff()
+	" judge if save
+	if &modified
+		if input("not save the buffer,save buffer?(y/n):")==?"y"
+			write
+		else
+			echo "\nnot save buffer,exit the operator"
+			return
+		endif
+	endif
+
 	let now_line=line('.')
 	if len(b:buffer_gitgutter)==0
 		echo 'git gutter not open yet'
@@ -74,6 +84,16 @@ func! gutter#GitGutterDiff()
 endfunc
 
 func! gutter#GitGutterRecover()
+	" judge if save
+	if &modified
+		if input("not save the buffer,save buffer?(y/n):")==?"y"
+			write
+		else
+			echo "\nnot save buffer,exit the operator"
+			return
+		endif
+	endif
+
 	let now_line=line('.')
 	if len(b:buffer_gitgutter)==0
 		echo 'git gutter not open yet'

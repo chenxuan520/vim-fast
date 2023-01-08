@@ -130,24 +130,10 @@ imap <c-h> <left>
 " 插入移动
 inoremap <c-e> <end>
 inoremap <c-a> <c-[>^i
-inoremap <c-y> <c-[>lWi
-inoremap <c-t> <c-[>Bi
 inoremap <c-q> <del>
-
-" 插入模式删除
-inoremap <c-d> <c-[>ddi
-snoremap <c-d> <c-[>ddi
-
-" 定位装置
-nnoremap { /{<cr>:noh<cr>va{<c-g>
-vnoremap { <c-[>/{<cr>:noh<cr>va{<c-g>
-nnoremap } /{<cr>:noh<cr>NNva}<c-g>
-vnoremap } <c-[>/{<cr>:noh<cr>NNva}<c-g>
-inoremap <c-f> <c-[>/{<cr>:noh<cr>va{<c-g>
-vnoremap <c-f> <c-[>/{<cr>:noh<cr>va{<c-g>
-vnoremap <c-b> <c-[>/{<cr>:noh<cr>NNva}<c-g>
+inoremap <c-f> <c-[>lWi
 inoremap <expr><c-b> <sid>CtrlB()
-func s:CtrlB()
+func! s:CtrlB()
 	if pumvisible()
 		return "\<c-n>"
 	elseif getline('.')[col('.')-2]==nr2char(9)
@@ -157,11 +143,25 @@ func s:CtrlB()
 			let s:result=s:result."\<bs>"
 			let s:pos-=1
 		endwhile
+		let s:result=s:result."\<c-n>"
 		return s:result
 	else
-		return "\<c-[>/}\<cr>:noh\<cr>NNva}\<c-g>"
+		return "\<c-[>Bi"
 	endif
 endfunc
+
+" 插入模式删除
+inoremap <c-d> <c-[>ddi
+snoremap <c-d> <c-[>ddi
+
+" 定位装置
+nnoremap <c-y> /{<cr>:noh<cr>NNva}<c-g>
+nnoremap <c-t> /{<cr>:noh<cr>va{<c-g>
+inoremap <c-y> <c-[>/{<cr>:noh<cr>va{<c-g>
+vnoremap <c-y> <c-[>/{<cr>:noh<cr>va{<c-g>
+vnoremap <c-t> <c-[>/{<cr>:noh<cr>NNva}<c-g>
+inoremap <c-t> <c-[>/}<cr>:noh<cr>NNva}<c-g>
+
 
 " 复制当前选中到系统剪切板
 vnoremap <leader><leader>y "+y
@@ -459,17 +459,15 @@ cnoremap w!! w !sudo tee % >/dev/null
 cnoremap cdn cd <c-r>=expand('%:p:h')<cr>
 cnoremap cdr cd <c-r>=<sid>FindRoot()<cr>
 func! s:FindRoot()
-	let s:gitdir=getcwd()."/"
-	while strridx(s:gitdir,"/")!=-1
-		let s:gitdir=strpart(s:gitdir,0,strridx(s:gitdir,"/"))
-		if isdirectory(s:gitdir . "/.git")
-			break
+	let s:gitdir = finddir(".git", getcwd() .';')
+	if !empty(s:gitdir)
+		if s:gitdir==".git"
+			let s:gitdir=getcwd()
+		else
+			let s:gitdir=strpart(s:gitdir,0,strridx(s:gitdir,"/"))
 		endif
-	endwhile
-	if strridx(s:gitdir,"/")==-1
-		return ""
+		return s:gitdir
 	endif
-	return s:gitdir
 endfunc
 
 " cmd emacs model
@@ -478,8 +476,8 @@ cnoremap <c-e> <end>
 cnoremap <c-d> <del>
 cnoremap <c-h> <left>
 cnoremap <c-l> <right>
-cnoremap <c-t> <s-left>
-cnoremap <c-y> <s-right>
+cnoremap <c-b> <s-left>
+cnoremap <c-f> <s-right>
 
 " set cursor middle
 nnoremap <c-o> <c-o>zz
@@ -673,10 +671,6 @@ func! TabLine()
 	endfor
 	redrawt
 	return s:result
-endfunc
-func! Redraw()
-	redrawt
-	return 'buffer'
 endfunc
 set showtabline=2
 set tabline=%2*\ %{TabLine()}
