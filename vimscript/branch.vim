@@ -3,10 +3,7 @@
 " vim: et ts=2 sts=2 sw=2
 
 func! airline#extensions#branch#git_branch(chan,msg) abort
-  let list=split(a:msg)
-  if len(list)>1
-    let g:status_branch_name=list[1]
-  endif
+  let g:status_branch_name=a:msg
 endfunc
 
 function! airline#extensions#branch#get_head()
@@ -14,7 +11,7 @@ function! airline#extensions#branch#get_head()
     return g:status_branch_name
   elseif !exists("s:call_back")||s:call_back==0
     let s:call_back=1
-    call job_start("git branch",{"out_cb":"airline#extensions#branch#git_branch"})
+    call job_start("git rev-parse --abbrev-ref HEAD",{"out_cb":"airline#extensions#branch#git_branch"})
     return ""
   else
     return ""
