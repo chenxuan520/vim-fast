@@ -92,7 +92,8 @@ func! s:Bold(ch)
 		let s:ch='\~\~'
 	endif
 
-	execute ":s/^\\(.\\{".(col-1)."\\}\\)".s:str."/\\1".s:ch.s:str.s:ch."/"
+	" execute ":s/^\\(.\\{".(col-1)."\\}\\)".s:str."/\\1".s:ch.s:str.s:ch."/"
+	execute ":s/\\V".s:str."/".s:ch.s:str.s:ch."/"
 	call cursor(line('.'),col+1)
 endfunc
 
@@ -103,7 +104,7 @@ func! s:BlodLink(begin,end)
 	let @s = temp
 	let col = col('.')
 
-	execute ":s/".s:str."/".a:begin.s:str.a:end."/"
+	execute ":s/\\V".s:str."/".a:begin.s:str.a:end."/"
 	call cursor(line('.'),col+1)
 endfunc
 
