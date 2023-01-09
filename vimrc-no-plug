@@ -693,7 +693,7 @@ let g:netrw_altv = 1
 let g:netrw_winsize = 15
 set fillchars=vert:\⎜
 nnoremap <leader>n :Lexplore<cr> " set netrw
-highlight VertSplit guibg=#333333 guifg=#666666
+highlight VertSplit guibg=#1a1b26 guifg=#232433
 
 " set tabline
 let s:tab_after=""

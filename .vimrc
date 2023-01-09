@@ -771,7 +771,7 @@ function! s:CocMouse()
 	nnoremenu <silent>PopUp.-Sep-          :<cr>
 	nnoremenu <silent>PopUp.Close\ Model\  :call <sid>MouseConfig()<cr>
 endfunction
-nnoremap <expr><silent><nowait>-c <sid>CocMouse()
+nnoremap <silent><nowait>-c :call <sid>CocMouse()<cr>
 
 function! ShowDocumentation()
 	if CocAction('hasProvider', 'hover')
