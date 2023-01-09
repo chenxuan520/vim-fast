@@ -635,7 +635,7 @@ if filereadable(expand('~/.vim/colors/tokyonight.vim'))
 	colorscheme tokyonight
 else
 	colorscheme desert
-	call job_start('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')
+	call job_start(['bash','-c','curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash'])
 endif
 
 let g:status_git_branch=""
