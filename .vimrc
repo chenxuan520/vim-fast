@@ -453,6 +453,10 @@ nnoremap <silent>-h :call findkey#get_key_msg(1)<cr>
 nnoremap <silent>]h :call findkey#open_file(1)<cr>
 nnoremap <silent>[h :call findkey#open_file(0)<cr>
 
+" highlight color
+nnoremap <silent><nowait>=c :call highlightcolor#Able()<cr>
+nnoremap <silent><nowait>\c :call highlightcolor#DisAble()<cr>
+
 " gutter for git
 let g:gitgutter_sign_able=1
 let g:gitgutter_highlight_able=0
@@ -767,7 +771,7 @@ function! s:CocMouse()
 	nnoremenu <silent>PopUp.-Sep-          :<cr>
 	nnoremenu <silent>PopUp.Close\ Model\  :call <sid>MouseConfig()<cr>
 endfunction
-nnoremap <expr><silent><nowait>=c <sid>CocMouse()
+nnoremap <expr><silent><nowait>-c <sid>CocMouse()
 
 function! ShowDocumentation()
 	if CocAction('hasProvider', 'hover')

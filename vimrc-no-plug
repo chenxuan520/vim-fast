@@ -638,6 +638,14 @@ else
 	call job_start('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')
 endif
 
+let g:status_git_branch=""
+func! GitBranchShow(chan,msg)
+	let g:status_git_branch=" ".a:msg." "
+endfunc
+if g:status_git_branch==""
+	call job_start("git rev-parse --abbrev-ref HEAD",{"out_cb":"GitBranchShow"})
+endif
+
 " set statusline
 function GetMode()
 	let m = mode()
@@ -666,14 +674,16 @@ function GetMode()
 endfunction
 
 set statusline=%3*\ %{GetMode()}
-set statusline+=%4*\ %F\ %m%r%h%w%=
+set statusline+=%4*%{g:status_git_branch}\ %F\ %m%r%h%w%=
 set statusline+=%3*\ %Y\ |
 set statusline+=%3*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}¦
-set statusline+=%3*☰\ %l/%-L%3p%%\ ¦:%v\ ¦
+set statusline+=%5*☰\ %l/%-L%3p%%\ ¦:%v\ ¦
 highlight User1 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
 highlight User2 font=#000000 guifg=#9ECE6A guibg=#232433
 highlight User3 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
 highlight User4 font=#000000 guifg=#9ECE6A guibg=#232433
+highlight User5 font=#000000 guifg=#1a1b26 guibg=#7AA2F7
+highlight User6 font=#000000 guifg=#7AA2F7 guibg=#232433
 
 " set netrw
 let g:netrw_banner = 0
@@ -686,24 +696,43 @@ nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#333333 guifg=#666666
 
 " set tabline
-func! TabLine()
-	let s:result=''
+let s:tab_after=""
+func! TabLine(direct)
+	let s:tab_result=""
+	let flag=0
+	if a:direct
+		return s:tab_after
+	else
+		let s:tab_after=""
+	endif
 	for buf in getbufinfo({'buflisted':1})
 		let s:name=buf.name
 		if strridx(buf.name,"/")!=-1
 			let s:name=strpart(buf.name,strridx(buf.name,"/")+1)
 		endif
 		if buf.name!=expand('%:p')
-			let s:result=s:result.' '.s:name
+			if flag==0
+				let s:tab_result=s:tab_result." ".s:name
+			else
+				let s:tab_after=s:tab_after." ".s:name.""
+			endif
+		else
+			let flag=1
 		endif
 	endfor
 	redrawt
-	return s:result
+	return s:tab_result
 endfunc
+func! TabLineSet()
+	if &modified
+		let tab="%2* %{TabLine(0)}%5* %t%6*%2*%{TabLine(1)}%r%h%w%=%5* buffer"
+	else
+		let tab="%2* %{TabLine(0)}%1* %t%2*%2*%{TabLine(1)}%r%h%w%=%1* buffer"
+	endif
+	return tab
+endfunc
+set tabline=%!TabLineSet()
 set showtabline=2
-set tabline=%2*\ %{TabLine()}
-set tabline+=%1*\ %t
-set tabline+=%2*%m%r%h%w%=%1*\ buffer
 
 " set gcc enable
 func! s:Commentary()
