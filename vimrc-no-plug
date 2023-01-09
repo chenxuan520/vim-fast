@@ -635,7 +635,10 @@ if filereadable(expand('~/.vim/colors/tokyonight.vim'))
 	colorscheme tokyonight
 else
 	colorscheme desert
-	call job_start(['bash','-c','curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash'])
+	func! ErrCb(chan,err)
+		echom a:err
+	endfunc
+	call job_start(['bash','-c','curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash'],{"err_cb":"ErrCb"})
 endif
 
 let g:status_git_branch=""
@@ -733,6 +736,7 @@ func! TabLineSet()
 endfunc
 set tabline=%!TabLineSet()
 set showtabline=2
+autocmd BufEnter * redrawt
 
 " set gcc enable
 func! s:Commentary()
@@ -785,7 +789,7 @@ func! s:AddSourround()
 	let s:str = @s
 	for k in keys(g:pair_map)
 		if s:ch==k||s:ch==g:pair_map[k]
-			execute ":s/^\\(.\\{".(col('.')-1)."\\}\\)".s:str."/\\1".k.s:str.g:pair_map[k]."/"
+			execute ":s/^\\(.\\{".(col('.')-1)."\\}\\)".escape(s:str, '~"\.^$[]*')."/\\1".k.s:str.g:pair_map[k]."/"
 			execute "normal! ".(s:col+1)."l"
 			return
 		endif
