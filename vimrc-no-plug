@@ -119,7 +119,7 @@ nnoremap <leader><leader>s :source $MYVIMRC<cr>
 nnoremap <leader><leader>S :source <c-r>=expand('%:p')<cr><cr>
 
 " update self
-command! UpdateSelf call system('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')|qa
+command! UpdateSelf echo "Updating,please wait..."|call system('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')|qa
 
 " 插入模式下的光标移动
 imap <c-j> <down>

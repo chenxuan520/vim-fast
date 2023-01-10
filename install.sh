@@ -47,6 +47,7 @@ function install_plug()
 
 	if [ -d ~/.vim/plugged/vim-airline/autoload/airline/extensions ];then
 		mv ${PWD}/vimscript/branch.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
+		# mv ${PWD}/vimscript/coc.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
 	fi
 
 	chmod 664 ~/.viminfo

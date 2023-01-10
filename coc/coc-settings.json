@@ -1,4 +1,7 @@
 {
+	"suggest.noselect": true,
+	"coc.preferences.currentFunctionSymbolAutoUpdate": false,
+
 	"python.pythonPath" : "/usr/bin/python3",
 	"go.checkForUpdates":"inform",
 	"clangd.checkUpdates":false,
