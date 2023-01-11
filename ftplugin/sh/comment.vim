@@ -10,3 +10,4 @@ endfunc
 
 nnoremap <silent><buffer><space>xx :w<cr>:vert term <c-r>=expand('%:p')<cr><cr>
 nnoremap <silent><buffer><space>xl 0v$"+y:!<c-r>=@+<cr><cr>
+xnoremap <silent><buffer><space>xl "+y:!<c-r>=substitute(getreg('+'),'\n',';','g')<cr><cr>

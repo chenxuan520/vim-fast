@@ -61,7 +61,7 @@ func! CallBack(timer)
 		call findkey#open_file(1)
 		return
 	endif
-	redraw!
+	" redraw!
 	echo "detect key: ".s:input
 	echohl WarningMsg
 	if s:input!=''
@@ -81,9 +81,9 @@ func! findkey#get_key_msg(direct)
 	let first_extra_time=300
 
 	if get(g:,"findkey_mode",1)
-		echo 'key code detecting...'
+		echo 'key code detecting(<esc> to cancel)...'
 	else
-		echo 'key code detecting(<esc>/<cr> to end)...'
+		echo 'key code detecting(<esc> to cancel,<cr> to ensure)...'
 	endif
 
 	while s:is_continue
@@ -104,6 +104,12 @@ func! findkey#get_key_msg(direct)
 				let s:input=s:input."<rightmouse>"
 			elseif temp=="\<c-rightmouse>"
 				let s:input=s:input."<c-rightmouse>"
+			elseif temp=="\<del>"
+				if s:input[len(s:input)-1]=='>'
+					let s:input=strpart(s:input,0,strridx(s:input,'<'))
+				else
+					let s:input=strpart(s:input,0,len(s:input)-1)
+				endif
 			endif
 		elseif temp==13
 			if !get(g:,"findkey_mode",1)
@@ -117,11 +123,7 @@ func! findkey#get_key_msg(direct)
 			endif
 		elseif temp==27
 			let s:is_continue=0
-			if !get(g:,"findkey_mode",1)
-				call CallBack(timer)
-			else
-				echo "cancel operator"
-			endif
+			echo "cancel operator"
 			return
 		elseif temp<27
 			let s:input=s:input."<c-".nr2char(temp+96).">"
@@ -134,7 +136,7 @@ func! findkey#get_key_msg(direct)
 		else
 			let s:input=s:input . nr2char(temp)
 		endif
-		if s:input!=""&&s:is_continue
+		if s:is_continue
 			redraw!
 			echo 'get key:'.s:input
 		endif

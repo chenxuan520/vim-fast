@@ -735,9 +735,15 @@ set tabline=%!TabLineSet()
 set showtabline=2
 autocmd BufEnter * redrawt
 
+" visual gcc
+func! s:VisualComment() abort
+	for temp in range(min([line('.'),line('v')]),max([line('.'),line('v')]))
+		call s:Commentary(temp)
+	endfor
+endfunc
 " set gcc enable
-func! s:Commentary()
-	let s:num=line('.')
+func! s:Commentary(line) abort
+	let s:num=a:line
 	let line=getline(s:num)
 	let uncomment=2
 	let [l, r] = split( substitute(substitute(substitute(
@@ -767,7 +773,8 @@ func! s:Commentary()
 	endif
 	call setline(s:num,line)
 endfunc
-nnoremap <silent><nowait>gcc :call <sid>Commentary()<cr>
+nnoremap <silent><nowait>gcc :call <sid>Commentary(line('.'))<cr>
+xnoremap <silent><nowait>gc  :call <sid>VisualComment()<cr>
 
 " vim sourround
 let g:pair_map={
@@ -816,6 +823,6 @@ func! s:ChangeSourround()
 	echo s:ch.' unknow pair'
 endfunc
 
-xnoremap <silent>S :<c-u>call <sid>AddSourround()<cr>
+xnoremap <silent>S  :<c-u>call <sid>AddSourround()<cr>
 nnoremap <silent>ds :call <sid>DelSourround()<cr>
 nnoremap <silent>cs :call <sid>ChangeSourround()<cr>

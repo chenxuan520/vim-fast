@@ -685,29 +685,29 @@ augroup NerdTree
 augroup END
 
 " coc.nvim
-" coc tab
+" coc map
 inoremap <silent><expr><TAB>
 			\ pumvisible() ? "\<C-n>" :
 			\ CheckBackspace() ? "\<TAB>" :
 			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr><right> pumvisible() ? "\<C-y>" : "\<right>"
+inoremap <expr><right> pumvisible() ? "\<c-y>" : "\<right>"
+inoremap <expr><c-p>   pumvisible() ? "\<c-p>" : "\<c-[>"
+
 " for coc 0.0.82
+" let g:coc_disable_startup_warning = 1
 " inoremap <silent><expr> <TAB>
 " 			\ coc#pum#visible() ? coc#pum#next(1):
 " 			\ CheckBackspace() ? "\<TAB>" :
 " 			\ coc#refresh()
 " inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-" inoremap <silent><expr> <right> coc#pum#visible() ? coc#pum#confirm()
-" 			\: "\<right>"
+" inoremap <silent><expr><right> coc#pum#visible() ? coc#pum#confirm() : "\<right>"
+" inoremap <silent><expr><c-p> coc#pum#visible() ? coc#pum#prev(1) : "\<c-[>"
 
 function! CheckBackspace() abort
 	let col = col('.') - 1
 	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-" c-p
-inoremap <silent><expr><c-p>
-			\ pumvisible()? "\<c-p>" : "\<c-[>"
 " coc find define
 nmap <leader>u <Plug>(coc-definition)
 nmap <leader>U <Plug>(coc-type-definition)
@@ -880,7 +880,7 @@ let g:Lf_WildIgnore = {
 			\}
 let g:Lf_UseCache = 0
 " f1 to open help menu,f5 to fresh,tab to normal mode
-" c-] open in vertical,c-x open in split,c-t open in a tab,c-\ ask for open,D to delete buffer
+" c-] open in vertical,c-x open in split,c-v paste clip,c-t open in a tab,c-\ ask for open,D to delete buffer
 
 " tabular
 nnoremap <leader>T :Tabularize /
