@@ -345,6 +345,10 @@ func! s:SignDefine()
 endfunc
 
 func! gutter#GitGutterChangeTurn(direct,now)
+	if !exists("b:gitgutter_status")||b:git_gutter_status==0
+		call gutter#GitGutterAble()
+	endif
+
 	if len(b:buffer_gitgutter)==0
 		echo 'no change list'
 		return

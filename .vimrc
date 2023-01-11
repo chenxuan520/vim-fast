@@ -189,7 +189,7 @@ imap <c-h> <left>
 " move in insert
 inoremap <c-e> <end>
 inoremap <c-a> <c-[>^i
-inoremap <c-q> <del>
+inoremap <c-d> <del>
 inoremap <c-f> <c-[>lWi
 inoremap <expr><c-b> <sid>CtrlB()
 func! s:CtrlB()
@@ -210,8 +210,8 @@ func! s:CtrlB()
 endfunc
 
 " delete line
-inoremap <c-d> <c-[>ddi
-snoremap <c-d> <c-[>ddi
+inoremap <c-q> <c-[>ddi
+snoremap <c-q> <c-[>ddi
 
 " find next {}
 nnoremap <c-y> /{<cr>:noh<cr>NNva}<c-g>
@@ -447,7 +447,7 @@ nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " endif
 
 " get key binding
-let g:findkey_mode=1
+let g:findkey_mode=0
 nnoremap <leader>h  :call findkey#get_key_msg(0)<cr>
 nnoremap <silent>-h :call findkey#get_key_msg(1)<cr>
 nnoremap <silent>]h :call findkey#open_file(1)<cr>
@@ -552,12 +552,9 @@ nnoremap <leader>e :edit<space>~/
 " open : quick
 nnoremap <space>; :
 
-" change } pos
-nnoremap L $i<c-m><esc>k$
-
 " add empty line
-nnoremap H O<c-[>j
-nnoremap M o<c-[>k
+nnoremap <silent><nowait>U :call append(line('.')-1,"")<cr>
+nnoremap <silent><nowait>M :call append(line('.'),"")<cr>
 
 " make move easy
 nnoremap <silent><c-e> $
@@ -694,14 +691,15 @@ inoremap <silent><expr><TAB>
 			\ CheckBackspace() ? "\<TAB>" :
 			\ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><right> pumvisible() ? "\<C-y>" : "\<right>"
 " for coc 0.0.82
-" inoremap <silent><expr> <right> coc#pum#visible() ? coc#pum#confirm()
-" 			\: "\<right>"
 " inoremap <silent><expr> <TAB>
 " 			\ coc#pum#visible() ? coc#pum#next(1):
 " 			\ CheckBackspace() ? "\<TAB>" :
 " 			\ coc#refresh()
 " inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" inoremap <silent><expr> <right> coc#pum#visible() ? coc#pum#confirm()
+" 			\: "\<right>"
 
 function! CheckBackspace() abort
 	let col = col('.') - 1

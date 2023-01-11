@@ -61,6 +61,7 @@ func! CallBack(timer)
 		call findkey#open_file(1)
 		return
 	endif
+	redraw!
 	echo "detect key: ".s:input
 	echohl WarningMsg
 	if s:input!=''
@@ -82,7 +83,7 @@ func! findkey#get_key_msg(direct)
 	if get(g:,"findkey_mode",1)
 		echo 'key code detecting...'
 	else
-		echo 'key code detecting(<esc> to end)...'
+		echo 'key code detecting(<esc>/<cr> to end)...'
 	endif
 
 	while s:is_continue
@@ -105,6 +106,12 @@ func! findkey#get_key_msg(direct)
 				let s:input=s:input."<c-rightmouse>"
 			endif
 		elseif temp==13
+			if !get(g:,"findkey_mode",1)
+				let s:is_continue=0
+				call CallBack(timer)
+				return
+			endif
+
 			if s:is_continue
 				let s:input=s:input."<c-m>"
 			endif
@@ -126,6 +133,10 @@ func! findkey#get_key_msg(direct)
 			let s:input=s:input."<space>"
 		else
 			let s:input=s:input . nr2char(temp)
+		endif
+		if s:input!=""&&s:is_continue
+			redraw!
+			echo 'get key:'.s:input
 		endif
 		let first_extra_time=0
 	endwhile

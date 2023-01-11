@@ -130,7 +130,7 @@ imap <c-h> <left>
 " 插入移动
 inoremap <c-e> <end>
 inoremap <c-a> <c-[>^i
-inoremap <c-q> <del>
+inoremap <c-d> <del>
 inoremap <c-f> <c-[>lWi
 inoremap <expr><c-b> <sid>CtrlB()
 func! s:CtrlB()
@@ -151,8 +151,8 @@ func! s:CtrlB()
 endfunc
 
 " 插入模式删除
-inoremap <c-d> <c-[>ddi
-snoremap <c-d> <c-[>ddi
+inoremap <c-q> <c-[>ddi
+snoremap <c-q> <c-[>ddi
 
 " 定位装置
 nnoremap <c-y> /{<cr>:noh<cr>NNva}<c-g>
@@ -523,12 +523,9 @@ nnoremap <leader>e :edit<space>~/
 " open : quick
 nnoremap <space>; :
 
-" change } pos
-nnoremap L $i<c-m><esc>k$
-
 " add empty line
-nnoremap H O<c-[>j
-nnoremap M o<c-[>k
+nnoremap <silent><nowait>U :call append(line('.')-1,"")<cr>
+nnoremap <silent><nowait>M :call append(line('.'),"")<cr>
 
 " make move easy
 nnoremap <silent><c-e> $
