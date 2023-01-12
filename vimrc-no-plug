@@ -826,3 +826,7 @@ endfunc
 xnoremap <silent>S  :<c-u>call <sid>AddSourround()<cr>
 nnoremap <silent>ds :call <sid>DelSourround()<cr>
 nnoremap <silent>cs :call <sid>ChangeSourround()<cr>
+
+" like leaderf
+nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
+nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>

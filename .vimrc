@@ -457,6 +457,11 @@ nnoremap <silent>[h :call findkey#open_file(0)<cr>
 nnoremap <silent><nowait>=c :call highlightcolor#Able()<cr>
 nnoremap <silent><nowait>\c :call highlightcolor#DisAble()<cr>
 
+" multcursor
+nnoremap <silent><a-LeftMouse> <LeftMouse>:call multcursor#Choose()<cr>
+nnoremap <silent><c-s> :call multcursor#Choose()<cr>
+nnoremap <silent>-s :call multcursor#Toggle()<cr>
+
 " gutter for git
 let g:gitgutter_sign_able=1
 let g:gitgutter_highlight_able=0
@@ -501,10 +506,10 @@ onoremap <silent>al :<c-u>normal! 0v$<cr>
 xnoremap <silent>al :<c-u>normal! 0v$<cr>
 
 " object argc
-onoremap <silent>aa :<c-u>call obj#GetArgc('T','f')<cr>
-onoremap <silent>ia :<c-u>call obj#GetArgc('T','t')<cr>
-xnoremap <silent>aa :<c-u>call obj#GetArgc('T','f')<cr>
-xnoremap <silent>ia :<c-u>call obj#GetArgc('T','t')<cr>
+onoremap <silent>aa :<c-u>call obj#GetArgs('a')<cr>
+onoremap <silent>ia :<c-u>call obj#GetArgs('i')<cr>
+xnoremap <silent>aa :<c-u>call obj#GetArgs('a')<cr>
+xnoremap <silent>ia :<c-u>call obj#GetArgs('i')<cr>
 
 " easy to get obj
 onoremap <silent>i, i<
