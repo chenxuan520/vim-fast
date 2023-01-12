@@ -5,6 +5,7 @@ let s:regex="\\v#[0-9a-fA-F]{3,6}"
 let b:hl_able=0
 let b:hl_num=0
 let b:hl_dict={}
+let b:buf_nr=-1
 
 func! s:HlDefine() abort
 	let list=getbufline("%",1,"$")
@@ -31,10 +32,10 @@ func! s:HlDefine() abort
 				if match[0]==guifg
 					let guifg="#FFFFFF"
 				endif
-				exec ":highlight HlColor".b:hl_num." guibg=".match[0]." guifg=".guifg
+				exec ":highlight HlColor".b:hl_num.b:buf_nr." guibg=".match[0]." guifg=".guifg
 				let b:hl_dict[match[0]]={"hl_num": b:hl_num,"hl_arr":[]}
 				let b:hl_num+=1
-				let m=matchadd("HlColor".hl_flag,str)
+				let m=matchadd("HlColor".hl_flag.b:buf_nr,str)
 				call add(b:hl_dict[match[0]]["hl_arr"],m)
 			endif
 			let match=matchstrpos(now,s:regex,match[2]+1)
@@ -43,11 +44,12 @@ func! s:HlDefine() abort
 	endfor
 endfunc
 
-func! highlightcolor#Able()
+func! highlightcolor#Able() abort
 	if exists("b:hl_able")&&b:hl_able
 		return
 	endif
 	let b:hl_able=1
+	let b:buf_nr=bufnr()
 	call s:HlDefine()
 endfunc
 
@@ -58,7 +60,7 @@ func! highlightcolor#DisAble()
 	endif
 
 	for [key,val] in items(b:hl_dict)
-		let m="HlColor".val["hl_num"]
+		let m="HlColor".val["hl_num"].b:buf_nr
 		for temp in val["hl_arr"]
 			call matchdelete(temp)
 		endfor

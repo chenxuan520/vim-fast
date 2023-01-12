@@ -1,4 +1,5 @@
 " obj get for self
+" TODO
 
 func! obj#GetArgc(one,two)
 	let s:pos=col('.')|let s:begin=''|let s:end=''|let s:i=s:pos-1|let s:one=a:one|let s:two=a:two

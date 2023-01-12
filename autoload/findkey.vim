@@ -65,7 +65,7 @@ func! CallBack(timer)
 	echo "detect key: ".s:input
 	echohl WarningMsg
 	if s:input!=''
-		exec ":echo 'vis/nor/sel/oper model'|verbose map ".s:input."|echo 'insert/command model'|verbose map! ".s:input
+		exec ":echo 'vis/nor/sel/oper model'|echohl NONE|verbose map ".s:input."|echo 'insert/command model'|verbose map! ".s:input
 		echo ""
 	else
 		echo 'empty input,enter <cr> exit'
