@@ -127,6 +127,18 @@ imap <c-k> <up>
 imap <c-l> <right>
 imap <c-h> <left>
 
+" map enter
+func! s:Enter()
+	let ch=getline('.')[col('.')-1]|let last=getline('.')[col('.')-2]
+	if ch=='}'&&last=='{'
+		let str=matchstr(getline('.'),"^\\s*")
+		call append(line('.'),str.ch)
+		return "\<del>\<cr>"
+	endif
+	return "\<cr>"
+endfunc
+inoremap <silent><cr> <c-r>=<sid>Enter()<cr>
+
 " 插入移动
 inoremap <c-e> <end>
 inoremap <c-a> <c-[>^i
@@ -155,12 +167,12 @@ inoremap <c-q> <c-[>ddi
 snoremap <c-q> <c-[>ddi
 
 " 定位装置
-nnoremap <c-y> /{<cr>:noh<cr>NNva}<c-g>
-nnoremap <c-t> /{<cr>:noh<cr>va{<c-g>
-inoremap <c-y> <c-[>/{<cr>:noh<cr>va{<c-g>
-vnoremap <c-y> <c-[>/{<cr>:noh<cr>va{<c-g>
-vnoremap <c-t> <c-[>/{<cr>:noh<cr>NNva}<c-g>
-inoremap <c-t> <c-[>/}<cr>:noh<cr>NNva}<c-g>
+nnoremap <c-y> /{<cr>:noh<cr>va}<c-g>
+nnoremap <c-t> ?}<cr>:noh<cr>va{<c-g>
+inoremap <c-y> <c-[>/{<cr>:noh<cr>va}<c-g>
+vnoremap <c-y> <c-[>/{<cr>:noh<cr>va}<c-g>
+vnoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
+inoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
 
 
 " 复制当前选中到系统剪切板
@@ -218,7 +230,7 @@ func! Tapi_EditFile(bufnum,arglist)
 		call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")
 	endif
 endfunc
-tnoremap <c-\> <c-\><c-n>
+tnoremap <c-\> <c-\><c-n>:setlocal norelativenumber<cr>:setlocal nonumber<cr>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
 tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
 tnoremap <c-z> exit<cr>
@@ -261,8 +273,21 @@ func! s:FzfFind(command)
 	vert call term_start('bash',{'term_finish':"close"})
 	call term_sendkeys(term_list()[0],a:command."\<cr>")
 endfunc
+let g:fzf_temp_file=""
+func! Tapi_Fzf(bufnum,arglist)
+	wincmd p|let temp=getenv("FZF_VIM")
+	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
+	if temp!=v:null
+		for line in readfile(g:fzf_temp_file)
+			let list=matchstr(line,"\/\^.*")
+			let pos=stridx(list,'/;"')
+			let @/=strpart(list,1,pos-1)
+			call feedkeys('n','in')
+		endfor
+	endif
+endfunc
 nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
-nnoremap <silent><space>Z :call <sid>FzfFind('fd')<cr>
+nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 
 " set pair baket
 inoremap ( ()<left>
@@ -303,7 +328,6 @@ cnoremap <expr>> <sid>Judge('>','c')
 cnoremap <expr>) <sid>Judge(')','c')
 cnoremap <expr>} <sid>Judge('}','c')
 cnoremap <expr>] <sid>Judge(']','c')
-
 " set backspace
 inoremap <expr><bs> <sid>Backspace('i')
 cnoremap <expr><bs> <sid>Backspace('c')
@@ -495,11 +519,11 @@ xnoremap <silent>in i{
 xnoremap <silent>an a{
 
 " sudo to write file
-cnoremap w!! w !sudo tee % >/dev/null
+cab w!! w !sudo tee % >/dev/null
 
 " quick to change dir
-cnoremap cdn cd <c-r>=expand('%:p:h')<cr>
-cnoremap cdr cd <c-r>=<sid>FindRoot()<cr>
+cab cdn cd <c-r>=expand('%:p:h')<cr>
+cab cdr cd <c-r>=termtask#Term_get_dir()<cr>
 func! s:FindRoot()
 	let s:gitdir = finddir(".git", getcwd() .';')
 	if !empty(s:gitdir)
@@ -607,6 +631,10 @@ iab ;n chenxuan
 nnoremap \a :iabc<cr>
 nnoremap =a :ab<cr>
 
+" remap {
+xnoremap { ,
+nnoremap { ,
+
 " config complete
 inoremap / /<c-x><c-f>
 let b:cmpX=-1
@@ -638,7 +666,6 @@ augroup END
 inoremap <silent><expr><TAB>
 			\ pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 
 " set colorscheme
 set termguicolors
@@ -708,6 +735,12 @@ let g:netrw_winsize = 15
 set fillchars=vert:\⎜
 nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#1a1b26 guifg=#232433
+
+" slash
+xnoremap * "sy:let @/="\\V".@s<cr>:set hlsearch<cr>
+xnoremap # "sy:let @/="\\V".@s<cr>:let v:searchforward=0<cr>:set hlsearch<cr>
+nnoremap * :let @/="\\<".expand('<cword>')."\\>"<cr>:set hlsearch<cr>
+nnoremap # :let @/="\\<".expand('<cword>')."\\>"<cr>:let v:searchforward=0<cr>:set hlsearch<cr>
 
 " set tabline
 let s:tab_after=""
@@ -837,5 +870,7 @@ nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
 nnoremap <nowait><space>h :help<space>
 xnoremap <silent><space>h "sy:<c-u>help <c-r>=@s<cr><cr>
-nnoremap <nowait><space>a :vimgrep /\V/j<space>./*<left><left><left><left><left><left>
-xnoremap <nowait><space>a "sy:vimgrep /\V<c-r>=@s<cr>/j<space>./*<cr>:copen<cr>
+nnoremap <nowait><space>a :vimgrep /\V/j<space>./**<s-left><left><left><left>
+xnoremap <nowait><space>a "sy:vimgrep /\V<c-r>=@s<cr>/j<space>./**<cr>:copen<cr>
+nnoremap <silent><space>t :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>

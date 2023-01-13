@@ -31,6 +31,8 @@ func! multcursor#Oper()
 		call matchdelete(s:match_dict[key]["hl"])
 	endfor
 	call cursor([old[1],old[2]])
+	silent! nunmap <buffer> I
+	silent! nunmap <buffer> A
 	let s:last_dict=s:match_dict
 	let s:match_dict={}
 	let s:able=0
@@ -41,6 +43,8 @@ func! multcursor#Disable()
 		silent! call matchdelete(s:match_dict[key]["hl"])
 	endfor
 	silent! au! MultCursor
+	silent! nunmap <buffer> I
+	silent! nunmap <buffer> A
 	let s:last_dict=s:match_dict
 	let s:match_dict={}
 	let s:able=0
@@ -57,15 +61,12 @@ func! multcursor#Toggle() abort
 	endif
 	let s:able=1
 	call s:HlDefine()
+	call s:InitCmd()
 	let s:match_dict=s:last_dict
 	for [key,val] in items(s:match_dict)
 		let m=matchaddpos("MultCursorHl", [[key,val["col"],1]])
 		let s:match_dict[key]={"col":col('.'),"hl":m}
 	endfor
-	augroup MultCursor
-		au!
-		autocmd InsertLeave * call multcursor#Oper()|au! MultCursor
-	augroup END
 endfunc
 
 func! s:Init()
@@ -73,12 +74,7 @@ func! s:Init()
 	let s:match_dict={}
 	let s:last_dict={}
 	call s:HlDefine()
-	set nohlsearch
-	augroup MultCursor
-		au!
-		autocmd BufDelete,BufLeave <buffer> ++once call multcursor#Disable()|au! MultCursor
-		autocmd InsertLeave <buffer> ++once call multcursor#Oper()|au! MultCursor
-	augroup END
+	call s:InitCmd()
 endfunc
 
 func! multcursor#Choose() abort
@@ -98,3 +94,13 @@ func! multcursor#Choose() abort
 	let s:match_dict[pos]={"col":col('.'),"hl":m}
 endfunc
 
+
+func! s:InitCmd()
+	nnoremap <buffer> I i
+	nnoremap <buffer> A a
+	augroup MultCursor
+		au!
+		autocmd BufDelete,BufLeave <buffer> ++once call multcursor#Disable()|au! MultCursor
+		autocmd InsertLeave <buffer> ++once call multcursor#Oper()|au! MultCursor
+	augroup END
+endfunc

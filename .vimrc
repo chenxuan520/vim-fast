@@ -214,12 +214,12 @@ inoremap <c-q> <c-[>ddi
 snoremap <c-q> <c-[>ddi
 
 " find next {}
-nnoremap <c-y> /{<cr>:noh<cr>NNva}<c-g>
-nnoremap <c-t> /{<cr>:noh<cr>va{<c-g>
-inoremap <c-y> <c-[>/{<cr>:noh<cr>va{<c-g>
-vnoremap <c-y> <c-[>/{<cr>:noh<cr>va{<c-g>
-vnoremap <c-t> <c-[>/{<cr>:noh<cr>NNva}<c-g>
-inoremap <c-t> <c-[>/}<cr>:noh<cr>NNva}<c-g>
+nnoremap <c-y> /{<cr>:noh<cr>va}<c-g>
+nnoremap <c-t> ?}<cr>:noh<cr>va{<c-g>
+inoremap <c-y> <c-[>/{<cr>:noh<cr>va}<c-g>
+vnoremap <c-y> <c-[>/{<cr>:noh<cr>va}<c-g>
+vnoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
+inoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
 
 " yank to system
 vnoremap <leader><leader>y "+y
@@ -260,7 +260,7 @@ nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
 
 " easy to add time
-func Time()
+func! Time()
 	return "update by chenxuan ".strftime("%Y-%m-%d %H:%M:%S")
 endfunc
 
@@ -274,7 +274,7 @@ func! Tapi_EditFile(bufnum,arglist)
 		call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")
 	endif
 endfunc
-tnoremap <c-\> <c-\><c-n>
+tnoremap <c-\> <c-\><c-n>:setlocal norelativenumber<cr>:setlocal nonumber<cr>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
 tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
 tnoremap <c-z> exit<cr>
@@ -308,13 +308,25 @@ func! s:LazyGitFile(close) abort
 endfunc
 
 " fzf self defile
-" TODO,change by env instead of call
 func! s:FzfFind(command)
 	vert call term_start('bash',{'term_finish':"close"})
 	call term_sendkeys(term_list()[0],a:command."\<cr>")
 endfunc
+let g:fzf_temp_file=""
+func! Tapi_Fzf(bufnum,arglist)
+	wincmd p|let temp=getenv("FZF_VIM")
+	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
+	if temp!=v:null
+		for line in readfile(g:fzf_temp_file)
+			let list=matchstr(line,"\/\^.*")
+			let pos=stridx(list,'/;"')
+			let @/=strpart(list,1,pos-1)
+			call feedkeys('n','in')
+		endfor
+	endif
+endfunc
 nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
-nnoremap <silent><space>Z :call <sid>FzfFind('fd')<cr>
+nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 
 " lf config define
 nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
@@ -527,11 +539,11 @@ xnoremap <silent>in i{
 xnoremap <silent>an a{
 
 " sudo to write file
-cnoremap w!! w !sudo tee % >/dev/null
+cab w!! w !sudo tee % >/dev/null
 
 " quick to change dir
-cnoremap cdn cd <c-r>=expand('%:p:h')<cr>
-cnoremap cdr cd <c-r>=termtask#Term_get_dir()<cr>
+cab cdn cd <c-r>=expand('%:p:h')<cr>
+cab cdr cd <c-r>=termtask#Term_get_dir()<cr>
 
 " cmd emacs model
 cnoremap <c-a> <home>
@@ -543,10 +555,35 @@ cnoremap <c-b> <s-left>
 cnoremap <c-f> <s-right>
 
 " cmd pair
-cnoremap " ""<left>
-cnoremap ' ''<left>
-cnoremap [ []<left>
+let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
+func! s:Judge(ch,mode)
+	if a:mode!='c'|let ch=getline('.')[col('.')-1]|else|let ch=getcmdline()[getcmdpos()-1]|endif
+	if a:ch=='"'||a:ch=="'"||a:ch=='`'|if ch!=a:ch|return a:ch.a:ch."\<left>"|endif|endif
+	if ch==a:ch|return "\<right>"|endif
+	return a:ch
+endfunc
+func! s:Backspace(mode)
+	if a:mode!='c'
+		let s:pair=getline('.')[col('.')-1]|let s:pair_l=getline('.')[col('.')-2]
+	else
+		let s:pair=getcmdline()[getcmdpos()-1]|let s:pair_l=getcmdline()[getcmdpos()-2]
+	endif
+	if has_key(g:pair_map, s:pair_l)&&(g:pair_map[s:pair_l]==s:pair)|return "\<right>\<bs>\<bs>"|else|return "\<bs>"|endif
+endfunc
 cnoremap ( ()<left>
+cnoremap [ []<left>
+cnoremap { {}<left>
+cnoremap <expr>"    <sid>Judge('"','c')
+cnoremap <expr>`    <sid>Judge('`','c')
+cnoremap <expr>'    <sid>Judge("'",'c')
+cnoremap <expr>>    <sid>Judge('>','c')
+cnoremap <expr>)    <sid>Judge(')','c')
+cnoremap <expr>}    <sid>Judge('}','c')
+cnoremap <expr>]    <sid>Judge(']','c')
+cnoremap <expr><bs> <sid>Backspace('c')
+
+" jump >
+inoremap <expr><silent>> <sid>Judge('>','i')
 
 " set cursor middle
 nnoremap <c-o> <c-o>zz
@@ -581,15 +618,6 @@ nnoremap <silent><expr>g<c-x> getline('.')[col('.')-1]=='0'?"r9":"r".(getline('.
 " add space
 nnoremap <leader><space> i<space><right><c-[>
 
-" jump >
-func! s:Judge()
-	if getline('.')[col('.')-1]=='>'
-		return "\<right>"
-	endif
-	return ">"
-endfunc
-inoremap <expr><silent>> <sid>Judge()
-
 " scroll in other window
 nnoremap <silent>\u <c-w>p<c-u><c-w>p
 nnoremap <silent>\d <c-w>p<c-d><c-w>p
@@ -600,11 +628,11 @@ nnoremap <silent>R :redr!<cr>
 " ctrl file system
 command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
-cab Rename Rename <c-r>=expand('%:p:h')<cr>/
+cab <expr>Rename "Rename ".expand('%:p:h')."/"
 command! -nargs=1 -bang -complete=file Mkdir echo mkdir(<f-args>)
-cab Mkdir Mkdir <c-r>=expand('%:p:h')<cr>/
+cab <expr>Mkdir "Mkdir ".expand('%:p:h')."/"
 command! -nargs=1 -bang -complete=file Rmdir echo delete(<f-args>,"d")
-cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
+cab <expr>Rmdir "Rmdir ".expand('%:p:h')."/"
 " use cd to change dir
 
 " select move
@@ -915,7 +943,9 @@ nnoremap <leader><leader>g :GV?<cr>
 " nnoremap \ ,
 " map \ <Plug>(clever-f-repeat-back)
 nmap <silent><nowait> ; <Plug>(clever-f-repeat-forward)
+nmap <silent><nowait> { <Plug>(clever-f-repeat-back)
 xmap <silent><nowait> ; <Plug>(clever-f-repeat-forward)
+xmap <silent><nowait> { <Plug>(clever-f-repeat-back)
 
 " asyncrun
 let g:asyncrun_open = 6
