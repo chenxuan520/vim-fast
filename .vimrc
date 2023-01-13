@@ -797,7 +797,6 @@ nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " auto pair
 let g:AutoPairsMapCh = 0
-let g:AutoPairsMapCR = 0
 
 " incsearch.vim
 nmap /  <Plug>(incsearch-forward)

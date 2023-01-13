@@ -175,6 +175,8 @@ vnoremap <leader><leader>P "+P
 let g:map_recent_close={}
 augroup ReadPost
 	au!
+	autocmd BufEnter * redrawt
+	autocmd QuickFixCmdPost * copen
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 	autocmd BufDelete * if expand('%:p')!=''|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
@@ -745,7 +747,6 @@ func! TabLineSet()
 endfunc
 set tabline=%!TabLineSet()
 set showtabline=2
-autocmd BufEnter * redrawt
 
 " visual gcc
 func! s:VisualComment() abort
@@ -836,3 +837,5 @@ nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
 nnoremap <nowait><space>h :help<space>
 xnoremap <silent><space>h "sy:<c-u>help <c-r>=@s<cr><cr>
+nnoremap <nowait><space>a :vimgrep /\V/j<space>./*<left><left><left><left><left><left>
+xnoremap <nowait><space>a "sy:vimgrep /\V<c-r>=@s<cr>/j<space>./*<cr>:copen<cr>
