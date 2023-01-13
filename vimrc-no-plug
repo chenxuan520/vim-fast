@@ -266,40 +266,52 @@ nnoremap <silent><space>Z :call <sid>FzfFind('fd')<cr>
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
+cnoremap ( ()<left>
+cnoremap [ []<left>
+cnoremap { {}<left>
 
 " jump
-func! s:Judge(ch)
+func! s:Judge(ch,mode)
+	if a:mode!='c'
+		let ch=getline('.')[col('.')-1]
+	else
+		let ch=getcmdline()[getcmdpos()-1]
+	endif
 	if a:ch=='"'||a:ch=="'"||a:ch=='`'
-		if getline('.')[col('.')-1]!=a:ch
+		if ch!=a:ch
 			return a:ch.a:ch."\<left>"
 		endif
 	endif
-	if getline('.')[col('.')-1]==a:ch
+	if ch==a:ch
 		return "\<right>"
 	endif
 	return a:ch
 endfunc
-inoremap <expr><silent>" <sid>Judge('"')
-inoremap <expr><silent>` <sid>Judge('`')
-inoremap <expr><silent>' <sid>Judge("'")
-inoremap <expr><silent>> <sid>Judge('>')
-inoremap <expr><silent>) <sid>Judge(')')
-inoremap <expr><silent>} <sid>Judge('}')
-inoremap <expr><silent>] <sid>Judge(']')
+inoremap <expr><silent>" <sid>Judge('"','i')
+inoremap <expr><silent>` <sid>Judge('`','i')
+inoremap <expr><silent>' <sid>Judge("'",'i')
+inoremap <expr><silent>> <sid>Judge('>','i')
+inoremap <expr><silent>) <sid>Judge(')','i')
+inoremap <expr><silent>} <sid>Judge('}','i')
+inoremap <expr><silent>] <sid>Judge(']','i')
+cnoremap <expr>" <sid>Judge('"','c')
+cnoremap <expr>` <sid>Judge('`','c')
+cnoremap <expr>' <sid>Judge("'",'c')
+cnoremap <expr>> <sid>Judge('>','c')
+cnoremap <expr>) <sid>Judge(')','c')
+cnoremap <expr>} <sid>Judge('}','c')
+cnoremap <expr>] <sid>Judge(']','c')
 
 " set backspace
-inoremap <expr><bs> <sid>Backspace()
-func! s:Backspace()
-	let s:pair=getline('.')[col('.')-1]
-	let s:pair_l=getline('.')[col('.')-2]
-	if (s:pair==')'&&s:pair_l=='(')||
-				\ (s:pair==']'&&s:pair_l=='[')||
-				\ (s:pair=='}'&&s:pair_l=='{')||
-				\ (s:pair=='"'&&s:pair_l=='"')||
-				\ (s:pair=="'"&&s:pair_l=="'")||
-				\ (s:pair=='`'&&s:pair_l=='`')||
-				\ (s:pair=='~'&&s:pair_l=='~')||
-				\ (s:pair=='*'&&s:pair_l=='*')
+inoremap <expr><bs> <sid>Backspace('i')
+cnoremap <expr><bs> <sid>Backspace('c')
+func! s:Backspace(mode)
+	if a:mode!='c'
+		let s:pair=getline('.')[col('.')-1]|let s:pair_l=getline('.')[col('.')-2]
+	else
+		let s:pair=getcmdline()[getcmdpos()-1]|let s:pair_l=getcmdline()[getcmdpos()-2]
+	endif
+	if has_key(g:pair_map, s:pair_l)&&(g:pair_map[s:pair_l]==s:pair)
 		return "\<right>\<bs>\<bs>"
 	else
 		return "\<bs>"
@@ -725,9 +737,9 @@ func! TabLine(direct)
 endfunc
 func! TabLineSet()
 	if &modified
-		let tab="%2* %{TabLine(0)}%5* %t%6*%2*%{TabLine(1)}%r%h%w%=%5* buffer"
+		let tab="%2* %0.32(%{TabLine(0)}%)%5* %t%6*%2*%<%{TabLine(1)}%r%h%w%=%5* buffer"
 	else
-		let tab="%2* %{TabLine(0)}%1* %t%2*%2*%{TabLine(1)}%r%h%w%=%1* buffer"
+		let tab="%2* %0.32(%{TabLine(0)}%)%1* %t%2*%2*%<%{TabLine(1)}%r%h%w%=%1* buffer"
 	endif
 	return tab
 endfunc
@@ -777,15 +789,7 @@ nnoremap <silent><nowait>gcc :call <sid>Commentary(line('.'))<cr>
 xnoremap <silent><nowait>gc  :call <sid>VisualComment()<cr>
 
 " vim sourround
-let g:pair_map={
-			\'(':')',
-			\'[':']',
-			\'{':'}',
-			\'"':'"',
-			\"'":"'",
-			\'<':'>',
-			\'`':'`',
-			\}
+let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
 func! s:AddSourround()
 	let s:ch=nr2char(getchar())
 	let s:col=col('.')
@@ -830,3 +834,5 @@ nnoremap <silent>cs :call <sid>ChangeSourround()<cr>
 " like leaderf
 nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
+nnoremap <nowait><space>h :help<space>
+xnoremap <silent><space>h "sy:<c-u>help <c-r>=@s<cr><cr>

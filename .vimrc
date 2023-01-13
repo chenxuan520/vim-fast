@@ -308,6 +308,7 @@ func! s:LazyGitFile(close) abort
 endfunc
 
 " fzf self defile
+" TODO,change by env instead of call
 func! s:FzfFind(command)
 	vert call term_start('bash',{'term_finish':"close"})
 	call term_sendkeys(term_list()[0],a:command."\<cr>")
@@ -540,6 +541,12 @@ cnoremap <c-h> <left>
 cnoremap <c-l> <right>
 cnoremap <c-b> <s-left>
 cnoremap <c-f> <s-right>
+
+" cmd pair
+cnoremap " ""<left>
+cnoremap ' ''<left>
+cnoremap [ []<left>
+cnoremap ( ()<left>
 
 " set cursor middle
 nnoremap <c-o> <c-o>zz

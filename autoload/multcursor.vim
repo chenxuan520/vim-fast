@@ -76,7 +76,8 @@ func! s:Init()
 	set nohlsearch
 	augroup MultCursor
 		au!
-		autocmd InsertLeave * call multcursor#Oper()|au! MultCursor
+		autocmd BufDelete,BufLeave <buffer> ++once call multcursor#Disable()|au! MultCursor
+		autocmd InsertLeave <buffer> ++once call multcursor#Oper()|au! MultCursor
 	augroup END
 endfunc
 
