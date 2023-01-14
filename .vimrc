@@ -289,21 +289,17 @@ nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++
 func! s:LazyGitFile(close) abort
 	if type(a:close)==0
 		if !exists("s:lazygit_file")||getenv("LAZYGIT_FILE")==v:null
-			let s:lazygit_file=tempname()
-			call setenv("LAZYGIT_FILE",s:lazygit_file)
+			let s:lazygit_file=tempname()|call setenv("LAZYGIT_FILE",s:lazygit_file)
 		endif
-	else
-		if exists("s:lazygit_file")&&filereadable(expand(s:lazygit_file))&&getenv("LAZYGIT_FILE")==s:lazygit_file&&filereadable(expand(s:lazygit_file))
-			tabclose
-			for line in readfile(s:lazygit_file)
-				let msg=split(line)
-				let file=termtask#Term_get_dir()."/".msg[0]
-				execute ":edit ".file
-				if msg[1]!=1
-					call cursor(msg[1],0)
-				endif
-			endfor
-		endif
+		return
+	endif
+	if exists("s:lazygit_file")&&filereadable(expand(s:lazygit_file))&&getenv("LAZYGIT_FILE")==s:lazygit_file&&filereadable(expand(s:lazygit_file))
+		tabclose
+		for line in readfile(s:lazygit_file)
+			let msg=split(line)|let file=termtask#Term_get_dir()."/".msg[0]
+			execute ":edit ".file
+			if msg[1]!=1|call cursor(msg[1],0)|endif
+		endfor
 	endif
 endfunc
 
@@ -342,6 +338,22 @@ vnoremap <leader>P "0P
 command! -nargs=0 Remote :diffg RE
 command! -nargs=0 Base :diffg BA
 command! -nargs=0 Local :diffg LO
+
+" edit binrary
+func! s:BinraryEdit(args) abort
+	if join(readfile(expand('%:p'), 'b', 5), '\n') !~# '[\x00-\x08\x10-\x1a\x1c-\x1f]\{2,}'
+		echo "not a bin file"|return
+	endif
+	let g:xxd_cmd=":%!xxd ".a:args
+	silent! execute g:xxd_cmd|let &modified=0
+	augroup Binrary
+		au!
+		autocmd BufWritePre  <buffer> let g:bin_pos_now=getcurpos()|silent! exec ":%!xxd -r"
+		autocmd BufWritePost <buffer> silent! exec g:xxd_cmd|call cursor([g:bin_pos_now[1],g:bin_pos_now[2]])
+		autocmd BufDelete    <buffer> au! Binrary
+	augroup END
+endfunc
+command! -nargs=* Binrary :call <sid>BinraryEdit(<q-args>)
 
 " change window width
 nnoremap <c-up> <c-w>+
