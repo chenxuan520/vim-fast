@@ -419,7 +419,7 @@ vnoremenu <silent> PopUp.Line\ Text   :call <sid>Bold('~~')<cr>
 vnoremenu <silent> PopUp.Code\ Text   :call <sid>Bold('`')<cr>
 vnoremenu <silent> PopUp.Link\ Text   :call <sid>BlodLink('[',']()')<cr>f]f)
 
-inoremap <silent><buffer> !<space> ![]()<left>
-inoremap <silent><buffer> ]<space>  []()<left>
+inoremap <silent><buffer> !<space> ![{title}]()<left>
+inoremap <silent><buffer> ]<space>  [{title}]()<left>
 
 setlocal conceallevel=3

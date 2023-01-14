@@ -229,15 +229,17 @@ nnoremap <leader><leader>P "+P
 vnoremap <leader><leader>p "+p
 vnoremap <leader><leader>P "+P
 
-" load the file last edit pos
-let g:map_recent_close={}
 augroup ReadPost
 	au!
+	autocmd TerminalOpen * setlocal norelativenumber|setlocal nonumber
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 	autocmd BufDelete * if expand('%:p')!=''|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
 				\|endif
 augroup END
+
+" load the file last edit pos
+let g:map_recent_close={}
 func! s:GetRecentClose()
 	let s:list=[]
 	for [key,value] in items(g:map_recent_close)
@@ -274,7 +276,7 @@ func! Tapi_EditFile(bufnum,arglist)
 		call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")
 	endif
 endfunc
-tnoremap <c-\> <c-\><c-n>:setlocal norelativenumber<cr>:setlocal nonumber<cr>
+tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
 tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
 tnoremap <c-z> exit<cr>
@@ -293,8 +295,8 @@ func! s:LazyGitFile(close) abort
 		endif
 		return
 	endif
+	tabclose
 	if exists("s:lazygit_file")&&filereadable(expand(s:lazygit_file))&&getenv("LAZYGIT_FILE")==s:lazygit_file&&filereadable(expand(s:lazygit_file))
-		tabclose
 		for line in readfile(s:lazygit_file)
 			let msg=split(line)|let file=termtask#Term_get_dir()."/".msg[0]
 			execute ":edit ".file
@@ -852,6 +854,7 @@ nmap <leader>f <Plug>(easymotion-overwin-f)
 nmap <leader>j <Plug>(easymotion-j)
 nmap <leader>k <Plug>(easymotion-k)
 nmap <silent>s <Plug>(easymotion-overwin-f)
+imap <silent><c-s> <c-o>s
 
 " python-highlight
 let g:python_highlight_all = 1

@@ -95,10 +95,6 @@ func! gutter#GitGutterRecover()
 	endif
 
 	let now_line=line('.')
-	if len(b:buffer_gitgutter)==0
-		echo 'git gutter not open yet'
-		return
-	endif
 	let s:lines=system('git diff -U0 '.expand('%:p'))
 	let s:list=split(s:lines,'\n')
 	let result=''
