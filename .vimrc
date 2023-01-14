@@ -116,7 +116,7 @@ call plug#begin('~/.vim/plugged')
 " begin vim
 Plug 'chenxuan520/my-vim-dashboard'
 " function list
-Plug 'preservim/tagbar', {'tag':'2.2'}
+Plug 'preservim/tagbar', {'tag':'2.2','on':'TagbarToggle'}
 " auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release','tag': '0.0.81'}
 " find anything

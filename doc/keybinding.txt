@@ -1,0 +1,194 @@
+*keybinding*  The key binding for vim
+*keybinding*
+==============================================================================
+CONTENTS                                                     *keybinding-contents*
+
+    INTRO .......................................... |keybinding-intro|
+    COMMANDS ....................................... |keybinding-commands|
+
+==============================================================================
+INTRO                                                           *keybinding-intro*
+
+keybinding is a plugin that shows the key binding,(only use foe vim-fast)
+
+==============================================================================
+COMMANDS                                                     *keybinding-commands*
+
+                                                             *key:<leader>-bind:,*
+leadef key ','
+                                                             *key:buffer-next/last:<leader>n/p*
+change buffer
+                                                             *key:buffer-delete:<leader>d*
+delete now buffer
+                                                             *key:buffer-save:c-m,<cr>*
+buffer save
+                                                             *key:window-size-change:<ctrl+up/down/left/right>*
+修改窗口大小
+                                                             *key:window-cursor-change:<ctrl+h/j/k/l>*
+修改光标所在窗口
+                                                             *key:window-location-change:<ctrl+shift+up/down/left/right>*
+修改窗口布局
+                                                             *key:color-change:<F1>*
+修改VIM主题
+                                                             *key:reload-vimrc:<leader><leader>s*
+重新加载.vimrc
+                                                             *key:plug-install:<leader><leader>i*
+插件安装
+                                                             *key:plug-clean:<leader><leader>c*
+清理无用插件
+                                                             *key:copy-system:<leader><leader>y*
+复制到系统粘贴板
+                                                             *key:paste-system:<leader><leader>p*
+从系统粘贴板粘贴
+                                                             *key:paste-copy:<leader>p*
+粘贴复制内容
+                                                             *key:add-comment-user:<leader>c*
+添加作者信息注释
+                                                             *key:up/down(insert):<ctrl+j/k>*
+插入模式光标移动
+                                                             *key:right(insert):<ctrl+l>*
+插入模式光标移动
+                                                             *key:term-inside:<leader><leader>t*
+垂直控制台
+                                                             *key:term-inside-space:<leader><leader>T*
+水平控制台
+                                                             *key:debug-open:<leader><leader>d,F5*
+打开调试
+                                                             *key:debug-break:F6*
+设置断点
+                                                             *key:debug-next:F7*
+调试下一步
+                                                             *key:debug-step:F8*
+调试进入
+                                                             *key:coc-goto-define:<leader>u,gd*
+去到定义
+                                                             *key:coc-goto-implementation:gi*
+去到虚函数引用
+                                                             *key:coc-goto-type-define:<leader>U,gD,<c-leftmouse>*
+去到类型定义
+                                                             *key:coc-goto-refence:gr*
+引用列表
+                                                             *key:coc-goto-tag:<space><space>j*
+tag列表
+                                                             *key:coc-rename:<leader>r*
+重命名
+                                                             *key:coc-refactor:<space>r*
+高级重命名
+                                                             *key:coc-fix:<leader>qq*
+快速修复
+                                                             *key:coc-wrong-list:<space>w,=w*
+错误列表
+                                                             *key:coc-wrong-next/last:[w,]w*
+上/下一个错误
+                                                             *key:coc-code-action:<leader>a*
+lsp的action
+                                                             *key:coc-help-current:K*
+当前光标的help
+                                                             *key:coc-mouse-open/close:=c,\c*
+coc阅读模式鼠标配置
+                                                             *key:coc-format-code:<leader><leader>f/:Format*
+格式化代码
+                                                             *key:coc-config:<space><space>c*
+coc配置
+                                                             *key:coc-list-exten:<space><space>l*
+coc安装插件列表
+                                                             *key:leaderf-last:<space>l*
+上一次leaderf搜索
+                                                             *key:leaderf-find-word:<space>a*
+查找单词
+                                                             *key:leaderf-find-select-word:<space>a*
+查找选中单词
+                                                             *key:leaderf-find-current-word:<space>A*
+查找光标单词
+                                                             *key:leaderf-recent-file:<space>F*
+查找最近文件
+                                                             *key:leaderf-line:<space>/*
+在当前buffer查找
+                                                             *key:leaderf-function-list:<leader>t*
+查找当前buffer函数
+                                                             *key:leaderf-function-list-all:<leader>T*
+查找所有buffer函数
+                                                             *key:leaderf-help:<space>h*
+查找帮助
+                                                             *key:leaderf-help-key:<space>H*
+查找快捷键帮助
+                                                             *key:leaderf-find-file:<space>f*
+查找文件
+                                                             *key:leaderf-jump-tags:<space>j*
+跳转当前缓冲区tag
+                                                             *key:leaderf-jump-tags:<space>J*
+跳转所有缓冲区tags
+                                                             *key:leaderf-quickfix:<space>Q*
+quickfix搜索
+                                                             *key:leaderf-buffer:<space>b*
+查找buffer
+                                                             *key:leaderf-dir-root-open/close:=l,\l*
+开启leaderf在根目录下
+                                                             *key:easy-motion:<leader>w*
+快速移动光标(按单词)
+                                                             *key:easy-motion-f:<leader>f*
+快速移动光标(按字母)
+                                                             *key:easy-motion-line:<leader>l/k*
+快速移动光标(按行)
+                                                             *key:git-file:<leader>g*
+当前文件commit图
+                                                             *key:git-all:<leader>G*
+仓库commit图
+                                                             *key:termtask-project-config:<space>c*
+项目配置文件打开
+                                                             *key:termtask-project-project:<space>C*
+项目运行
+                                                             *key:async-find-word:<leader>A*
+ack搜索单词
+                                                             *key:async-run:<space>;*
+异步命令
+                                                             *key:tabular-aligen:<leader>T*
+文本对齐
+                                                             *key:nerdtree-file-tree:<leader>n*
+文件目录打开
+                                                             *key:comment-code:gcc*
+快速注释
+                                                             *key:quickfix-open/delete:=q,\q*
+quickfix打开/关闭
+                                                             *key:quickfix-next/last:[q,]q*
+quickfix跳转
+                                                             *key:mouse-open/close:=m,\m*
+鼠标打开/关闭
+                                                             *key:spell-open/close:=s,\s*
+拼写检查打开/关闭
+                                                             *key:indentline-open/close:=i,\i*
+缩进线打开/关闭
+                                                             *key:fold-open/close:=z,\z*
+折叠打开/关闭
+                                                             *key:fold-open/close:=o,\o*
+局部折叠打开/关闭
+                                                             *key:hlsearch-open/close:=h,\h*
+高亮打开/关闭
+                                                             *key:delete-space-endline:d<space>*
+删除行尾空格
+                                                             *key:name-quick(insert):;n<space>*
+姓名快速输入
+                                                             *key:email-quick(insert):;e<space>*
+邮箱快速输入
+                                                             *key:indent-buffer:=e*
+整个buffer缩进
+                                                             *key:indent-buffer:vae*
+整个buffer选中
+                                                             *key:wrap-line-open/close:=r,\r*
+折行打开/关闭
+                                                             *key:linenumber-open/close:=n,\n*
+绝对行号打开/关闭
+                                                             *key:recent-close-buffer:<space>q*
+最近关闭的buffer
+                                                             *key:goto-link:gl,gx*
+打开光标所在的链接
+                                                             *key:gitgutter-open/close/next/last:=g,\g,]g,[g,-g*
+文件git更改打开/关闭/下一个不同/上一个不同/恢复差异
+                                                             *key:cursorline-open/close/toggle:=f,\f,-f*
+高亮光标所在单词/关闭高亮/固定高亮
+                                                             *key:findkey-open/close/toggle:<leader>h,-h,[h,]h*
+搜索按键绑定/直接跳转按键绑定/上一个/下一个
+                                                             *key:multiple-cursor:<leader>s,-s*
+多光标操作打开/关闭
+==============================================================================
+vim:tw=78:sw=4:ts=8:ft=help:norl:noet:

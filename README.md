@@ -110,13 +110,17 @@
 
 10. 颜色可视化,类似插件[colorizer](https://kgithub.com/lilydjwg/colorizer)
 
-11. 查询按键是否被绑定,\<leader\>h 和\-h触发检测
+11. 二进制文件编辑,类似插件[Vinarise](https://github.com/Shougo/vinarise.vim)
 
-12. 查看并打开最近关闭的buffer
+12. 多光标编辑,类似插件[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
 
-13. 简单的markdown和html预览
+13. **查询按键是否被绑定**,\<leader\>h 和\-h触发检测
 
-14. fzf简单调用
+14. 查看并打开最近关闭的buffer
+
+15. 简单的markdown和html预览
+
+16. fzf调用
 
 - 说明:以上功能均内置在Vim-fast,且不会影响Vim启动速度
 
@@ -315,6 +319,10 @@
 11. 使用的主题
 
   - [tokyonight](https://github.com/ghifarit53/tokyonight-vim)
+
+12. ctrl-s之后没有多光标,反而卡住了
+
+  - 终端的设置问题,将`stty -ixon`加到~/.bashrc,然后重新加载就可以了
 
 ## 帮助
 
