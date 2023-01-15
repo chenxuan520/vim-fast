@@ -28,3 +28,16 @@ nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>
 
 iab <buffer>include #include "
 iab <buffer>pra #pragma once
+
+func! s:Run()
+	if filereadable(expand('%:p:h')."/Makefile")||filereadable(expand('%:p:h')."/makefile")
+		exec ":vert term make"
+	elseif filereadable(expand('%:p:h')."/CMakeLists.txt")
+		exec ":vert term cmake ."
+	else
+		echo "using g++,please wait..."
+		call system("g++ ".expand('%:p'))
+		exec ":vert term ./a.out"
+	endif
+endfunc
+nnoremap <buffer><space>xx :call <sid>Run()<cr>

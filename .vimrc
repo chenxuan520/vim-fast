@@ -346,8 +346,12 @@ func! s:BinraryEdit(args) abort
 	if join(readfile(expand('%:p'), 'b', 5), '\n') !~# '[\x00-\x08\x10-\x1a\x1c-\x1f]\{2,}'
 		echo "not a bin file"|return
 	endif
+	if &readonly|echohl WarningMsg|echo "this file not open with bin,reopen it by ++bin"|echohl NONE|return|endif
+	setlocal bin
+	if !executable('xxd')|echoerr "xxd not find,install it first"|endif
+	echo "transform...please wait..."
 	let g:xxd_cmd=":%!xxd ".a:args
-	silent! execute g:xxd_cmd|let &modified=0
+	silent! execute g:xxd_cmd|let &modified=0|redraw!
 	augroup Binrary
 		au!
 		autocmd BufWritePre  <buffer> let g:bin_pos_now=getcurpos()|silent! exec ":%!xxd -r"
@@ -537,6 +541,12 @@ onoremap <silent>aa :<c-u>call obj#GetArgs('a')<cr>
 onoremap <silent>ia :<c-u>call obj#GetArgs('i')<cr>
 xnoremap <silent>aa :<c-u>call obj#GetArgs('a')<cr>
 xnoremap <silent>ia :<c-u>call obj#GetArgs('i')<cr>
+
+" object indent
+onoremap <silent>ai :<c-u>call obj#GetIndent(0)<cr>
+onoremap <silent>ii :<c-u>call obj#GetIndent(1)<cr>
+xnoremap <silent>ai :<c-u>call obj#GetIndent(0)<cr>
+xnoremap <silent>ii :<c-u>call obj#GetIndent(1)<cr>
 
 " easy to get obj
 onoremap <silent>i, i<

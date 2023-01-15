@@ -34,7 +34,6 @@ set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后�
 set noshowmode           " 设置不打开底部insert
 set hidden               " 设置允许在未保存切换buffer
 set background=dark      " 设置背景默认黑色
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -64,6 +63,7 @@ set wildmenu                             " vim自身命名行模式智能补全
 set completeopt=menuone,preview,noselect " 补全时不显示窗口，只显示补全列表
 set omnifunc=syntaxcomplete#Complete     " 设置全能补全
 set shortmess+=c                         " 设置补全静默
+set cpt+=kspell                          " 设置补全单词
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 搜索设置
@@ -362,8 +362,12 @@ func! s:BinraryEdit(args) abort
 	if join(readfile(expand('%:p'), 'b', 5), '\n') !~# '[\x00-\x08\x10-\x1a\x1c-\x1f]\{2,}'
 		echo "not a bin file"|return
 	endif
+	if &readonly|echohl WarningMsg|echo "this file not open with bin,reopen it by ++bin"|echohl NONE|return|endif
+	setlocal bin
+	if !executable('xxd')|echoerr "xxd not find,install it first"|endif
+	echo "transform...please wait..."
 	let g:xxd_cmd=":%!xxd ".a:args
-	silent! execute g:xxd_cmd|let &modified=0
+	silent! execute g:xxd_cmd|let &modified=0|redraw!
 	augroup Binrary
 		au!
 		autocmd BufWritePre  <buffer> let g:bin_pos_now=getcurpos()|silent! exec ":%!xxd -r"
@@ -490,36 +494,40 @@ onoremap <silent>al :<c-u>normal! 0v$<cr>
 xnoremap <silent>al :<c-u>normal! 0v$<cr>
 
 " object argc
-onoremap <silent>aa :<c-u>call <sid>GetArgc('T','f')<cr>
-onoremap <silent>ia :<c-u>call <sid>GetArgc('T','t')<cr>
-xnoremap <silent>aa :<c-u>call <sid>GetArgc('T','f')<cr>
-xnoremap <silent>ia :<c-u>call <sid>GetArgc('T','t')<cr>
-func! s:GetArgc(one,two)
-	let s:pos=col('.')|let s:begin=''|let s:end=''|let s:i=s:pos-1|let s:one=a:one|let s:two=a:two
-	while s:i>0
-		if getline('.')[s:i]=='('||getline('.')[s:i]==','
-			let s:begin=getline('.')[s:i]
-			break
-		endif
-		let s:i-=1
+onoremap <silent>aa :<c-u>call <sid>GetArgs('a')<cr>
+onoremap <silent>ia :<c-u>call <sid>GetArgs('i')<cr>
+xnoremap <silent>aa :<c-u>call <sid>GetArgs('a')<cr>
+xnoremap <silent>ia :<c-u>call <sid>GetArgs('i')<cr>
+func! s:GetArgs(model)
+	let model=a:model
+	let line=line('.')|let col=col('.')|let i=col-1|let now=getline('.')
+	let begin=-1|let end=-1|let pos0=-1|let pos1=-1
+	let buket=0|let flag=0
+	while i>0
+		let temp=now[i]|let flag=0
+		if temp==')'|let buket+=1|endif
+		if temp=='('|let buket-=1|let flag=1|endif
+		if (buket>0)||(buket==0&&flag)|let i-=1|continue|endif
+		if temp=='('|| temp==','|let begin=temp|let pos0=i|break|endif
+		let i-=1
 	endwhile
-	let s:i=s:pos
-	while s:i<col('$')
-		if getline('.')[s:i]==')'||getline('.')[s:i]==','
-			let s:end=getline('.')[s:i]
-			if s:begin==','&&s:two=='f'&&s:end!=','
-				let s:one='F'
-			endif
-			if s:end==')'
-				let s:two='t'
-			endif
-			break
-		endif
-		let s:i+=1
+	let i=col|let buket=0|let flag=0
+	while i<col('$')
+		let temp=now[i]|let flag=0
+		if temp=='('|let buket+=1|endif
+		if temp==')'|let buket-=1|let flag=1|endif
+		if (buket>0)||(buket==0&&flag)|let i+=1|continue|endif
+		if temp==')'|| temp==','|let end=temp|let pos1=i|break|endif
+		let i+=1
 	endwhile
-	if s:begin!=''&&s:end!=''
-		execute "normal! ".s:one.s:begin."v".s:two.s:end
+	if model=='i'
+		let pos0+=1|let pos1-=1
+	else
+		if begin=='('|let pos0+=1|else|let pos1-=1|endif
 	endif
+	call cursor([line,pos0+1])
+	let pos1-=pos0|echom end
+	execute "normal! v".pos1."l"
 endfunc
 
 " easy to get obj
