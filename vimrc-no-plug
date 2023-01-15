@@ -549,7 +549,7 @@ cab w!! w !sudo tee % >/dev/null
 
 " quick to change dir
 cab cdn cd <c-r>=expand('%:p:h')<cr>
-cab cdr cd <c-r>=termtask#Term_get_dir()<cr>
+cab cdr cd <c-r>=<sid>FindRoot()<cr>
 func! s:FindRoot()
 	let s:gitdir = finddir(".git", getcwd() .';')
 	if !empty(s:gitdir)
@@ -663,15 +663,15 @@ nnoremap { ,
 
 " config complete
 inoremap / /<c-x><c-f>
-let b:cmpX=-1
-let b:cmpY=-1
+let g:cmpX=-1
+let g:cmpY=-1
 function! s:feed_popup()
 	if getline('.')[col('.')-1]=='/'
 		return
 	endif
 	let x = col('.') - 1
 	let y = line('.') - 1
-	if b:cmpX==x&&b:cmpY==y
+	if g:cmpX==x&&g:cmpY==y
 		return
 	endif
 	let s:min_complete=2
@@ -681,13 +681,13 @@ function! s:feed_popup()
 		return
 	endif
 	silent! call feedkeys("\<c-n>", 'n')
-	let b:cmpX=x
-	let b:cmpY=y
+	let g:cmpX=x
+	let g:cmpY=y
 	return
 endfunction
 augroup Complete
 	au!
-	au CursorMovedI <buffer> nested call s:feed_popup()
+	au CursorMovedI * nested call s:feed_popup()
 augroup END
 inoremap <silent><expr><TAB>
 			\ pumvisible() ? "\<C-n>" : "\<TAB>"
