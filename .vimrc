@@ -512,8 +512,10 @@ nnoremap <silent><nowait>\f :call cursorline#Disable()<cr>
 
 " ici to tran
 let g:term_cmd='~/.local/bin/ici'
-xnoremap <silent><leader>i :call termtask#Term_cmd_exec('v')<cr>
-nnoremap <silent><leader>i :call termtask#Term_cmd_exec('')<cr>
+xnoremap <silent><leader>I :call termtask#Term_cmd_exec('v')<cr>
+nnoremap <silent><leader>I :call termtask#Term_cmd_exec('')<cr>
+xnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('v')<cr>
+nnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('')<cr>
 
 " ibus enable
 let g:ibus_enable=1

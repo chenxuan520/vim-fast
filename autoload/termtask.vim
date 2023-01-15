@@ -240,6 +240,7 @@ func! termtask#Term_cmd_exec_popup(mode)
 		echo "cmd no define"
 		return
 	endif
-	let s:result=system(s:cmd.' '.@s)
-	call popup_atcursor(s:result,{})
+	let result=system(s:cmd.' '.@s)
+	let text=split(result,"\n")
+	call popup_atcursor(text,{})
 endfunc
