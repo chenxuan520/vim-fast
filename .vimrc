@@ -122,7 +122,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release','tag': '0.0.81'}
 " find anything
 Plug 'Yggdroot/LeaderF'
 " quick move mouse
-Plug 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
 " enhance the /
 Plug 'haya14busa/incsearch.vim'
 " pair auto
@@ -188,9 +188,9 @@ imap <c-h> <left>
 
 " move in insert
 inoremap <c-e> <end>
-inoremap <c-a> <c-[>^i
+inoremap <c-a> <c-o>^
 inoremap <c-d> <del>
-inoremap <c-f> <c-[>lWi
+inoremap <c-f> <c-o>lW
 inoremap <expr><c-b> <sid>CtrlB()
 func! s:CtrlB()
 	if pumvisible()
@@ -210,8 +210,8 @@ func! s:CtrlB()
 endfunc
 
 " delete line
-inoremap <c-q> <c-[>ddi
-snoremap <c-q> <c-[>ddi
+inoremap <c-q> <c-o>dd
+snoremap <c-q> <c-o>dd
 
 " find next {}
 nnoremap <c-y> /{<cr>:noh<cr>va}<c-g>
@@ -860,13 +860,10 @@ nmap g/ <Plug>(incsearch-stay)
 " vim-easymotion
 let g:EasyMotion_smartcase = 1
 map  <leader>w <Plug>(easymotion-bd-w)
-nmap <leader>w <Plug>(easymotion-overwin-w)
-map  <leader>f <Plug>(easymotion-bd-f)
-nmap <leader>f <Plug>(easymotion-overwin-f)
-nmap <leader>j <Plug>(easymotion-j)
-nmap <leader>k <Plug>(easymotion-k)
-nmap <silent>s <Plug>(easymotion-overwin-f)
+map  <leader>f <Plug>(easymotion-s)
+nmap <silent>s <Plug>(easymotion-s)
 imap <silent><c-s> <c-o>s
+" map  <leader>f <Plug>(easymotion-overwin-f)
 
 " python-highlight
 let g:python_highlight_all = 1

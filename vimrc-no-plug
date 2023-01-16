@@ -141,9 +141,9 @@ inoremap <silent><cr> <c-r>=<sid>Enter()<cr>
 
 " 插入移动
 inoremap <c-e> <end>
-inoremap <c-a> <c-[>^i
+inoremap <c-a> <c-o>^
 inoremap <c-d> <del>
-inoremap <c-f> <c-[>lWi
+inoremap <c-f> <c-o>lW
 inoremap <expr><c-b> <sid>CtrlB()
 func! s:CtrlB()
 	if pumvisible()
@@ -163,8 +163,8 @@ func! s:CtrlB()
 endfunc
 
 " 插入模式删除
-inoremap <c-q> <c-[>ddi
-snoremap <c-q> <c-[>ddi
+inoremap <c-q> <c-o>dd
+snoremap <c-q> <c-o>dd
 
 " 定位装置
 nnoremap <c-y> /{<cr>:noh<cr>va}<c-g>

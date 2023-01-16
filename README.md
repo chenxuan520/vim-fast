@@ -48,6 +48,8 @@
 
   - 有的完全使用lua,使得VIM不兼容问题
 
+  - 有的使用的文件以及结构太多,对于新手不友好
+
 - 基于以上的问题,我想基于Vimplus进行创作,使得它更加好
 
 ## 项目特点
@@ -84,9 +86,11 @@
 
 16. 和ici以及lazygit,fzf,lf集成,无需额外插件,即可实现翻译和git管理,文件管理
 
-17. 配置好的折叠功能,让代码浏览更加简单
+17. 内置了一个**Vimrc无插件简化版本**,没有插件或者root权限也可以使用
 
-18. 内置众多便捷vimscript,方便学习和简化操作
+18. 配置好的折叠功能,让代码浏览更加简单
+
+19. 内置众多便捷vimscript,方便学习和简化操作
 
 ## 内置的Vimscript功能
 
@@ -104,7 +108,7 @@
 
 7. ibus输入法自动切换,默认markdown文件开启,类似插件[vim-ibus](https://github.com/h-youhei/vim-ibus)
 
-8. lazygit和Vim集成,类似插件[lazygit.nvim](https://github.com/kdheepak/lazygit.nvim)
+8. lazygit和Vim集成,效果更好,类似插件[lazygit.nvim](https://github.com/kdheepak/lazygit.nvim)
 
 9. ici翻译,类似插件[ici.vim](https://github.com/Flowerowl/ici.vim)
 
