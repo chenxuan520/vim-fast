@@ -278,14 +278,13 @@ func! Tapi_Fzf(bufnum,arglist)
 	if temp!=v:null
 		for line in readfile(g:fzf_temp_file)
 			let list=matchstr(line,"\/\^.*")
-			let pos=stridx(list,'/;"')
-			let @/=strpart(list,1,pos-1)
+			if a:arglist[0]=="0"|let @/="^".line."\$"|else|let @/=strpart(list,1,len(list)-2)|endif
 			call feedkeys('n','in')
 		endfor
 	endif
 endfunc
 nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
-nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 
 " lf config define
 nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
@@ -592,12 +591,14 @@ nnoremap <silent><nowait>U :call append(line('.')-1,"")<cr>
 nnoremap <silent><nowait>M :call append(line('.'),"")<cr>
 
 " make move easy
-nnoremap <silent><c-e> $
 nnoremap <silent>Q $
-nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
 nnoremap <silent>S ^
+nnoremap <silent><c-e> $
+vnoremap <silent><c-e> $
+nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
+vnoremap <silent><expr><c-a> mode()==#'v'&&line('.')==line('v')?"^":"\<c-a>"
 
-" enhance c-a
+" enhance c-a and c-x
 nnoremap <silent><expr>g<c-a> getline('.')[col('.')-1]=='9'?"r0":"r".(getline('.')[col('.')-1]+1)
 nnoremap <silent><expr>g<c-x> getline('.')[col('.')-1]=='0'?"r9":"r".(getline('.')[col('.')-1]-1)
 
@@ -899,5 +900,6 @@ nnoremap <nowait><space>h :help<space>
 xnoremap <silent><space>h "sy:<c-u>help <c-r>=@s<cr><cr>
 nnoremap <nowait><space>a :vimgrep /\V/j<space>./**<s-left><left><left><left>
 xnoremap <nowait><space>a "sy:vimgrep /\V<c-r>=@s<cr>/j<space>./**<cr>:copen<cr>
-nnoremap <silent><space>t :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
-nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>t :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
