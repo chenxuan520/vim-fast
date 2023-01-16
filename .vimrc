@@ -151,7 +151,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'ryanoasis/vim-devicons'
 " git control
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
+Plug 'junegunn/gv.vim', {'on':['GV','GV!']}
 " enhance f/t
 Plug 'rhysd/clever-f.vim'
 " code snippets
@@ -652,7 +652,8 @@ nnoremap <silent>\d <c-w>p<c-d><c-w>p
 nnoremap <silent>R :redr!<cr>
 
 " ctrl file system
-command! Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
+command! -nargs=? -bang Reload exec ":edit ".<q-args>." ".expand('%')
+command! -nargs=0 -bang Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
 cab <expr>Rename "Rename ".expand('%:p:h')."/"
 command! -nargs=1 -bang -complete=file Mkdir echo mkdir(<f-args>)
