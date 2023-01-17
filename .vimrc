@@ -519,7 +519,7 @@ xnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('v')<cr>
 nnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('')<cr>
 
 " ibus enable
-let g:ibus_enable=1
+let g:ibus_enable=0
 " md fold enable
 let g:markdown_fold_enable=1
 
@@ -627,6 +627,9 @@ nnoremap <leader>e :edit<space>~/
 
 " open : quick
 nnoremap <space>; :
+
+" bs to delete
+xnoremap <silent><bs> d
 
 " add empty line
 nnoremap <silent><nowait>U :call append(line('.')-1,"")<cr>

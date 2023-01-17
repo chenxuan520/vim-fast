@@ -588,6 +588,9 @@ nnoremap <leader>e :edit<space>~/
 " open : quick
 nnoremap <space>; :
 
+" bs to delete
+xnoremap <silent><bs> d
+
 " add empty line
 nnoremap <silent><nowait>U :call append(line('.')-1,"")<cr>
 nnoremap <silent><nowait>M :call append(line('.'),"")<cr>
