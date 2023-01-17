@@ -178,7 +178,9 @@ nnoremap <leader><leader>c :PlugClean<cr>
 nnoremap <silent><c-p> :bp<cr>
 nnoremap <silent><c-n> :bn<cr>
 nnoremap <silent><leader>d :bd<cr>
-nnoremap <silent><expr><c-m> expand('%')==''?"\<cr>":":w<cr>"
+nnoremap <silent><expr><c-m> expand('%')!=''?":w<cr>":
+			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
+			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
 
 " insert model to move cursor
 imap <c-j> <down>
@@ -318,7 +320,7 @@ func! Tapi_Fzf(bufnum,arglist)
 		for line in readfile(g:fzf_temp_file)
 			let list=matchstr(line,"\/\^.*")
 			if a:arglist[0]=="0"|let @/="^".line."\$"|else|let @/=strpart(list,1,len(list)-2)|endif
-			call feedkeys('n','in')
+			call feedkeys('n','in')|set hlsearch
 		endfor
 	endif
 endfunc
@@ -358,7 +360,7 @@ func! s:BinraryEdit(args) abort
 		autocmd BufDelete    <buffer> au! Binrary
 	augroup END
 endfunc
-command! -nargs=* Binrary :call <sid>BinraryEdit(<q-args>)
+command! -nargs=? Binrary :call <sid>BinraryEdit(<q-args>)
 
 " change window width
 nnoremap <c-up> <c-w>+

@@ -26,9 +26,6 @@ func! VimFastSetPreCode()
 endfunc
 nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>
 
-iab <buffer>include #include "
-iab <buffer>pra #pragma once
-
 func! s:Run()
 	if filereadable(expand('%:p:h')."/Makefile")||filereadable(expand('%:p:h')."/makefile")
 		exec ":vert term make"

@@ -112,7 +112,9 @@ endif
 nnoremap <silent><c-p> :bp<cr>
 nnoremap <silent><c-n> :bn<cr>
 nnoremap <silent><leader>d :bd<cr>
-nnoremap <silent><expr><c-m> expand('%')==''?"\<cr>":":w<cr>"
+nnoremap <silent><expr><c-m> expand('%')!=''?":w<cr>":
+			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
+			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
 
 " reload .vimrc
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
@@ -279,7 +281,7 @@ func! Tapi_Fzf(bufnum,arglist)
 		for line in readfile(g:fzf_temp_file)
 			let list=matchstr(line,"\/\^.*")
 			if a:arglist[0]=="0"|let @/="^".line."\$"|else|let @/=strpart(list,1,len(list)-2)|endif
-			call feedkeys('n','in')
+			call feedkeys('n','in')|set hlsearch
 		endfor
 	endif
 endfunc
@@ -374,7 +376,7 @@ func! s:BinraryEdit(args) abort
 		autocmd BufDelete    <buffer> au! Binrary
 	augroup END
 endfunc
-command! -nargs=* Binrary :call <sid>BinraryEdit(<q-args>)
+command! -nargs=? Binrary :call <sid>BinraryEdit(<q-args>)
 
 " change window width
 nnoremap <c-up> <c-w>+
@@ -746,7 +748,7 @@ set statusline=%3*\ %{GetMode()}
 set statusline+=%4*%{g:status_git_branch}\ %F\ %m%r%h%w%=
 set statusline+=%3*\ %Y\ |
 set statusline+=%3*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}¦
-set statusline+=%5*☰\ %l/%-L%3p%%\ ¦:%v\ ¦
+set statusline+=%5*☰\ %l/%-L¦%3p%%¦:%v\ ¦
 highlight User1 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
 highlight User2 font=#000000 guifg=#9ECE6A guibg=#232433
 highlight User3 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
@@ -765,10 +767,29 @@ nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#1a1b26 guifg=#232433
 
 " slash
-xnoremap * "sy:let @/="\\V".@s<cr>:set hlsearch<cr>
-xnoremap # "sy:let @/="\\V".@s<cr>:let v:searchforward=0<cr>:set hlsearch<cr>
-nnoremap * :let @/="\\<".expand('<cword>')."\\>"<cr>:set hlsearch<cr>
-nnoremap # :let @/="\\<".expand('<cword>')."\\>"<cr>:let v:searchforward=0<cr>:set hlsearch<cr>
+func! s:SlashCb()
+	if g:slash_able
+		set nohlsearch
+		autocmd! slash
+	else
+		set hlsearch
+		let g:slash_able=1
+	endif
+endf
+func! s:Slash(oper)
+	augroup slash
+		autocmd!
+		autocmd CursorMoved,CursorMovedI * call <sid>SlashCb()
+	augroup END
+	let g:slash_able=0
+	return a:oper."zz"
+endf
+nnoremap <silent><expr>n <sid>Slash('n')
+nnoremap <silent><expr>N <sid>Slash('N')
+xnoremap <silent>* "sy:let @/="\\V".@s<cr>:set hlsearch<cr>
+xnoremap <silent># "sy:let @/="\\V".@s<cr>:let v:searchforward=0<cr>:set hlsearch<cr>
+nnoremap <silent>* :let @/="\\<".expand('<cword>')."\\>"<cr>:set hlsearch<cr>
+nnoremap <silent># :let @/="\\<".expand('<cword>')."\\>"<cr>:let v:searchforward=0<cr>:set hlsearch<cr>
 
 " set tabline
 let s:tab_after=""
@@ -800,9 +821,9 @@ func! TabLine(direct)
 endfunc
 func! TabLineSet()
 	if &modified
-		let tab="%2* %0.32(%{TabLine(0)}%)%5* %t%6*%2*%<%{TabLine(1)}%r%h%w%=%5* buffer"
+		let tab="%2* %0.32(%{TabLine(0)}%)%5* %t%6*%2*%<%{TabLine(1)}%r%h%w%=%6*%5* buffer"
 	else
-		let tab="%2* %0.32(%{TabLine(0)}%)%1* %t%2*%2*%<%{TabLine(1)}%r%h%w%=%1* buffer"
+		let tab="%2* %0.32(%{TabLine(0)}%)%1* %t%2*%2*%<%{TabLine(1)}%r%h%w%=%2*%1* buffer"
 	endif
 	return tab
 endfunc
@@ -903,3 +924,4 @@ xnoremap <nowait><space>a "sy:vimgrep /\V<c-r>=@s<cr>/j<space>./**<cr>:copen<cr>
 nnoremap <silent><space>t :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
