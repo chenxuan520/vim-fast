@@ -106,7 +106,7 @@
 
 6. 参数选中,类似插件[vim-textobj-parameter](https://github.com/sgur/vim-textobj-parameter)
 
-7. ibus输入法自动切换,默认markdown文件开启,类似插件[vim-ibus](https://github.com/h-youhei/vim-ibus)
+7. ibus输入法自动切换,类似插件[vim-ibus](https://github.com/h-youhei/vim-ibus)
 
 8. lazygit和Vim集成,效果更好,类似插件[lazygit.nvim](https://github.com/kdheepak/lazygit.nvim)
 

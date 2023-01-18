@@ -9,7 +9,7 @@
 
 function! s:Travel(file,tab,path) abort
 	let tab=a:tab|let path=a:path|let file=a:file
-	if g:mdbook_sort|call sort(file,"n")|endif
+	if g:mdbook_sort|call sort(file,"N")|endif
 	for now in file
 		let old=now|let now=path.now
 		if isdirectory(now)
@@ -28,7 +28,7 @@ endfunction
 
 function! s:Init() abort
 	let s:result=get(g:,"mdbook_head","#Summary\n\n")
-	let g:mdbook_sort=get(g:,"mdbook_sort",0)
+	let g:mdbook_sort=get(g:,"mdbook_sort",1)
 endfunction
 
 function! mdbook#MkbookFile() abort
