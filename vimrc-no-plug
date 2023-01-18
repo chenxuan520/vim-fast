@@ -148,15 +148,11 @@ inoremap <c-d> <del>
 inoremap <c-f> <c-o>lW
 inoremap <expr><c-b> <sid>CtrlB()
 func! s:CtrlB()
-	if pumvisible()
-		return "\<c-n>"
+	if pumvisible()|return "\<c-n>"
 	elseif getline('.')[col('.')-2]==nr2char(9)
 		let s:pos=col('.')
 		let s:result=""
-		while s:pos!=0
-			let s:result=s:result."\<bs>"
-			let s:pos-=1
-		endwhile
+		while s:pos!=0|let s:result=s:result."\<bs>"|let s:pos-=1|endwhile
 		let s:result=s:result."\<c-n>"
 		return s:result
 	else
@@ -673,23 +669,17 @@ inoremap / /<c-x><c-f>
 let g:cmpX=-1
 let g:cmpY=-1
 function! s:feed_popup()
-	if getline('.')[col('.')-1]=='/'
-		return
-	endif
-	let x = col('.') - 1
-	let y = line('.') - 1
+	if getline('.')[col('.')-1]=='/'|return|endif
+	let x = col('.') - 1|let y = line('.') - 1
 	if g:cmpX==x&&g:cmpY==y
 		return
 	endif
 	let s:min_complete=2
 	let s:context=strpart(getline('.'), 0, col('.') - 1)
 	let s:match= matchlist(s:context, '\(\k\{' . s:min_complete . ',}\)$')
-	if empty(s:match)
-		return
-	endif
+	if empty(s:match)|return|endif
 	silent! call feedkeys("\<c-n>", 'n')
-	let g:cmpX=x
-	let g:cmpY=y
+	let g:cmpX=x|let g:cmpY=y
 	return
 endfunction
 augroup Complete
@@ -752,6 +742,8 @@ set statusline+=%4*%{g:status_git_branch}\ %F\ %m%r%h%w%=
 set statusline+=%3*\ %Y\ |
 set statusline+=%3*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}¦
 set statusline+=%5*☰\ %l/%-L¦%3p%%¦:%v\ ¦
+
+" highlight define,you can change self
 highlight User1 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
 highlight User2 font=#000000 guifg=#9ECE6A guibg=#232433
 highlight User3 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
@@ -799,11 +791,7 @@ let s:tab_after=""
 func! TabLine(direct)
 	let s:tab_result=""
 	let flag=0
-	if a:direct
-		return s:tab_after
-	else
-		let s:tab_after=""
-	endif
+	if a:direct|return s:tab_after|else|let s:tab_after=""|endif
 	for buf in getbufinfo({'buflisted':1})
 		let s:name=buf.name
 		if strridx(buf.name,"/")!=-1
@@ -892,9 +880,7 @@ func! s:AddSourround()
 endfunc
 func! s:DelSourround()
 	let s:ch=nr2char(getchar())
-	if getline('.')[col('.')-1]!=s:ch
-		echo 'not begin with'.s:ch
-	endif
+	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|endif
 	for k in keys(g:pair_map)
 		if s:ch==k
 			execute 'normal! xf'.g:pair_map[k].'x'
@@ -906,9 +892,7 @@ endfunc
 func! s:ChangeSourround()
 	let s:ch=nr2char(getchar())
 	let s:two=nr2char(getchar())
-	if getline('.')[col('.')-1]!=s:ch
-		echo 'not begin with'.s:ch
-	endif
+	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|endif
 	execute 'normal! r'.s:two.'f'.g:pair_map[s:ch].'r'.g:pair_map[s:two]
 	echo s:ch.' unknow pair'
 endfunc

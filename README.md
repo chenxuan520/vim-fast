@@ -120,11 +120,13 @@
 
 13. **查询按键是否被绑定**,\<leader\>h 和\-h触发检测
 
-14. 查看并打开最近关闭的buffer
+14. mdbook 目录自动生成
 
-15. 简单的markdown和html预览
+15. 查看并打开最近关闭的buffer
 
-16. fzf调用
+16. 简单的markdown和html预览
+
+17. fzf调用
 
 - 说明:以上功能均内置在Vim-fast,且不会影响Vim启动速度
 

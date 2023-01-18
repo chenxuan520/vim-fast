@@ -788,7 +788,6 @@ nmap <silent>gd <Plug>(coc-definition)
 nmap <silent>gD <Plug>(coc-type-definition)
 nmap <silent>gr <Plug>(coc-references)
 nmap <silent>gi <Plug>(coc-implementation)
-nmap <leader>qq <Plug>(coc-fix-current)
 " coc refactor code
 nmap <space>r <Plug>(coc-refactor)
 nmap <leader>r <Plug>(coc-rename)
@@ -797,8 +796,9 @@ nmap <silent><F3> <Plug>(coc-diagnostic-prev)
 nmap <silent><F4> <Plug>(coc-diagnostic-next)
 nmap <silent>[w <Plug>(coc-diagnostic-prev)
 nmap <silent>]w <Plug>(coc-diagnostic-next)
+nmap <leader>-w <Plug>(coc-fix-current)
 nnoremap <silent><nowait>=w :<C-u>CocList --normal diagnostics<cr>
-nnoremap <silent><nowait> <space>w :<C-u>CocList --normal diagnostics<cr>
+nnoremap <silent><nowait><space>w :<C-u>CocList --normal diagnostics<cr>
 " coc text obj
 xmap if <Plug>(coc-funcobj-i)
 omap if <Plug>(coc-funcobj-i)
