@@ -120,8 +120,12 @@ nnoremap <silent><expr><c-m> expand('%')!=''?":w<cr>":
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
 nnoremap <leader><leader>S :source <c-r>=expand('%:p')<cr><cr>
 
+" load vim default plugin
+runtime macros/matchit.vim
+
 " update self
 command! UpdateSelf echo "Updating,please wait..."|call system('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')|qa
+nnoremap <silent>Q :UpdateSelf<cr>
 
 " 插入模式下的光标移动
 imap <c-j> <down>
@@ -592,8 +596,6 @@ nnoremap <silent><nowait>U :call append(line('.')-1,"")<cr>
 nnoremap <silent><nowait>M :call append(line('.'),"")<cr>
 
 " make move easy
-nnoremap <silent>Q $
-nnoremap <silent>S ^
 nnoremap <silent><c-e> $
 vnoremap <silent><c-e> $
 nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
@@ -615,6 +617,7 @@ nnoremap <silent>R :redr!<cr>
 
 " ctrl file system
 command! -nargs=? -bang Reload exec ":edit ".<q-args>." ".expand('%')
+nnoremap <silent>S :edit<space><c-r>=expand('%')<cr><cr>
 command! -nargs=0 -bang Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
 cab Rename Rename <c-r>=expand('%:p:h')<cr>/
@@ -902,6 +905,7 @@ nnoremap <silent>ds :call <sid>DelSourround()<cr>
 nnoremap <silent>cs :call <sid>ChangeSourround()<cr>
 
 " like leaderf
+set wildignore+=.*,*.out,*.gz
 nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
 nnoremap <nowait><space>h :help<space>
@@ -912,3 +916,6 @@ nnoremap <silent><space>t :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM
 nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
+
+" git config
+command! -nargs=+ Git echo system("git ".<q-args>)

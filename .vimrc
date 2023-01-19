@@ -470,6 +470,7 @@ command! -nargs=1 -complete=customlist,termtask#Term_task_list TaskRun  :call te
 command! -nargs=0 TaskList :echo termtask#Term_task_list('','','')
 command! -nargs=0 TaskLoad :call termtask#Term_task_run('')
 nnoremap <space><space>C :TaskLoad<cr>
+nnoremap <silent>Q :TaskLoad<cr>
 nnoremap <space>c :TaskRun<space>
 nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " auto read project file
@@ -636,8 +637,6 @@ nnoremap <silent><nowait>U :call append(line('.')-1,"")<cr>
 nnoremap <silent><nowait>M :call append(line('.'),"")<cr>
 
 " make move easy
-nnoremap <silent>Q $
-nnoremap <silent>S ^
 nnoremap <silent><c-e> $
 vnoremap <silent><c-e> $
 nnoremap <silent><expr><c-a> getline('.')[col('.')-1]>='0'&&getline('.')[col('.')-1]<='9'?"\<c-a>":"^"
@@ -659,6 +658,7 @@ nnoremap <silent>R :redr!<cr>
 
 " ctrl file system
 command! -nargs=? -bang Reload exec ":edit ".<q-args>." ".expand('%')
+nnoremap <silent>S :edit<space><c-r>=expand('%')<cr><cr>
 command! -nargs=0 -bang Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
 cab <expr>Rename "Rename ".expand('%:p:h')."/"
