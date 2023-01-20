@@ -150,8 +150,8 @@ Plug 'vim-airline/vim-airline'
 " file devicon
 Plug 'ryanoasis/vim-devicons'
 " git control
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim', {'on':['GV','GV!']}
+Plug 'tpope/vim-fugitive', {'on':['Git','GV','GV!']}
+Plug 'junegunn/gv.vim', {'on':['Git','GV','GV!']}
 " enhance f/t
 Plug 'rhysd/clever-f.vim'
 " code snippets
@@ -466,10 +466,9 @@ xmap g/ "sy/\V<c-r>=@s<cr><cr>
 xnoremap @ :normal @
 
 " termtask project config
-command! -nargs=1 -complete=customlist,termtask#Term_task_list TaskRun  :call termtask#Term_task_run(<f-args>)
+command! -nargs=? -complete=customlist,termtask#Term_task_list TaskRun  :call termtask#Term_task_run(<q-args>)
 command! -nargs=0 TaskList :echo termtask#Term_task_list('','','')
 command! -nargs=0 TaskLoad :call termtask#Term_task_run('')
-nnoremap <space><space>C :TaskLoad<cr>
 nnoremap <silent>Q :TaskLoad<cr>
 nnoremap <space>c :TaskRun<space>
 nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
@@ -739,7 +738,6 @@ let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
-let g:airline_coc_cur_func = 1
 
 " nerdtree
 nnoremap <silent><leader>n :NERDTreeToggle<cr>
@@ -796,7 +794,7 @@ nmap <silent><F3> <Plug>(coc-diagnostic-prev)
 nmap <silent><F4> <Plug>(coc-diagnostic-next)
 nmap <silent>[w <Plug>(coc-diagnostic-prev)
 nmap <silent>]w <Plug>(coc-diagnostic-next)
-nmap <leader>-w <Plug>(coc-fix-current)
+nmap <silent>-w <Plug>(coc-fix-current)
 nnoremap <silent><nowait>=w :<C-u>CocList --normal diagnostics<cr>
 nnoremap <silent><nowait><space>w :<C-u>CocList --normal diagnostics<cr>
 " coc text obj
@@ -858,6 +856,9 @@ nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " auto pair
 let g:AutoPairsMapCh = 0
+
+" dash board
+let g:dashboard_disable_statusline=1
 
 " incsearch.vim
 nmap /  <Plug>(incsearch-forward)

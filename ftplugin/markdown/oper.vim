@@ -80,7 +80,7 @@ func! s:Bold(ch)
 	let col = col('.')
 	let temp = col('v')
 	norm! "sy
-	let s:str = @s
+	let str = @s
 	let @s = temp
 
 	if temp<col
@@ -92,8 +92,9 @@ func! s:Bold(ch)
 		let s:ch='\~\~'
 	endif
 
-	" execute ":s/^\\(.\\{".(col-1)."\\}\\)".s:str."/\\1".s:ch.s:str.s:ch."/"
-	execute ":s/\\V".s:str."/".s:ch.s:str.s:ch."/"
+	" execute ":s/^\\(.\\{".(col-1)."\\}\\)".str."/\\1".s:ch.str.s:ch."/"
+	let str=escape(str,"\\/")
+	execute ":s/\\V".str."/".s:ch.str.s:ch."/"
 	call cursor(line('.'),col+1)
 endfunc
 
@@ -104,6 +105,7 @@ func! s:BlodLink(begin,end)
 	let @s = temp
 	let col = col('.')
 
+	let s:str=escape(s:str,"\\/")
 	execute ":s/\\V".s:str."/".a:begin.s:str.a:end."/"
 	call cursor(line('.'),col+1)
 endfunc
@@ -358,10 +360,9 @@ nnoremap <silent><buffer><leader>> : call <sid>Refence()<cr>
 
 xnoremap <silent><buffer><leader>~ : call <sid>Bold('~~')<cr>
 
-xnoremap <silent><buffer>*     :call <sid>Bold('*')<cr>
+xnoremap <silent><buffer>*     :call <sid>Bold('*')<cr>gvlol
 xnoremap <silent><buffer><c-i> :call <sid>Bold('*')<cr>
 xnoremap <silent><buffer><c-b> :call <sid>Bold('**')<cr>
-nnoremap <silent><buffer>*     viw:call <sid>Bold('*')<cr>
 
 xnoremap <silent><buffer>`     :call <sid>Bold('`')<cr>
 nnoremap <silent><buffer>`     viw:call <sid>Bold('`')<cr>

@@ -66,7 +66,7 @@
 
 6. 完善了**鼠标的支持**,使得新手更加友好
 
-7. 支持C/C++,Go,python语言一键配置(欢迎大家提mr添加更多语言支持)
+7. 支持**C/C++,Go,Python,Rust**语言一键配置(欢迎大家提mr添加更多语言支持)
 
 8. 使用coc代替YCM,更好的补全体验
 
@@ -154,7 +154,7 @@
 
 - uninstall.sh 卸载vim-fast
 
-- shell/cpp/go/python.sh 三种语言的lsp以及coc安装,运行install.sh后按需调用
+- shell/cpp/go/rust/python.sh 四种语言的lsp以及coc安装,运行install.sh后按需调用
 
 - shell/plug.sh 下载并安装最新所有插件(,自动调用,使用gitee,更加快速)
 
@@ -250,6 +250,12 @@
 3. 出现这个为安装go补全成功
 
    ![](https://pic2.zhimg.com/80/v2-1d6ebe0d321f1f0aaae71836371c1c35_720w.jpg)
+
+#### Rust
+
+1. ./shell/rust.sh
+
+2. 等待安装结束(大约一分钟),如果不存在rust环境会自动下载
 
 ### 简易安装无插件版本
    > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash
