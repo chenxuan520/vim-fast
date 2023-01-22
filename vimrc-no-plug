@@ -179,6 +179,7 @@ inoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
 
 " 复制当前选中到系统剪切板
 vnoremap <leader><leader>y "+y
+nnoremap <leader><leader>y "+y
 "将系统剪切板内容粘贴到vim
 nnoremap <leader><leader>p "+p
 nnoremap <leader><leader>P "+P
@@ -477,6 +478,9 @@ xmap g/ "sy/\V<c-r>=@s<cr><cr>
 
 " run macro in visual model
 xnoremap @ :normal @
+
+" repeat for macro
+nnoremap <silent><c-q> @@
 
 " use select area to replace
 xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/

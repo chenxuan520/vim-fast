@@ -225,6 +225,7 @@ inoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
 
 " yank to system
 vnoremap <leader><leader>y "+y
+nnoremap <leader><leader>y "+y
 " paste to system
 nnoremap <leader><leader>p "+p
 nnoremap <leader><leader>P "+P
@@ -464,6 +465,9 @@ xmap g/ "sy/\V<c-r>=@s<cr><cr>
 
 " run macro in visual model
 xnoremap @ :normal @
+
+" repeat for macro
+nnoremap <silent><c-q> @@
 
 " termtask project config
 command! -nargs=? -complete=customlist,termtask#Term_task_list TaskRun  :call termtask#Term_task_run(<q-args>)
@@ -842,7 +846,6 @@ function! s:CocMouse()
 	nnoremenu <silent>PopUp.Close\ Model\  :call <sid>MouseConfig()<cr>
 endfunction
 nnoremap <silent><nowait>-c :call <sid>CocMouse()<cr>
-
 function! ShowDocumentation()
 	if CocAction('hasProvider', 'hover')
 		call CocActionAsync('doHover')
@@ -851,6 +854,7 @@ function! ShowDocumentation()
 	endif
 endfunction
 
+" tagbar
 let g:tagbar_width = 22
 nnoremap <silent> <leader>t :TagbarToggle<cr>
 
