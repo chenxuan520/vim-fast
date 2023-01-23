@@ -860,6 +860,7 @@ nnoremap <silent> <leader>t :TagbarToggle<cr>
 
 " auto pair
 let g:AutoPairsMapCh = 0
+let g:AutoPairsMapSpace = 0
 
 " dash board
 let g:dashboard_disable_statusline=1
@@ -929,9 +930,11 @@ nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
 xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr>
 xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr><tab>
-" jump tags
+" tags
 nnoremap <space>j :LeaderfBufTag<cr>
 nnoremap <space>J :LeaderfBufTagAll<cr>
+" jumps
+nnoremap <space>k :Leaderf jumps<cr><tab>
 " recall
 nnoremap <space>l :Leaderf --recall<cr><tab>
 " quickfix jump

@@ -886,6 +886,7 @@ nnoremap <silent><space>t :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM
 nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
+nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
 
 " git config
 command! -nargs=+ Git echo system("git ".<q-args>)
