@@ -12,4 +12,4 @@ func! VimFastSetPreCode()
 endfunc
 nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>
 
-nnoremap <buffer><silent>xx :w<cr>:vert term python3 <c-r>=expand('%:p')<cr><cr>
+nnoremap <buffer><space>xx :w<cr>:vert term python3 <c-r>=expand('%:p')<cr><cr>
