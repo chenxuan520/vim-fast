@@ -649,9 +649,7 @@ func! s:GotoLink()
 	while s:list[0]!=''&&(s:list[1]>col('.')||s:list[2]<col('.'))
 		let s:list=matchstrpos(getline('.'),'https*://\S[^][(){}]*',s:list[2])
 	endwhile
-	if s:list[0]!=''
-		let s:link=s:list[0]
-	endif
+	if s:list[0]!=''|let s:link=s:list[0]|endif
 	let s:browser=get(g:,'default_browser','firefox')
 	if s:link!=''
 		call job_start(s:browser.' '.s:link)
@@ -678,9 +676,7 @@ let g:cmpY=-1
 function! s:feed_popup()
 	if getline('.')[col('.')-1]=='/'|return|endif
 	let x = col('.') - 1|let y = line('.') - 1
-	if g:cmpX==x&&g:cmpY==y
-		return
-	endif
+	if g:cmpX==x&&g:cmpY==y|return|endif
 	let s:min_complete=2
 	let s:context=strpart(getline('.'), 0, col('.') - 1)
 	let s:match= matchlist(s:context, '\(\k\{' . s:min_complete . ',}\)$')
@@ -719,24 +715,17 @@ endif
 
 " set statusline
 function GetMode()
-	let m = mode()
-	let s:str=''
-	let s:color='#9ECE6A'
+	let m = mode()|let s:str=''|let s:color='#9ECE6A'
 	if m == 'R'
-		let s:color='#F7768E'
-		let s:str= 'Replace'
+		let s:color='#F7768E'|let s:str= 'Replace'
 	elseif m == 'v'
-		let s:color='#F7768E'
-		let s:str= 'Visual'
+		let s:color='#F7768E'|let s:str= 'Visual'
 	elseif m == 'i'
-		let s:color='#7AA2F7'
-		let s:str= 'Insert'
+		let s:color='#7AA2F7'|let s:str= 'Insert'
 	elseif m == 't'
-		let s:color='#7AA2F7'
-		let s:str= 'Terminal'
+		let s:color='#7AA2F7'|let s:str= 'Terminal'
 	else
-		let s:color='#9ECE6A'
-		let s:str= 'Normal'
+		let s:color='#9ECE6A'|let s:str= 'Normal'
 	endif
 	exec 'highlight User3 font=#000000 guifg=#1a1b26 guibg='.s:color
 	exec 'highlight User4 font=#000000 guifg='.s:color.' guibg=#232433'
@@ -771,11 +760,9 @@ highlight VertSplit guibg=#1a1b26 guifg=#232433
 " slash
 func! s:SlashCb()
 	if g:slash_able
-		set nohlsearch
-		autocmd! slash
+		set nohlsearch|autocmd! slash
 	else
-		set hlsearch
-		let g:slash_able=1
+		set hlsearch|let g:slash_able=1
 	endif
 endf
 func! s:Slash(oper)
@@ -796,20 +783,13 @@ nnoremap <silent># :let @/="\\<".expand('<cword>')."\\>"<cr>:let v:searchforward
 " set tabline
 let s:tab_after=""
 func! TabLine(direct)
-	let s:tab_result=""
-	let flag=0
+	let s:tab_result=""|let flag=0
 	if a:direct|return s:tab_after|else|let s:tab_after=""|endif
 	for buf in getbufinfo({'buflisted':1})
 		let s:name=buf.name
-		if strridx(buf.name,"/")!=-1
-			let s:name=strpart(buf.name,strridx(buf.name,"/")+1)
-		endif
+		if strridx(buf.name,"/")!=-1|let s:name=strpart(buf.name,strridx(buf.name,"/")+1)|endif
 		if buf.name!=expand('%:p')
-			if flag==0
-				let s:tab_result=s:tab_result." ".s:name
-			else
-				let s:tab_after=s:tab_after." ".s:name.""
-			endif
+			if flag==0|let s:tab_result=s:tab_result." ".s:name|else|let s:tab_after=s:tab_after." ".s:name.""|endif
 		else
 			let flag=1
 		endif
@@ -842,15 +822,9 @@ func! s:Commentary(line) abort
 	let [l, r] = split( substitute(substitute(substitute(
 				\ &commentstring, '^$', '%s', ''), '\S\zs%s',' %s', '') ,'%s\ze\S', '%s ', ''), '%s', 1)
 	let line = matchstr(getline(s:num),'\S.*\s\@<!')
-	if l[-1:] ==# ' ' && stridx(line,l) == -1 && stridx(line,l[0:-2]) == 0
-		let l = l[:-2]
-	endif
-	if r[0] ==# ' ' && line[-strlen(r):] != r && line[1-strlen(r):] == r[1:]
-		let r = r[1:]
-	endif
-	if len(line) && (stridx(line,l) || line[strlen(line)-strlen(r) : -1] != r)
-		let uncomment = 0
-	endif
+	if l[-1:] ==# ' ' && stridx(line,l) == -1 && stridx(line,l[0:-2]) == 0|let l = l[:-2]|endif
+	if r[0] ==# ' ' && line[-strlen(r):] != r && line[1-strlen(r):] == r[1:]|let r = r[1:]|endif
+	if len(line) && (stridx(line,l) || line[strlen(line)-strlen(r) : -1] != r)|let uncomment = 0|endif
 	let line=getline(s:num)
 	let [l, r] = split( substitute(substitute(substitute(
 				\ &commentstring, '^$', '%s', ''), '\S\zs%s',' %s', '') ,'%s\ze\S', '%s ', ''), '%s', 1)
@@ -872,10 +846,7 @@ xnoremap <silent><nowait>gc  :call <sid>VisualComment()<cr>
 " vim sourround
 let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
 func! s:AddSourround()
-	let s:ch=nr2char(getchar())
-	let s:col=col('.')
-	norm! gv"sy
-	let s:str = @s
+	let s:ch=nr2char(getchar())|let s:col=col('.')|norm! gv"sy|let s:str = @s
 	for k in keys(g:pair_map)
 		if s:ch==k||s:ch==g:pair_map[k]
 			execute ":s/^\\(.\\{".(col('.')-1)."\\}\\)".escape(s:str, '~"\.^$[]*')."/\\1".k.s:str.g:pair_map[k]."/"
@@ -889,21 +860,16 @@ func! s:DelSourround()
 	let s:ch=nr2char(getchar())
 	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|endif
 	for k in keys(g:pair_map)
-		if s:ch==k
-			execute 'normal! xf'.g:pair_map[k].'x'
-			return
-		endif
+		if s:ch==k|execute 'normal! xf'.g:pair_map[k].'x'|return|endif
 	endfor
 	echo s:ch.' unknow pair'
 endfunc
 func! s:ChangeSourround()
-	let s:ch=nr2char(getchar())
-	let s:two=nr2char(getchar())
+	let s:ch=nr2char(getchar())|let s:two=nr2char(getchar())
 	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|endif
 	execute 'normal! r'.s:two.'f'.g:pair_map[s:ch].'r'.g:pair_map[s:two]
 	echo s:ch.' unknow pair'
 endfunc
-
 xnoremap <silent>S  :<c-u>call <sid>AddSourround()<cr>
 nnoremap <silent>ds :call <sid>DelSourround()<cr>
 nnoremap <silent>cs :call <sid>ChangeSourround()<cr>
@@ -923,3 +889,35 @@ nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:c
 
 " git config
 command! -nargs=+ Git echo system("git ".<q-args>)
+
+" like easy motion
+let s:easymotion={}
+let s:easymotion_key=['a','s','d','f','k','h','g','q','w','e','r','u','i','o','p','c','v','b','n','m','t','y','z','x',',']
+func! s:EasyMotion()abort
+	echo "please input find:"|let ch=nr2char(getchar())|let s:easymotion={}|let info=winsaveview()|let info["endline"]=winheight(0)+info["topline"]|let num=0|let old=ch
+	if ch=="\<c-[>"|return|endif
+	let lines=getbufline("%",info["topline"],info["endline"])|set nohlsearch
+	for i in range(0,len(lines)-1)
+		let pos=stridx(lines[i],ch)
+		if i+info["topline"]==info["lnum"]|continue|endif
+		if pos!=-1
+			let m= matchaddpos("incsearch", [[i+info["topline"],pos+1,1]])
+			let s:easymotion[s:easymotion_key[num]]={"line":i,"pos":pos,"hl":m}
+			let lines[i]=strpart(lines[i],0,pos).s:easymotion_key[num].strpart(lines[i],pos+1)
+			let num+=1|if num>=len(s:easymotion_key)|break|endif
+		endif
+	endfor
+	if len(s:easymotion)==0|echo "cannot find"|return|endif
+	call setline(info["topline"],lines)|redraw!|echo "move:"| let ch=nr2char(getchar())
+	if has_key(s:easymotion, ch)|let temp=s:easymotion[ch]|call cursor(temp["line"]+info["topline"],temp["pos"]+1)
+	else|echom "no find"|endif
+	for [key,val] in items(s:easymotion)
+		let i=val["line"]|let pos=val["pos"]|let hl=val["hl"]
+		let lines[i]=strpart(lines[i],0,pos).old.strpart(lines[i],pos+1)
+		call matchdelete(hl)
+	endfor
+	call setline(info["topline"],lines)|setlocal nomodified
+	exec "normal! f".old|exec "normal! ,"
+endfunc
+nnoremap <silent>s :call <sid>EasyMotion()<cr>
+inoremap <silent><c-s> <c-o>:call <sid>EasyMotion()<cr>
