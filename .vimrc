@@ -236,7 +236,7 @@ augroup ReadPost
 	au!
 	autocmd TerminalOpen * setlocal norelativenumber|setlocal nonumber
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
-	autocmd BufDelete * if expand('%:p')!=''|let g:map_recent_close[expand('%:p')] =
+	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
 				\|endif
 augroup END

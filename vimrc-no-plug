@@ -124,7 +124,7 @@ nnoremap <leader><leader>S :source <c-r>=expand('%:p')<cr><cr>
 runtime macros/matchit.vim
 
 " update self
-command! UpdateSelf echo "Updating,please wait..."|call system('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')|qa
+command! -nargs=0 UpdateSelf echo "Updating,please wait..."|call system('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')|qa
 nnoremap <silent>Q :UpdateSelf<cr>
 
 " 插入模式下的光标移动
@@ -192,7 +192,7 @@ augroup ReadPost
 	autocmd QuickFixCmdPost * copen
 	autocmd TerminalOpen * setlocal norelativenumber|setlocal nonumber
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
-	autocmd BufDelete * if expand('%:p')!=''|let g:map_recent_close[expand('%:p')] =
+	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
 				\|endif
 augroup END
@@ -838,11 +838,13 @@ xnoremap <silent><nowait>gc  :call <sid>VisualComment()<cr>
 " vim sourround
 let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
 func! s:AddSourround()
-	let s:ch=nr2char(getchar())|let s:col=col('.')|norm! gv"sy|let s:str = @s
+	let s:ch=nr2char(getchar())
+	let s:col=col('.')
+	norm! gv"sy
+	let s:str = @s
 	for k in keys(g:pair_map)
 		if s:ch==k||s:ch==g:pair_map[k]
 			execute ":s/^\\(.\\{".(col('.')-1)."\\}\\)".escape(s:str, '~"\.^$[]*')."/\\1".k.s:str.g:pair_map[k]."/"
-			execute "normal! ".(s:col+1)."l"
 			return
 		endif
 	endfor
@@ -850,24 +852,24 @@ func! s:AddSourround()
 endfunc
 func! s:DelSourround()
 	let s:ch=nr2char(getchar())
-	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|endif
+	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|return|endif
 	for k in keys(g:pair_map)
 		if s:ch==k|execute 'normal! xf'.g:pair_map[k].'x'|return|endif
 	endfor
-	echo s:ch.' unknow pair'
 endfunc
 func! s:ChangeSourround()
 	let s:ch=nr2char(getchar())|let s:two=nr2char(getchar())
-	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|endif
+	let pos=getcurpos()
+	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|return|endif
 	execute 'normal! r'.s:two.'f'.g:pair_map[s:ch].'r'.g:pair_map[s:two]
-	echo s:ch.' unknow pair'
+	call setpos('.',pos)
 endfunc
 xnoremap <silent>S  :<c-u>call <sid>AddSourround()<cr>
 nnoremap <silent>ds :call <sid>DelSourround()<cr>
 nnoremap <silent>cs :call <sid>ChangeSourround()<cr>
 
 " like leaderf
-set wildignore+=.*,*.out,*.gz
+set wildignore+=.git*,*.out,*.gz
 nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
 nnoremap <nowait><space>h :help<space>
@@ -879,15 +881,16 @@ nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
+command! -nargs=0 Fzf echo system("sudo apt install fzf")
 
 " git config
 command! -nargs=+ Git echo system("git ".<q-args>)
 
 " like easy motion
-let s:easymotion={}
 let s:easymotion_key=['a','s','d','f','k','h','g','q','w','e','r','u','i','o','p','c','v','b','n','m','t','y','z','x']
+let s:easymotion_leader=[';',',','.',"'",' ','/']|let s:easymotion_leader_dict={';':0,',':0,'.':0,"'":0,' ':0,'/':0}
 func! s:EasyMotion()abort
-	echo "input key:"|let ch=nr2char(getchar())|let s:easymotion={}
+	echo "input key:"|let ch=nr2char(getchar())|let s:easymotion={}|let llen=len(s:easymotion_leader)+1
 	let info=winsaveview()|let info["endline"]=winheight(0)+info["topline"]|let width=winwidth(0)|let num=0|let old=ch|let pos=0|let klen=len(s:easymotion_key)
 	if ch=="\<c-[>"|return|endif
 	let lines=getbufline("%",info["topline"],info["endline"])|let bak=copy(lines)|set nohlsearch
@@ -900,26 +903,26 @@ func! s:EasyMotion()abort
 			let pos=stridx(lines[i],ch,pos)
 			if pos!=-1&&pos<width
 				if num<klen|let req=s:easymotion_key[num]
-				elseif num<2*klen|let req=';'.s:easymotion_key[num%klen]
-				else|let req=','.s:easymotion_key[num%klen]
+				elseif num<llen*klen|let req=s:easymotion_leader[num/klen-1].s:easymotion_key[num%klen]
+				else|break
 				endif
 				let m= matchaddpos("incsearch", [[i+info["topline"],pos+1,len(req)]])
 				let s:easymotion[req]={"line":i,"pos":pos,"hl":m}
 				let lines[i]=strpart(lines[i],0,pos).req.strpart(lines[i],pos+len(req))
-				let num+=1|let pos+=1|if num>=3*klen|break|endif
+				let num+=1|let pos+=2|if num>=llen*klen|break|endif
 			else|let pos=0|break
 			endif
 		endwhile
-		if num>=3*klen|break|endif
+		if num>=llen*klen|break|endif
 	endfor
 	if len(s:easymotion)==0|echo "cannot find"|return|endif
-	call setline(info["topline"],lines)|redraw!|echo "target key:"| let ch=nr2char(getchar())
-	if ch==';'||ch==','|let ch=ch.nr2char(getchar())|endif
+	silent! undojoin|call setline(info["topline"],lines)|redraw!|echo "target key:"| let ch=nr2char(getchar())
+	if has_key(s:easymotion_leader_dict,ch)|let ch=ch.nr2char(getchar())|endif
 	if has_key(s:easymotion, ch)|let temp=s:easymotion[ch]|call cursor(temp["line"]+info["topline"],temp["pos"]+1)
-	else|echo "no find"|endif
+	else|return|endif
 	for [key,val] in items(s:easymotion)|let i=val["line"]|let pos=val["pos"]|let hl=val["hl"]|call matchdelete(hl)|endfor
 	for hlnow in hlcomment|call matchdelete(hlnow)|endfor
-	call setline(info["topline"],bak)|setlocal nomodified
+	silent! undojoin|call setline(info["topline"],bak)|setlocal nomodified
 endfunc
 nnoremap <silent>s :call <sid>EasyMotion()<cr>
 inoremap <silent><c-s> <c-o>:call <sid>EasyMotion()<cr>
