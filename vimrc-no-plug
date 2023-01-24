@@ -918,8 +918,7 @@ func! s:EasyMotion()abort
 	if len(s:easymotion)==0|echo "cannot find"|return|endif
 	silent! undojoin|call setline(info["topline"],lines)|redraw!|echo "target key:"| let ch=nr2char(getchar())
 	if has_key(s:easymotion_leader_dict,ch)|let ch=ch.nr2char(getchar())|endif
-	if has_key(s:easymotion, ch)|let temp=s:easymotion[ch]|call cursor(temp["line"]+info["topline"],temp["pos"]+1)
-	else|return|endif
+	if has_key(s:easymotion, ch)|let temp=s:easymotion[ch]|call cursor(temp["line"]+info["topline"],temp["pos"]+1)|endif
 	for [key,val] in items(s:easymotion)|let i=val["line"]|let pos=val["pos"]|let hl=val["hl"]|call matchdelete(hl)|endfor
 	for hlnow in hlcomment|call matchdelete(hlnow)|endfor
 	silent! undojoin|call setline(info["topline"],bak)|setlocal nomodified
