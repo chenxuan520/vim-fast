@@ -831,13 +831,13 @@ xnoremap <silent><nowait>gc  :call <sid>VisualComment()<cr>
 " vim sourround
 let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
 func! s:AddSourround()
-	let s:ch=nr2char(getchar())
-	let s:col=col('.')
+	let s:ch=nr2char(getchar())|let s:col=col('.')|let pos=getcurpos()
 	norm! gv"sy
 	let s:str = @s
 	for k in keys(g:pair_map)
 		if s:ch==k||s:ch==g:pair_map[k]
 			execute ":s/^\\(.\\{".(col('.')-1)."\\}\\)".escape(s:str, '~"\.^$[]*')."/\\1".k.s:str.g:pair_map[k]."/"
+			call setpos('.', pos)
 			return
 		endif
 	endfor
@@ -874,14 +874,15 @@ nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
-command! -nargs=0 Fzfinstall echo system("sudo apt install fzf")
+command! -nargs=0 Fzfinstall   echo system("sudo apt install -y fzf")
+command! -nargs=0 Ctagsinstall echo system("sudo apt install -y ctags")
 
 " git config
 command! -nargs=+ Git echo system("git ".<q-args>)
 
 " like easy motion
 let s:easymotion_key=['a','s','d','f','k','h','g','q','w','e','r','u','i','o','p','c','v','b','n','m','t','y','z','x']
-let s:easymotion_leader=[';',',','.',"'",' ','/','[','\',']']|let s:easymotion_leader_dict={';':0,',':0,'.':0,"'":0,' ':0,'/':0,'[':0,'\':0}
+let s:easymotion_leader=[';',',','.',"'",' ','/','[','\',']']|let s:easymotion_leader_dict={';':0,',':0,'.':0,"'":0,' ':0,'/':0,'[':0,'\':0,']':0}
 func! s:EasyMotion()abort
 	echo "input key:"|let ch=nr2char(getchar())|let s:easymotion={}|let llen=len(s:easymotion_leader)+1
 	let info=winsaveview()|let info["endline"]=winheight(0)+info["topline"]|let width=winwidth(0)|let num=0|let old=ch|let pos=0|let klen=len(s:easymotion_key)

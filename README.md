@@ -260,6 +260,10 @@
 ### 简易安装无插件版本
    > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash
 
+   - 或者
+
+   > wget https://gitee.com/mirrorvim/vim-fast/raw/master/vimrc-no-plug -O ~/.vimrc
+
 ## 更新
 
    - ./update.sh
