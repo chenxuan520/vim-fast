@@ -650,7 +650,12 @@ nnoremap <silent><expr>g<c-a> getline('.')[col('.')-1]=='9'?"r0":"r".(getline('.
 nnoremap <silent><expr>g<c-x> getline('.')[col('.')-1]=='0'?"r9":"r".(getline('.')[col('.')-1]-1)
 
 " add space
-nnoremap <leader><space> i<space><right><c-[>
+func! s:AddSpace()
+	execute("normal! i ")|redraw|let ch=nr2char(getchar())
+	while ch==' '|execute("normal! i ")|redraw|let ch=nr2char(getchar())|endwhile
+	call feedkeys(ch,'in')
+ endfunc
+nnoremap <silent><leader><space> :call <sid>AddSpace()<cr>
 
 " scroll in other window
 nnoremap <silent>\u <c-w>p<c-u><c-w>p
@@ -876,7 +881,6 @@ map  <leader>w <Plug>(easymotion-bd-w)
 map  <leader>f <Plug>(easymotion-s)
 nmap <silent>s <Plug>(easymotion-s)
 imap <silent><c-s> <c-o>s
-" map  <leader>f <Plug>(easymotion-overwin-f)
 
 " python-highlight
 let g:python_highlight_all = 1

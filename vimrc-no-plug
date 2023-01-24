@@ -608,7 +608,12 @@ nnoremap <silent><expr>g<c-a> getline('.')[col('.')-1]=='9'?"r0":"r".(getline('.
 nnoremap <silent><expr>g<c-x> getline('.')[col('.')-1]=='0'?"r9":"r".(getline('.')[col('.')-1]-1)
 
 " add space
-nnoremap <leader><space> i<space><right><c-[>
+func! s:AddSpace()
+	execute("normal! i ")|redraw|let ch=nr2char(getchar())
+	while ch==' '|execute("normal! i ")|redraw|let ch=nr2char(getchar())|endwhile
+	call feedkeys(ch,'in')
+ endfunc
+nnoremap <silent><leader><space> :call <sid>AddSpace()<cr>
 
 " scroll in other window
 nnoremap <silent>\u <c-w>p<c-u><c-w>p
@@ -869,7 +874,7 @@ nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
-command! -nargs=0 Fzf echo system("sudo apt install fzf")
+command! -nargs=0 Fzfinstall echo system("sudo apt install fzf")
 
 " git config
 command! -nargs=+ Git echo system("git ".<q-args>)
@@ -890,7 +895,7 @@ func! s:EasyMotion()abort
 		if i+info["topline"]==info["lnum"]|continue|endif
 		while 1
 			let pos=stridx(lines[i],ch,pos)
-			if pos!=-1&&pos<width
+			if pos!=-1&&(pos<width||&wrap)
 				if num<klen|let req=s:easymotion_key[num]
 				elseif num<llen*klen|let req=s:easymotion_leader[num/klen-1].s:easymotion_key[num%klen]
 				else|break
@@ -988,15 +993,11 @@ if (has('termguicolors') && &termguicolors) || has('gui_running')  " guifg guibg
 				else|call add(hl_string, 'gui=underline')
 				endif
 				call add(hl_string, 'cterm=underline')
-			else
-				call add(hl_string, 'gui=' . a:1)|call add(hl_string, 'cterm=' . a:1)
+			else|call add(hl_string, 'gui=' . a:1)|call add(hl_string, 'cterm=' . a:1)
 			endif
-		else
-			call add(hl_string, 'gui=NONE')|call add(hl_string, 'cterm=NONE')
+		else|call add(hl_string, 'gui=NONE')|call add(hl_string, 'cterm=NONE')
 		endif
-		if a:0 >= 2
-			call add(hl_string, 'guisp=' . a:2[0])
-		endif
+		if a:0 >= 2|call add(hl_string, 'guisp=' . a:2[0])|endif
 		execute join(hl_string, ' ')
 	endfunction
 elseif s:t_Co >= 256
