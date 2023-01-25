@@ -449,6 +449,7 @@ nnoremap <silent><nowait>\o zC
 nnoremap <silent><nowait><expr><bs> foldlevel('.')>0?"zc":"\<bs>"
 
 " tab ctrl
+nnoremap <silent><nowait>=t :tabnew<cr>
 nnoremap <silent><nowait>\t :tabc<cr>
 nnoremap <silent><nowait>[t :tabp<cr>
 nnoremap <silent><nowait>]t :tabn<cr>
@@ -536,25 +537,24 @@ onoremap <silent>ie :<c-u>normal! ggVG<cr>
 xnoremap <silent>ie :<c-u>normal! ggVG<cr>
 onoremap <silent>ae :<c-u>normal! ggVG<cr>
 xnoremap <silent>ae :<c-u>normal! ggVG<cr>
-
 " object line
 onoremap <silent>il :<c-u>normal! ^v$BE<cr>
 xnoremap <silent>il :<c-u>normal! ^v$<cr><left>
 onoremap <silent>al :<c-u>normal! 0v$<cr>
 xnoremap <silent>al :<c-u>normal! 0v$<cr>
-
 " object argc
 onoremap <silent>aa :<c-u>call obj#GetArgs('a')<cr>
 onoremap <silent>ia :<c-u>call obj#GetArgs('i')<cr>
 xnoremap <silent>aa :<c-u>call obj#GetArgs('a')<cr>
 xnoremap <silent>ia :<c-u>call obj#GetArgs('i')<cr>
-
 " object indent
 onoremap <silent>ai :<c-u>call obj#GetIndent(0)<cr>
 onoremap <silent>ii :<c-u>call obj#GetIndent(1)<cr>
 xnoremap <silent>ai :<c-u>call obj#GetIndent(0)<cr>
 xnoremap <silent>ii :<c-u>call obj#GetIndent(1)<cr>
-
+" object syntax
+onoremap <silent>ih :<c-u>call obj#GetSynchl('i')<cr>
+xnoremap <silent>ih :<c-u>call obj#GetSynchl('i')<cr>
 " easy to get obj
 onoremap <silent>i, i<
 onoremap <silent>a, a<
@@ -654,7 +654,7 @@ func! s:AddSpace()
 	execute("normal! i ")|redraw|let ch=nr2char(getchar())
 	while ch==' '|execute("normal! i ")|redraw|let ch=nr2char(getchar())|endwhile
 	call feedkeys(ch,'in')
- endfunc
+endfunc
 nnoremap <silent><leader><space> :call <sid>AddSpace()<cr>
 
 " scroll in other window
@@ -686,8 +686,7 @@ xnoremap <silent><c-k>   :move '<-2<cr>gv
 xnoremap <silent><c-l>   y<c-w>lo<c-[>Vpgv
 xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
 
-" open link
-" is default in vim by gx
+" open link,is default in vim by gx
 func! s:GotoLink()
 	let s:list=matchstrpos(getline('.'),'https*://\S[^][(){}]*',0)
 	let s:link=s:list[0]

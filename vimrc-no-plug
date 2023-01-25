@@ -281,7 +281,7 @@ func! Tapi_Fzf(bufnum,arglist)
 	if temp!=v:null
 		for line in readfile(g:fzf_temp_file)
 			let list=matchstr(line,"\/\^.*")
-			if a:arglist[0]=="0"|let @/="^".line."\$"|else|let @/=strpart(list,1,len(list)-2)|endif
+			if a:arglist[0]=="0"|let @/="^".line."\$"|else|let list=escape(list,'*')|let @/=strpart(list,1,len(list)-2)|endif
 			call feedkeys('n','in')|set hlsearch
 		endfor
 	endif
@@ -462,6 +462,7 @@ nnoremap <silent><nowait>\o zC
 nnoremap <silent><nowait><expr><bs> foldlevel('.')>0?"zc":"\<bs>"
 
 " tab ctrl
+nnoremap <silent><nowait>=t :tabnew<cr>
 nnoremap <silent><nowait>\t :tabc<cr>
 nnoremap <silent><nowait>[t :tabp<cr>
 nnoremap <silent><nowait>]t :tabn<cr>
@@ -612,7 +613,7 @@ func! s:AddSpace()
 	execute("normal! i ")|redraw|let ch=nr2char(getchar())
 	while ch==' '|execute("normal! i ")|redraw|let ch=nr2char(getchar())|endwhile
 	call feedkeys(ch,'in')
- endfunc
+endfunc
 nnoremap <silent><leader><space> :call <sid>AddSpace()<cr>
 
 " scroll in other window
@@ -785,10 +786,8 @@ func! TabLine(direct)
 	return s:tab_result
 endfunc
 func! TabLineSet()
-	if &modified
-		let tab="%2* %0.32(%{TabLine(0)}%)%5* %t%6*%2*%<%{TabLine(1)}%r%h%w%=%6*%5* buffer"
-	else
-		let tab="%2* %0.32(%{TabLine(0)}%)%1* %t%2*%2*%<%{TabLine(1)}%r%h%w%=%2*%1* buffer"
+	if &modified|let tab="%2* %0.32(%{TabLine(0)}%)%5* %t%6*%2*%<%{TabLine(1)}%r%h%w%=%6*%5* buffer"
+	else|let tab="%2* %0.32(%{TabLine(0)}%)%1* %t%2*%2*%<%{TabLine(1)}%r%h%w%=%2*%1* buffer"
 	endif
 	return tab
 endfunc

@@ -17,6 +17,20 @@ func! obj#GetIndent(model)
 	execute "normal! V".(end-begin)."j"
 endfunc
 
+func! obj#GetSynchl(model)
+	let hl=synstack(line('.'),col('.'))[-1]
+	let begin=col('.')-1|let end=col('.')|let line=line('.')
+	let list=synstack(line,begin)
+	while(begin>=0&&len(list)>0&&list[-1]==hl)
+		let list=synstack(line,begin)|let begin-=1
+	endwhile
+	let list=synstack(line,end)
+	while(end<=line('$')&&len(list)>0&&list[-1]==hl)
+		let list=synstack(line,end)|let end+=1
+	endwhile
+	call cursor([line, begin+2])|execute "normal! v".(end-begin-4)."l"
+endfunc
+
 func! obj#GetArgs(model)
 	let model=a:model
 	let line=line('.')|let col=col('.')|let i=col-1|let now=getline('.')
