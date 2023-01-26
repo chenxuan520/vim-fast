@@ -531,7 +531,7 @@ let g:markdown_fold_enable=1
 " use select area to replace
 xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/
 
-" indent buffer
+" object buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
 onoremap <silent>ie :<c-u>normal! ggVG<cr>
 xnoremap <silent>ie :<c-u>normal! ggVG<cr>
@@ -653,7 +653,7 @@ nnoremap <silent><expr>g<c-x> getline('.')[col('.')-1]=='0'?"r9":"r".(getline('.
 func! s:AddSpace()
 	execute("normal! i ")|redraw|let ch=nr2char(getchar())
 	while ch==' '|execute("normal! i ")|redraw|let ch=nr2char(getchar())|endwhile
-	call feedkeys(ch,'in')
+	call feedkeys(ch,'im')
 endfunc
 nnoremap <silent><leader><space> :call <sid>AddSpace()<cr>
 
@@ -897,9 +897,7 @@ let g:go_highlight_build_constraints =1
 let g:go_highlight_generate_tags =1
 let g:go_highlight_string_spellcheck = 1
 let g:go_highlight_fields = 1
-" let g:go_highlight_variable_declarations = 1
-" let g:go_highlight_variable_assignments = 1
-" let g:go_highlight_array_whitespace_error = 1
+" let g:go_highlight_variable_declarations = 1|" let g:go_highlight_variable_assignments = 1|" let g:go_highlight_array_whitespace_error = 1
 
 " dashboard
 " let g:slash_auto_middle=0
@@ -953,7 +951,7 @@ let g:Lf_HideHelp = 1
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
-let g:Lf_PreviewResult = {'Function': 1,'Rg': 1,'Line': 1,'BufTag': 1}
+let g:Lf_PreviewResult = {'Function': 1,'Rg': 1,'Line': 1,'BufTag': 1,'Jumps': 1}
 let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>'],'<C-K>':['<C-P>','<C-K>'],'<C-P>':['<C-L>'],'<HOME>':['<C-A>']}
 let g:Lf_WildIgnore = {
 			\ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
@@ -984,6 +982,8 @@ nnoremap <leader><leader>g :GV?<cr>
 " clever f
 " nnoremap \ ,
 " map \ <Plug>(clever-f-repeat-back)
+let g:clever_f_smart_case=1
+let g:clever_f_chars_match_any_signs=';'
 nmap <silent><nowait> ; <Plug>(clever-f-repeat-forward)
 nmap <silent><nowait> { <Plug>(clever-f-repeat-back)
 xmap <silent><nowait> ; <Plug>(clever-f-repeat-forward)
