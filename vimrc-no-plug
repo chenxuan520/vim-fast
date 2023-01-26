@@ -123,6 +123,11 @@ nnoremap <leader><leader>S :source <c-r>=expand('%:p')<cr><cr>
 " load vim default plugin
 runtime macros/matchit.vim
 
+" check version
+if !has('patch-8.0.1453')
+	echom "WARNING:vim is too old,so it can support some feature!"|finish
+endif
+
 " update self
 command! -nargs=0 UpdateSelf echo "Updating,please wait..."|call system('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')|qa
 nnoremap <silent>Q :UpdateSelf<cr>

@@ -264,6 +264,16 @@
 
    > wget https://gitee.com/mirrorvim/vim-fast/raw/master/vimrc-no-plug -O ~/.vimrc
 
+#### 无插件版说明
+
+   1. 无插件版只有一个文件(vimrc),不会创建任何其他文件,因此可以直接复制粘贴文件(./vimrc-no-plug)到~/.vimrc
+
+   2. 内置插件有**easy-motion**,vim-surround,vim-commentary,auto-pair的大部分功能
+
+   3. 内置了tokynight颜色主题,以及所有有插件版本的自定义按键功能
+
+   4. 如果安装有fzf,拥有leaderf大部分功能
+
 ## 更新
 
    - ./update.sh

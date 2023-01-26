@@ -693,15 +693,9 @@ func! s:GotoLink()
 	while s:list[0]!=''&&(s:list[1]>col('.')||s:list[2]<col('.'))
 		let s:list=matchstrpos(getline('.'),'https*://\S[^][(){}]*',s:list[2])
 	endwhile
-	if s:list[0]!=''
-		let s:link=s:list[0]
-	endif
+	if s:list[0]!=''|let s:link=s:list[0]|endif
 	let s:browser=get(g:,'default_browser','firefox')
-	if s:link!=''
-		call job_start(s:browser.' '.s:link)
-	else
-		echo 'cannot find link'
-	endif
+	if s:link!=''|call job_start(s:browser.' '.s:link)|else|echo 'cannot find link'|endif
 endfunc
 nnoremap <silent><nowait>gl :call <sid>GotoLink()<cr>
 
