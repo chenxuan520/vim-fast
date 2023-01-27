@@ -18,7 +18,8 @@ func! obj#GetIndent(model)
 endfunc
 
 func! obj#GetSynchl(model)
-	let hl=synstack(line('.'),col('.'))[-1]
+	let temp=synstack(line('.'),col('.'))
+	if len(temp)==0|return|endif|let hl=temp[-1]
 	let begin=col('.')-1|let end=col('.')|let line=line('.')
 	let list=synstack(line,begin)
 	while(begin>=0&&len(list)>0&&list[-1]==hl)
@@ -28,7 +29,9 @@ func! obj#GetSynchl(model)
 	while(end<=line('$')&&len(list)>0&&list[-1]==hl)
 		let list=synstack(line,end)|let end+=1
 	endwhile
-	call cursor([line, begin+2])|execute "normal! v".(end-begin-4)."l"
+	if begin!=col('.')-1|call cursor([line, begin+2])|execute "normal! v".(end-begin-4)."l"
+	else|call cursor(line, begin+1)|execute "normal! v".(end-begin-3)."l"
+	endif
 endfunc
 
 func! obj#GetArgs(model)

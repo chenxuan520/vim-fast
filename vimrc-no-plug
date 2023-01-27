@@ -900,7 +900,7 @@ func! s:EasyMotion()abort
 	call add(hlcomment,matchaddpos("comment",range(begin,end)))
 	let listl=range(0,len(lines)-1)|let nowline=info["lnum"]-info["topline"]|call sort(listl,{arg1,arg2 -> abs(arg2-nowline)-abs(arg1-nowline)})
 	for i in listl
-		if i+info["topline"]==info["lnum"]|continue|endif
+		" if i+info["topline"]==info["lnum"]|continue|endif
 		while 1
 			let pos=stridx(lines[i],ch,pos)
 			if up!=""|let postemp=stridx(lines[i],up,pos)|if postemp!=-1&&(postemp<pos||pos==-1)|let pos=postemp|endif|endif
@@ -928,7 +928,6 @@ func! s:EasyMotion()abort
 endfunc
 nnoremap <silent>s :call <sid>EasyMotion()<cr>
 inoremap <silent><c-s> <c-o>:call <sid>EasyMotion()<cr>
-
 
 " tokyonight color inside,donnot change it
 set termguicolors

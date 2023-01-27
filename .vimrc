@@ -839,7 +839,7 @@ function! s:CocMouse()
 	nnoremenu <silent>PopUp.Next\ Pos      <c-i>zz
 	nnoremenu <silent>PopUp.Open\ Fold     zO
 	nnoremenu <silent>PopUp.Close\ Fold    zC
-	nnoremenu <silent>PopUp.Fold\ Enable   :set fdm=indent<cr>:set fen<cr>
+	nnoremenu <silent>PopUp.Fold\ Enable   :setlocal fdm=indent<cr>:setlocal fen<cr>
 	nnoremenu <silent>PopUp.-Sep-          :<cr>
 	nnoremenu <silent>PopUp.Close\ Model\  :call <sid>MouseConfig()<cr>
 endfunction
@@ -940,18 +940,17 @@ nnoremap <F1> :LeaderfColorscheme<cr>
 nnoremap <silent><nowait>=l :let g:Lf_WorkingDirectoryMode = 'ac'<cr>
 nnoremap <silent><nowait>\l :let g:Lf_WorkingDirectoryMode = 'c'<cr>
 " set leaderf options
-" let g:Lf_WorkingDirectoryMode = 'ac'
 let g:Lf_HideHelp = 1
 let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
 let g:Lf_PreviewResult = {'Function': 1,'Rg': 1,'Line': 1,'BufTag': 1,'Jumps': 1}
 let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>'],'<C-K>':['<C-P>','<C-K>'],'<C-P>':['<C-L>'],'<HOME>':['<C-A>']}
-let g:Lf_WildIgnore = {
-			\ 'dir': ['.svn','.git','.hg','.vscode','.wine','.deepinwine','.oh-my-zsh'],
-			\ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
-			\}
 let g:Lf_UseCache = 0
+let g:Lf_WildIgnore = {
+			\ 'dir': ['.svn','.git','.hg','.vscode','.idea','bin','static'],
+			\ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]','*.out']
+			\}
 " f1 to open help menu,f5 to fresh,tab to normal mode
 " c-] open in vertical,c-x open in split,c-v paste clip,c-t open in a tab,c-\ ask for open,D to delete buffer
 
