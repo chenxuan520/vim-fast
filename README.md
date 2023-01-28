@@ -268,7 +268,7 @@
 
    1. 无插件版只有一个文件(vimrc),不会创建任何其他文件,因此可以直接复制粘贴文件(./vimrc-no-plug)到~/.vimrc
 
-   2. 内置插件有**easy-motion**,vim-surround,vim-commentary,auto-pair的大部分功能
+   2. 内置插件有**easy-motion**,vim-surround,vim-commentary,auto-pair,vim-slash,vim-airline的大部分功能
 
    3. 内置了tokynight颜色主题,以及所有有插件版本的自定义按键功能
 
@@ -296,7 +296,7 @@
 
 1. 有nvim版本吗
 
-   - nvim可以暂时通过nvim.sh安装,lua配置版本还需要点时间
+   - nvim可以暂时通过nvim.sh安装,lua配置配置版本会在另一个仓库
 
 2. 我的系统没有支持
 
