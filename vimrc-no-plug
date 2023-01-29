@@ -480,7 +480,7 @@ nnoremap <silent><nowait>=h :set hlsearch<cr>
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 
 " select search
-xmap g/ "sy/\V<c-r>=@s<cr><cr>
+xmap g/ "sy/\V<c-r>=@s<cr>
 
 " run macro in visual model
 xnoremap @ :normal @
@@ -489,7 +489,8 @@ xnoremap @ :normal @
 nnoremap <silent><c-q> @@
 
 " use select area to replace
-xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/
+xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>//gn<left><left><left>
+nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz

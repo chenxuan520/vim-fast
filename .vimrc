@@ -462,13 +462,18 @@ nnoremap <silent><nowait>=h :set hlsearch<cr>
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 
 " select search
-xmap g/ "sy/\V<c-r>=@s<cr><cr>
+xmap g/ "sy/\V<c-r>=@s<cr>
 
 " run macro in visual model
 xnoremap @ :normal @
 
 " repeat for macro
 nnoremap <silent><c-q> @@
+
+" ibus enable
+let g:ibus_enable=0
+" md fold enable
+let g:markdown_fold_enable=1
 
 " termtask project config
 command! -nargs=? -complete=customlist,termtask#Term_task_list TaskRun  :call termtask#Term_task_run(<q-args>)
@@ -528,13 +533,9 @@ nnoremap <silent><leader>I :call termtask#Term_cmd_exec('')<cr>
 xnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('v')<cr>
 nnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('')<cr>
 
-" ibus enable
-let g:ibus_enable=0
-" md fold enable
-let g:markdown_fold_enable=1
-
 " use select area to replace
-xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/
+xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>//gn<left><left><left>
+nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 
 " object buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
