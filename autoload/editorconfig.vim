@@ -7,6 +7,7 @@
 "======================================================================
 
 let s:editorconfigdict={}
+let s:pathprefix=""
 
 func! s:FindConfig()
 	return findfile(".editorconfig", getcwd() .';')
@@ -46,6 +47,7 @@ func! s:AnalyseFile(file)abort
 		echohl WarningMsg|echo "cannot find .editorconfig file"|echohl NONE
 		return
 	endif
+	let s:pathprefix=fnamemodify(a:file,":p:h")
 	let nowkey=""|let nowdict={}
 	for line in readfile(a:file)
 		if line==""||line=~"^\\s*#"
@@ -77,10 +79,13 @@ endfunc
 func! s:Clear()abort
 	silent! autocmd! EditorConfig
 	let s:editorconfigdict={}
+	let s:pathprefix=""
 endfunc
 
 func! editorconfig#Run()abort
-	" TODO: add avoid to normap file
+	if s:pathprefix==""||stridx(expand('%:p:h'),s:pathprefix)==-1
+		return
+	endif
 	for [key,val] in items(s:editorconfigdict)
 		if expand('%')=~glob2regpat(key)
 			for [k1,v1] in items(val)
@@ -97,6 +102,7 @@ func! editorconfig#Able()abort
 		augroup EditorConfig
 			autocmd!
 			autocmd BufReadPost * call editorconfig#Run()
+			autocmd BufNewFile *  call editorconfig#Run()
 		augroup END
 		echomsg "load success"
 	endif

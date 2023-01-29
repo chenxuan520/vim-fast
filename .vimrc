@@ -734,7 +734,7 @@ colorscheme tokyonight
 " set prepare code when new file
 augroup PreCode
 	autocmd!
-	autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,*.html,.config.vim,CMakeLists.txt execute ":call VimFastSetPreCode()"
+	autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,*.html,.config.vim,CMakeLists.txt call VimFastSetPreCode()
 augroup END
 
 " airline

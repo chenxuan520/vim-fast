@@ -8,40 +8,18 @@
 
 let s:dictname={}
 func! s:FindConfigWay()
-	let s:gitdir = finddir(".git", getcwd() .';')
-	if !empty(s:gitdir)
-		if s:gitdir==".git"
-			let s:gitdir=getcwd()
-		else
-			let s:gitdir=strpart(s:gitdir,0,strridx(s:gitdir,"/"))
-		endif
-		let s:gitdir=s:gitdir."/.config.vim"
-		return s:gitdir
-	endif
-	return ""
-	" let s:gitdir=getcwd()."/"
-	" while strridx(s:gitdir,"/")!=-1
-	" 	let s:gitdir=strpart(s:gitdir,0,strridx(s:gitdir,"/"))
-	" 	if isdirectory(s:gitdir . "/.git")
-	" 		break
-	" 	endif
-	" endwhile
-	" if strridx(s:gitdir,"/")==-1
-	" 	return ""
-	" endif
-	" let s:gitdir=s:gitdir."/.config.vim"
-	" return s:gitdir
+	return findfile(".config.vim",getcwd().';')
 endfunc
 
 func! s:FindRoot()
-	let s:gitdir = finddir(".git", getcwd() .';')
-	if !empty(s:gitdir)
-		if s:gitdir==".git"
-			let s:gitdir=getcwd()
+	let temp = finddir(".git", getcwd() .';')
+	if !empty(temp)
+		if temp==".git"
+			let temp=getcwd()
 		else
-			let s:gitdir=strpart(s:gitdir,0,strridx(s:gitdir,"/"))
+			let temp=strpart(temp,0,strridx(temp,"/"))
 		endif
-		return s:gitdir
+		return temp
 	endif
 	return ""
 	" let s:gitdir=getcwd()."/"
@@ -188,9 +166,9 @@ function! s:Term_read(name)
 endfunction
 
 function! termtask#Term_task_run(name) abort
-	let s:dictname={}|let i=0
-	if filereadable(s:FindConfigWay())
-		execute ":source ". s:gitdir
+	let s:dictname={}|let i=0|let temp=s:FindConfigWay()
+	if filereadable(temp)
+		execute ":source ". temp
 		echo "load success"
 	else
 		echohl WarningMsg
@@ -216,27 +194,34 @@ endfunction
 
 " read diff config for diff project
 func! termtask#Term_config_edit()
-	let s:git_dir=s:FindConfigWay()
-	if s:git_dir!=""
-		execute ":edit ".s:FindConfigWay()
+	let config=s:FindConfigWay()
+	if config!=""
+		execute ":edit ".config
 	else
-		echo "can not find .git dir"
+		let temp=s:FindRoot()
+		if temp!=""
+			execute ":edit ".temp."/.config.vim"
+		else
+			edit .config.vim
+			redraw
+			echohl WarningMsg|echom "cannot not find .git dir,create config in pwd"|echohl NONE
+		endif
 	endif
 endfunc
 
 " read from git dir
 func! termtask#Term_get_dir()
-	return s:FindRoot()
+	let root=s:FindRoot()
+	return root==""?getcwd():root
 endfunc
 
 " get task list
 func! termtask#Term_task_list(A,C,P)
-	if filereadable(s:FindConfigWay())
-		execute ":source ". s:gitdir
+	let temp=s:FindConfigWay()
+	if filereadable(temp)
+		execute ":source ".temp
 	else
-		echohl WarningMsg
-		echo "no config file"
-		echohl NONE
+		echohl WarningMsg|echo "no config file"|echohl NONE
 		return
 	endif
 
