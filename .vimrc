@@ -510,6 +510,11 @@ nnoremap <silent>-g    :call gutter#GitGutterRecover()<cr>
 nnoremap <silent>zg    :call gutter#GitGutterFold()<cr>
 nnoremap <silent><c-g> :call gutter#GitGutterDiff()<cr>
 
+" editorconfig
+nnoremap <silent>=E :call editorconfig#Able()<cr>
+nnoremap <silent>\E :call editorconfig#Disable()<cr>
+nnoremap <silent>-E :call editorconfig#EditconfigFile()<cr>
+
 " line cword
 let g:cursorline_delay=0
 nnoremap <silent><nowait>=f :call cursorline#Able()<cr>
