@@ -178,7 +178,7 @@ nnoremap <leader><leader>c :PlugClean<cr>
 nnoremap <silent><c-p> :bp<cr>
 nnoremap <silent><c-n> :bn<cr>
 nnoremap <silent><leader>d :bd<cr>
-nnoremap <silent><expr><c-m> expand('%')!=''?":w<cr>":
+nnoremap <silent><expr><c-m> &bt==''?":w<cr>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
 
@@ -198,12 +198,8 @@ func! s:CtrlB()
 	if pumvisible()
 		return "\<c-n>"
 	elseif getline('.')[col('.')-2]==nr2char(9)
-		let s:pos=col('.')
-		let s:result=""
-		while s:pos!=0
-			let s:result=s:result."\<bs>"
-			let s:pos-=1
-		endwhile
+		let s:pos=col('.')|let s:result=""
+		while s:pos!=0|let s:result=s:result."\<bs>"|let s:pos-=1|endwhile
 		let s:result=s:result."\<c-n>"
 		return s:result
 	else
@@ -348,8 +344,7 @@ func! s:BinraryEdit(args) abort
 	if join(readfile(expand('%:p'), 'b', 5), '\n') !~# '[\x00-\x08\x10-\x1a\x1c-\x1f]\{2,}'
 		echo "not a bin file"|return
 	endif
-	if &readonly|echohl WarningMsg|echo "this file not open with bin,reopen it by ++bin"|echohl NONE|return|endif
-	setlocal bin
+	if &readonly|execute ":edit ++bin".expand('%')|endif|setlocal bin
 	if !executable('xxd')|echoerr "xxd not find,install it first"|endif
 	echo "transform...please wait..."
 	let g:xxd_cmd=":%!xxd ".a:args
@@ -479,7 +474,6 @@ let g:markdown_fold_enable=1
 command! -nargs=? -complete=customlist,termtask#Term_task_list TaskRun  :call termtask#Term_task_run(<q-args>)
 command! -nargs=0 TaskList :echo termtask#Term_task_list('','','')
 command! -nargs=0 TaskLoad :call termtask#Term_task_run('')
-nnoremap <silent>Q :TaskLoad<cr>
 nnoremap <space>c :TaskRun<space>
 nnoremap <silent><space>C :call termtask#Term_config_edit()<cr>
 " auto read project file

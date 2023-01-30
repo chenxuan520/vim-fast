@@ -142,6 +142,11 @@ function! s:Term_read(name)
 			endif
 		endif
 
+		" TODO: avoid string ; "
+		if stridx(s:task['command'],';')!=-1&&get(s:task,'close',2)!=2
+			let s:task['command']='bash -c "'.s:task['command'].'"'
+		endif
+
 		if has_key(s:task,'type')&&s:task['type']=='tab'
 			execute ':tabe'
 			let s:options['curwin']=1

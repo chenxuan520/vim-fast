@@ -112,7 +112,7 @@ endif
 nnoremap <silent><c-p> :bp<cr>
 nnoremap <silent><c-n> :bn<cr>
 nnoremap <silent><leader>d :bd<cr>
-nnoremap <silent><expr><c-m> expand('%')!=''?":w<cr>":
+nnoremap <silent><expr><c-m> &bt==''?":w<cr>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
 
@@ -369,7 +369,7 @@ func! s:BinraryEdit(args) abort
 	if join(readfile(expand('%:p'), 'b', 5), '\n') !~# '[\x00-\x08\x10-\x1a\x1c-\x1f]\{2,}'
 		echo "not a bin file"|return
 	endif
-	if &readonly|echohl WarningMsg|echo "this file not open with bin,reopen it by ++bin"|echohl NONE|return|endif
+	if &readonly|execute ":edit ++bin".expand('%')|endif|setlocal bin
 	setlocal bin
 	if !executable('xxd')|echoerr "xxd not find,install it first"|endif
 	echo "transform...please wait..."

@@ -39,6 +39,8 @@ func! s:SetOptions(key,val)abort
 	elseif key==?'indent_size'
 		execute ":setlocal shiftwidth=".val
 		execute ":setlocal softtabstop=".val
+	elseif key==?'charset'
+		execute ":setlocal fileencoding=".val
 	endif
 endfunc
 
@@ -105,6 +107,8 @@ func! editorconfig#Able()abort
 			autocmd BufNewFile *  call editorconfig#Run()
 		augroup END
 		echomsg "load success"
+	else
+		call s:Clear()
 	endif
 endfunc
 

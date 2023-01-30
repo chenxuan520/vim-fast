@@ -118,15 +118,17 @@
 
 12. 多光标编辑,类似插件[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
 
-13. **查询按键是否被绑定**,\<leader\>h 和\-h触发检测
+13. editorconfig支持,类似插件[editorconfig-vim](https://github.com/editorconfig/editorconfig-vim)
 
-14. mdbook 目录自动生成
+14. **查询按键是否被绑定以及被绑定的位置**,\<leader\>h 和\-h触发检测
 
-15. 查看并打开最近关闭的buffer
+15. mdbook 目录自动生成
 
-16. 简单的markdown和html预览
+16. 查看并打开最近关闭的buffer
 
-17. fzf调用
+17. 简单的markdown和html预览
+
+18. fzf调用
 
 - 说明:以上功能均内置在Vim-fast,且不会影响Vim启动速度
 
