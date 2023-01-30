@@ -7,6 +7,9 @@
 "======================================================================
 
 let s:dictname={}
+let g:term_exit_code=0
+let s:term_fin_exec=""
+
 func! s:FindConfigWay()
 	return findfile(".config.vim",getcwd().';')
 endfunc
@@ -47,8 +50,7 @@ func! s:Workflow(dict) abort
 	endif
 	let begin=s:dictname[dict['begin']]|let index=begin['index']
 	if get(begin,'quickfix',0)==0&&get(begin,'mode','')!='quickfix'
-		echoerr 'begin is not a quick func'
-		return
+		let g:Term_project_task[index]['end_script']=''
 	endif
 	let g:Term_project_task[index]['next']=dict['next']
 	call s:Term_read(dict['begin'])
@@ -57,6 +59,7 @@ endfunc
 
 function! s:Term_read(name)
 	let s:options={}
+	let s:term_fin_exec=""
 	let s:exist=0
 
 	for s:task in g:Term_project_task
@@ -115,10 +118,12 @@ function! s:Term_read(name)
 			endif
 		endif
 
+		if has_key(s:task, 'next')&&s:task['next']!=''
+			let g:asyncrun_exit="if g:asyncrun_code==0|cclose|call termtask#Term_task_run('".s:task['next']."')|endif|"
+			let s:term_fin_exec="if g:term_exit_code==0|call termtask#Term_task_run('".s:task['next']."')|endif"
+		endif
+
 		if has_key(s:task,'quickfix')&&s:task['quickfix']
-			if has_key(s:task, 'next')&&s:task['next']!=''
-				let g:asyncrun_exit="if g:asyncrun_code==0|cclose|call termtask#Term_task_run('".s:task['next']."')|endif|"
-			endif
 
 			if has_key(s:task,'type')&&s:task['type']=='tab'
 				let s:options['pos']='tab'
@@ -147,6 +152,11 @@ function! s:Term_read(name)
 			let s:task['command']='bash -c "'.s:task['command'].'"'
 		endif
 
+		if has_key(s:task,'end_script')
+			let s:options['exit_cb']="termtask#Term_Cb"
+			let s:term_fin_exec=s:term_fin_exec.s:task['end_script']
+		endif
+
 		if has_key(s:task,'type')&&s:task['type']=='tab'
 			execute ':tabe'
 			let s:options['curwin']=1
@@ -155,10 +165,6 @@ function! s:Term_read(name)
 			vert call term_start(s:task['command'],s:options)
 		else
 			call term_start(s:task['command'],s:options)
-		endif
-
-		if has_key(s:task,'end_script')&&s:task['end_script']!=''
-			execute s:task['end_script']
 		endif
 
 		break
@@ -196,6 +202,14 @@ function! termtask#Term_task_run(name) abort
 		call s:Term_read(a:name)
 	endif
 endfunction
+
+fun! termtask#Term_Cb(chan,msg)
+	let g:term_exit_code=a:msg
+	echom a:msg
+	if s:term_fin_exec!=''
+		exec s:term_fin_exec
+	endif
+endfun
 
 " read diff config for diff project
 func! termtask#Term_config_edit()
