@@ -106,29 +106,35 @@
 
 6. 参数选中,类似插件[vim-textobj-parameter](https://github.com/sgur/vim-textobj-parameter)
 
-7. ibus输入法自动切换,类似插件[vim-ibus](https://github.com/h-youhei/vim-ibus)
+7. 高亮选中,类似插件[vim-textobj-syntax](https://github.com/kana/vim-textobj-syntax)
 
-8. lazygit和Vim集成,效果更好,类似插件[lazygit.nvim](https://github.com/kdheepak/lazygit.nvim)
+8. 缩进选中,类似插件[vim-textobj-indent](https://github.com/kana/vim-textobj-indent)
 
-9. ici翻译,类似插件[ici.vim](https://github.com/Flowerowl/ici.vim)
+9. ibus输入法自动切换,类似插件[vim-ibus](https://github.com/h-youhei/vim-ibus)
 
-10. 颜色可视化,类似插件[colorizer](https://kgithub.com/lilydjwg/colorizer)
+10. lazygit和Vim集成,效果更好,类似插件[lazygit.nvim](https://github.com/kdheepak/lazygit.nvim)
 
-11. 二进制文件编辑,类似插件[Vinarise](https://github.com/Shougo/vinarise.vim)
+11. lf和vim集成,类似插件[lf.vim](https://github.com/ptzz/lf.vim)
 
-12. 多光标编辑,类似插件[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
+12. ici翻译,类似插件[ici.vim](https://github.com/Flowerowl/ici.vim)
 
-13. editorconfig支持,类似插件[editorconfig-vim](https://github.com/editorconfig/editorconfig-vim)
+13. 颜色可视化,类似插件[colorizer](https://kgithub.com/lilydjwg/colorizer)
 
-14. **查询按键是否被绑定以及被绑定的位置**,\<leader\>h 和\-h触发检测
+14. 二进制文件编辑,类似插件[Vinarise](https://github.com/Shougo/vinarise.vim)
 
-15. mdbook 目录自动生成
+15. 多光标编辑,类似插件[vim-multiple-cursors](https://github.com/terryma/vim-multiple-cursors)
 
-16. 查看并打开最近关闭的buffer
+16. editorconfig支持,类似插件[editorconfig-vim](https://github.com/editorconfig/editorconfig-vim)
 
-17. 简单的markdown和html预览
+17. **查询按键是否被绑定以及被绑定的位置**,\<leader\>h 和\-h触发检测
 
-18. fzf调用
+18. mdbook 目录自动生成
+
+19. 查看并打开最近关闭的buffer
+
+20. 简单的markdown和html预览
+
+21. fzf调用
 
 - 说明:以上功能均内置在Vim-fast,且不会影响Vim启动速度
 
@@ -351,6 +357,10 @@
 12. ctrl-s之后没有多光标,反而卡住了
 
   - 终端的设置问题,将`stty -ixon`加到~/.bashrc,然后重新加载就可以了
+
+13. 安装nodejs出错,无法连接下载
+
+  - 重新运行./shell/nodejs.sh
 
 ## 帮助
 

@@ -273,9 +273,8 @@ func! Tapi_EditFile(bufnum,arglist)
 	elseif isdirectory(a:arglist[0])
 		execute ":cd " . a:arglist[0]
 	endif
-	if len(a:arglist)>1
-		call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")
-	endif
+	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
+	if len(gettabinfo())>1|tabclose|if filereadable(a:arglist[0])|execute ":edit " . a:arglist[0]|endif|endif
 endfunc
 tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
