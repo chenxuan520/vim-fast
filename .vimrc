@@ -535,7 +535,7 @@ xnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('v')<cr>
 nnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('')<cr>
 
 " use select area to replace
-xnoremap s :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>//gn<left><left><left>
+xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn<left><left><left>
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 
 " object buffer
@@ -627,6 +627,10 @@ inoremap <expr><silent>> <sid>Judge('>','i')
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
 
+" enhance gf
+nnoremap gf gF
+vnoremap gf gF
+
 " set split window
 nnoremap <silent><nowait>_ :vsp<cr>:bn<cr>
 nnoremap <silent><nowait>+ :sp<cr>:bn<cr>
@@ -714,11 +718,8 @@ nnoremap =a :ab<cr>
 
 " set function to choose select area
 func s:GetSelectArea()
-	let temp = @s
 	norm! gv"sy
-	let l:str = @s
-	let @s = temp
-	return l:str
+	return @s
 endfunc
 
 " plug config setting
@@ -899,8 +900,6 @@ let g:go_highlight_fields = 1
 " let g:go_highlight_variable_declarations = 1|" let g:go_highlight_variable_assignments = 1|" let g:go_highlight_array_whitespace_error = 1
 
 " dashboard
-" let g:slash_auto_middle=0
-" let g:slash_auto_star_middle=0
 nnoremap <space>S :SessionSave<cr>
 nnoremap <space>s :SessionLoad<cr>
 

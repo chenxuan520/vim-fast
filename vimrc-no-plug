@@ -496,7 +496,7 @@ xnoremap @ :normal @
 nnoremap <silent><c-q> @@
 
 " use select area to replace
-xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>//gn<left><left><left>
+xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn<left><left><left>
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 
 " indent buffer
@@ -591,6 +591,10 @@ cnoremap <c-f> <s-right>
 " set cursor middle
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
+
+" enhance gf
+nnoremap gf gF
+vnoremap gf gF
 
 " set split window
 nnoremap <silent><nowait>_ :vsp<cr>:bn<cr>
