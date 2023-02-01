@@ -154,13 +154,12 @@ inoremap <silent><cr> <c-r>=<sid>Enter()<cr>
 inoremap <c-e> <end>
 inoremap <c-a> <c-o>^
 inoremap <c-d> <del>
-inoremap <c-f> <c-o>lW
+inoremap <c-f> <c-o>W
 inoremap <expr><c-b> <sid>CtrlB()
 func! s:CtrlB()
 	if pumvisible()|return "\<c-n>"
 	elseif getline('.')[col('.')-2]==nr2char(9)
-		let s:pos=col('.')
-		let s:result=""
+		let s:pos=col('.')|let s:result=""
 		while s:pos!=0|let s:result=s:result."\<bs>"|let s:pos-=1|endwhile
 		let s:result=s:result."\<c-n>"
 		return s:result
@@ -412,6 +411,13 @@ nnoremap [q :cnext<cr>
 nnoremap ]q :cprevious<cr>
 nnoremap \q :cclose<cr>
 nnoremap =q :copen<cr>
+nnoremap ]Q :cnext<cr>:call <sid>Qfpopup()<cr>
+nnoremap [Q :cprevious<cr>:call <sid>Qfpopup()<cr>
+func! s:Qfpopup()abort
+	let dict=getqflist({'all':1})|let pos=dict['idx']|let item=dict['items']|let len=len(dict['items'])|let show=[item[pos-1]['text']]
+	while pos<len&&item[pos]['lnum']==0|let show=add(show,item[pos]['text'])|let pos+=1|endwhile
+	let show=show[0:-2]|call popup_atcursor(show,{})
+endfunc
 
 " set mouse
 func MouseConfig()
