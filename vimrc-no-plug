@@ -130,7 +130,6 @@ endif
 
 " update self
 command! -nargs=0 UpdateSelf echo "Updating,please wait..."|call system('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')|qa
-nnoremap <silent>Q :UpdateSelf<cr>
 
 " 插入模式下的光标移动
 imap <c-j> <down>
@@ -897,6 +896,13 @@ command! -nargs=0 Ctagsinstall echo system("sudo apt install -y ctags")
 
 " git config
 command! -nargs=+ Git echo system("git ".<q-args>)
+
+" make run
+command! -nargs=+ Run let command=strpart(<q-args>,0,stridx(<q-args>,' '))|
+			\exec "set makeprg=".command|
+			\exec ":make ".strpart(<q-args>,stridx(<q-args>,' '))|
+			\call <sid>Qfpopup()
+nnoremap <space>: :Run<space>
 
 " like easy motion
 let s:easymotion_key=['j','l','k','h','a','s','d','f','g','q','w','e','r','u','i','o','p','c','v','b','n','m','t','y','z','x']
