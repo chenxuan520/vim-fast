@@ -175,8 +175,8 @@ nnoremap <leader><leader>i :PlugInstall<cr>
 nnoremap <leader><leader>c :PlugClean<cr>
 
 " vim-buffer
-nnoremap <silent><c-p> :bp<cr>
-nnoremap <silent><c-n> :bn<cr>
+nnoremap <silent><c-p> :bp<bar>if &bt!=''<bar>bn<bar>endif<cr>
+nnoremap <silent><c-n> :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
 nnoremap <silent><leader>d :bd<cr>
 nnoremap <silent><expr><c-m> &bt==''?":w<cr>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
@@ -325,8 +325,8 @@ nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_E
 nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 
 " lf config define
-nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
-nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf .<cr>
+nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
+nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf .<cr>
 
 " yank and paste
 nnoremap <leader>p "0p

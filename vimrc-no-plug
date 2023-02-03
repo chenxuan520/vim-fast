@@ -109,8 +109,8 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-buffer
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent><c-p> :bp<cr>
-nnoremap <silent><c-n> :bn<cr>
+nnoremap <silent><c-p> :bp<bar>if &bt!=''<bar>bn<bar>endif<cr>
+nnoremap <silent><c-n> :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
 nnoremap <silent><leader>d :bd<cr>
 nnoremap <silent><expr><c-m> &bt==''?":w<cr>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
@@ -294,8 +294,8 @@ nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_E
 nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 
 " lf config define
-nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
-nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf .<cr>
+nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
+nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf .<cr>
 
 " set pair baket
 inoremap ( ()<left>
@@ -689,7 +689,7 @@ nnoremap =a :ab<cr>
 xnoremap { ,
 nnoremap { ,
 
-" config complete
+" config complete {{{
 inoremap <silent><expr>/ complete_info(["selected"])["selected"]!=-1&&getline(line('.'))[col('.')-2]=='/'?
 			\ "\<bs>/\<c-x>\<c-f>":
 			\ "/\<c-x>\<c-f>"
@@ -714,6 +714,7 @@ augroup END
 inoremap <silent><expr><TAB>
 			\ pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"}}}
 
 let g:status_git_branch=""
 func! GitBranchShow(chan,msg)
@@ -723,7 +724,7 @@ if g:status_git_branch==""
 	call job_start("git rev-parse --abbrev-ref HEAD",{"out_cb":"GitBranchShow"})
 endif
 
-" set statusline
+" set statusline {{{
 function GetMode()
 	let m = mode()|let s:str=''|let s:color='#9ECE6A'
 	if m == 'R'|let s:color='#F7768E'|let s:str= 'Replace'
@@ -742,6 +743,7 @@ set statusline+=%4*%{g:status_git_branch}\ %F\ %m%r%h%w%=
 set statusline+=%3*\ %Y\ |
 set statusline+=%3*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}¦
 set statusline+=%5*☰\ %l/%-L¦%3p%%¦:%v\ ¦
+"}}}
 
 " highlight define,you can change self
 highlight User1 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
@@ -783,8 +785,10 @@ xnoremap <silent>* "sy:let @/="\\V".@s<cr>:set hlsearch<cr>
 xnoremap <silent># "sy:let @/="\\V".@s<cr>:let v:searchforward=0<cr>:set hlsearch<cr>
 nnoremap <silent>* :let @/="\\<".expand('<cword>')."\\>"<cr>:set hlsearch<cr>
 nnoremap <silent># :let @/="\\<".expand('<cword>')."\\>"<cr>:let v:searchforward=0<cr>:set hlsearch<cr>
+xnoremap <silent>g8 "sy:let @/="\\V".@s<cr>:set hlsearch<cr>
+nnoremap <silent>g8 :let @/="\\<".expand('<cword>')."\\>"<cr>:set hlsearch<cr>
 
-" set tabline
+" set tabline {{{
 let s:tab_after=""
 func! TabLine(direct)
 	let s:tab_result=""|let flag=0
@@ -809,14 +813,9 @@ func! TabLineSet()
 endfunc
 set tabline=%!TabLineSet()
 set showtabline=2
+"}}}
 
-" visual gcc
-func! s:VisualComment() abort
-	for temp in range(min([line('.'),line('v')]),max([line('.'),line('v')]))
-		call s:Commentary(temp)
-	endfor
-endfunc
-" set gcc enable
+" set gcc enable {{{
 func! s:Commentary(line) abort
 	let s:num=a:line
 	let line=getline(s:num)
@@ -842,10 +841,17 @@ func! s:Commentary(line) abort
 	endif
 	call setline(s:num,line)
 endfunc
+" visual gcc
+func! s:VisualComment() abort
+	for temp in range(min([line('.'),line('v')]),max([line('.'),line('v')]))
+		call s:Commentary(temp)
+	endfor
+endfunc
 nnoremap <silent><nowait>gcc :call <sid>Commentary(line('.'))<cr>
 xnoremap <silent><nowait>gc  :call <sid>VisualComment()<cr>
+"}}}
 
-" vim sourround
+" vim sourround {{{
 let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
 func! s:AddSourround()
 	let s:ch=nr2char(getchar())|let s:col=col('.')|let pos=getcurpos()
@@ -877,8 +883,40 @@ endfunc
 xnoremap <silent>S  :<c-u>call <sid>AddSourround()<cr>
 nnoremap <silent>ds :call <sid>DelSourround()<cr>
 nnoremap <silent>cs :call <sid>ChangeSourround()<cr>
+"}}}
 
-" like leaderf
+" git config
+command! -nargs=+ Git echo system("git ".<q-args>)
+
+" make run
+command! -nargs=+ Run let command=strpart(<q-args>,0,stridx(<q-args>,' '))|
+			\exec "set makeprg=".command|
+			\exec ":make ".strpart(<q-args>,stridx(<q-args>,' '))|
+			\call <sid>Qfpopup()
+nnoremap <space>: :Run<space>
+
+" ctags config{{{
+command! -nargs=? TagCreate call s:CreateTags(<q-args>)
+command! -nargs=0 TagKind echo system("ctags --list-maps")
+command! -nargs=1 -complete=file TagSave if exists("g:tag_file")&&filereadable(g:tag_file)|call system("cp ".g:tag_file." ".<q-args>)|endif
+nnoremap <space>C :TagCreate<cr>
+func! s:CreateTags(arg)
+	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif
+	let g:tag_file=tempname()
+	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif
+	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=always -R .",
+				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})
+	exec "set tags+=".g:tag_file
+endfunc
+func CreateTagErrCB(chan,msg)
+	echoerr a:msg
+endfunc
+func! CreateTagCB(chan)
+	call popup_create("tags create success", #{pos:'botright',time: 1000,highlight: 'WarningMsg',border: [],close: 'click',})
+endfunc
+"}}}
+
+" like leaderf {{{
 set wildignore+=*/bin/*,.git*,*.out,*.gz
 nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
@@ -893,18 +931,9 @@ nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:c
 nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
 command! -nargs=0 Fzfinstall   echo system("sudo apt install -y fzf")
 command! -nargs=0 Ctagsinstall echo system("sudo apt install -y ctags")
+" }}}
 
-" git config
-command! -nargs=+ Git echo system("git ".<q-args>)
-
-" make run
-command! -nargs=+ Run let command=strpart(<q-args>,0,stridx(<q-args>,' '))|
-			\exec "set makeprg=".command|
-			\exec ":make ".strpart(<q-args>,stridx(<q-args>,' '))|
-			\call <sid>Qfpopup()
-nnoremap <space>: :Run<space>
-
-" like easy motion
+" like easy motion {{{
 let s:easymotion_key=['j','l','k','h','a','s','d','f','g','q','w','e','r','u','i','o','p','c','v','b','n','m','t','y','z','x']
 let s:easymotion_leader=[';',',',' ',"'",'.','/','[','\',']']|let s:easymotion_leader_dict={';':0,',':0,'.':0,"'":0,' ':0,'/':0,'[':0,'\':0,']':0}
 func! s:EasyMotion()abort
@@ -946,8 +975,9 @@ func! s:EasyMotion()abort
 endfunc
 nnoremap <silent>s :call <sid>EasyMotion()<cr>
 inoremap <silent><c-s> <c-o>:call <sid>EasyMotion()<cr>
+" }}}
 
-" tokyonight color inside,donnot change it
+" tokyonight color inside,donnot change it {{{
 set termguicolors
 let g:tokyonight_style = 'night' " available: night, storm
 let s:t_Co = exists('&t_Co') && !empty(&t_Co) && &t_Co > 1 ? &t_Co : 2
@@ -1183,3 +1213,5 @@ let s:terminal = {
 let g:terminal_ansi_colors = [s:terminal.black[0], s:terminal.red[0], s:terminal.green[0], s:terminal.yellow[0],
 			\ s:terminal.blue[0], s:terminal.purple[0], s:terminal.cyan[0], s:terminal.white[0], s:terminal.black[0], s:terminal.red[0],
 			\ s:terminal.green[0], s:terminal.yellow[0], s:terminal.blue[0], s:terminal.purple[0], s:terminal.cyan[0], s:terminal.white[0]]
+
+" vim: set fen ft=vim fdm=marker fmr={{{,}}}:
