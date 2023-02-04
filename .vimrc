@@ -175,7 +175,7 @@ nnoremap <leader><leader>i :PlugInstall<cr>
 nnoremap <leader><leader>c :PlugClean<cr>
 
 " vim-buffer
-nnoremap <silent><c-p> :bp<bar>if &bt!=''<bar>bn<bar>endif<cr>
+nnoremap <silent><c-p> :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
 nnoremap <silent><c-n> :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
 nnoremap <silent><leader>d :bd<cr>
 nnoremap <silent><expr><c-m> &bt==''?":w<cr>":
