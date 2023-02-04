@@ -200,7 +200,7 @@ augroup ReadPost
 				\|endif
 augroup END
 
-" 打开文件自动定位到最后编辑的位置
+" 打开最近关闭的buffer
 let g:map_recent_close={}
 func! s:GetRecentClose()
 	let s:list=[]
@@ -247,11 +247,6 @@ nnoremap <leader><leader>T :bo term ++rows=6<CR>
 nnoremap <leader><leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
 nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:call term_start("bash",{"cwd":"<c-r>=@s<cr>","curwin":1,"term_finish":"close"})<cr>
-
-" term console
-nnoremap <leader><leader>T :bo term ++rows=6<CR>
-nnoremap <leader><leader>t :vert term<CR>
-nnoremap <silent><space><space>t :tabe<cr>:vert term ++curwin ++close<cr>
 
 " lazygit
 nnoremap <silent><space>g :call <sid>LazyGitFile(0)<cr>:tabe<cr>:call term_start("lazygit",{"close_cb":"<sid>LazyGitFile","curwin":1,"term_finish":"close"})<cr>
@@ -716,14 +711,6 @@ inoremap <silent><expr><TAB>
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 "}}}
 
-let g:status_git_branch=""
-func! GitBranchShow(chan,msg)
-	let g:status_git_branch=" ".a:msg." "
-endfunc
-if g:status_git_branch==""
-	call job_start("git rev-parse --abbrev-ref HEAD",{"out_cb":"GitBranchShow"})
-endif
-
 " set statusline {{{
 function GetMode()
 	let m = mode()|let s:str=''|let s:color='#9ECE6A'
@@ -738,6 +725,14 @@ function GetMode()
 	redraw|return s:str
 endfunction
 
+let g:status_git_branch=""
+func! GitBranchShow(chan,msg)
+	let g:status_git_branch=" ".a:msg." "
+endfunc
+if g:status_git_branch==""
+	call job_start("git rev-parse --abbrev-ref HEAD",{"out_cb":"GitBranchShow"})
+endif
+
 set statusline=%3*\ %{GetMode()}
 set statusline+=%4*%{g:status_git_branch}\ %F\ %m%r%h%w%=
 set statusline+=%3*\ %Y\ |
@@ -745,15 +740,16 @@ set statusline+=%3*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"
 set statusline+=%5*☰\ %l/%-L¦%3p%%¦:%v\ ¦
 "}}}
 
-" highlight define,you can change self
+" highlight define,you can change self {{{
 highlight User1 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
 highlight User2 font=#000000 guifg=#9ECE6A guibg=#232433
 highlight User3 font=#000000 guifg=#1a1b26 guibg=#9ECE6A
 highlight User4 font=#000000 guifg=#9ECE6A guibg=#232433
 highlight User5 font=#000000 guifg=#1a1b26 guibg=#7AA2F7
 highlight User6 font=#000000 guifg=#7AA2F7 guibg=#232433
+"}}}
 
-" set netrw
+" set netrw {{{
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
@@ -762,8 +758,9 @@ let g:netrw_winsize = 15
 set fillchars=vert:\⎜
 nnoremap <leader>n :Lexplore<cr> " set netrw
 highlight VertSplit guibg=#1a1b26 guifg=#232433
+"}}}
 
-" slash
+" slash {{{
 func! s:SlashCb()
 	if g:slash_able
 		set nohlsearch|autocmd! slash
@@ -787,6 +784,7 @@ nnoremap <silent>* :let @/="\\<".expand('<cword>')."\\>"<cr>:set hlsearch<cr>
 nnoremap <silent># :let @/="\\<".expand('<cword>')."\\>"<cr>:let v:searchforward=0<cr>:set hlsearch<cr>
 xnoremap <silent>g8 "sy:let @/="\\V".@s<cr>:set hlsearch<cr>
 nnoremap <silent>g8 :let @/="\\<".expand('<cword>')."\\>"<cr>:set hlsearch<cr>
+"}}}
 
 " set tabline {{{
 let s:tab_after=""
@@ -885,7 +883,7 @@ nnoremap <silent>ds :call <sid>DelSourround()<cr>
 nnoremap <silent>cs :call <sid>ChangeSourround()<cr>
 "}}}
 
-" git config
+" git config {{{
 command! -nargs=+ Git echo system("git ".<q-args>)
 
 " make run
@@ -894,6 +892,7 @@ command! -nargs=+ Run let command=strpart(<q-args>,0,stridx(<q-args>,' '))|
 			\exec ":make ".strpart(<q-args>,stridx(<q-args>,' '))|
 			\call <sid>Qfpopup()
 nnoremap <space>: :Run<space>
+"}}}
 
 " ctags config{{{
 command! -nargs=? TagCreate call s:CreateTags(<q-args>)
@@ -929,8 +928,9 @@ nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
-command! -nargs=0 Fzfinstall   echo system("sudo apt install -y fzf")
-command! -nargs=0 Ctagsinstall echo system("sudo apt install -y ctags")
+command! -nargs=0 Fzfinstall      echo system("sudo apt install -y fzf")
+command! -nargs=0 Fzfinstallweb   echo system("wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/fzf-0.36.0-linux_amd64.tar.gz")
+command! -nargs=0 Ctagsinstall    echo system("sudo apt install -y ctags")
 " }}}
 
 " like easy motion {{{
