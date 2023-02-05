@@ -192,7 +192,7 @@ imap <c-h> <left>
 inoremap <c-e> <end>
 inoremap <c-a> <c-o>^
 inoremap <c-d> <del>
-inoremap <c-f> <c-o>W
+inoremap <c-f> <c-o>w
 inoremap <expr><c-b> <sid>CtrlB()
 func! s:CtrlB()
 	if pumvisible()|return "\<c-n>"
@@ -202,7 +202,7 @@ func! s:CtrlB()
 		let s:result=s:result."\<c-n>"
 		return s:result
 	else
-		return "\<c-[>Bi"
+		return "\<c-o>b"
 	endif
 endfunc
 
@@ -316,7 +316,7 @@ func! Tapi_Fzf(bufnum,arglist)
 	if temp!=v:null
 		for line in readfile(g:fzf_temp_file)
 			let list=matchstr(line,"\/\^.*")
-			if a:arglist[0]=="0"|let @/="^".line."\$"|else|let @/=strpart(list,1,len(list)-2)|endif
+			if a:arglist[0]=="0"|let @/="\\V\\^".line."\\$"|else|let @/="\\V".escape(strpart(list,1,len(list)-2),"^$")|endif
 			call feedkeys('n','in')|set hlsearch
 		endfor
 	endif
@@ -388,7 +388,8 @@ nnoremap =q :copen<cr>
 nnoremap ]Q :cnext<cr>:call <sid>Qfpopup()<cr>
 nnoremap [Q :cprevious<cr>:call <sid>Qfpopup()<cr>
 func! s:Qfpopup()abort
-	let dict=getqflist({'all':1})|let pos=dict['idx']|let item=dict['items']|let len=len(dict['items'])|let show=[item[pos-1]['text']]
+	let dict=getqflist({'all':1})|let pos=dict['idx']|let item=dict['items']|let len=len(dict['items'])
+	if len==0||(pos==1&&item[pos-1]['lnum']==0)|cclose|return|endif|let show=[item[pos-1]['text']]
 	while pos<len&&item[pos]['lnum']==0|let show=add(show,item[pos]['text'])|let pos+=1|endwhile
 	let show=show[0:-2]|call popup_atcursor(show,{})
 endfunc
