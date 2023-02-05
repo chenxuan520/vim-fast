@@ -506,6 +506,9 @@ nnoremap <silent><a-LeftMouse> <LeftMouse>:call multcursor#Choose()<cr>
 nnoremap <silent><c-s> :call multcursor#Choose()<cr>
 nnoremap <silent>-s :call multcursor#Toggle()<cr>
 
+" rest test
+nnoremap <space>i :call rest#VrcQuery()<CR>
+
 " gutter for git
 let g:gitgutter_sign_able=1
 let g:gitgutter_highlight_able=0
