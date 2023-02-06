@@ -14,4 +14,19 @@ func! VimFastSetPreCode()
 
 	call append(line(".")-1,'package ' . split(expand('%:p'),'/')[-2])
 endfunc
-nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>
+" auto get go.mod path way
+func! s:GetModPath()
+	let file=findfile("go.mod",".;")
+	if file==""
+		return
+	endif
+	for line in readfile(file)
+		let list=matchlist(line,"^\\s*module\\s*\\(.*\\)$")
+		if len(list)>1
+			execute ':iab <buffer> mod "'.list[1].'/"<left>'
+			break
+		endif
+	endfor
+endfunc
+nnoremap <buffer><Leader>c :call <sid>SetComment()<CR>
+nnoremap <buffer><Leader>C :call <sid>GetModPath()<CR>

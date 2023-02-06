@@ -478,6 +478,13 @@ nnoremap <silent><nowait>]t :tabn<cr>
 nnoremap <silent><nowait>\h :noh<cr>
 nnoremap <silent><nowait>=h :set hlsearch<cr>
 
+" set auto indent file
+nnoremap <silent>=<tab> :call <sid>IndentSet()<cr>
+func! s:IndentSet()
+	let line=matchstr(getline(line('.')),"^\\s*")
+	if len(line)!=0&&line[0]==' '|exec "setlocal shiftwidth=".len(line)|setlocal expandtab|endif|echo 'indent get ok'
+endfunc
+
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
 
@@ -921,12 +928,16 @@ endfunc
 
 " like leaderf {{{
 set wildignore+=*/bin/*,.git*,*.out,*.gz
+func! s:ExludeIgnore()
+	let s:ignore_loaded=get(s:,"ignore_loaded",0)
+	if !s:ignore_loaded|let file=findfile(".gitignore",".;")|if file!=""|for line in readfile(file)|if line!=""&&match(line,"^#")==-1|exec ":set wildignore+=".line|endif|endfor|endif|endif
+endfunc
 nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
 nnoremap <nowait><space>h :help<space>
 xnoremap <silent><space>h "sy:<c-u>help <c-r>=@s<cr><cr>
-nnoremap <nowait><space>a :vimgrep /\V/j<space>./**<s-left><left><left><left>
-xnoremap <nowait><space>a "sy:vimgrep /\V<c-r>=@s<cr>/j<space>./**<cr>:copen<cr>
+nnoremap <nowait><space>a :call <sid>ExludeIgnore()<cr>:vimgrep /\V/j<space>./**<s-left><left><left><left>
+xnoremap <nowait><space>a "sy:call <sid>ExludeIgnore()<cr>:vimgrep /\V<c-r>=@s<cr>/j<space>./**<cr>:copen<cr>
 nnoremap <silent><space>t :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>

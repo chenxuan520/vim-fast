@@ -494,6 +494,12 @@ function! s:GetCurlCommand(request)
   if !empty(a:request.dataBody)
     call add(curlArgs, s:GetCurlDataArgs(a:request))
   endif
+
+  """ Ignore Total line
+  if get(g:,"ignore_total_head",1)
+    call add(curlArgs," 2> /dev/null")
+  endif
+
   return [
     \ 'curl ' . join(curlArgs) . ' ' . s:Shellescape(a:request.host . a:request.requestPath),
     \ curlOpts
@@ -596,6 +602,23 @@ function! s:GetCurlDataArgs(request)
   endif
   """ Otherwise, url-encode and send the request body as a whole.
   return '--data-urlencode ' . s:Shellescape(join(dataLines, ''))
+endfunction
+
+"""
+" Save resutl in file commentary
+"
+" @param string a:output curl result
+" @param number a:endline insert after line
+"
+function! s:SaveResult(output,line)
+  let output=a:output
+  let list=split(output,'\n')
+  for i in range(len(list))
+    let list[i]="# ".list[i]
+  endfor
+  call add(list,"# UPDATE: ".strftime("%c"))
+  call append(a:line-1,list)
+  return a:line+len(list)
 endfunction
 
 """
@@ -720,6 +743,8 @@ endfunction
 "
 function! s:RunQuery(start, end)
   let globSection = s:ParseGlobSection()
+  let shouldSave=get(g:,"vrc_auto_save_result",0)
+  let end=a:end
   let outputInfo = {
     \ 'outputChunks': [],
     \ 'commands': [],
@@ -730,8 +755,8 @@ function! s:RunQuery(start, end)
   let resumeFrom = a:start
   let shouldShowCommand = s:GetOpt('vrc_show_command', 0)
   let shouldDebug = s:GetOpt('vrc_debug', 0)
-  while resumeFrom < a:end
-    let request = s:ParseRequest(a:start, resumeFrom, a:end, globSection)
+  while resumeFrom < end
+    let request = s:ParseRequest(a:start, resumeFrom,end, globSection)
     if !request.success
       echom request.msg
       return
@@ -745,20 +770,26 @@ function! s:RunQuery(start, end)
     silent !clear
     redraw!
 
-    call add(outputInfo['outputChunks'], system(curlCmd))
+    let temp=system(curlCmd)
+    call add(outputInfo['outputChunks'],temp)
     if shouldShowCommand
       call add(outputInfo['commands'], curlCmd)
+    endif
+    if shouldSave
+      let end=s:SaveResult(temp, request.resumeFrom)
     endif
     let resumeFrom = request.resumeFrom
   endwhile
 
-  call s:DisplayOutput(
-    \ s:GetOpt('vrc_output_buffer_name', '__REST_response__'),
-    \ outputInfo,
-    \ {
-      \ 'hasResponseHeader': s:DictHasKeys(curlOpts, ['-i', '--include'])
-    \ }
-  \)
+  if !shouldSave
+    call s:DisplayOutput(
+          \ s:GetOpt('vrc_output_buffer_name', '__REST_response__'),
+          \ outputInfo,
+          \ {
+          \ 'hasResponseHeader': s:DictHasKeys(curlOpts, ['-i', '--include'])
+          \ }
+          \)
+  endif
 endfunction
 
 """

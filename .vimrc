@@ -399,7 +399,6 @@ func! s:MouseConfig()
 	set mouse=a
 	set mousemodel=popup_setpos
 	unmenu PopUp
-	" you can define menu self
 	" visual model
 	vnoremenu PopUp.Yank\ Text "+y
 	vnoremenu PopUp.Cut\ Text "+d
@@ -460,6 +459,13 @@ nnoremap <silent><nowait>]t :tabn<cr>
 " set search noh
 nnoremap <silent><nowait>\h :noh<cr>
 nnoremap <silent><nowait>=h :set hlsearch<cr>
+
+" set auto indent file
+nnoremap <silent>=<tab> :call <sid>IndentSet()<cr>
+func! s:IndentSet()
+	let line=matchstr(getline(line('.')),"^\\s*")
+	if len(line)!=0&&line[0]==' '|exec "setlocal shiftwidth=".len(line)|setlocal expandtab|endif|echo 'indent get ok'
+endfunc
 
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
