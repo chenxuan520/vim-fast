@@ -933,8 +933,12 @@ function! s:Prepare()
   syntax match restKeyword '\c\v^\s*(GET|POST|PUT|DELETE|HEAD|PATCH|OPTIONS|TRACE)'
   highlight link restKeyword Type
 
-  syntax match restHead '\c\v^\w*\s*:\s*[^\/].*$'
+  syntax match restHead '\c\v^\S*\s*:\s*[^\/].*$'
   highlight link restHead KeyWord
+
+  syntax region restBody start="^{"  end="^}"
+  syntax match restBody '\c\v^\s*\S*\s*\=\s*\S*'
+  highlight link restBody String
 
   syntax match restUrl '\c\v \/.*$'
   highlight link restUrl Tag
