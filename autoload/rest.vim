@@ -731,7 +731,7 @@ function! s:DisplayOutput(tmpBufName, outputInfo, config)
   endif
 
   """ Finalize view.
-  setlocal nomodifiable
+  " setlocal nomodifiable
   execute origWin . 'wincmd w'
 endfunction
 
@@ -754,7 +754,7 @@ function! s:RunQuery(start, end)
   " requests using consecutive verbs.
   let resumeFrom = a:start
   let shouldShowCommand = s:GetOpt('vrc_show_command', 0)
-  let shouldDebug = s:GetOpt('vrc_debug', 0)
+  let shouldDebug = s:GetOpt('vrc_debug', 1)
   while resumeFrom < end
     let request = s:ParseRequest(a:start, resumeFrom,end, globSection)
     if !request.success
@@ -811,8 +811,15 @@ endfunction
 """
 " Run a request block that encloses the cursor.
 "
-function! rest#VrcQuery()
-  """ if file name is not rest,finish
+function! rest#Able()
+  call s:Prepare()
+endfunction
+
+"""
+" Run a request block that encloses the cursor.
+"
+function! rest#VrcQuery() abort
+  """ If file name is not rest,finish
   if expand('%:e')!='rest'
     echo 'is not rest file'
     return
@@ -820,6 +827,7 @@ function! rest#VrcQuery()
 
   """ We'll jump pretty much. Save the current win line to set the view as before.
   setlocal commentstring=#%s
+  call s:Prepare()
   let curWinLine = winline()
 
   let curPos = getpos('.')
@@ -907,3 +915,44 @@ function! s:GetDefaultCurlOpts()
   endif
   return copy(opts)
 endfunction
+
+"""
+" Define highlight for file
+"
+function! s:Prepare()
+  setlocal ft=rest
+  setlocal indentexpr=RestIndent()
+  let s:vrc_syntax_highlight=1
+
+  syntax match restKeyword '\c\v^\s*(GET|POST|PUT|DELETE|HEAD|PATCH|OPTIONS|TRACE)\s*.*'
+  highlight link restKeyword Comment
+
+  syntax match restHost '\c\v^\s*HTTPS?\://\S+$'
+  highlight link restHost Label
+
+  syntax match restKeyword '\c\v^\s*(GET|POST|PUT|DELETE|HEAD|PATCH|OPTIONS|TRACE)'
+  highlight link restKeyword Type
+
+  syntax match restHead '\c\v^\w*\s*:\s*[^\/].*$'
+  highlight link restHead KeyWord
+
+  syntax match restUrl '\c\v \/.*$'
+  highlight link restUrl Tag
+
+  syntax match restComment '\v^\s*(#|//).*$'
+  highlight link restComment Comment
+endfunction
+
+"""
+" Define indent way
+"
+func! RestIndent()
+  if v:lnum==0
+    return -1
+  endif
+  let line=getline(v:lnum-1)
+  if line[len(line)-1]!=','
+    return cindent(v:lnum)
+  endif
+  return indent(v:lnum-1)
+endfunc
