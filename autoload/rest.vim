@@ -496,8 +496,11 @@ function! s:GetCurlCommand(request)
   endif
 
   """ Ignore Total line
-  if get(g:,"ignore_total_head",1)
-    call add(curlArgs," 2> /dev/null")
+  if get(g:,"vrc_ignore_total_head",1)
+    if !exists("s:errfile")
+      let s:errfile=tempname()
+    endif
+    call add(curlArgs," 2>> ".s:errfile)
   endif
 
   return [
@@ -663,6 +666,14 @@ function! s:DisplayOutput(tmpBufName, outputInfo, config)
   silent! normal! ggdG
   let output = join(a:outputInfo['outputChunks'], "\n\n")
   call setline('.', split(substitute(output, '[[:return:]]', '', 'g'), '\v\n'))
+
+  """ Add error msg
+  if exists("s:errfile")&&filereadable(s:errfile)
+    call append(line('$'),["","","---------------------------------------------------"])
+    let output = join(readfile(s:errfile), "\n\n")
+    call append(line('$'), split(substitute(output, '[[:return:]]', '', 'g'), '\v\n'))
+    unlet s:errfile
+  endif
 
   """ Display commands in quickfix window if any.
   if (!empty(a:outputInfo['commands']))
@@ -924,11 +935,8 @@ function! s:Prepare()
   setlocal indentexpr=RestIndent()
   let s:vrc_syntax_highlight=1
 
-  syntax match restKeyword '\c\v^\s*(GET|POST|PUT|DELETE|HEAD|PATCH|OPTIONS|TRACE)\s*.*'
-  highlight link restKeyword Comment
-
   syntax match restHost '\c\v^\s*HTTPS?\://\S+$'
-  highlight link restHost Label
+  highlight link restHost String
 
   syntax match restKeyword '\c\v^\s*(GET|POST|PUT|DELETE|HEAD|PATCH|OPTIONS|TRACE)'
   highlight link restKeyword Type
@@ -938,13 +946,16 @@ function! s:Prepare()
 
   syntax region restBody start="^{"  end="^}"
   syntax match restBody '\c\v^\s*\S*\s*\=\s*\S*'
-  highlight link restBody String
+  highlight link restBody Tag
 
   syntax match restUrl '\c\v \/.*$'
-  highlight link restUrl Tag
+  highlight link restUrl Directory
 
   syntax match restComment '\v^\s*(#|//).*$'
   highlight link restComment Comment
+
+  syntax match restOption '^-\S*\s*$'
+  highlight link restOption Label
 endfunction
 
 """

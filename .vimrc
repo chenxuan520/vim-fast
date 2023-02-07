@@ -229,7 +229,6 @@ vnoremap <leader><leader>P "+P
 
 augroup ReadPost
 	au!
-	autocmd BufNewFile,BufRead *.rest silent! call rest#Able()
 	autocmd TerminalOpen * setlocal norelativenumber|setlocal nonumber
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
@@ -514,6 +513,10 @@ nnoremap <silent><c-s> :call multcursor#Choose()<cr>
 nnoremap <silent>-s :call multcursor#Toggle()<cr>
 
 " rest test
+augroup restful
+	au!
+	autocmd BufNewFile,BufRead *.rest silent! call rest#Able()
+augroup END
 cab pyj python -m json.tool
 nnoremap <space>i :call rest#VrcQuery()<CR>
 
