@@ -735,14 +735,14 @@ endfunction
 
 let g:status_git_branch=""
 func! GitBranchShow(chan,msg)
-	let g:status_git_branch=" ".a:msg." "
+	let g:status_git_branch=" ".a:msg." |"
 endfunc
 if g:status_git_branch==""
 	call job_start("git rev-parse --abbrev-ref HEAD",{"out_cb":"GitBranchShow"})
 endif
 
 set statusline=%3*\ %{GetMode()}
-set statusline+=%4*%{g:status_git_branch}\ %F\ %m%r%h%w%=
+set statusline+=%4*\ %{g:status_git_branch}\ %F\ \|%m%r%h%w%=
 set statusline+=%3*\ %Y\ |
 set statusline+=%3*¦%{\"\".(\"\"?&enc:&fenc).((exists(\"+bomb\")\ &&\ &bomb)?\"+\":\"\").\"\"}¦
 set statusline+=%5*☰\ %l/%-L¦%3p%%¦:%v\ ¦
@@ -803,7 +803,7 @@ func! TabLine(direct)
 		let s:name=buf.name
 		if strridx(buf.name,"/")!=-1|let s:name=strpart(buf.name,strridx(buf.name,"/")+1)|endif
 		if buf.name!=expand('%:p')
-			if flag==0|let s:tab_result=s:tab_result." ".s:name|else|let s:tab_after=s:tab_after." ".s:name.""|endif
+			if flag==0|let s:tab_result=s:tab_result."\ ".s:name|else|let s:tab_after=s:tab_after."\ ".s:name|endif
 		else
 			let flag=1
 		endif
@@ -812,8 +812,8 @@ func! TabLine(direct)
 	return s:tab_result
 endfunc
 func! TabLineSet()
-	if &modified|let tab="%2* %0.32(%{TabLine(0)}%)%5* %t%6*%2*%<%{TabLine(1)}%r%h%w%=%6*%5* buffer"
-	else|let tab="%2* %0.32(%{TabLine(0)}%)%1* %t%2*%2*%<%{TabLine(1)}%r%h%w%=%2*%1* buffer"
+	if &modified|let tab="%2* %0.32(%{TabLine(0)}%)%5*\ %t%6*%2*%<%{TabLine(1)}%r%h%w%=%6*\ %5* buffer"
+	else|let tab="%2* %0.32(%{TabLine(0)}%)%1*\ %t%2*%2*%<%{TabLine(1)}%r%h%w%=%2*\ %1* buffer"
 	endif
 	return tab
 endfunc
@@ -911,8 +911,7 @@ nnoremap <space>c  :let temp=taglist(input("Enter regex find:"))<bar>redraw<bar>
 nnoremap <space>C  :TagCreate<cr>
 nnoremap <leader>u <c-]>
 func! s:CreateTags(arg)
-	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif
-	let g:tag_file=tempname()
+	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif|let g:tag_file=tempname()
 	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif
 	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=always -R .",
 				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})

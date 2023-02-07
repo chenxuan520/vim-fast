@@ -129,7 +129,6 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'jiangmiao/auto-pairs'
 " file tree left
 Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight', {'on': 'NERDTreeToggle'}
 " easy align
 Plug 'godlygeek/tabular', {'on':'Tabularize'}
 " change surround quick
@@ -250,6 +249,24 @@ func! s:GetRecentClose()
 	copen
 endfunc
 nnoremap <silent><nowait><space>q :call <sid>GetRecentClose()<cr>
+
+" ctags config
+command! -nargs=? TagCreate call s:CreateTags(<q-args>)
+command! -nargs=0 TagKind echo system("ctags --list-maps")
+command! -nargs=1 -complete=file TagSave if exists("g:tag_file")&&filereadable(g:tag_file)|call system("cp ".g:tag_file." ".<q-args>)|endif
+func! s:CreateTags(arg)
+	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif|let g:tag_file=tempname()
+	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif
+	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=always -R .",
+				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})
+	exec "set tags+=".g:tag_file
+endfunc
+func CreateTagErrCB(chan,msg)
+	echoerr a:msg
+endfunc
+func! CreateTagCB(chan)
+	call popup_create("tags create success", #{pos:'botright',time: 1000,highlight: 'WarningMsg',border: [],close: 'click',})
+endfunc
 
 " termdebug
 let g:termdebug_wide=1
