@@ -1,5 +1,6 @@
 "
-" this file is from https://kgithub.com/diepm/vim-rest-console
+" this file is from https://github.com/diepm/vim-rest-console
+" if you want to more info about it ,please go to the office website
 "
 
 let s:vrc_auto_format_response_patterns = {

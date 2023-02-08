@@ -981,7 +981,7 @@ let g:Lf_WindowPosition = 'popup'
 let g:Lf_StlSeparator = { 'left': '', 'right': ''}
 let g:Lf_PreviewInPopup = 1
 let g:Lf_PreviewResult = {'Function': 1,'Rg': 1,'Line': 1,'BufTag': 1,'Jumps': 1}
-let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>'],'<C-K>':['<C-P>','<C-K>'],'<C-P>':['<C-L>'],'<HOME>':['<C-A>']}
+let g:Lf_CommandMap = {'<C-J>':['<C-J>','<C-N>'],'<C-K>':['<C-P>','<C-K>'],'<C-P>':['<C-L>'],'<HOME>':['<C-A>'],'<Del>':['<Del>','<C-D>']}
 let g:Lf_UseCache = 0
 let g:Lf_WildIgnore = {
 			\ 'dir': ['.svn','.git','.hg','.vscode','.idea','bin','static'],
