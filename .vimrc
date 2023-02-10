@@ -261,7 +261,7 @@ func! s:CreateTags(arg)
 				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})
 	exec "set tags+=".g:tag_file
 endfunc
-func CreateTagErrCB(chan,msg)
+func! CreateTagErrCB(chan,msg)
 	echoerr a:msg
 endfunc
 func! CreateTagCB(chan)
