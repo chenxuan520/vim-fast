@@ -353,10 +353,12 @@ vnoremap <leader>p "0p
 nnoremap <leader>P "0P
 vnoremap <leader>P "0P
 
-" vimdiff merge
+" vimdiff tool
+cab <expr>Diff "Diff ".expand('%:p:h')."/"
+command! -nargs=1 -bang -complete=file Diff exec ":vert diffsplit ".<q-args>
 command! -nargs=0 Remote :diffg RE
-command! -nargs=0 Base :diffg BA
-command! -nargs=0 Local :diffg LO
+command! -nargs=0 Base   :diffg BA
+command! -nargs=0 Local  :diffg LO
 
 " edit binrary
 func! s:BinraryEdit(args) abort
