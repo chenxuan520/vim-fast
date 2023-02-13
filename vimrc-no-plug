@@ -135,12 +135,12 @@ command! -nargs=0 UpdateSelf echo "Updating,please wait..."|call system('curl ht
 func! s:Askifaddpath()
 	echohl WarningMsg|if input("need to add to binrary path to $PATH?")=="y"|call system("echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc")|endif|echohl NONE
 endfunc
-command! -nargs=0 Fzfinstall        echo system("sudo apt install -y fzf")
+command! -nargs=0 Fzfinstalldeb     echo system("sudo apt install -y fzf")
 command! -nargs=0 Fzfinstallweb     echo system("wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/fzf-0.36.0-linux_amd64.tar.gz;mkdir ~/.local;mkdir ~/.local/bin;tar -zxvf ./fzf-0.36.0-linux_amd64.tar.gz -C ~/.local/bin;rm ./fzf-0.36.0-linux_amd64.tar.gz")|call <sid>Askifaddpath()
-command! -nargs=0 Ctagsinstall      echo system("sudo apt install -y ctags")
+command! -nargs=0 Ctagsinstalldeb   echo system("sudo apt install -y ctags")
 command! -nargs=0 Ctagsinstallweb   echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.0/ctags -O ~/.local/bin/ctags;chmod +x ~/.local/bin/ctags")|call <sid>Askifaddpath()
 command! -nargs=0 Lfinstallweb      echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lf -O ~/.local/bin/lf;chmod +x ~/.local/bin/lf")|call <sid>Askifaddpath()
-command! -nargs=0 Lazygitinstallweb echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lazygit.tar.gz;tar -zxvf ./lazygit.tar.gz -C ~/.local/bin;rm ./lazygit.tar.gz")|call <sid>Askifaddpath()
+command! -nargs=0 Lazygitinstallweb echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lazygit.tar.gz;tar -zxvf ./lazygit.tar.gz -C ~/.local/bin;rm ./lazygit.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE")|call <sid>Askifaddpath()
 
 " 插入模式下的光标移动
 imap <c-j> <down>
@@ -812,7 +812,7 @@ nnoremap <silent>g8 :let @/="\\<".expand('<cword>')."\\>"<cr>:set hlsearch<cr>
 let s:tab_after=""
 func! TabLine(direct)
 	let s:tab_result=""|let flag=0
-	if a:direct|return s:tab_after|else|let s:tab_after=""|endif
+	if a:direct|return s:tab_after!=""?s:tab_after."|":""|else|let s:tab_after=""|endif
 	for buf in getbufinfo({'buflisted':1})
 		let s:name=buf.name
 		if strridx(buf.name,"/")!=-1|let s:name=strpart(buf.name,strridx(buf.name,"/")+1)|endif
