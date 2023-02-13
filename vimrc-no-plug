@@ -131,6 +131,17 @@ endif
 " update self
 command! -nargs=0 UpdateSelf echo "Updating,please wait..."|call system('curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash')|qa
 
+" install binrary tools
+func! s:Askifaddpath()
+	echohl WarningMsg|if input("need to add to binrary path to $PATH?")=="y"|call system("echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc")|endif|echohl NONE
+endfunc
+command! -nargs=0 Fzfinstall        echo system("sudo apt install -y fzf")
+command! -nargs=0 Fzfinstallweb     echo system("wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/fzf-0.36.0-linux_amd64.tar.gz;mkdir ~/.local;mkdir ~/.local/bin;tar -zxvf ./fzf-0.36.0-linux_amd64.tar.gz -C ~/.local/bin;rm ./fzf-0.36.0-linux_amd64.tar.gz")|call <sid>Askifaddpath()
+command! -nargs=0 Ctagsinstall      echo system("sudo apt install -y ctags")
+command! -nargs=0 Ctagsinstallweb   echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.0/ctags -O ~/.local/bin/ctags;chmod +x ~/.local/bin/ctags")|call <sid>Askifaddpath()
+command! -nargs=0 Lfinstallweb      echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lf -O ~/.local/bin/lf;chmod +x ~/.local/bin/lf")|call <sid>Askifaddpath()
+command! -nargs=0 Lazygitinstallweb echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lazygit.tar.gz;tar -zxvf ./lazygit.tar.gz -C ~/.local/bin;rm ./lazygit.tar.gz")|call <sid>Askifaddpath()
+
 " 插入模式下的光标移动
 imap <c-j> <down>
 imap <c-k> <up>
@@ -945,9 +956,6 @@ nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
-command! -nargs=0 Fzfinstall      echo system("sudo apt install -y fzf")
-command! -nargs=0 Fzfinstallweb   echo system("wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/fzf-0.36.0-linux_amd64.tar.gz;mkdir ~/.local;mkdir ~/.local/bin;tar -zxvf ./fzf-0.36.0-linux_amd64.tar.gz -C ~/.local/bin;echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc")
-command! -nargs=0 Ctagsinstall    echo system("sudo apt install -y ctags")
 " }}}
 
 " like easy motion {{{
