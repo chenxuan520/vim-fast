@@ -364,7 +364,7 @@ func! s:BinraryEdit(args) abort
 		echo "not a bin file"|return
 	endif
 	if &readonly|execute ":edit ++bin".expand('%')|endif|setlocal bin
-	if !executable('xxd')|echoerr "xxd not find,install it first"|endif
+	if !executable('xxd')|echoerr "xxd not find,install it first"|return|endif
 	echo "transform...please wait..."
 	let g:xxd_cmd=":%!xxd ".a:args
 	silent! execute g:xxd_cmd|let &modified=0|redraw!
