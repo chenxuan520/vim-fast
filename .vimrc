@@ -33,6 +33,7 @@ set ttimeoutlen=0        " set <ESC> response time
 set virtualedit=block,onemore   " allows the cursor appear after last character
 set noshowmode           " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
+set matchpairs+=<:>      " make % can jump <>
 set background=dark      " set background color
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

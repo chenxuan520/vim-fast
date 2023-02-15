@@ -33,6 +33,7 @@ set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
 set noshowmode           " 设置不打开底部insert
 set hidden               " 设置允许在未保存切换buffer
+set matchpairs+=<:>      " 设置%匹配<>
 set background=dark      " 设置背景默认黑色
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
@@ -135,12 +136,12 @@ command! -nargs=0 UpdateSelf echo "Updating,please wait..."|call system('curl ht
 func! s:Askifaddpath()
 	echohl WarningMsg|if input("need to add to binrary path to $PATH?")=="y"|call system("echo 'export PATH=~/.local/bin:$PATH' >> ~/.bashrc")|endif|echohl NONE
 endfunc
-command! -nargs=0 Fzfinstalldeb     echo system("sudo apt install -y fzf")
-command! -nargs=0 Fzfinstallweb     echo system("wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/fzf-0.36.0-linux_amd64.tar.gz;mkdir ~/.local;mkdir ~/.local/bin;tar -zxvf ./fzf-0.36.0-linux_amd64.tar.gz -C ~/.local/bin;rm ./fzf-0.36.0-linux_amd64.tar.gz")|call <sid>Askifaddpath()
-command! -nargs=0 Ctagsinstalldeb   echo system("sudo apt install -y ctags")
-command! -nargs=0 Ctagsinstallweb   echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.0/ctags -O ~/.local/bin/ctags;chmod +x ~/.local/bin/ctags")|call <sid>Askifaddpath()
-command! -nargs=0 Lfinstallweb      echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lf -O ~/.local/bin/lf;chmod +x ~/.local/bin/lf")|call <sid>Askifaddpath()
-command! -nargs=0 Lazygitinstallweb echo system("mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lazygit.tar.gz;tar -zxvf ./lazygit.tar.gz -C ~/.local/bin;rm ./lazygit.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE")|call <sid>Askifaddpath()
+command! -nargs=0 Fzfinstalldeb     exec ":!sudo apt install -y fzf"
+command! -nargs=0 Fzfinstallweb     exec ":!wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/fzf-0.36.0-linux_amd64.tar.gz;mkdir ~/.local;mkdir ~/.local/bin;tar -zxvf ./fzf-0.36.0-linux_amd64.tar.gz -C ~/.local/bin;rm ./fzf-0.36.0-linux_amd64.tar.gz"|redraw!|call <sid>Askifaddpath()
+command! -nargs=0 Ctagsinstalldeb   exec ":!sudo apt install -y ctags"
+command! -nargs=0 Ctagsinstallweb   exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.0/ctags -O ~/.local/bin/ctags;chmod +x ~/.local/bin/ctags"|redraw!|call <sid>Askifaddpath()
+command! -nargs=0 Lfinstallweb      exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lf -O ~/.local/bin/lf;chmod +x ~/.local/bin/lf"|redraw!|call <sid>Askifaddpath()
+command! -nargs=0 Lazygitinstallweb exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lazygit.tar.gz;tar -zxvf ./lazygit.tar.gz -C ~/.local/bin;rm ./lazygit.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE"|redraw!|call <sid>Askifaddpath()
 
 " 插入模式下的光标移动
 imap <c-j> <down>
@@ -705,6 +706,10 @@ nnoremap =a :ab<cr>
 xnoremap { ,
 nnoremap { ,
 
+" session manager
+nnoremap <space>S :mksession! .session.vim<cr>
+nnoremap <space>s :silent! source .session.vim<cr>
+
 " config complete {{{
 inoremap <silent><expr>/ complete_info(["selected"])["selected"]!=-1&&getline(line('.'))[col('.')-2]=='/'?
 			\ "\<bs>/\<c-x>\<c-f>":
@@ -826,6 +831,7 @@ func! TabLine(direct)
 	return s:tab_result
 endfunc
 func! TabLineSet()
+	if len(gettabinfo())>1|return "%5*  Tab%2*%=%1* buffer"|endif
 	if &modified|let tab="%2* %0.32(%{TabLine(0)}%)%5*\ %t%6*%2*%<%{TabLine(1)}%r%h%w%=%6*\ %5* buffer"
 	else|let tab="%2* %0.32(%{TabLine(0)}%)%1*\ %t%2*%2*%<%{TabLine(1)}%r%h%w%=%2*\ %1* buffer"
 	endif
@@ -920,7 +926,9 @@ nnoremap <space>: :Run<space>
 " ctags config{{{
 command! -nargs=? TagCreate call s:CreateTags(<q-args>)
 command! -nargs=0 TagKind echo system("ctags --list-maps")
+command! -nargs=1 -complete=tag  TagFind exec ":ts /".<q-args>
 command! -nargs=1 -complete=file TagSave if exists("g:tag_file")&&filereadable(g:tag_file)|call system("cp ".g:tag_file." ".<q-args>)|endif
+cab TagSave TagSave <c-r>=expand('%:p:h')<cr>/ctags
 nnoremap <space>c  :let temp=taglist(input("Enter regex find:"))<bar>redraw<bar>echo temp<cr>
 nnoremap <space>C  :TagCreate<cr>
 nnoremap <leader>u <c-]>
