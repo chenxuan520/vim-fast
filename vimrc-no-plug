@@ -494,9 +494,15 @@ nnoremap <silent><nowait>=h :set hlsearch<cr>
 
 " set auto indent file
 nnoremap <silent>=<tab> :call <sid>IndentSet()<cr>
-func! s:IndentSet()
+func! s:IndentSet()abort
 	let line=matchstr(getline(line('.')),"^\\s*")
-	if len(line)!=0&&line[0]==' '|exec "setlocal shiftwidth=".len(line)|setlocal expandtab|endif|echo 'indent get ok'
+	for temp in getline(line('.')+1, line('$'))
+		let temp=matchstr(temp,"^\\s*")|if temp!=line|break|endif
+	endfor
+	if (len(line)!=0&&line[0]==' ')||(len(temp)!=0&&temp[0]==' ')
+		setlocal expandtab|exec "setlocal shiftwidth=".abs(len(line)-len(temp))
+	endif
+	echo 'indent ok'
 endfunc
 
 " delete <space> in end of line

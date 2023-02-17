@@ -312,7 +312,7 @@
 
 3. PlugInstall 出现\# unsafe repository git config --global --add safe.directory
 
-   - git config --global --add safe.directory "*"
+   - git config --global --add safe.directory "\*"
 
 4. xshell,tmux 打开的颜色混乱
 
