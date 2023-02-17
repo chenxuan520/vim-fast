@@ -254,7 +254,9 @@ nnoremap <silent><nowait><space>q :call <sid>GetRecentClose()<cr>
 " ctags config
 command! -nargs=? TagCreate call s:CreateTags(<q-args>)
 command! -nargs=0 TagKind echo system("ctags --list-maps")
+command! -nargs=1 -complete=tag  TagFind exec ":ts /".<q-args>
 command! -nargs=1 -complete=file TagSave if exists("g:tag_file")&&filereadable(g:tag_file)|call system("cp ".g:tag_file." ".<q-args>)|endif
+cab TagSave TagSave <c-r>=<sid>FindRoot()<cr>/tags
 func! s:CreateTags(arg)
 	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif|let g:tag_file=tempname()
 	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif

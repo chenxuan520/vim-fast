@@ -714,8 +714,7 @@ nnoremap <space>s :silent! source .session.vim<cr>
 inoremap <silent><expr>/ complete_info(["selected"])["selected"]!=-1&&getline(line('.'))[col('.')-2]=='/'?
 			\ "\<bs>/\<c-x>\<c-f>":
 			\ "/\<c-x>\<c-f>"
-let g:cmpX=-1
-let g:cmpY=-1
+let g:cmpX=-1|let g:cmpY=-1
 function! s:feed_popup()
 	if getline('.')[col('.')-1]=='/'|return|endif
 	let x = col('.') - 1|let y = line('.') - 1
@@ -928,7 +927,7 @@ command! -nargs=? TagCreate call s:CreateTags(<q-args>)
 command! -nargs=0 TagKind echo system("ctags --list-maps")
 command! -nargs=1 -complete=tag  TagFind exec ":ts /".<q-args>
 command! -nargs=1 -complete=file TagSave if exists("g:tag_file")&&filereadable(g:tag_file)|call system("cp ".g:tag_file." ".<q-args>)|endif
-cab TagSave TagSave <c-r>=expand('%:p:h')<cr>/ctags
+cab TagSave TagSave <c-r>=<sid>FindRoot()<cr>/tags
 nnoremap <space>c  :let temp=taglist(input("Enter regex find:"))<bar>redraw<bar>echo temp<cr>
 nnoremap <space>C  :TagCreate<cr>
 nnoremap <leader>u <c-]>
