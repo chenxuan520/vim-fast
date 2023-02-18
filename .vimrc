@@ -546,7 +546,8 @@ augroup restful
 	autocmd BufNewFile,BufRead *.rest silent! call rest#Able()
 augroup END
 cab pyj python -m json.tool
-nnoremap <space>i :call rest#VrcQuery()<CR>
+nnoremap <space>i :call rest#VrcQuery(1)<CR>
+nnoremap <space>I :call rest#VrcQuery(0)<CR>
 
 " gutter for git
 let g:gitgutter_sign_able=1

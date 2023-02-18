@@ -205,6 +205,9 @@ function! s:ParseHeaders(start, end)
   let lineBuf = getline(a:start, a:end)
   let hasContentType = 0
   for line in lineBuf
+    if line=~'\c\v^(GET|POST|PUT|DELETE|HEAD|PATCH|OPTIONS|TRACE)\s+'
+      return headers
+    endif
     let line = s:StrTrim(line)
     if line ==? '' || line =~? s:vrc_comment_delim || line =~? '\v^--?\w+'
       continue
@@ -315,6 +318,50 @@ function! s:ParseCurlOpts(fromLine, toLine)
     endif
   endfor
   return curlOpts
+endfunction
+
+"""
+" Parse the request block.
+"
+" @param  int  a:resumeFrom (inclusive)
+" @param  int  a:end (inclusive)
+" @param  dict a:request
+" @return dict {
+"                'success':     boolean,
+"                'resumeFrom':  int,
+"                'msg':         string,
+"                'host':        string,
+"                'headers':     dict,
+"                'curlOpts':    dict,
+"                'httpVerb':    string,
+"                'requestPath': string,
+"                'dataBody':    string,
+"                'describe':    []string,
+"                'param':       []string,
+"                'return':      []string
+"              }
+"
+function! s:ParseComment(resumeFrom,end,dict)
+  let describe=[]|let param=[]|let result=[]|let title=[]
+  let dict=a:dict
+  for line in getline(a:resumeFrom,a:end)
+    if line=~"^\\s*#!"
+      call add(describe,strpart(line,stridx(line,"#!")+2))
+    elseif line=~"^\\s*#@"
+      call add(param,strpart(line,stridx(line,"#@")+2))
+    elseif line=~"^\\s*##"
+      call add(result,strpart(line,stridx(line,"##")+2))
+    elseif line=~"^\\s*#-"
+      call add(title,strpart(line,stridx(line,"#-")+2))
+    elseif line=~'\c\v^(GET|POST|PUT|DELETE|HEAD|PATCH|OPTIONS|TRACE)\s+'
+      break
+    endif
+  endfor
+  let dict['describe']=describe
+  let dict['param']=param
+  let dict['return']=result
+  let dict['title']=title
+  return dict
 endfunction
 
 """
@@ -748,6 +795,119 @@ function! s:DisplayOutput(tmpBufName, outputInfo, config)
 endfunction
 
 """
+" Make requests to a markdown file
+"
+" @param arr a:request
+"
+" @return dict {
+"                'host':        string,
+"                'headers':     dict,
+"                'curlOpts':    dict,
+"                'httpVerb':    string,
+"                'requestPath': string,
+"                'dataBody':    string,
+"                'title':       []string,
+"                'describe':    []string,
+"                'param':       []string,
+"                'return':      []string
+"              }
+function! s:MdCreate(reqs)abort
+  let reqs=a:reqs
+  let result=["## Host: ".reqs[0]['host'],""]
+  " add header
+  if len(reqs[0]['headers'])!=0
+    call add(result,"### public header")
+    for [key,val] in items(reqs[0]['headers'])
+      call add(result,"- ".key.":".val)
+    endfor
+    call add(result,"")
+  endif
+
+  for req in reqs
+    if len(req['title'])!=0
+      let result=result+["## ".join(req['title'])]
+    endif
+    " add request
+    call add(result,"### ".req['httpVerb']." ".req['requestPath'])
+    if len(req['describe'])!=0
+      call add(result,"#### describe")
+      for temp in req['describe']
+        call add(result,"- ".temp)
+      endfor
+    endif
+
+    " add curl demo
+    let result=result+["#### curl demo","- `".req['commands']."`"]
+
+    " add body
+    if len(req['param'])!=0
+      call add(result,"#### request describe")
+      for temp in req['param']
+        call add(result,"- ".temp)
+      endfor
+    endif
+    if len(req['dataBody'])!=0
+      let result=result+["#### body","```"]+req['dataBody']+["```"]
+    endif
+
+    " add output
+    if len(req['return'])!=0
+      call add(result,"#### response describe")
+      for temp in req['return']
+        call add(result,"- ".temp)
+      endfor
+    endif
+    call add(result,"#### response")
+    let result=result+["```",req['output'],"```",""]
+  endfor
+
+  edit rest.md
+  setlocal nofoldenable
+  call append(len('$'),result)
+  call cursor(0,0)
+endfunction
+
+
+"""
+" Make REST request to markdown between the given lines.
+"
+" @param int a:start
+" @param int a:end
+"
+function! s:MdQuery(start, end)
+  let globSection = s:ParseGlobSection()
+  let end=a:end
+  let reqs=[]
+
+  " The `while loop` is to support multiple
+  " requests using consecutive verbs.
+  let resumeFrom = a:start
+  let shouldDebug = s:GetOpt('vrc_debug', 0)
+  while resumeFrom < end
+    let request = s:ParseRequest(a:start, resumeFrom,end, globSection)
+    let request = s:ParseComment(resumeFrom, end, request)
+    if !request.success
+      echom request.msg
+      return
+    endif
+
+    let [curlCmd, curlOpts] = s:GetCurlCommand(request)
+    if shouldDebug
+      echom '[Debug] Command: ' . curlCmd
+      echom '[Debug] cUrl options: ' . string(curlOpts)
+    endif
+    silent !clear
+    redraw!
+
+    let request['output']=system(curlCmd)
+    let request['commands']=curlCmd
+    let resumeFrom = request.resumeFrom
+    call add(reqs,request)
+  endwhile
+  call s:MdCreate(reqs)
+endfunction
+
+"""
 " Run a REST request between the given lines.
 "
 " @param int a:start
@@ -830,7 +990,7 @@ endfunction
 """
 " Run a request block that encloses the cursor.
 "
-function! rest#VrcQuery() abort
+function! rest#VrcQuery(mode) abort
   """ If file name is not rest,finish
   if expand('%:e')!='rest'
     echo 'is not rest file'
@@ -857,7 +1017,11 @@ function! rest#VrcQuery() abort
   endif
 
   """ Parse and execute the query
-  call s:RunQuery(blockStart, blockEnd)
+  if a:mode
+    call s:RunQuery(blockStart, blockEnd)
+  else
+    call s:MdQuery(blockStart, blockEnd)
+  endif
   call s:RestoreWinLine(curWinLine)
 
   """ Display deprecated message if any.
