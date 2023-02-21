@@ -469,7 +469,7 @@ nnoremap <silent><nowait>\r :setlocal nowrap<cr>:unmap<buffer> j<cr>:unmap<buffe
 
 " set line number
 nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
-nnoremap <silent><nowait>\n :setlocal relativenumber<cr>
+nnoremap <silent><nowait>\n :setlocal relativenumber<bar>setlocal number<cr>
 
 " close/open number
 nnoremap <silent><nowait>=N :setlocal norelativenumber<cr>:setlocal nonumber<cr>

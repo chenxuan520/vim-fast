@@ -117,9 +117,9 @@ call plug#begin('~/.vim/plugged')
 " begin vim
 Plug 'chenxuan520/my-vim-dashboard'
 " function list
-Plug 'preservim/tagbar', {'tag':'2.2','on':'TagbarToggle'}
+Plug 'preservim/tagbar', {'on':'TagbarToggle'}
 " auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release','tag': '0.0.81'}
+Plug 'neoclide/coc.nvim', {'branch': 'release','tag': 'v0.0.81'}
 " find anything
 Plug 'Yggdroot/LeaderF', {'do':'./install.sh'}
 " quick move mouse
@@ -459,7 +459,7 @@ nnoremap <silent><nowait>\r :setlocal nowrap<cr>:unmap<buffer> j<cr>:unmap<buffe
 
 " set line number
 nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
-nnoremap <silent><nowait>\n :setlocal relativenumber<cr>
+nnoremap <silent><nowait>\n :setlocal relativenumber<bar>setlocal number<cr>
 
 " close/open number
 nnoremap <silent><nowait>=N :setlocal norelativenumber<cr>:setlocal nonumber<cr>

@@ -188,7 +188,7 @@
 
 ## 项目说明
 
-1. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux,其他系统可以使用vimplus!,同时非常希望大家可以提mr来完善仓库,或者提出issue说明需求的系统**
+1. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux(如debian,linux mint等),其他系统可以使用vimplus!,同时非常希望大家可以提mr来完善仓库,或者提出issue说明需求的系统**
 
 2. 该项目基于[Vimplus](https://gitee.com/chxuan/vimplus.git)
 
