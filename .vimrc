@@ -229,7 +229,7 @@ vnoremap <leader><leader>P "+P
 
 augroup ReadPost
 	au!
-	autocmd TerminalOpen * setlocal norelativenumber|setlocal nonumber
+	autocmd TerminalOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|endif
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
@@ -316,6 +316,7 @@ func! s:LazyGitFile(close) abort
 	endif
 	tabclose
 	if exists("s:lazygit_file")&&filereadable(expand(s:lazygit_file))&&getenv("LAZYGIT_FILE")==s:lazygit_file&&filereadable(expand(s:lazygit_file))
+		call setenv("LAZYGIT_FILE", v:null)
 		for line in readfile(s:lazygit_file)
 			let msg=split(line)|let file=termtask#Term_get_dir()."/".msg[0]
 			execute ":edit ".file
