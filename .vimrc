@@ -581,6 +581,7 @@ nnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('')<cr>
 
 " use select area to replace
 xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn<left><left><left>
+xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:!sed -i "s/<c-r>=escape(@s,'/')<cr>//g" `grep "<c-r>=escape(@s,'/')<cr>" -rl ./\ --exclude-dir=".git"`
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 
 " object buffer
