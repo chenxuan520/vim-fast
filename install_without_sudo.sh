@@ -26,18 +26,12 @@ function install_plug()
 	./shell/plug.sh
 	# curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 
+	./shell/nodejs.sh 0
 	type node
 	if [ $? == 1 ];then
 		npm config set registry https://registry.npmmirror.com
 		# https://registry.npmjs.org/
 		# npm install -g yarn
-		npm install -g yarn
-		yarn config set registry 'https://registry.npm.taobao.org'
-
-		git clone https://gitee.com/zgpio/markdown-preview.nvim.git ~/.vim/plugged/markdown-preview.nvim
-		cd ~/.vim/plugged/markdown-preview.nvim/app
-		yarn install
-
 		git clone -b release https://gitee.com/zgpio/coc.nvim.git ~/.vim/plugged/coc.nvim
 		cd ~/.vim/plugged/coc.nvim
 		git reset --hard v0.0.81
@@ -46,7 +40,11 @@ function install_plug()
 		# yarn install
 		# yarn build
 		vim -c "PlugInstall" -c "q" -c "q"
-		chmod 664 ~/.viminfo
+	fi
+
+	if [ -d ~/.vim/plugged/vim-airline/autoload/airline/extensions ];then
+		mv ${PWD}/vimscript/branch.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
+		# mv ${PWD}/vimscript/coc.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
 	fi
 
 	chmod 664 ~/.viminfo
