@@ -7,4 +7,5 @@ if [ $? == 1 ];then
 	sudo unzip ./clangd-linux-14.0.3.zip
 	sudo ln -s ./clangd_14.0.3/bin/clangd /usr/bin/clangd 
 fi
+# can download it by https://github.com/clangd/clangd/releases/download/15.0.6/clangd-linux-15.0.6.zip
 vim -c "CocInstall coc-clangd" 

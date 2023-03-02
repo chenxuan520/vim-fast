@@ -287,10 +287,10 @@ endfunc
 " term console
 func! Tapi_EditFile(bufnum,arglist)
 	execute ":wincmd p"
-	if filereadable(a:arglist[0])
-		execute ":edit " . a:arglist[0]
-	elseif isdirectory(a:arglist[0])
-		execute ":cd " . a:arglist[0]
+	if isdirectory(a:arglist[0])
+		execute ":cd " . a:arglist[0]|echo "cd ".a:arglist[0]." success"
+	else
+		execute ":edit " . a:arglist[0]|echo "open ".a:arglist[0]." success"
 	endif
 	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
 	if len(gettabinfo())>1|tabclose|if filereadable(a:arglist[0])|execute ":edit " . a:arglist[0]|endif|endif

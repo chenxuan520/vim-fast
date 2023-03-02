@@ -48,6 +48,24 @@ function install_plug()
 	fi
 
 	chmod 664 ~/.viminfo
+
+	mkdir ~/.local;mkdir ~/.local/bin
+
+	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.0/ctags -O ~/.local/bin/ctags
+	chmod +x ~/.local/bin/ctags
+
+	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lf -O ~/.local/bin/lf
+	chmod +x ~/.local/bin/lf
+
+	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/rgv1.0.0/rg.tar.gz
+	tar -zxvf ./rg.tar.gz -C ~/.local/bin
+	mv ./ripgrep-13.0.0-x86_64-unknown-linux-musl/rg ~/.local/bin/rg
+	rm -rf ./ripgrep-13.0.0-x86_64-unknown-linux-musl ./rg.tar.gz
+
+	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lazygit.tar.gz
+	tar -zxvf ./lazygit.tar.gz -C ~/.local/bin
+	chmod +x ~/.local/bin/lazygit
+	rm ./lazygit.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE
 }
 
 # 安装vim插件
