@@ -734,6 +734,20 @@ cab <expr>Rmdir "Rmdir ".expand('%:p:h')."/"
 command! -nargs=0 -bang Write call mkdir(expand("%:p:h"),"p")|write!
 " use cd to change dir
 
+" autoload file
+func s:SetUpdateTime(delay) abort
+	setlocal readonly
+	if a:delay==""|let delay=1000
+	else|let delay=a:delay|endif
+	if !exists("s:update_timer")||s:update_timer==-1|let s:update_timer=timer_start(delay, "TimerUpdate",{"repeat":-1})|echo "check begin"
+	else|call timer_stop(s:update_timer)|let s:update_timer=-1|echo "check stop"|setlocal noreadonly|endif
+endfunc
+func TimerUpdate(timer)
+	checktime
+	execute "normal! Gzz"
+endfunc
+command! -nargs=? -bang Check call s:SetUpdateTime(<q-args>)
+
 " select move
 xnoremap <silent><up>    :move '<-2<cr>gv
 xnoremap <silent><down>  :move '>+1<cr>gv
