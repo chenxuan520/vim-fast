@@ -508,8 +508,6 @@ xnoremap @ :normal @
 " repeat for macro
 nnoremap <silent><c-q> @@
 
-" ibus enable
-let g:ibus_enable=0
 " md fold enable
 let g:markdown_fold_enable=1
 
