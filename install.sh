@@ -101,6 +101,10 @@ function begin_install_vimplus()
 # 安装ubuntu必备软件
 function install_prepare_software_on_ubuntu()
 {
+	type apt
+	if [ $? == 1 ];then
+		return
+	fi
 	sudo apt-get update
 	sudo apt-get install -y vim
 	sudo apt-get install -y zip curl git wget ctags ripgrep fzf
@@ -110,6 +114,10 @@ function install_prepare_software_on_ubuntu()
 # 安装debian必备软件
 function install_prepare_software_on_debian()
 {
+	type apt
+	if [ $? == 1 ];then
+		return
+	fi
 	sudo apt-get update
 	sudo apt-get install -y vim
 	sudo apt-get install -y zip curl git wget ctags ripgrep fzf

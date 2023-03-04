@@ -731,6 +731,7 @@ command! -nargs=1 -bang -complete=file Mkdir echo mkdir(<f-args>)
 cab <expr>Mkdir "Mkdir ".expand('%:p:h')."/"
 command! -nargs=1 -bang -complete=file Rmdir echo delete(<f-args>,"d")
 cab <expr>Rmdir "Rmdir ".expand('%:p:h')."/"
+command! -nargs=0 -bang Write call mkdir(expand("%:p:h"),"p")|write!
 " use cd to change dir
 
 " select move

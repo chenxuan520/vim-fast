@@ -669,11 +669,12 @@ command! -nargs=? -bang Reload exec ":edit ".<q-args>." ".expand('%')
 nnoremap <silent>S :edit<space><c-r>=expand('%')<cr><cr>
 command! -nargs=0 -bang Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
-cab Rename Rename <c-r>=expand('%:p:h')<cr>/
+cab <expr>Rename "Rename ".expand('%:p:h')."/"
 command! -nargs=1 -bang -complete=file Mkdir echo mkdir(<f-args>)
-cab Mkdir Mkdir <c-r>=expand('%:p:h')<cr>/
+cab <expr>Mkdir "Mkdir ".expand('%:p:h')."/"
 command! -nargs=1 -bang -complete=file Rmdir echo delete(<f-args>,"d")
-cab Rmdir Rmdir <c-r>=expand('%:p:h')<cr>/
+cab <expr>Rmdir "Rmdir ".expand('%:p:h')."/"
+command! -nargs=0 -bang Write call mkdir(expand("%:p:h"),"p")|write!
 " use cd to change dir
 
 " select move
@@ -686,8 +687,7 @@ xnoremap <silent><c-k>   :move '<-2<cr>gv
 xnoremap <silent><c-l>   y<c-w>lo<c-[>Vpgv
 xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
 
-" open link
-" is default in vim by gx
+" open link,is default in vim by gx
 func! s:GotoLink()
 	let s:list=matchstrpos(getline('.'),'https*://\S[^][(){}]*',0)
 	let s:link=s:list[0]
