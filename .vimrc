@@ -499,6 +499,7 @@ endfunc
 
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
+nnoremap <nowait>g<space> :syntax match DiffDelete " *$"<cr>
 
 " select search
 xmap g/ "sy/\V<c-r>=@s<cr>
