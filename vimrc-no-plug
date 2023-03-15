@@ -947,7 +947,8 @@ nnoremap <space>: :Run<space>
 "}}}
 
 " ctags config{{{
-command! -nargs=? TagCreate call s:CreateTags(<q-args>)
+command! -nargs=? TagCreate call s:CreateTags(<q-args>,0)
+command! -nargs=? TagPwd    call s:CreateTags(<q-args>,1)
 command! -nargs=0 TagKind echo system("ctags --list-maps")
 command! -nargs=1 -complete=tag  TagFind exec ":ts /".<q-args>
 command! -nargs=1 -complete=file TagSave if exists("g:tag_file")&&filereadable(g:tag_file)|call system("cp ".g:tag_file." ".<q-args>)|endif
@@ -955,8 +956,15 @@ cab TagSave TagSave <c-r>=<sid>FindRoot()<cr>/tags
 nnoremap <space>c  :let temp=taglist(input("Enter regex find:"))<bar>redraw<bar>echo temp<cr>
 nnoremap <space>C  :TagCreate<cr>
 nnoremap <leader>u <c-]>
-func! s:CreateTags(arg)
+nnoremap <expr><c-]> <sid>FindTags(expand('<cword>'))
+vnoremap <nowait><c-]> "sy:TagFind <c-r>=@s<cr><cr>
+func! s:FindTags(str)
+	let list=taglist(a:str)
+	if len(list)==1|return "\<c-]>"|else|return ":ts ".a:str."\<cr>"|endif
+endfunc
+func! s:CreateTags(arg,flag)
 	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif|let g:tag_file=tempname()
+	if a:flag|let g:tag_file="./tags"|endif
 	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif
 	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=always -R .",
 				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})

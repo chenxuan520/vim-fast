@@ -253,13 +253,21 @@ endfunc
 nnoremap <silent><nowait><space>q :call <sid>GetRecentClose()<cr>
 
 " ctags config
-command! -nargs=? TagCreate call s:CreateTags(<q-args>)
+command! -nargs=? TagCreate call s:CreateTags(<q-args>,0)
+command! -nargs=? TagPwd    call s:CreateTags(<q-args>,1)
 command! -nargs=0 TagKind echo system("ctags --list-maps")
 command! -nargs=1 -complete=tag  TagFind exec ":ts /".<q-args>
 command! -nargs=1 -complete=file TagSave if exists("g:tag_file")&&filereadable(g:tag_file)|call system("cp ".g:tag_file." ".<q-args>)|endif
-cab TagSave TagSave <c-r>=<sid>FindRoot()<cr>/tags
-func! s:CreateTags(arg)
+cab TagSave TagSave <c-r>=termtask#Term_get_dir()<cr>/tags
+nnoremap <expr><c-]> <sid>FindTags(expand('<cword>'))
+vnoremap <nowait><c-]> "sy:TagFind <c-r>=@s<cr><cr>
+func! s:FindTags(str)
+	let list=taglist(a:str)
+	if len(list)==1|return "\<c-]>"|else|return ":ts ".a:str."\<cr>"|endif
+endfunc
+func! s:CreateTags(arg,flag)
 	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif|let g:tag_file=tempname()
+	if a:flag|let g:tag_file="./tags"|endif
 	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif
 	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=always -R .",
 				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})
