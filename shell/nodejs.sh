@@ -16,7 +16,7 @@ function AddPath()
 
 type node
 if [ $? == 1 ];then
-	NODEVERSION='v18.13.0'
+	NODEVERSION='v18.15.0'
 	PKGNAME=node-${NODEVERSION}-linux-x64.tar.xz
 	URL=https://nodejs.org/dist/${NODEVERSION}/${PKGNAME}
 	if [ $# == 0 ]; then
