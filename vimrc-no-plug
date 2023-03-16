@@ -522,8 +522,12 @@ nnoremap <silent><c-q> @@
 
 " use select area to replace
 xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn<left><left><left>
-xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:!sed -i "s/<c-r>=escape(@s,'/')<cr>//g" `grep "<c-r>=escape(@s,'/')<cr>" -rl ./\ --exclude-dir=".git"`
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
+xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
+func s:ReplaceGlobal(str) abort
+	let str=escape(a:str,'/')|let temp=escape(input("replace ".a:str." to:"),'/')
+	call system('sed -i "s/'.str.'/'.temp.'/g" `grep "'.escape(a:str,'"').'" -rl --exclude-dir=".git" ./`')|redraw!|echo "replace ok"
+endfunc
 
 " indent buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
