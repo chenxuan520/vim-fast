@@ -58,7 +58,7 @@
 
 2. 基于Vimplus,使得所有配置文件都在.vimrc中,1000 余行的配置文件更加简单和直观,同时也避免了多个配置文件冗余
 
-3. 插件精简化,精选出了24个插件,使得打开速度得到提高(有插件版本大约130ms,无插件版本约20ms)
+3. 插件精简化,精选出了23个插件,使得打开速度得到提高(**有插件版本大约130ms,无插件版本约20ms**)
 
 4. **插件压缩包放在gitee上,使得插件下载的速度得到提高**,对新手友好化,提供shell脚本一键配置插件
 
@@ -156,7 +156,7 @@
 
 - install.sh 安装脚本,首先运行,安装vim-fast
 
-- install_without_sudo.sh 在没有root和sudo下安装(需要提前下载好软件包)
+- install_without_sudo.sh 在没有root和sudo下安装
 
 - update.sh 拉取vim-fast最新配置
 
@@ -324,6 +324,8 @@
 
    - 如果在本机之前安装过vim-fast或者对应的软件已经全部安装好了,可以不需要sudo,否则需要sudo安装软件包
 
+   - 如果没有root权限可以运行./install_without_sudo.sh,但部分功能可能没有
+
 6. 我想要自定义Vim启动时候dashboard内容
 
    - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii),选择类型为`ANSI Shadow`
@@ -342,9 +344,23 @@
 
    - 在`~/.vim/ftplugin`找到对应文件的文件夹,修改comment.vim的内容即可
 
-9. 控制台图标混乱
+9. 控制台状态栏和图标混乱
 
   - 设置控制台的字体,打开首选项,设置字体为 `DroidSansMono Nerd Font Book`
+
+  - 如果不想设置或者无法设置,可以选择禁用图标功能
+
+     1. 将下列代码注释
+      ```
+      let g:airline_left_sep = ''
+      let g:airline_left_alt_sep = ''
+      let g:airline_right_sep = ''
+      let g:airline_right_alt_sep = ''
+      ```
+
+      2. 将`Plug 'ryanoasis/vim-devicons'`这一行注释
+
+      3. 在~/.vimrc中加入`let g:dashboard_icon_disable=1`
 
 10. 出现E117,未定义的函数getenv
 
@@ -356,7 +372,7 @@
 
 12. ctrl-s之后没有多光标,反而卡住了
 
-  - 终端的设置问题,将`stty -ixon`加到~/.bashrc,然后重新加载就可以了
+  - 终端的设置问题,将`stty -ixon`加到~/.bashrc,然后重新打开终端加载就可以了
 
 13. 安装nodejs出错,无法连接下载
 
@@ -367,6 +383,12 @@
 1. [插件快捷键说明](./doc/key.md)(可能有部分过时,推荐使用\<space\>H查看)
 
 2. [Vim一些按键帮助](./doc/help.md)
+
+## 反馈
+
+   - 出现bug或者问题可以使用github或者gitee的issue提出
+
+   - 或者直接加Q1607772321联系我
 
 ## 希望
 
