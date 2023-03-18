@@ -622,6 +622,10 @@ cnoremap <c-f> <s-right>
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
 
+" set tab indent
+xnoremap <tab>   >gv
+xnoremap <s-tab> <gv
+
 " enhance gf
 nnoremap gf gF
 vnoremap gf gF

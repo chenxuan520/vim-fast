@@ -685,6 +685,10 @@ inoremap <expr><silent>> <sid>Judge('>','i')
 nnoremap <c-o> <c-o>zz
 nnoremap <c-i> <c-i>zz
 
+" set tab indent
+xnoremap <tab>   >gv
+xnoremap <s-tab> <gv
+
 " enhance gf
 nnoremap gf gF
 vnoremap gf gF
