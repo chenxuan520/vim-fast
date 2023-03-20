@@ -7,6 +7,9 @@ func! airline#extensions#branch#git_branch(chan,msg) abort
 endfunc
 
 function! airline#extensions#branch#get_head()
+  if has('nvim')
+    return ""
+  endif
   if exists("g:status_branch_name")
     return g:status_branch_name
   elseif !exists("s:call_back")||s:call_back==0
