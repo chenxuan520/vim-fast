@@ -79,6 +79,14 @@ function! s:Term_read(name)
 			elseif s:task['mode']=='workflow'
 				call s:Workflow(s:task)
 				return
+			elseif s:task['mode']=='shell'
+				if !has_key(s:task,'command')
+					echom s:task['name'].' command is null'
+					return
+				endif
+				echo system(s:task['command'])
+				let g:term_exit_code=0
+				return
 			else
 				echom "unknown task mode"
 				return

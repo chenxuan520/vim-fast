@@ -954,6 +954,7 @@ command! -nargs=+ Run let command=strpart(<q-args>,0,stridx(<q-args>,' '))|
 			\exec ":make ".strpart(<q-args>,stridx(<q-args>,' '))|
 			\call <sid>Qfpopup()
 nnoremap <space>: :Run<space>
+cab pyj python3 -m json.tool
 "}}}
 
 " ctags config{{{
@@ -1005,6 +1006,7 @@ nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM
 nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
+nnoremap <silent><space>l :copen<cr>
 " }}}
 
 " like easy motion {{{
