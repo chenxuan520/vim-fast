@@ -786,6 +786,9 @@ function GetMode()
 endfunction
 
 let g:status_git_branch=""
+if has('nvim')
+	let g:status_git_branch=' nvim'.' |'
+endif
 func! GitBranchShow(chan,msg)
 	let g:status_git_branch=" ".a:msg." |"
 endfunc
