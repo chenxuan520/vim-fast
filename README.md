@@ -192,6 +192,8 @@
 
 2. 该项目基于[Vimplus](https://gitee.com/chxuan/vimplus.git)
 
+3. **如果遇到问题请先阅读本文的QA部分,不能解决再提出issue或者联系作者**
+
 ## 视频及文章
 
 - [bilibili](https://space.bilibili.com/322142755)
@@ -377,6 +379,10 @@
 13. 安装nodejs出错,无法连接下载
 
   - 重新运行./shell/nodejs.sh
+
+14. xshell中使用vim的backspace无法删除字符
+
+  - xshell的问题,[参考](https://www.cnblogs.com/yjd_hycf_space/p/11329841.html)
 
 ## 帮助
 

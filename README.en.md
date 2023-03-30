@@ -24,7 +24,7 @@
 
 2. github:[GitHub - chenxuan520/vim-fast](https://github.com/chenxuan520/vim-fast)
 
-## configuration effect
+## Configuration effect
 
 ![](https://picx.zhimg.com/v2-465040e3e32df418808b886729a1815f_1440w.jpg?source=172ae18b)
 
@@ -192,11 +192,13 @@
 
 2. The project is based on[Vimplus](https://gitee.com/chxuan/vimplus.git)
 
+3. **If you encounter a problem, please read the QA section of this article first. If you can't solve it, then raise an issue or contact the author**
+
 ## Videos and Articles
 
 - [bilibili](https://space.bilibili.com/322142755)
 
-  1. [Installation](https://www.bilibili.com/video/BV1RV4y1K7Le/)
+  1. [installation](https://www.bilibili.com/video/BV1RV4y1K7Le/)
 
   2. [Configuration Details](https://www.bilibili.com/video/BV1Ht4y1P7Ao/)
 
@@ -282,7 +284,7 @@
 
    4. If you have fzf installed, you have most of the functionality of leaderf
 
-## update
+## Update
 
    - ./update.sh
 
@@ -378,19 +380,23 @@
 
   - Rerun./shell/nodejs.sh
 
-## help
+14. Using vim's backspace in xshell cannot delete characters
+
+  - xshell problem,[reference](https://www.cnblogs.com/yjd_hycf_space/p/11329841.html)
+
+## Help
 
 1. [Plugin shortcut description](./doc/key.md)(may be partially outdated, it is recommended to use\<space\>H to view)
 
 2. [Vim Some Key Help](./doc/help.md)
 
-## feedback
+## Feedback
 
    - Bugs or problems can be raised using github or gitee issues
 
    - Or contact me directly by adding Q1607772321
 
-## hope
+## Hope
 
 - Due to limited personal ability, i hope you can write a copy of the system, and then mention mr, thank you very much
 
