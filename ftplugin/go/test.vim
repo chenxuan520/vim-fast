@@ -17,6 +17,7 @@ if exists('g:did_coc_loaded')
 endif
 
 func! s:JsonRun(name)
+	if a:name==""|return|endif
 	let str=[]|let s:name=expand("%:p:h")."/json_test.go"
 	call add(str,'package ' . split(expand('%:p'),'/')[-2])
 	let str+=["import (",'	"testing"','	"fmt"','	"encoding/json"',')']
