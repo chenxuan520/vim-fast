@@ -25,10 +25,10 @@ func! s:HppCppturn()
 	let @s=s:name
 endfunc
 
-nnoremap <silent><buffer><leader>C  :call <sid>HppCppturn()<cr>:e <c-r>=@s<cr><cr>
+nnoremap <silent><buffer><space>xc  :call <sid>HppCppturn()<cr>:e <c-r>=@s<cr><cr>
 
 if exists('g:did_coc_loaded')
-	nnoremap <silent><buffer><leader>C :CocCommand clangd.switchSourceHeader<cr>
+	nnoremap <silent><buffer><space>xc :CocCommand clangd.switchSourceHeader<cr>
 endif
 
 func! s:Enter()

@@ -271,7 +271,7 @@ func! s:CreateTags(arg,flag)
 	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif|let g:tag_file=tempname()
 	if a:flag|let g:tag_file="./tags"|endif
 	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif
-	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=always -R .",
+	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=no -R ".expand("%:p:h"),
 				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})
 	exec "set tags+=".g:tag_file
 endfunc
