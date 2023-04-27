@@ -177,6 +177,8 @@ nnoremap <leader><leader>c :PlugClean<cr>
 " vim-buffer
 nnoremap <silent><c-p> :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
 nnoremap <silent><c-n> :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
+nnoremap <silent>H     :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
+nnoremap <silent>L     :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
 nnoremap <silent><leader>d :bd<cr>
 nnoremap <silent><expr><c-m> &bt==''?":w<cr>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
@@ -709,6 +711,7 @@ nnoremap <leader>e :edit<space>~/
 
 " open : quick
 nnoremap <space>; :
+xnoremap <space>; :
 
 " bs to delete
 xnoremap <silent><bs> d
