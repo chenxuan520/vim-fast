@@ -65,3 +65,36 @@ func! obj#GetArgs(model)
 	let pos1-=pos0|echom end
 	execute "normal! v".pos1."l"
 endfunc
+
+func! obj#GetBigWord(model)
+	let begin=col('.')-1|let end=col('.')|let line=getline('.')
+	while begin>0
+		let temp=line[begin]
+		if (temp>='a'&&temp<='z')||(temp>='0'&&temp<='9')||temp=='_'||temp=='-'|let begin-=1
+		else|break|endif
+	endwhile
+	while end<col('$')
+		let temp=line[end]
+		if (temp>='a'&&temp<='z')||(temp>='0'&&temp<='9')||temp=='_'||temp=='-'|let end+=1
+		else|break|endif
+	endwhile
+	call cursor([line('.'),begin+2])
+	execute "normal! v".(end-begin-2)."l"
+endfunc
+
+func! obj#GetAllObj(model,need)
+	let need=a:need
+	let begin=col('.')-1|let end=col('.')|let line=getline('.')
+	while begin>0
+		let temp=line[begin]
+		if temp==need|break
+		else|let begin-=1|endif
+	endwhile
+	while end<col('$')
+		let temp=line[end]
+		if temp==need|break
+		else|let end+=1|endif
+	endwhile
+	call cursor([line('.'),begin+2])
+	execute "normal! v".(end-begin-2)."l"
+endfunc

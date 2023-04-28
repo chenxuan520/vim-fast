@@ -627,6 +627,18 @@ xnoremap <silent>ii :<c-u>call obj#GetIndent(1)<cr>
 " object syntax
 onoremap <silent>ih :<c-u>call obj#GetSynchl('i')<cr>
 xnoremap <silent>ih :<c-u>call obj#GetSynchl('i')<cr>
+" object bigword
+onoremap <silent>ib :<c-u>call obj#GetBigWord('i')<cr>
+xnoremap <silent>ib :<c-u>call obj#GetBigWord('i')<cr>
+" object all
+onoremap <silent>i/ :<c-u>call obj#GetAllObj('i','/')<cr>
+xnoremap <silent>i/ :<c-u>call obj#GetAllObj('i','/')<cr>
+onoremap <silent>i- :<c-u>call obj#GetAllObj('i','-')<cr>
+xnoremap <silent>i- :<c-u>call obj#GetAllObj('i','-')<cr>
+onoremap <silent>i. :<c-u>call obj#GetAllObj('i','.')<cr>
+xnoremap <silent>i. :<c-u>call obj#GetAllObj('i','.')<cr>
+onoremap <silent>i* :<c-u>call obj#GetAllObj('i','*')<cr>
+xnoremap <silent>i* :<c-u>call obj#GetAllObj('i','*')<cr>
 " easy to get obj
 onoremap <silent>i, i<
 onoremap <silent>a, a<
