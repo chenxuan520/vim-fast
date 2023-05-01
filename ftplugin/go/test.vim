@@ -3,7 +3,7 @@
 if exists('g:did_coc_loaded')
 	" test
 	nnoremap <buffer><space>xe :CocCommand go.test.generate.exported<cr>
-	nnoremap <buffer><space>xf :CocCommand go.test.generate.function<cr>
+	nnoremap <buffer><space>xf :call <sid>TestFunc()<cr>
 	nnoremap <buffer><space>xn :CocCommand go.test.generate.file<cr>
 	nnoremap <buffer><space>xg :CocCommand go.test.toggle<cr>
 	" tag
@@ -30,15 +30,28 @@ func! JsonCloseCb(chan)
 	call delete(s:name)|echo "Run ok"
 endfunc
 
-func! s:CodeRun()
+func! s:CodeRun(testfunc)
 	write
 	let s:name=expand('%:p')
 	if match(expand('%'),"test")==-1
 		exec ":vert term go run ".expand('%:p')
 	else
-		exec ":vert term go test -v ".expand('%:p:h')
+		if a:testfunc==''
+			exec ":vert term go test -v ".expand('%:p:h')
+		else
+			vert call term_start("go test -v -run ". a:testfunc,{"cwd":expand("%:p:h")})
+		endif
 	endif
 endfunc
-nnoremap <buffer><space>xx :call <sid>CodeRun()<cr>
+
+func! s:TestFunc()
+	if match(expand('%'),"test")==-1
+		CocCommand go.test.generate.function
+	else
+		call <sid>CodeRun(CocAction('getCurrentFunctionSymbol'))
+	endif
+endfunc
+
+nnoremap <buffer><space>xx :call <sid>CodeRun('')<cr>
 nnoremap <buffer><space>xj :call <sid>JsonRun(input("input struct name:"))<cr>
 xnoremap <buffer><space>xj :<c-u>execute "normal! gv\"sy"<cr>:call <sid>JsonRun(@s)<cr>

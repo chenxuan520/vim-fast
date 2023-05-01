@@ -614,6 +614,7 @@ func! s:FindRoot()
 		endif
 		return s:gitdir
 	endif
+	return ""
 endfunc
 
 " cmd emacs model
@@ -986,7 +987,9 @@ func! s:CreateTags(arg,flag)
 	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif|let g:tag_file=tempname()
 	if a:flag|let g:tag_file="./tags"|endif
 	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif
-	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=no -R ".expand("%:p:h"),
+	let dir=s:FindRoot()
+	if dir==""|let dir=getcwd()|endif
+	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=no -R ".dir,
 				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})
 	exec "set tags+=".g:tag_file
 endfunc
