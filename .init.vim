@@ -5,7 +5,7 @@
 "  \ \__|    \ \_\  \ \_\ \ \_\  \ \_\    \ \_\ \_\  \/\_____\    \ \_\
 "   \/_/      \/_/   \/_/  \/_/   \/_/     \/_/\/_/   \/_____/     \/_/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" chenxuan's vim config
+" chenxuan's nvim config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -232,7 +232,8 @@ vnoremap <leader><leader>P "+P
 
 augroup ReadPost
 	au!
-	autocmd TerminalOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|endif
+	autocmd TermOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|startinsert|endif
+	autocmd TermClose * if !exists('g:nvim_term_open')|call feedkeys("i")|else|unlet g:nvim_term_open|endif
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
@@ -311,14 +312,13 @@ tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
 tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
 tnoremap <c-z> exit<cr>
-nnoremap <leader><leader>T :bo term ++rows=6<CR>
-nnoremap <leader><leader>t :vert term<CR>
-nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
-nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:call term_start("bash",{"cwd":"<c-r>=@s<cr>","curwin":1,"term_finish":"close"})<cr>
+nnoremap <leader><leader>T :split<CR>:term<cr>
+nnoremap <leader><leader>t :vsplit<CR>:term<cr>
+nnoremap <silent><space><space>t :term<cr>
 
 " lazygit
-nnoremap <silent><space>g :call <sid>LazyGitFile(0)<cr>:tabe<cr>:call term_start("lazygit",{"close_cb":"<sid>LazyGitFile","curwin":1,"term_finish":"close"})<cr>
-nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
+nnoremap <silent><space>g :term lazygit<cr>
+nnoremap <silent><space>G :let @s=expand('%')<cr>:term lazygit -f <c-r>s<cr>
 func! s:LazyGitFile(close) abort
 	if type(a:close)==0
 		if !exists("s:lazygit_file")||getenv("LAZYGIT_FILE")==v:null

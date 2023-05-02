@@ -12,11 +12,11 @@ function main(){
 	fi
 	rm ~/.config/nvim/init.vim
 	mkdir ~/.config/nvim
-	ln -s $PWD/.vimrc ~/.config/nvim/init.vim
-	cp ~/.vim/coc-settings.json ~/.config/nvim/
-	cp -r ./colors ~/.config/nvim/
-	cp -r ./autoload ~/.config/nvim/
-	cp -r ./ftplugin ~/.config/nvim/
+	ln -s $PWD/.init.vim ~/.config/nvim/init.vim
+	ln -s $PWD/coc/coc-settings.json ~/.config/nvim/coc-settings.json
+	ln -s $PWD/autoload ~/.config/nvim/autoload
+	ln -s $PWD/ftplugin ~/.config/nvim/ftplugin
+	cp -r $PWD/colors ~/.config/nvim/
 	color="$(tput setaf 6)"
 	normal="$(tput sgr0)"
 	printf "${color}"
