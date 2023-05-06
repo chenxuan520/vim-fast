@@ -194,6 +194,7 @@ imap <c-h> <left>
 inoremap <c-e> <end>
 inoremap <c-a> <c-o>^
 inoremap <c-d> <del>
+vnoremap <c-d> <del>
 inoremap <c-f> <c-o>w
 inoremap <c-v> <c-o>D
 inoremap <expr><c-b> <sid>CtrlB()
@@ -706,6 +707,10 @@ nnoremap <c-i> <c-i>zz
 " set tab indent
 xnoremap <tab>   >gv
 xnoremap <s-tab> <gv
+
+" set tab next snippet
+smap <tab>   <c-j>
+smap <s-tab> <c-k>
 
 " enhance gf
 nnoremap gf gF
