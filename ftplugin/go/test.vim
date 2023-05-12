@@ -16,10 +16,19 @@ if exists('g:did_coc_loaded')
 	augroup END
 endif
 
+function! s:FindGoPackageName()
+	let pattern = '\v^\s*package\s+(\w+)'
+	let line = search(pattern, 'n')
+	if line != 0|return substitute(matchstr(getline(line), pattern), '^\s*package\s*', '', '')
+	else|return ''|endif
+endfunction
+
 func! s:JsonRun(name)
 	if a:name==""|return|endif
 	let str=[]|let s:name=expand("%:p:h")."/json_test.go"
-	call add(str,'package ' . split(expand('%:p'),'/')[-2])
+	let packagename=s:FindGoPackageName()
+	if packagename==''|let packagename=split(expand('%:p'),'/')[-2]|endif
+	call add(str,'package ' . packagename)
 	let str+=["import (",'	"testing"','	"fmt"','	"encoding/json"',')']
 	let str+=['func TestJson(t *testing.T) {','	temp:='.a:name.'{}']
 	let str+=['	data, _ := json.MarshalIndent(temp, "", "  ")','	fmt.Println(string(data))','}']

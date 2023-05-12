@@ -932,6 +932,8 @@ nmap <leader><leader>f :Format<cr>
 nmap <silent><nowait><space><space>c :CocConfig<cr>
 nmap <silent><nowait><space><space>l :CocList --normal extensions<cr>
 nmap <silent><nowait><space><space>j :CocList outline<cr>
+" coc currnt tag
+nnoremap <silent><nowait><space><space>k :echo CocAction('getCurrentFunctionSymbol')<cr>
 " coc help
 nnoremap <silent> K  :call ShowDocumentation()<cr>
 nnoremap <silent> gh :call ShowDocumentation()<cr>
