@@ -294,11 +294,9 @@ func! termtask#Term_cmd_exec_popup(mode)
 		let @s=expand('<cword>')
 	endif
 	let s:cmd=get(g:,"term_cmd","")
-	if s:cmd==""|echo "cmd no define"|return
-	endif
+	if s:cmd==""|echo "cmd no define"|return|endif
 	let result=system(s:cmd.' "'.@s.'"')
-	if has('nvim')|echo result|return
-	endif
+	if has('nvim')|echo result|return|endif
 	let text=split(result,"\n")
 	if result==""|let text="no message"|endif
 	call popup_atcursor(text,{})

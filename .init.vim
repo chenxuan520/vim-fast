@@ -322,43 +322,6 @@ nnoremap <silent><space><space>t :term<cr>
 " lazygit
 nnoremap <silent><space>g :term lazygit<cr>
 nnoremap <silent><space>G :let @s=expand('%')<cr>:term lazygit -f <c-r>s<cr>
-func! s:LazyGitFile(close) abort
-	if type(a:close)==0
-		if !exists("s:lazygit_file")||getenv("LAZYGIT_FILE")==v:null
-			let s:lazygit_file=tempname()|call setenv("LAZYGIT_FILE",s:lazygit_file)
-		endif
-		return
-	endif
-	tabclose
-	if exists("s:lazygit_file")&&filereadable(expand(s:lazygit_file))&&getenv("LAZYGIT_FILE")==s:lazygit_file&&filereadable(expand(s:lazygit_file))
-		call setenv("LAZYGIT_FILE", v:null)
-		for line in readfile(s:lazygit_file)
-			let msg=split(line)|let file=termtask#Term_get_dir()."/".msg[0]
-			execute ":edit ".file
-			if msg[1]!=1|call cursor(msg[1],0)|endif
-		endfor
-	endif
-endfunc
-
-" fzf self defile
-func! s:FzfFind(command)
-	vert call term_start('bash',{'term_finish':"close"})
-	call term_sendkeys(term_list()[0],a:command."\<cr>")
-endfunc
-let g:fzf_temp_file=""
-func! Tapi_Fzf(bufnum,arglist)
-	wincmd p|let temp=getenv("FZF_VIM")
-	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
-	if temp!=v:null
-		for line in readfile(g:fzf_temp_file)
-			let list=matchstr(line,"\/\^.*")
-			if a:arglist[0]=="0"|let @/="\\V\\^".line."\\$"|else|let @/="\\V".escape(strpart(list,1,len(list)-2),"^$")|endif
-			call feedkeys('n','in')|set hlsearch
-		endfor
-	endif
-endfunc
-nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
-nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 
 " lf config define
 nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
