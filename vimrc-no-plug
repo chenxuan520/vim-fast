@@ -485,8 +485,8 @@ nnoremap <silent><nowait>=n :setlocal norelativenumber<cr>
 nnoremap <silent><nowait>\n :setlocal relativenumber<bar>setlocal number<cr>
 
 " close/open number
-nnoremap <silent><nowait>=N :setlocal norelativenumber<cr>:setlocal nonumber<cr>
-nnoremap <silent><nowait>\N :setlocal relativenumber<cr>:setlocal number<cr>
+nnoremap <silent><nowait>=N :setlocal norelativenumber<cr>:setlocal nonumber<cr>:set nolist<cr>
+nnoremap <silent><nowait>\N :setlocal relativenumber<cr>:setlocal number<cr>:set list lcs=tab:¦\<space> <cr>
 
 " set fold auto
 nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
