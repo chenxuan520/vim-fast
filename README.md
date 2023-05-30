@@ -219,7 +219,7 @@
 
 1. git clone [https://gitee.com/mirrorvim/vim-fast](https://gitee.com/mirrorvim/vim-fast)
 
-2. cd vim-fast && ./install.sh
+2. cd vim-fast && ./install.sh (**不需要sudo,sudo会使得文件位置错误**)
 
 3. 出现![](https://pic3.zhimg.com/80/v2-c8683440682115dcb5c95c78f93c52b2_720w.png)后按下回车
 

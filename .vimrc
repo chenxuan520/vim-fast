@@ -1082,8 +1082,8 @@ nnoremap <leader><leader>g :GV?<cr>
 " clever f
 " nnoremap \ ,
 " map \ <Plug>(clever-f-repeat-back)
+" let g:clever_f_chars_match_any_signs=';'
 let g:clever_f_smart_case=1
-let g:clever_f_chars_match_any_signs=';'
 nmap <silent><nowait> ; <Plug>(clever-f-repeat-forward)
 nmap <silent><nowait> { <Plug>(clever-f-repeat-back)
 xmap <silent><nowait> ; <Plug>(clever-f-repeat-forward)
