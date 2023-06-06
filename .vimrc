@@ -203,7 +203,6 @@ func! s:CtrlB()
 	elseif getline('.')[col('.')-2]==nr2char(9)
 		let s:pos=col('.')|let s:result=""
 		while s:pos!=0|let s:result=s:result."\<bs>"|let s:pos-=1|endwhile
-		let s:result=s:result."\<c-n>"
 		return s:result
 	else
 		return "\<c-o>b"
@@ -233,6 +232,7 @@ vnoremap <leader><leader>P "+P
 
 augroup ReadPost
 	au!
+	autocmd FileType java,c,cpp set commentstring=//\ %s
 	autocmd TerminalOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|endif
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
@@ -605,8 +605,6 @@ endfunc
 
 " object buffer
 nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
-onoremap <silent>ie :<c-u>normal! ggVG<cr>
-xnoremap <silent>ie :<c-u>normal! ggVG<cr>
 onoremap <silent>ae :<c-u>normal! ggVG<cr>
 xnoremap <silent>ae :<c-u>normal! ggVG<cr>
 " object line
