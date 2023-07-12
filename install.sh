@@ -98,6 +98,18 @@ function begin_install_vimplus()
 	print_logo
 }
 
+# 安装mac必备软件
+function install_prepare_software_on_mac()
+{
+	type brew
+	if [ $? == 1 ];then
+		curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh
+	fi
+	brew install nodejs
+	brew install zip wget git ctags fzf ripgrep
+}
+
+
 # 安装ubuntu必备软件
 function install_prepare_software_on_ubuntu()
 {
@@ -275,6 +287,14 @@ function backup_vimrc_and_vim()
 	backup_vim_dir
 }
 
+# 在mac上安装vimfast
+function install_vimplus_on_mac()
+{
+	backup_vimrc_and_vim
+	install_prepare_software_on_mac
+	begin_install_vimplus
+}
+
 # 在ubuntu上安装vimplus
 function install_vimplus_on_ubuntu()
 {
@@ -345,6 +365,8 @@ function main(){
 		else
 			install_vimplus_on_linux
 		fi
+	elif [ ${type} == "Darwin" ]; then
+		install_vimplus_on_mac
 	else
 		echo "Not support platform type: "${type}
 	fi

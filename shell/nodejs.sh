@@ -1,4 +1,12 @@
 #!/bin/bash
+
+#check mac version
+type=$(uname)
+if [ ${type} == "Darwin" ]; then
+	exit
+fi
+
+
 function AddPath()
 {
 	OLD_IFS="$IFS"
