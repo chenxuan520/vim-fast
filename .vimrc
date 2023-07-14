@@ -292,11 +292,6 @@ nnoremap <F6> :Break<cr>
 nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
 
-" easy to add time
-func! Time()
-	return "update by chenxuan ".strftime("%Y-%m-%d %H:%M:%S")
-endfunc
-
 " term console
 func! Tapi_EditFile(bufnum,arglist)
 	execute ":wincmd p"
