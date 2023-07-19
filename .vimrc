@@ -755,6 +755,7 @@ nnoremap <silent>\d <c-w>p<c-d><c-w>p
 nnoremap <silent>R :redr!<cr>
 
 " ctrl file system
+command! -nargs=0 -bang Pwd echo expand('%:p')
 command! -nargs=? -bang Reload exec ":edit ".<q-args>." ".expand('%')
 nnoremap <silent>S :edit<space><c-r>=expand('%')<cr><cr>
 command! -nargs=0 -bang Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
