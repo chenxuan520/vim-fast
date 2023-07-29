@@ -724,6 +724,7 @@ xnoremap <space>; :
 
 " bs to delete
 xnoremap <silent><bs> d
+snoremap <silent><bs> <space><bs>
 
 " add empty line
 nnoremap <silent><nowait>U :call append(line('.')-1,"")<cr>
