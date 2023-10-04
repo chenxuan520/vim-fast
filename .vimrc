@@ -1025,7 +1025,7 @@ xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectA
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
-xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr><tab>
 xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr><tab>
 " tags
 nnoremap <space>j :LeaderfBufTag<cr>

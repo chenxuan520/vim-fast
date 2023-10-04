@@ -6,6 +6,7 @@
 	"python.pythonPath" : "/usr/bin/python3",
 	"go.checkForUpdates":"inform",
 	"clangd.checkUpdates":false,
+	"json.schemaDownload.enable": false,
 	"list.insertMappings": {
 		"<tab>":"do:togglemode"
 	}

@@ -26,7 +26,13 @@
 
 ## 配置效果
 
-![](https://picx.zhimg.com/v2-465040e3e32df418808b886729a1815f_1440w.jpg?source=172ae18b)
+### 打开效果
+
+![](https://pic1.zhimg.com/80/v2-bbb4ad457961cf116facf75be76486b0_720w.jpg)
+
+### 编辑效果
+
+![](https://picx.zhimg.com/70/v2-7f64e5078afe4b4ef6ca033ae4fecbe2_1440w.awebp)
 
 ## 为什么制作
 
@@ -241,6 +247,8 @@
 
 #### Python
 
+> 注意:node需要在14以上,使用node --version 查看node版本,如果版本太低,参考[这篇文章解决](https://juejin.cn/post/6980714131217350692)
+
 1. ./shell/python.sh
 
    ![](https://pic4.zhimg.com/80/v2-f4024d6b0b3ac1563753ff06485f6203_720w.png)
@@ -350,7 +358,7 @@
 
 8. Vim 特定文件预先生成的代码我想要修改
 
-   - 在`~/.vim/ftplugin`找到对应文件的文件夹,修改comment.vim的内容即可
+   - 在`~/.vim/ftplugin/template`找到对应文件的文件夹,修改文件的内容即可
 
 9. 控制台状态栏和图标混乱
 
@@ -358,7 +366,7 @@
 
   - 如果不想设置或者无法设置,可以选择禁用图标功能
 
-     1. 将下列代码注释
+     1. 将下列代码注释,如果执行之后还是乱码,将下列代码中的类似更改为空格
       ```
       let g:airline_left_sep = ''
       let g:airline_left_alt_sep = ''
@@ -389,6 +397,7 @@
 14. xshell中使用vim的backspace无法删除字符
 
   - xshell的问题,[参考](https://www.cnblogs.com/yjd_hycf_space/p/11329841.html)
+
 
 ## 帮助
 
