@@ -25,3 +25,9 @@ func! s:Run()
 	endif
 endfunc
 nnoremap <buffer><space>xx :call <sid>Run()<cr>
+
+" 设置cpp缩进
+setlocal expandtab     " set forbidden space to replace tab
+setlocal tabstop=2     " number of spaces used by tabs when editing
+setlocal shiftwidth=2  " number of spaces tab occupies when formatting
+setlocal softtabstop=2 " set 4 spaces as tabs

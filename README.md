@@ -202,6 +202,8 @@
 
 4. vim版本需**8.1**以上
 
+5. 如果出现了QA以外的问题,优先考虑是不是nodejs版本问题,经过测试v18.13.0版本是没问题,[参考](https://juejin.cn/post/7132680379898527757)
+
 ## 视频及文章
 
 - [bilibili](https://space.bilibili.com/322142755)
