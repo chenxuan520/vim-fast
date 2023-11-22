@@ -236,7 +236,8 @@ augroup ReadPost
 	au!
 	autocmd FileType java,c,cpp set commentstring=//\ %s
 	autocmd TermOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|startinsert|endif
-	autocmd TermClose * if !exists('g:nvim_term_open')|call feedkeys("i")|else|unlet g:nvim_term_open|endif
+	autocmd WinEnter * if &bt=='terminal'|call feedkeys("i\<esc>")|endif
+	autocmd TermClose * if !exists('g:nvim_term_open')|call feedkeys("i\<esc>")|else|unlet g:nvim_term_open|endif
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
@@ -296,23 +297,18 @@ nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
 
 " term console
-func! Tapi_EditFile(bufnum,arglist)
-	execute ":wincmd p"
-	if isdirectory(a:arglist[0])
-		execute ":cd " . a:arglist[0]|echo "cd ".a:arglist[0]." success"
-	else
-		execute ":edit " . a:arglist[0]|echo "open ".a:arglist[0]." success"
-	endif
-	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
-	if len(gettabinfo())>1|tabclose|if filereadable(a:arglist[0])|execute ":edit " . a:arglist[0]|endif|endif
-endfunc
 tnoremap <c-\> <c-\><c-n>
-tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
-tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
+tnoremap <c-o> ~/.config/nvim/nvr.py -l <space>
+tnoremap <c-]> ~/.config/nvim/nvr.py -l <space>
 tnoremap <c-z> exit<cr>
 nnoremap <leader><leader>T :split<CR>:term<cr>
 nnoremap <leader><leader>t :vsplit<CR>:term<cr>
 nnoremap <silent><space><space>t :term<cr>
+nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:vert term $SHELL -c "cd <c-r>=@s<cr>;$SHELL"<cr>
+tnoremap <c-w>l <c-\><c-n><c-w>l
+tnoremap <c-w>h <c-\><c-n><c-w>h
+tnoremap <c-w>j <c-\><c-n><c-w>j
+tnoremap <c-w>k <c-\><c-n><c-w>k
 
 " lazygit
 nnoremap <silent><space>g :term lazygit<cr>
@@ -827,24 +823,24 @@ augroup NerdTree
 augroup END
 
 " coc.nvim
-" coc map
-inoremap <silent><expr><TAB>
-			\ pumvisible() ? "\<C-n>" :
-			\ CheckBackspace() ? "\<TAB>" :
-			\ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <expr><right> pumvisible() ? "\<c-y>" : "\<right>"
-inoremap <expr><c-p>   pumvisible() ? "\<c-p>" : "\<c-[>"
-
-" for coc 0.0.82
-" let g:coc_disable_startup_warning = 1
-" inoremap <silent><expr> <TAB>
-" 			\ coc#pum#visible() ? coc#pum#next(1):
+" coc map for coc 0.0.81
+" inoremap <silent><expr><TAB>
+" 			\ pumvisible() ? "\<C-n>" :
 " 			\ CheckBackspace() ? "\<TAB>" :
 " 			\ coc#refresh()
-" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-" inoremap <silent><expr><right> coc#pum#visible() ? coc#pum#confirm() : "\<right>"
-" inoremap <silent><expr><c-p> coc#pum#visible() ? coc#pum#prev(1) : "\<c-[>"
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <expr><right> pumvisible() ? "\<c-y>" : "\<right>"
+" inoremap <expr><c-p>   pumvisible() ? "\<c-p>" : "\<c-[>"
+
+" for coc 0.0.82
+let g:coc_disable_startup_warning = 1
+inoremap <silent><expr> <TAB>
+			\ coc#pum#visible() ? coc#pum#next(1):
+			\ CheckBackspace() ? "\<TAB>" :
+			\ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+inoremap <silent><expr><right> coc#pum#visible() ? coc#pum#confirm() : "\<right>"
+inoremap <silent><expr><c-p> coc#pum#visible() ? coc#pum#prev(1) : "\<c-[>"
 
 function! CheckBackspace() abort
 	let col = col('.') - 1
@@ -931,6 +927,7 @@ let g:AutoPairsMapSpace = 0
 
 " dash board
 let g:dashboard_disable_statusline=1
+" let g:dashboard_icon_disable=1
 
 " incsearch.vim
 nmap /  <Plug>(incsearch-forward)
