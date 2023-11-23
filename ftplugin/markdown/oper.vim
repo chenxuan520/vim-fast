@@ -157,6 +157,15 @@ func! g:VimFastEnter(ch)
 	let s:str=getline('.')
 	let s:char=""
 	let s:i=0
+	" 删除至行首
+	if match(s:str, '^\s*-\s*$')>=0||match(s:str, '^\s*\d.\s*$')>=0||match(s:str, '^\s*>\s*$')>=0
+		return "\<c-u>"
+	endif
+	" 如果发现前面有空格,那么减少缩进
+	if match(s:str, '^\s\+$')>=0
+		return "\<c-o><<"
+	endif
+
 
 	for s:ch in str2list(s:str)
 		if s:ch!=char2nr(' ')&&s:ch!=9
@@ -363,6 +372,7 @@ xnoremap <silent><buffer><leader>~ : call <sid>Bold('~~')<cr>
 xnoremap <silent><buffer>*     :call <sid>Bold('*')<cr>gvlol
 xnoremap <silent><buffer><c-i> :call <sid>Bold('*')<cr>
 xnoremap <silent><buffer><c-b> :call <sid>Bold('**')<cr>
+inoremap <silent><buffer><c-b> ****<left><left>
 
 xnoremap <silent><buffer>`     :call <sid>Bold('`')<cr>
 nnoremap <silent><buffer>`     viw:call <sid>Bold('`')<cr>
@@ -379,8 +389,7 @@ inoremap <silent><buffer><c-m>      <c-r>=g:VimFastEnter('')<cr>
 inoremap <silent><buffer>\<cr>      <c-r>=g:VimFastEnter('io')<cr>
 inoremap <silent><buffer><kenter>   <c-r>=g:VimFastEnter('ke')<cr>
 
-inoremap <expr><silent><buffer><bs>   <sid>Backspace()
-inoremap <silent><buffer><c-h> <bs>
+inoremap <expr><silent><buffer><c-h>   <sid>Backspace()
 
 inoremap <expr><silent><buffer>\t  <sid>TableCreate('i')
 nnoremap <silent><buffer>\t  :call <sid>TableCreate('')<cr>
@@ -413,6 +422,12 @@ nnoremap <silent><buffer>"+p :call <sid>Paste()<cr>
 
 nnoremap <silent><buffer>> >>
 nnoremap <silent><buffer>< <<
+
+inoremap <silent><expr><TAB>
+			\ pumvisible() ? "\<C-n>" :
+			\ getline(".")=~'^\s*$'  ? "\<TAB>" :
+			\ "\<c-o>>>\<c-o>$"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<c-o><<\<c-o>$"
 
 vnoremenu <silent> PopUp.Bold\ Text   :call <sid>Bold('**')<cr>
 vnoremenu <silent> PopUp.Italic\ Text :call <sid>Bold('*')<cr>
