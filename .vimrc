@@ -158,6 +158,8 @@ Plug 'rhysd/clever-f.vim'
 Plug 'honza/vim-snippets'
 " run shell in async
 Plug 'skywind3000/asyncrun.vim'
+" copilot
+" Plug 'github/copilot.vim'
 
 call plug#end()
 
@@ -208,6 +210,9 @@ func! s:CtrlB()
 		return "\<c-o>b"
 	endif
 endfunc
+
+" select paste
+snoremap <c-v> <space><bs><c-o>"0P
 
 " delete line
 inoremap <c-q> <c-o>dd
@@ -594,8 +599,9 @@ xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
 func s:ReplaceGlobal(str) abort
-	let str=escape(a:str,'/')|let temp=escape(input("replace ".a:str." to:"),'/')
-	call system('sed -i "s/'.str.'/'.temp.'/g" `grep "'.escape(a:str,'"').'" -rl --exclude-dir=".git" ./`')|redraw!|echo "replace ok"
+	let str=escape(a:str,'.')|let replace=escape(input("replace ".a:str." to:"),'.')
+	if replace==""|return|endif
+	echo system('find . -path "./.git" -prune -o -type f -exec sed -i "s|'.a:str.'|'.replace.'|g" {} +')
 endfunc
 
 " object buffer
@@ -966,6 +972,7 @@ let g:AutoPairsMapSpace = 0
 
 " dash board
 let g:dashboard_disable_statusline=1
+" let g:dashboard_icon_disable=1
 
 " incsearch.vim
 nmap /  <Plug>(incsearch-forward)

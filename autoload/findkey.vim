@@ -17,9 +17,10 @@ func! findkey#open_file(direct) abort
 	endif
 	if !exists("s:last_change_file")||len(s:last_change_file)==0
 		let s:last_change_file=[]
+		echom execute(":verbose map ".s:input)
 		let list=split(execute(":verbose map ".s:input."| verbose map! ".s:input,"silent"),'\n')
 		for now in list
-			let str=matchlist(now,"\\~\\?/\\S* line \\d*")
+			let str=matchlist(now,'\~\?/\S* \(line\|行\) \d*')
 			if len(str)==0
 				continue
 			endif

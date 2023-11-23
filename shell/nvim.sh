@@ -12,11 +12,14 @@ function main(){
 	fi
 	rm ~/.config/nvim/init.vim
 	mkdir ~/.config/nvim
-	ln -s $PWD/.init.vim ~/.config/nvim/init.vim
+	ln -s $PWD/init.vim ~/.config/nvim/init.vim
 	ln -s $PWD/coc/coc-settings.json ~/.config/nvim/coc-settings.json
 	ln -s $PWD/autoload ~/.config/nvim/autoload
 	ln -s $PWD/ftplugin ~/.config/nvim/ftplugin
+	cp $PWD/shell/nvr.py ~/.config/nvim/nvr.py
 	cp -r $PWD/colors ~/.config/nvim/
+	pip3 install neovim
+	pip3 install pynvim
 	color="$(tput setaf 6)"
 	normal="$(tput sgr0)"
 	printf "${color}"

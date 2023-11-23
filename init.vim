@@ -119,7 +119,7 @@ Plug 'chenxuan520/my-vim-dashboard'
 " function list
 Plug 'preservim/tagbar', {'on':'TagbarToggle'}
 " auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release','tag': 'v0.0.81'}
+Plug 'neoclide/coc.nvim', {'branch': 'release','tag': 'v0.0.82'}
 " find anything
 Plug 'Yggdroot/LeaderF', {'do':'./install.sh'}
 " quick move mouse
@@ -211,6 +211,9 @@ func! s:CtrlB()
 	endif
 endfunc
 
+" select paste
+snoremap <c-v> <space><bs><c-o>"0P
+
 " delete line
 inoremap <c-q> <c-o>dd
 snoremap <c-q> <c-o>dd
@@ -299,7 +302,7 @@ nnoremap <F8> :Step<cr>
 " term console
 tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> ~/.config/nvim/nvr.py -l <space>
-tnoremap <c-]> ~/.config/nvim/nvr.py -l <space>
+tnoremap <c-]> ~/.config/nvim/nvr.py <space>
 tnoremap <c-z> exit<cr>
 nnoremap <leader><leader>T :split<CR>:term<cr>
 nnoremap <leader><leader>t :vsplit<CR>:term<cr>
@@ -555,8 +558,9 @@ xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
 func s:ReplaceGlobal(str) abort
-	let str=escape(a:str,'/')|let temp=escape(input("replace ".a:str." to:"),'/')
-	call system('sed -i "s/'.str.'/'.temp.'/g" `grep "'.escape(a:str,'"').'" -rl --exclude-dir=".git" ./`')|redraw!|echo "replace ok"
+	let str=escape(a:str,'.')|let replace=escape(input("replace ".a:str." to:"),'.')
+	if replace==""|return|endif
+	echo system('find . -path "./.git" -prune -o -type f -exec sed -i "s|'.a:str.'|'.replace.'|g" {} +')
 endfunc
 
 " object buffer

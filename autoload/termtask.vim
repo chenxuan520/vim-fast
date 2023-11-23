@@ -141,6 +141,8 @@ function! s:Term_read(name)
 			elseif s:task['close']==3
 				let s:options['hidden']=1
 				let s:options['term_finish']='open'
+			elseif s:task['close']==0&&has('nvim')
+				let s:task['command']='bash -c "'.s:task['command'].';bash"'
 			endif
 		endif
 
@@ -167,12 +169,12 @@ function! s:Term_read(name)
 			call Funcrun(s:task['command'],s:options)
 		elseif has_key(s:task,'type')&&s:task['type']=='vsplit'
 			if has('nvim')
-				exec 'vsplit term'
+				exec 'vsplit|term'
 			endif
 			vert call Funcrun(s:task['command'],s:options)
 		else
 			if has('nvim')
-				exec 'split term'
+				exec 'split|term'
 			endif
 			call Funcrun(s:task['command'],s:options)
 		endif

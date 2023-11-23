@@ -48,7 +48,12 @@ func! s:CodeRun(testfunc)
 		if a:testfunc==''
 			exec ":vert term go test -v ".expand('%:p:h')
 		else
-			vert call term_start("go test -v -run ". a:testfunc,{"cwd":expand("%:p:h")})
+			if !has('nvim')
+				vert call term_start("go test -v -run ". a:testfunc,{"cwd":expand("%:p:h")})
+			else
+				vsp
+				call termopen("bash -c 'go test -v -run ". a:testfunc.";bash'",{"cwd":expand("%:p:h")})
+			endif
 		endif
 	endif
 endfunc
@@ -62,5 +67,6 @@ func! s:TestFunc()
 endfunc
 
 nnoremap <buffer><space>xx :call <sid>CodeRun('')<cr>
+xnoremap <buffer><space>xf :<c-u>execute "normal! gv\"sy"<cr>:call <sid>CodeRun("^".@s."$")<cr>
 nnoremap <buffer><space>xj :call <sid>JsonRun(input("input struct name:"))<cr>
 xnoremap <buffer><space>xj :<c-u>execute "normal! gv\"sy"<cr>:call <sid>JsonRun(@s)<cr>
