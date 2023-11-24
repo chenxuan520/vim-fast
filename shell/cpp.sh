@@ -1,4 +1,13 @@
 #!/bin/bash
+
+# for mac install
+if [ "$(uname)" == "Darwin" ]; then
+	brew install llvm
+	vim -c "CocInstall coc-clangd"
+	exit 0
+fi
+
+# linux install
 sudo apt update
 sudo apt-get install -y wget clangd
 type clangd

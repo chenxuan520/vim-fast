@@ -141,24 +141,28 @@ function! s:Term_read(name)
 			elseif s:task['close']==3
 				let s:options['hidden']=1
 				let s:options['term_finish']='open'
-			elseif s:task['close']==0&&has('nvim')
-				" let s:task['command']=s:task['command'].';bash'
 			endif
 		endif
 
-		" TODO: avoid string ; "
 		if stridx(s:task['command'],';')!=-1&&get(s:task,'close',2)!=2
 			let s:task['command']='bash -c "'.s:task['command'].'"'
 		endif
 
 		if has_key(s:task,'end_script')
 			let s:options['exit_cb']="termtask#Term_Cb"
+			if has('nvim')
+				let s:options['on_exit']="termtask#Nvim_Term_Exit"
+			endif
 			let s:term_fin_exec=s:term_fin_exec.s:task['end_script']
 		endif
 
 		if has('nvim')
 			let g:nvim_term_open=1
 			let Funcrun=function('termopen')
+
+			if s:task['close']==1||s:task['close']==2
+				unlet g:nvim_term_open
+			endif
 		else
 			let Funcrun=function('term_start')
 		endif
@@ -218,6 +222,14 @@ function! termtask#Term_task_run(name) abort
 endfunction
 
 fun! termtask#Term_Cb(chan,msg)
+	let g:term_exit_code=a:msg
+	echom a:msg
+	if s:term_fin_exec!=''
+		exec s:term_fin_exec
+	endif
+endfun
+
+fun! termtask#Nvim_Term_Exit(chan,msg,event)
 	let g:term_exit_code=a:msg
 	echom a:msg
 	if s:term_fin_exec!=''

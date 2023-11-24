@@ -194,7 +194,7 @@
 
 ## 项目说明
 
-1. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux(如debian,linux mint等),其他系统可以使用vimplus!,同时非常希望大家可以提mr来完善仓库,或者提出issue说明需求的系统**
+1. **!目前只支持ubuntu,debian,以及其他ubuntu系的linux(如debian,linux mint等),mac支持可能不完善,其他系统可以使用vimplus!,同时非常希望大家可以提mr来完善仓库,或者提出issue说明需求的系统**
 
 2. 该项目基于[Vimplus](https://gitee.com/chxuan/vimplus.git)
 
@@ -364,7 +364,14 @@
 
 9. 控制台状态栏和图标混乱
 
-  - 设置控制台的字体,打开首选项,设置字体为 `DroidSansMono Nerd Font Book`
+  - 设置控制台的字体
+      - 如果是linux系统
+          1. 打开终端首选项
+          2. 设置字体为 `DroidSansMono Nerd Font Book`
+      - 如果是mac(以iterm2终端举例)
+          1. 打开fonts文件夹(项目根目录下),双击DejaVu.ttf文件安装该字体
+          2. 打开Item2 -> setting -> profile -> text -> font
+          3. 设置字体为`DejaVvSansMona Nerd Font`
 
   - 如果不想设置或者无法设置,可以选择禁用图标功能
 

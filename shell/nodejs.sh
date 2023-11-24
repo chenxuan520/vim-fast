@@ -3,6 +3,7 @@
 #check mac version
 type=$(uname)
 if [ ${type} == "Darwin" ]; then
+	brew install node
 	exit
 fi
 

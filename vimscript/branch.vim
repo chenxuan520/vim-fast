@@ -14,7 +14,9 @@ function! airline#extensions#branch#get_head()
     return g:status_branch_name
   elseif !exists("s:call_back")||s:call_back==0
     let s:call_back=1
-    call job_start("git rev-parse --abbrev-ref HEAD",{"out_cb":"airline#extensions#branch#git_branch"})
+    if !has('nvim')
+      call job_start("git rev-parse --abbrev-ref HEAD",{"out_cb":"airline#extensions#branch#git_branch"})
+    endif
     return ""
   else
     return ""

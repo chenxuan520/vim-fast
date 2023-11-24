@@ -182,6 +182,9 @@ func! s:CtrlB()
 	endif
 endfunc
 
+" select paste
+snoremap <c-v> <space><bs><c-o>"0P
+
 " 插入模式删除
 inoremap <c-q> <c-o>dd
 snoremap <c-q> <c-o>dd

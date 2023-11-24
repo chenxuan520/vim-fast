@@ -1,4 +1,15 @@
 #!/bin/bash
+
+
+# for mac install
+if [ "$(uname)" == "Darwin" ]; then
+	brew install go
+	vim -c "CocInstall coc-go@1.2.1 coc-snippets"
+	go env -w GO111MODULE=on
+	go env -w GOPROXY=https://goproxy.cn,direct
+	exit 0
+fi
+
 type go
 if [ $? == 1 ];then
 	sudo apt update

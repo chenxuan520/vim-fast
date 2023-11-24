@@ -42,7 +42,11 @@ func! s:MarkdownPreview()
 	endif
 	echo 'Turn md to html,please wait...'
 	call system(b:pandoc.' '.expand('%:p').' -t html >>'.s:html)
-	call job_start(b:browser.' '.s:html)
+	if has('nvim')
+		call jobstart(b:browser.' '.s:html)
+	else
+		call job_start(b:browser.' '.s:html)
+	endif
 	echo s:html
 endfunc
 

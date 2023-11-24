@@ -16,5 +16,9 @@ endfunc
 let b:browser=get(g:,'default_browser','firefox')
 
 if expand('%:e')=='html'
-	nnoremap <silent><buffer><space><space>p :w<cr>:call job_start(b:browser.' '.expand('%:p'))<cr>
+	if has('nvim')
+		nnoremap <silent><buffer><space><space>p :w<cr>:call jobstart(b:browser.' '.expand('%:p'))<cr>
+	else
+		nnoremap <silent><buffer><space><space>p :w<cr>:call job_start(b:browser.' '.expand('%:p'))<cr>
+	endif
 endif

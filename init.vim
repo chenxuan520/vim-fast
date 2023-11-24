@@ -280,15 +280,15 @@ func! s:CreateTags(arg,flag)
 	if a:flag|let g:tag_file="./tags"|endif
 	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif
 	let dir=termtask#Term_get_dir()
-	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=no -R ".dir,
-				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})
+	call jobstart("ctags -f ".g:tag_file.arg." --tag-relative=no -R ".dir,
+				\{"on_exit":"CreateTagCB","on_stderr":"CreateTagErrCB"})
 	exec "set tags+=".g:tag_file
 endfunc
-func! CreateTagErrCB(chan,msg)
-	echoerr a:msg
+func! CreateTagErrCB(chan,msg,name)
+	if a:msg[0]!=""|echoerr a:msg|endif
 endfunc
-func! CreateTagCB(chan)
-	call popup_create("tags create success", #{pos:'botright',time: 1000,highlight: 'WarningMsg',border: [],close: 'click',})
+func! CreateTagCB(chan,msg,event)
+	if a:msg==0|echom "tag create success"|else|echom a:msg."create tag wrong"|endif
 endfunc
 
 " termdebug
@@ -767,7 +767,7 @@ func! s:GotoLink()
 	endwhile
 	if s:list[0]!=''|let s:link=s:list[0]|endif
 	let s:browser=get(g:,'default_browser','firefox')
-	if s:link!=''|call job_start(s:browser.' '.s:link)|else|echo 'cannot find link'|endif
+	if s:link!=''|call jobstart(s:browser.' '.s:link)|else|echo 'cannot find link'|endif
 endfunc
 nnoremap <silent><nowait>gl :call <sid>GotoLink()<cr>
 

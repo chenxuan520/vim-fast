@@ -104,6 +104,9 @@ function install_prepare_software_on_mac()
 	type brew
 	if [ $? == 1 ];then
 		curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh
+		echo 'eval $(/opt/homebrew/bin/brew shellenv)' >> ~/.zprofile
+		echo 'please make sure brew is installed,and run it angin'
+		exit 1
 	fi
 	brew install nodejs
 	brew install zip wget git ctags fzf ripgrep

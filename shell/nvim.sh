@@ -7,8 +7,13 @@ function main(){
 	fi
 	type nvim
 	if [ $? == 1 ];then
-		sudo apt update
-		sudo apt install -y neovim
+		# not mac system
+		if [ "$(uname)" != "Darwin" ]; then
+			sudo apt update
+			sudo apt install -y neovim
+		else
+			brew install neovim
+		fi
 	fi
 	rm ~/.config/nvim/init.vim
 	mkdir ~/.config/nvim
