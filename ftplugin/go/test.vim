@@ -33,9 +33,18 @@ func! s:JsonRun(name)
 	let str+=['func TestJson(t *testing.T) {','	temp:='.a:name.'{}']
 	let str+=['	data, _ := json.MarshalIndent(temp, "", "  ")','	fmt.Println(string(data))','}']
 	call writefile(str,s:name)
-	vert call term_start("go test -v -run TestJson",{"cwd":expand("%:p:h"),"close_cb":"JsonCloseCb"})
+	if has('nvim')
+		let g:nvim_term_open=1
+		vsp|call termopen("go test -v -run TestJson",{"cwd":expand("%:p:h"),"on_exit":"JsonCloseCbNvim"})
+	else
+		vert call term_start("go test -v -run TestJson",{"cwd":expand("%:p:h"),"close_cb":"JsonCloseCb"})
+	endif
 endfunc
+
 func! JsonCloseCb(chan)
+	call delete(s:name)|echo "Run ok"
+endfunc
+func! JsonCloseCbNvim(chan,exitcode,event)
 	call delete(s:name)|echo "Run ok"
 endfunc
 

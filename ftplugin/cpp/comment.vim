@@ -14,14 +14,27 @@ endfunc
 nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>
 
 func! s:Run()
+	let g:nvim_term_open=1
 	if filereadable(expand('%:p:h')."/Makefile")||filereadable(expand('%:p:h')."/makefile")
-		exec ":vert term make"
+		if has('nvim')
+			exec ":vsplit|term make"
+		else
+			exec ":vert term make"
+		endif
 	elseif filereadable(expand('%:p:h')."/CMakeLists.txt")
-		exec ":vert term cmake ."
+		if has('nvim')
+			exec ":vsplit|term cmake ."
+		else
+			exec ":vert term cmake ."
+		endif
 	else
 		echo "using g++,please wait..."
 		call system("g++ ".expand('%:p'))
-		exec ":vert term ./a.out"
+		if has('nvim')
+			exec ":vsplit|term ./a.out"
+		else
+			exec ":vert term ./a.out"
+		endif
 	endif
 endfunc
 nnoremap <buffer><space>xx :call <sid>Run()<cr>

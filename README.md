@@ -365,12 +365,19 @@
 9. 控制台状态栏和图标混乱
 
   - 设置控制台的字体
+
       - 如果是linux系统
+
           1. 打开终端首选项
+
           2. 设置字体为 `DroidSansMono Nerd Font Book`
+
       - 如果是mac(以iterm2终端举例)
+
           1. 打开fonts文件夹(项目根目录下),双击DejaVu.ttf文件安装该字体
+
           2. 打开Item2 -> setting -> profile -> text -> font
+
           3. 设置字体为`DejaVvSansMona Nerd Font`
 
   - 如果不想设置或者无法设置,可以选择禁用图标功能
@@ -407,6 +414,9 @@
 
   - xshell的问题,[参考](https://www.cnblogs.com/yjd_hycf_space/p/11329841.html)
 
+15. nvim无法使用系统粘贴板
+
+  - 运行`sudo apt install xclip`,[参考](https://zhuanlan.zhihu.com/p/667386801)
 
 ## 帮助
 

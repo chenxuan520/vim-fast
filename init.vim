@@ -119,7 +119,7 @@ Plug 'chenxuan520/my-vim-dashboard'
 " function list
 Plug 'preservim/tagbar', {'on':'TagbarToggle'}
 " auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release','tag': 'v0.0.82'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " find anything
 Plug 'Yggdroot/LeaderF', {'do':'./install.sh'}
 " quick move mouse
@@ -159,7 +159,7 @@ Plug 'honza/vim-snippets'
 " run shell in async
 Plug 'skywind3000/asyncrun.vim'
 " copilot
-Plug 'github/copilot.vim'
+Plug 'github/copilot.vim', {'on': 'Copilot'}
 
 call plug#end()
 
@@ -302,7 +302,7 @@ nnoremap <F8> :Step<cr>
 " term console
 tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> ~/.config/nvim/nvr.py -l <space>
-tnoremap <c-]> ~/.config/nvim/nvr.py <space>
+tnoremap <c-]> ~/.config/nvim/nvr.py -l<space>;exit<left><left><left><left><left>
 tnoremap <c-z> exit<cr>
 nnoremap <leader><leader>T :split<CR>:term<cr>
 nnoremap <leader><leader>t :vsplit<CR>:term<cr>
@@ -315,11 +315,30 @@ tnoremap <c-w>k <c-\><c-n><c-w>k
 
 " lazygit
 nnoremap <silent><space>g :term lazygit<cr>
+nnoremap <silent><space>g :call <sid>ShellOpenFile(-1,0,"LAZYGIT_FILE")<cr>:tabnew<cr>:call termopen("lazygit",{"on_exit":"<sid>ShellOpenFile"})<cr>
 nnoremap <silent><space>G :let @s=expand('%')<cr>:term lazygit -f <c-r>s<cr>
+func! s:ShellOpenFile(close,exitcode,event) abort
+	if a:close==-1
+		if !exists("s:shell_open_file")||getenv(a:event)==v:null
+			let s:shell_open_file=tempname()|let s:shell_open_env=a:event
+			call setenv(a:event,s:shell_open_file)
+		endif
+		return
+	endif
+	tabclose
+	if exists("s:shell_open_file")&&filereadable(expand(s:shell_open_file))&&getenv(s:shell_open_env)==s:shell_open_file&&filereadable(expand(s:shell_open_file))
+		call setenv(s:shell_open_env, v:null)
+		for line in readfile(s:shell_open_file)
+			let msg=split(line)|let file=termtask#Term_get_dir()."/".msg[0]
+			execute ":edit ".file
+			if msg[1]!=1|call cursor(msg[1],0)|endif
+		endfor
+	endif
+endfunc
 
 " lf config define
-nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
-nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf .<cr>
+nnoremap <silent><space>E :tabe<cr>:vert term lf <c-r>=getenv('HOME')<cr><cr>
+nnoremap <silent><space>e :tabe<cr>:call termopen("lf",{"on_exit":"<sid>ShellOpenFile"})<cr>
 
 " yank and paste
 nnoremap <leader>p "0p
@@ -724,7 +743,7 @@ nnoremap <silent>R :redr!<cr>
 command! -nargs=0 -bang Pwd echo expand('%:p')
 command! -nargs=? -bang Reload exec ":edit ".<q-args>." ".expand('%')
 nnoremap <silent>S :edit<space><c-r>=expand('%')<cr><cr>
-command! -nargs=0 -bang Delete if filereadable(expand('%'))|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
+command! -nargs=0 -bang Delete if filereadable(expand('%'))|w|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
 cab <expr>Rename "Rename ".expand('%:p:h')."/"
 command! -nargs=1 -bang -complete=file Mkdir echo mkdir(<f-args>)
@@ -1056,3 +1075,6 @@ let g:asyncrun_bell = 0
 nmap <space>: :AsyncRun<space>
 " asyncrun ack
 nnoremap <leader>A :AsyncRun ack -i<space>
+
+" Copilot
+cab Copilot Copilot enable
