@@ -6,7 +6,7 @@
 
 **chenxuan**
 
-- [README](./README.md) in Chinese
+- [README](./README.en.md) in English
 
 ```shell
 '       _            __          _   '
@@ -80,11 +80,11 @@
 
 10. Provide shell scripts to customize Vim
 
-11. Project Chinese documentation detailed, more friendly to beginners
+11. Project Chinese documentation detailed, more novice friendly
 
 12. [**Built-in a simple and complete task management system, easy to establish a one-click compilation and operation system**](https://github.com/chenxuan520/termtask.vim)
 
-13. Provide one-click download configuration of Chinese VIM manual[(based on Vimcdoc)](https://github.com/yianwillis/vimcdoc)
+13. One-click download configuration of VIM manual in Chinese[(based on Vimcdoc)](https://github.com/yianwillis/vimcdoc)
 
 14. [**Built-in markdown shortcut plugin**](https://github.com/chenxuan520/markdown-simple.vim)
 
@@ -172,7 +172,7 @@
 
 - shell/plug.sh Download and install all the latest plugins (, auto-invoke, use gitee, faster)
 
-- The requested URL/doc_zh.sh was not found on this server.
+- shell/doc_zh.sh Download and install vim Chinese documentation
 
 - shell/self.sh customize the name and email in.vimrc to your own
 
@@ -194,13 +194,15 @@
 
 ## item description
 
-1. **! Currently only supports ubuntu,debian, and other ubuntu linux(such as debian,linux mint, etc.), other systems can use vimplus!, At the same time, I hope that everyone can propose mr to improve the warehouse, or propose a system for issue specification requirements.**
+1. **! Currently only supports ubuntu,debian, and other ubuntu linux(such as debian,linux mint, etc.),mac support may not be perfect, other systems can use vimplus!, At the same time, I hope that everyone can propose mr to improve the warehouse, or propose a system for issue specification requirements.**
 
 2. The project is based on[Vimplus](https://gitee.com/chxuan/vimplus.git)
 
 3. **If you encounter a problem, please read the QA section of this article first. If you can't solve it, raise an issue or contact the author.**
 
 4. Vim version **8.1** or above
+
+5. If there is a problem other than QA, give priority to whether it is a nodejs version problem, after testing v18.13.0 version is no problem,[refer to](https://juejin.cn/post/7132680379898527757)
 
 ## Videos and Articles
 
@@ -219,11 +221,11 @@
 ## installation
 >The first and second steps can be simplified to
 >
->curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/webinstall.sh|bash
+> curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/webinstall.sh |bash
 >
 >(After installation, if you encounter a problem with output confusion, you can directly close the terminal and restart it)
 
-1. git clone[https://gitee.com/mirrorvim/vim-fast](https://gitee.com/mirrorvim/vim-fast)
+1. git clone [https://gitee.com/mirrorvim/vim-fast](https://gitee.com/mirrorvim/vim-fast)
 
 2. cd vim-fast && ./ install.sh (**sudo is not required,sudo will make the file location wrong**)
 
@@ -278,11 +280,11 @@
 2. Wait for the installation to finish (about one minute), if no rust environment exists it will download automatically
 
 ### Easy to install plug-in free version
-   >curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh| bash
+   > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/websimple.sh | bash
 
    - or
 
-   >wget https://gitee.com/mirrorvim/vim-fast/raw/master/vimrc-no-plug-O ~/.vimrc
+   > wget https://gitee.com/mirrorvim/vim-fast/raw/master/vimrc-no-plug -O ~/.vimrc
 
 #### No plug-in version description
 
@@ -362,7 +364,21 @@
 
 9. Console status bar and icon confusion
 
-  - Set console font, open preferences, set font to`DroidSansMono Nerd Font Book`
+  - Set font for console
+
+      - linux
+
+          1. Open Terminal Preferences
+
+          2. Set font to`DroidSansMono Nerd Font Book`
+
+      - mac(iterm2)
+
+          1. Open the fonts folder (in the project root directory) and double-click the DejaVu.ttf file to install the font
+
+          2. Open Item2 -> setting -> profile -> text -> font
+
+          3. Set font to`DejaVvSansMona Nerd Font`
 
   - If you don't want to set it or can't set it, you can choose to disable icon function
 
@@ -392,12 +408,15 @@
 
 13. Error installing nodejs, unable to connect download
 
-  - Rerun./ shell/nodejs.sh
+  - Re-run./ shell/nodejs.sh
 
 14. backspace using vim in xshell cannot delete characters
 
   - xshell problems,[reference](https://www.cnblogs.com/yjd_hycf_space/p/11329841.html)
 
+15. nvim cannot use the system pasteboard
+
+  - Run`sudo apt install xclip`,[see](https://zhuanlan.zhihu.com/p/667386801)
 
 ## help
 

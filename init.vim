@@ -315,30 +315,36 @@ tnoremap <c-w>k <c-\><c-n><c-w>k
 
 " lazygit
 nnoremap <silent><space>g :term lazygit<cr>
-nnoremap <silent><space>g :call <sid>ShellOpenFile(-1,0,"LAZYGIT_FILE")<cr>:tabnew<cr>:call termopen("lazygit",{"on_exit":"<sid>ShellOpenFile"})<cr>
+nnoremap <silent><space>g :call <sid>ShellOpenFile(-1,0,"LAZYGIT_FILE")<cr>:call termopen("lazygit",{"on_exit":"<sid>ShellOpenFile"})<cr>
 nnoremap <silent><space>G :let @s=expand('%')<cr>:term lazygit -f <c-r>s<cr>
 func! s:ShellOpenFile(close,exitcode,event) abort
 	if a:close==-1
+		tabe
 		if !exists("s:shell_open_file")||getenv(a:event)==v:null
 			let s:shell_open_file=tempname()|let s:shell_open_env=a:event
 			call setenv(a:event,s:shell_open_file)
 		endif
 		return
 	endif
-	tabclose
+	bd
 	if exists("s:shell_open_file")&&filereadable(expand(s:shell_open_file))&&getenv(s:shell_open_env)==s:shell_open_file&&filereadable(expand(s:shell_open_file))
 		call setenv(s:shell_open_env, v:null)
 		for line in readfile(s:shell_open_file)
-			let msg=split(line)|let file=termtask#Term_get_dir()."/".msg[0]
-			execute ":edit ".file
-			if msg[1]!=1|call cursor(msg[1],0)|endif
+			let msg=split(line)
+			let file=msg[0]
+			if filereadable(file)
+				execute ":edit ".file
+			elseif isdirectory(file)
+				execute ":cd ".file
+			endif
+			if len(msg)>1&&msg[1]!=1|call cursor(msg[1],0)|endif
 		endfor
 	endif
 endfunc
 
 " lf config define
-nnoremap <silent><space>E :tabe<cr>:vert term lf <c-r>=getenv('HOME')<cr><cr>
-nnoremap <silent><space>e :tabe<cr>:call termopen("lf",{"on_exit":"<sid>ShellOpenFile"})<cr>
+nnoremap <silent><space>E :call <sid>ShellOpenFile(-1,0,"OPEN_FILE")<cr>:call termopen("lf <c-r>=getenv('HOME')<cr>",{"on_exit":"<sid>ShellOpenFile"})<cr>
+nnoremap <silent><space>e :call <sid>ShellOpenFile(-1,0,"OPEN_FILE")<cr>:call termopen("lf",{"on_exit":"<sid>ShellOpenFile"})<cr>
 
 " yank and paste
 nnoremap <leader>p "0p

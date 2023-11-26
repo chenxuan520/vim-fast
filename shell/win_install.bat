@@ -73,7 +73,7 @@ IF NOT EXIST "%USERPROFILE%\.vim\plugged\coc.nvim" (
 REM install other plug,TODO
 REM cd "%USERPROFILE%\.vim"
 REM del ./vim.tar.gz
-REM curl https://gitee.com/mirrorvim/vim-fast/releases/download/v1.0.11/vim.tar.gz -o vim.tar.gz
+REM curl https://gitee.com/mirrorvim/vim-fast/releases/download/v1.0.12/vim.tar.gz -o vim.tar.gz
 REM tar -zxvf ./vim.tar.gz
 vim -c "PlugInstall" -c "q" -c "q"
 

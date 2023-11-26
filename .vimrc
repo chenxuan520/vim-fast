@@ -318,25 +318,36 @@ nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close 
 nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:call term_start("bash",{"cwd":"<c-r>=@s<cr>","curwin":1,"term_finish":"close"})<cr>
 
 " lazygit
-nnoremap <silent><space>g :call <sid>LazyGitFile(0)<cr>:tabe<cr>:call term_start("lazygit",{"close_cb":"<sid>LazyGitFile","curwin":1,"term_finish":"close"})<cr>
+nnoremap <silent><space>g :call <sid>ShellOpenFile("LAZYGIT_FILE")<cr>:call term_start("lazygit",{"close_cb":"<sid>ShellOpenFile","curwin":1,"term_finish":"close"})<cr>
 nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
-func! s:LazyGitFile(close) abort
-	if type(a:close)==0
-		if !exists("s:lazygit_file")||getenv("LAZYGIT_FILE")==v:null
-			let s:lazygit_file=tempname()|call setenv("LAZYGIT_FILE",s:lazygit_file)
+func! s:ShellOpenFile(event) abort
+	if type(a:event)==type("")
+		tabe
+		if !exists("s:shell_open_file")||getenv(a:event)==v:null
+			let s:shell_open_file=tempname()|let s:shell_open_env=a:event
+			call setenv(a:event,s:shell_open_file)
 		endif
 		return
 	endif
 	tabclose
-	if exists("s:lazygit_file")&&filereadable(expand(s:lazygit_file))&&getenv("LAZYGIT_FILE")==s:lazygit_file&&filereadable(expand(s:lazygit_file))
-		call setenv("LAZYGIT_FILE", v:null)
-		for line in readfile(s:lazygit_file)
-			let msg=split(line)|let file=termtask#Term_get_dir()."/".msg[0]
-			execute ":edit ".file
-			if msg[1]!=1|call cursor(msg[1],0)|endif
+	if exists("s:shell_open_file")&&filereadable(expand(s:shell_open_file))&&getenv(s:shell_open_env)==s:shell_open_file&&filereadable(expand(s:shell_open_file))
+		call setenv(s:shell_open_env, v:null)
+		for line in readfile(s:shell_open_file)
+			let msg=split(line)
+			let file=msg[0]
+			if filereadable(file)
+				execute ":edit ".file
+			elseif isdirectory(file)
+				execute ":cd ".file
+			endif
+			if len(msg)>1&&msg[1]!=1|call cursor(msg[1],0)|endif
 		endfor
 	endif
 endfunc
+
+" lf config define
+nnoremap <silent><space>E :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_start("lf <c-r>=getenv('HOME')<cr>",{"close_cb":"<sid>ShellOpenFile","curwin":1})<cr>
+nnoremap <silent><space>e :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_start("lf",{"close_cb":"<sid>ShellOpenFile","curwin":1})<cr>
 
 " fzf self defile
 func! s:FzfFind(command)
@@ -357,10 +368,6 @@ func! Tapi_Fzf(bufnum,arglist)
 endfunc
 nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
 nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
-
-" lf config define
-nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
-nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf .<cr>
 
 " yank and paste
 nnoremap <leader>p "0p

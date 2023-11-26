@@ -158,7 +158,7 @@ func! g:VimFastEnter(ch)
 	let s:char=""
 	let s:i=0
 	" 删除至行首
-	if match(s:str, '^\s*-\s*$')>=0||match(s:str, '^\s*\d.\s*$')>=0||match(s:str, '^\s*>\s*$')>=0
+	if match(s:str, '^\s*-\s*$')>=0||match(s:str, '^\s*\d\+.\s*$')>=0||match(s:str, '^\s*>\s*$')>=0
 		return "\<c-u>"
 	endif
 	" 如果发现前面有空格,那么减少缩进
@@ -423,11 +423,11 @@ nnoremap <silent><buffer>"+p :call <sid>Paste()<cr>
 nnoremap <silent><buffer>> >>
 nnoremap <silent><buffer>< <<
 
-inoremap <silent><expr><TAB>
+inoremap <silent><buffer><expr><TAB>
 			\ pumvisible() ? "\<C-n>" :
 			\ getline(".")=~'^\s*$'  ? "\<TAB>" :
 			\ "\<c-o>>>\<c-o>$"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<c-o><<\<c-o>$"
+inoremap <expr><buffer><S-TAB> pumvisible() ? "\<C-p>" : "\<c-o><<\<c-o>$"
 
 vnoremenu <silent> PopUp.Bold\ Text   :call <sid>Bold('**')<cr>
 vnoremenu <silent> PopUp.Italic\ Text :call <sid>Bold('*')<cr>
