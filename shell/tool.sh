@@ -35,7 +35,7 @@ install_lf(){
 		echo "lf command exists"
 		return
 	fi
-	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lf -O ~/.local/bin/lf
+	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/lfv1.0.0/lf -O ~/.local/bin/lf
 	chmod +x ~/.local/bin/lf
 }
 

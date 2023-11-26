@@ -142,7 +142,7 @@ command! -nargs=0 Fzfinstalldeb     exec ":!sudo apt install -y fzf"
 command! -nargs=0 Fzfinstallweb     exec ":!wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/fzf-0.36.0-linux_amd64.tar.gz;mkdir ~/.local;mkdir ~/.local/bin;tar -zxvf ./fzf-0.36.0-linux_amd64.tar.gz -C ~/.local/bin;rm ./fzf-0.36.0-linux_amd64.tar.gz"|redraw!|call <sid>Askifaddpath()
 command! -nargs=0 Ctagsinstalldeb   exec ":!sudo apt install -y ctags"
 command! -nargs=0 Ctagsinstallweb   exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.0/ctags -O ~/.local/bin/ctags;chmod +x ~/.local/bin/ctags"|redraw!|call <sid>Askifaddpath()
-command! -nargs=0 Lfinstallweb      exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lf -O ~/.local/bin/lf;chmod +x ~/.local/bin/lf"|redraw!|call <sid>Askifaddpath()
+command! -nargs=0 Lfinstallweb      exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/lfv1.0.0/lf -O ~/.local/bin/lf;chmod +x ~/.local/bin/lf"|redraw!|call <sid>Askifaddpath()
 command! -nargs=0 Lazygitinstallweb exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lazygit.tar.gz;tar -zxvf ./lazygit.tar.gz -C ~/.local/bin;rm ./lazygit.tar.gz ~/.local/bin/README.md ~/.local/bin/LICENSE"|redraw!|call <sid>Askifaddpath()
 
 " 插入模式下的光标移动
@@ -276,22 +276,29 @@ if has('nvim')
 endif
 
 " lazygit
-nnoremap <silent><space>g :call <sid>LazyGitFile(0)<cr>:tabe<cr>:call term_start("lazygit",{"close_cb":"<sid>LazyGitFile","curwin":1,"term_finish":"close"})<cr>
+nnoremap <silent><space>g :call <sid>ShellOpenFile("LAZYGIT_FILE")<cr>:call term_start("lazygit",{"close_cb":"<sid>ShellOpenFile","curwin":1,"term_finish":"close"})<cr>
 nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
-func! s:LazyGitFile(close) abort
-	if type(a:close)==0
-		if !exists("s:lazygit_file")||getenv("LAZYGIT_FILE")==v:null
-			let s:lazygit_file=tempname()|call setenv("LAZYGIT_FILE",s:lazygit_file)
+func! s:ShellOpenFile(event) abort
+	if type(a:event)==type("")
+		tabe
+		if !exists("s:shell_open_file")||getenv(a:event)==v:null
+			let s:shell_open_file=tempname()|let s:shell_open_env=a:event
+			call setenv(a:event,s:shell_open_file)
 		endif
 		return
 	endif
 	tabclose
-	if exists("s:lazygit_file")&&filereadable(expand(s:lazygit_file))&&getenv("LAZYGIT_FILE")==s:lazygit_file&&filereadable(expand(s:lazygit_file))
-		call setenv("LAZYGIT_FILE", v:null)
-		for line in readfile(s:lazygit_file)
-			let msg=split(line)|let file=termtask#Term_get_dir()."/".msg[0]
-			execute ":edit ".file
-			if msg[1]!=1|call cursor(msg[1],0)|endif
+	if exists("s:shell_open_file")&&filereadable(expand(s:shell_open_file))&&getenv(s:shell_open_env)==s:shell_open_file&&filereadable(expand(s:shell_open_file))
+		call setenv(s:shell_open_env, v:null)
+		for line in readfile(s:shell_open_file)
+			let msg=split(line)
+			let file=msg[0]
+			if filereadable(file)
+				execute ":edit ".file
+			elseif isdirectory(file)
+				execute ":cd ".file
+			endif
+			if len(msg)>1&&msg[1]!=1|call cursor(msg[1],0)|endif
 		endfor
 	endif
 endfunc
@@ -317,8 +324,8 @@ nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_E
 nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 
 " lf config define
-nnoremap <silent><space>E :tabe<cr>:vert term ++curwin ++close lf <c-r>=getenv('HOME')<cr><cr>
-nnoremap <silent><space>e :tabe<cr>:vert term ++curwin ++close lf .<cr>
+nnoremap <silent><space>E :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_start("lf <c-r>=getenv('HOME')<cr>",{"close_cb":"<sid>ShellOpenFile","curwin":1})<cr>
+nnoremap <silent><space>e :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_start("lf",{"close_cb":"<sid>ShellOpenFile","curwin":1})<cr>
 
 " set pair baket
 inoremap ( ()<left>

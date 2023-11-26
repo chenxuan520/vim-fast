@@ -54,7 +54,7 @@ function install_plug()
 	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.0/ctags -O ~/.local/bin/ctags
 	chmod +x ~/.local/bin/ctags
 
-	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/lf -O ~/.local/bin/lf
+	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/lfv1.0.0/lf -O ~/.local/bin/lf
 	chmod +x ~/.local/bin/lf
 
 	wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/rgv1.0.0/rg.tar.gz
