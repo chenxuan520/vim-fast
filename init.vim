@@ -545,7 +545,7 @@ augroup restful
 	au!
 	autocmd BufNewFile,BufRead *.rest silent! call rest#Able()
 augroup END
-cab pyj python3 -m json.tool
+cab pyj !python3 -m json.tool
 nnoremap <space>i :call rest#VrcQuery(1)<CR>
 nnoremap <space>I :call rest#VrcQuery(0)<CR>
 

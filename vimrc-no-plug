@@ -985,7 +985,7 @@ command! -nargs=+ Run let command=strpart(<q-args>,0,stridx(<q-args>,' '))|
 			\exec ":make ".strpart(<q-args>,stridx(<q-args>,' '))|
 			\call <sid>Qfpopup()
 nnoremap <space>: :Run<space>
-cab pyj python3 -m json.tool
+cab pyj !python3 -m json.tool
 "}}}
 
 " ctags config{{{
