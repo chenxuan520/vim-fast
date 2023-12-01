@@ -428,11 +428,23 @@ inoremap <silent><buffer><expr><TAB>
 			\ "\<c-o>>>\<c-o>$"
 inoremap <expr><buffer><S-TAB> pumvisible() ? "\<C-p>" : "\<c-o><<\<c-o>$"
 
-vnoremenu <silent> PopUp.Bold\ Text   :call <sid>Bold('**')<cr>
-vnoremenu <silent> PopUp.Italic\ Text :call <sid>Bold('*')<cr>
-vnoremenu <silent> PopUp.Line\ Text   :call <sid>Bold('~~')<cr>
-vnoremenu <silent> PopUp.Code\ Text   :call <sid>Bold('`')<cr>
-vnoremenu <silent> PopUp.Link\ Text   :call <sid>BlodLink('[',']()')<cr>f]f)
+" for popup menu
+func MarkDownMenu()
+	unmenu PopUp
+	" visual model
+	vnoremenu PopUp.Yank\ Text "+y
+	vnoremenu PopUp.Paste\ Text "+p
+	" normal model
+	nnoremenu PopUp.Paste\ Text "+p
+	nnoremenu PopUp.Select\ All ggVG
+	" markdown text
+	vnoremenu PopUp.Bold\ Text   :call <sid>Bold('**')<cr>
+	vnoremenu PopUp.Italic\ Text :call <sid>Bold('*')<cr>
+	vnoremenu PopUp.Line\ Text   :call <sid>Bold('~~')<cr>
+	vnoremenu PopUp.Code\ Text   :call <sid>Bold('`')<cr>
+	vnoremenu PopUp.Link\ Text   :call <sid>BlodLink('[',']()')<cr>f]f)
+endfunc
+let g:rightmouse_popupmenu['markdown']=function("MarkDownMenu")
 
 inoremap <silent><buffer> !<space> ![{title}]()<left>
 inoremap <silent><buffer> ]<space>  [{title}]()<left>

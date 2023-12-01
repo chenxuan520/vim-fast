@@ -243,7 +243,15 @@ augroup ReadPost
 	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
 				\|endif
+	autocmd MenuPopup * call RightMouseMenu()
 augroup END
+
+" global popupmenu
+let g:rightmouse_popupmenu={}
+func RightMouseMenu()
+	if has_key(g:rightmouse_popupmenu, &ft)|call g:rightmouse_popupmenu[&ft]()
+	else|call s:MouseConfig()|endif
+endfunc
 
 " load the file last edit pos
 let g:map_recent_close={}

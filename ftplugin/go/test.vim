@@ -52,7 +52,11 @@ func! s:CodeRun(testfunc)
 	write
 	let s:name=expand('%:p')
 	if match(expand('%'),"test")==-1
-		exec ":vert term go run ".expand('%:p')
+		if a:testfunc==''
+			exec ":vert term go run ".expand('%:p')
+		else
+			CocCommand go.test.generate.function
+		endif
 	else
 		if a:testfunc==''
 			exec ":vert term go test -v ".expand('%:p:h')
@@ -60,7 +64,7 @@ func! s:CodeRun(testfunc)
 			if !has('nvim')
 				vert call term_start("go test -v -run ". a:testfunc,{"cwd":expand("%:p:h")})
 			else
-				vsp
+				vsp|enew
 				call termopen("bash -c 'go test -v -run ". a:testfunc.";bash'",{"cwd":expand("%:p:h")})
 			endif
 		endif
@@ -79,3 +83,17 @@ nnoremap <buffer><space>xx :call <sid>CodeRun('')<cr>
 xnoremap <buffer><space>xf :<c-u>execute "normal! gv\"sy"<cr>:call <sid>CodeRun("^".@s."$")<cr>
 nnoremap <buffer><space>xj :call <sid>JsonRun(input("input struct name:"))<cr>
 xnoremap <buffer><space>xj :<c-u>execute "normal! gv\"sy"<cr>:call <sid>JsonRun(@s)<cr>
+
+" for popup menu
+func GoMenu()
+	unmenu PopUp
+	vnoremenu PopUp.Go\ Run\ Test :<c-u>execute "normal! gv\"sy"<cr>:call <sid>CodeRun("^".@s."$")<cr>
+	nnoremenu PopUp.Go\ Run\ File :call <sid>CodeRun('')<cr>
+	" visual model
+	vnoremenu PopUp.Yank\ Text "+y
+	vnoremenu PopUp.Paste\ Text "+p
+	" normal model
+	nnoremenu PopUp.Paste\ Text "+p
+	nnoremenu PopUp.Select\ All ggVG
+endfunc
+let g:rightmouse_popupmenu['go']=function("GoMenu")
