@@ -71,3 +71,12 @@ if expand('%:t')=='.config.vim'
 		au BufDelete .config.vim au! TaskLoad
 	augroup END
 endif
+
+" for popup menu
+func VimMenu()
+	unmenu PopUp
+	vnoremenu PopUp.Vims\ Run "+y:<c-r>=@+<cr><cr>
+	nnoremenu PopUp.Vims\ Source :source <c-r>=expand("%")<cr><cr>
+	call MouseConfig()
+endfunc
+let g:rightmouse_popupmenu['vim']=function("VimMenu")

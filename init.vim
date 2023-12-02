@@ -252,7 +252,7 @@ augroup END
 let g:rightmouse_popupmenu={}
 func RightMouseMenu()
 	if has_key(g:rightmouse_popupmenu, &ft)|call g:rightmouse_popupmenu[&ft]()
-	else|call s:MouseConfig()|endif
+	else|call MouseConfig()|endif
 endfunc
 
 " load the file last edit pos
@@ -423,10 +423,9 @@ func! s:Qfpopup()abort
 endfunc
 
 " set mouse
-func! s:MouseConfig()
+func! MouseConfig()
 	set mouse=a
 	set mousemodel=popup_setpos
-	unmenu PopUp
 	" visual model
 	vnoremenu PopUp.Yank\ Text "+y
 	vnoremenu PopUp.Cut\ Text "+d
@@ -446,8 +445,9 @@ func! s:MouseConfig()
 	" term model
 	tlnoremenu PopUp.Exit\ Term exit<cr>
 endfunc
-call <sid>MouseConfig() " default set mouse enable
-nnoremap <silent><nowait>=m :call <sid>MouseConfig()<cr>
+unmenu PopUp
+call MouseConfig() " default set mouse enable
+nnoremap <silent><nowait>=m :unmenu PopUp<cr>call MouseConfig()<cr>
 nnoremap <silent><nowait>\m :set mouse=""<cr>
 
 " show indent line

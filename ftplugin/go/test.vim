@@ -88,12 +88,10 @@ xnoremap <buffer><space>xj :<c-u>execute "normal! gv\"sy"<cr>:call <sid>JsonRun(
 func GoMenu()
 	unmenu PopUp
 	vnoremenu PopUp.Go\ Run\ Test :<c-u>execute "normal! gv\"sy"<cr>:call <sid>CodeRun("^".@s."$")<cr>
+	vnoremenu PopUp.Go\ Json :<c-u>execute "normal! gv\"sy"<cr>:call <sid>JsonRun(@s)<cr>
+
 	nnoremenu PopUp.Go\ Run\ File :call <sid>CodeRun('')<cr>
-	" visual model
-	vnoremenu PopUp.Yank\ Text "+y
-	vnoremenu PopUp.Paste\ Text "+p
-	" normal model
-	nnoremenu PopUp.Paste\ Text "+p
-	nnoremenu PopUp.Select\ All ggVG
+	nnoremenu PopUp.Go\ Json :call <sid>JsonRun(input("input struct name:"))<cr>
+	call MouseConfig()
 endfunc
 let g:rightmouse_popupmenu['go']=function("GoMenu")

@@ -431,18 +431,14 @@ inoremap <expr><buffer><S-TAB> pumvisible() ? "\<C-p>" : "\<c-o><<\<c-o>$"
 " for popup menu
 func MarkDownMenu()
 	unmenu PopUp
-	" visual model
-	vnoremenu PopUp.Yank\ Text "+y
-	vnoremenu PopUp.Paste\ Text "+p
-	" normal model
-	nnoremenu PopUp.Paste\ Text "+p
-	nnoremenu PopUp.Select\ All ggVG
 	" markdown text
 	vnoremenu PopUp.Bold\ Text   :call <sid>Bold('**')<cr>
 	vnoremenu PopUp.Italic\ Text :call <sid>Bold('*')<cr>
 	vnoremenu PopUp.Line\ Text   :call <sid>Bold('~~')<cr>
 	vnoremenu PopUp.Code\ Text   :call <sid>Bold('`')<cr>
 	vnoremenu PopUp.Link\ Text   :call <sid>BlodLink('[',']()')<cr>f]f)
+
+	call MouseConfig()
 endfunc
 let g:rightmouse_popupmenu['markdown']=function("MarkDownMenu")
 

@@ -18,3 +18,17 @@ func! s:ExecShell(str)
 	call setfperm(temp,"rwxrwxrwx")
 	exec ":!".temp
 endfunc
+
+" for popup menu
+func ShMenu()
+	unmenu PopUp
+	vnoremenu PopUp.Shell\ Run "+y:call <sid>ExecShell(getreg('+'))<cr>
+	nnoremenu PopUp.Shell\ Run :w<cr>:vert term <c-r>=expand('%:p')<cr><cr>
+	" visual model
+	vnoremenu PopUp.Yank\ Text "+y
+	vnoremenu PopUp.Paste\ Text "+p
+	" normal model
+	nnoremenu PopUp.Paste\ Text "+p
+	nnoremenu PopUp.Select\ All ggVG
+endfunc
+let g:rightmouse_popupmenu['sh']=function("ShMenu")
