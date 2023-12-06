@@ -12,7 +12,7 @@ func! VimFastSetPreCode()
 endfunc
 nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>
 
-nnoremap <buffer><space>xx :w<cr>:vert term python3 <c-r>=expand('%:p')<cr><cr>
+nnoremap <buffer><space>xx :w<cr>:let g:nvim_term_open=1<cr>:vert term python3 <c-r>=expand('%:p')<cr><cr>
 nnoremap <silent><buffer><space>xl 0v$"+y:call <sid>ExecPython(getreg('+'))<cr>
 xnoremap <silent><buffer><space>xl "+y:call <sid>ExecPython(getreg('+'))<cr>
 func! s:ExecPython(str)

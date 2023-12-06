@@ -12,7 +12,7 @@ if exists('g:did_coc_loaded')
 	" auto format
 	augroup GoFormat
 		autocmd!
-		autocmd BufWritePre *.go call CocAction('format')
+		autocmd BufWritePre *.go silent! call CocAction('format')
 	augroup END
 endif
 
@@ -53,7 +53,14 @@ func! s:CodeRun(testfunc)
 	let s:name=expand('%:p')
 	if match(expand('%'),"test")==-1
 		if a:testfunc==''
-			exec ":vert term go run ".expand('%:p')
+			if !has('nvim')
+				exec ":vert term go run ".expand('%:p')
+			else
+				let path=expand("%:p")
+				let g:nvim_term_open=1
+				vsp|enew
+				exec ":term go run ".path
+			endif
 		else
 			CocCommand go.test.generate.function
 		endif
@@ -64,8 +71,10 @@ func! s:CodeRun(testfunc)
 			if !has('nvim')
 				vert call term_start("go test -v -run ". a:testfunc,{"cwd":expand("%:p:h")})
 			else
+				let path=expand("%:p:h")
 				vsp|enew
-				call termopen("bash -c 'go test -v -run ". a:testfunc.";bash'",{"cwd":expand("%:p:h")})
+				let g:nvim_term_open=1
+				call termopen("go test -v -run ". a:testfunc,{"cwd":path})
 			endif
 		endif
 	endif
@@ -92,6 +101,9 @@ func GoMenu()
 
 	nnoremenu PopUp.Go\ Run\ File :call <sid>CodeRun('')<cr>
 	nnoremenu PopUp.Go\ Json :call <sid>JsonRun(input("input struct name:"))<cr>
+	nnoremenu PopUp.Go\ Toggle :CocCommand go.test.toggle<cr>
 	call MouseConfig()
 endfunc
 let g:rightmouse_popupmenu['go']=function("GoMenu")
+
+command! GoLines exec "!golines -w ".expand("%d")
