@@ -16,8 +16,9 @@ if [ $? == 1 ];then
 	sudo apt-get install -y wget
 	sudo apt-get remove golang
 	# it may be very slow,so advise to use apt intsall
+	# https://golang.google.cn/dl/ or download form there
 	wget https://gomirrors.org/dl/go/go1.20.1.linux-amd64.tar.gz
-	sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18.3.linux-amd64.tar.gz
+	sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.1.linux-amd64.tar.gz
 	sudo ln -s  /usr/local/go/bin/go /usr/bin/go
 	sudo ln -s  /usr/local/go/bin/gofmt /usr/bin/gofmt
 	go env -w GO111MODULE=on
