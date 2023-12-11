@@ -311,6 +311,12 @@ func! s:FzfFind(command)
 	vert call term_start('bash',{'term_finish':"close"})
 	call term_sendkeys(term_list()[0],a:command."\<cr>")
 endfunc
+func! s:FzfFindTab(command)
+	tabe
+	call term_start('bash',{'term_finish':"close",'curwin':1})
+	call term_sendkeys(term_list()[0],a:command."\<cr>")
+endfunc
+
 let g:fzf_temp_file=""
 func! Tapi_Fzf(bufnum,arglist)
 	wincmd p|let temp=getenv("FZF_VIM")
@@ -324,6 +330,8 @@ func! Tapi_Fzf(bufnum,arglist)
 			elseif a:arglist[0]=="1"
 				let list= matchlist(line,'\([^:]\+\):\(\d\+\):\(\d\+\):')
 				if len(list)<4|echom line." cannot found"|return|endif
+				exec ":edit ".list[1]
+				if len(gettabinfo())>1|tabclose|endif
 				exec ":edit ".list[1]
 				call cursor(list[2], list[3])
 			else
@@ -1049,15 +1057,16 @@ func! s:ExludeIgnore()
 	let s:ignore_loaded=get(s:,"ignore_loaded",0)
 	if !s:ignore_loaded|let file=findfile(".gitignore",".;")|if file!=""|for line in readfile(file)|if line!=""&&match(line,"^#")==-1|exec ":set wildignore+=".line|endif|endfor|endif|endif
 endfunc
-let s:rg_fzf_cmd=""
+let g:rg_fzf_cmd="rg --column --line-number --no-heading --color=always \"\" | fzf --ansi --multi --reverse --preview=\"cat -n \\$(echo {}|awk -F ':' '{print \\$1}') | tail -n +\\$(echo {}|awk -F ':' '{print \\$2}')\" > $FZF_VIM"
+let g:term_open_file=';printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"1\",\"exit\"]]\007"'
 nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
 nnoremap <nowait><space>h :help<space>
 xnoremap <silent><space>h "sy:<c-u>help <c-r>=@s<cr><cr>
 nnoremap <nowait><space>a :call <sid>ExludeIgnore()<cr>:vimgrep /\V/j<space>./**<s-left><left><left><left>
 xnoremap <nowait><space>a "sy:call <sid>ExludeIgnore()<cr>:vimgrep /\V<c-r>=@s<cr>/j<space>./**<cr>:copen<cr>
-nnoremap <silent><space>A :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('rg --column --line-number --no-heading --color=always ""<bar>fzf --ansi --multi --reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"1\",\"exit\"]]\007"')<cr>
-xnoremap <silent><space>A "sy:let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('rg --column --line-number --no-heading --color=always ""<bar>fzf --ansi --multi --query <c-r>=@s<cr> --reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"1\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>A :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFindTab(g:rg_fzf_cmd.g:term_open_file)<cr>
+xnoremap <silent><space>A "sy:let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFindTab(g:rg_fzf_cmd.' --query="<c-r>=@s<cr>" '.g:term_open_file)<cr>
 nnoremap <silent><space>t :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>j :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>/ :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
