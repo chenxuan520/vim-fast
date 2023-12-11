@@ -314,12 +314,22 @@ endfunc
 let g:fzf_temp_file=""
 func! Tapi_Fzf(bufnum,arglist)
 	wincmd p|let temp=getenv("FZF_VIM")
-	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
+	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[len(a:arglist)-1]."\<cr>")|endif
 	if temp!=v:null
 		for line in readfile(g:fzf_temp_file)
 			let list=matchstr(line,"\/\^.*")
-			if a:arglist[0]=="0"|let @/="\\V\\^".line."\\$"|else|let @/="\\V".escape(strpart(list,1,len(list)-2),"^$")|endif
-			call feedkeys('n','in')|set hlsearch
+			if a:arglist[0]=="0"
+				let @/="\\V\\^".line."\\$"
+				call feedkeys('n','in')|set hlsearch
+			elseif a:arglist[0]=="1"
+				let list= matchlist(line,'\([^:]\+\):\(\d\+\):\(\d\+\):')
+				if len(list)<4|echom line." cannot found"|return|endif
+				exec ":edit ".list[1]
+				call cursor(list[2], list[3])
+			else
+				let @/="\\V".escape(strpart(list,1,len(list)-2),"^$")
+				call feedkeys('n','in')|set hlsearch
+			endif
 		endfor
 	endif
 endfunc
@@ -561,8 +571,9 @@ xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
 func s:ReplaceGlobal(str) abort
-	let str=escape(a:str,'/')|let temp=escape(input("replace ".a:str." to:"),'/')
-	call system('sed -i "s/'.str.'/'.temp.'/g" `grep "'.escape(a:str,'"').'" -rl --exclude-dir=".git" ./`')|redraw!|echo "replace ok"
+	let str=escape(a:str,'.')|let replace=escape(input("replace ".a:str." to:"),'.')
+	if replace==""|return|endif
+	echo system('find . -path "./.git" -prune -o -type f -exec sed -i "s|'.a:str.'|'.replace.'|g" {} +')
 endfunc
 
 " indent buffer
@@ -812,13 +823,13 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 "}}}
 
 " set statusline {{{
-function GetMode()
+function! GetMode()
 	let m = mode()|let s:str=''|let s:color='#9ECE6A'
-	if m == 'R'|let s:color='#F7768E'|let s:str= 'Replace'
-	elseif m == 'v'|let s:color='#F7768E'|let s:str= 'Visual'
-	elseif m == 'i'|let s:color='#7AA2F7'|let s:str= 'Insert'
-	elseif m == 't'|let s:color='#7AA2F7'|let s:str= 'Terminal'
-	else|let s:color='#9ECE6A'|let s:str= 'Normal'
+	if m == 'R'|let s:color='#F7768E'|let s:str= 'Replace '
+	elseif m == 'v'|let s:color='#F7768E'|let s:str= 'Visual '
+	elseif m == 'i'|let s:color='#7AA2F7'|let s:str= 'Insert '
+	elseif m == 't'|let s:color='#7AA2F7'|let s:str= 'Terminal '
+	else|let s:color='#9ECE6A'|let s:str= 'Normal '
 	endif
 	exec 'highlight User3 font=#000000 guifg=#1a1b26 guibg='.s:color
 	exec 'highlight User4 font=#000000 guifg='.s:color.' guibg=#232433'
@@ -893,23 +904,21 @@ nnoremap <silent>g8 :let @/="\\<".expand('<cword>')."\\>"<cr>:set hlsearch<cr>
 let s:tab_after=""
 func! TabLine(direct)
 	let s:tab_result=""|let flag=0
-	if a:direct|return s:tab_after!=""?s:tab_after."|":""|else|let s:tab_after=""|endif
+	if a:direct|return s:tab_after!=""?s:tab_after."|":"\ "|else|let s:tab_after=""|endif
 	for buf in getbufinfo({'buflisted':1})
 		let s:name=buf.name
 		if strridx(buf.name,"/")!=-1|let s:name=strpart(buf.name,strridx(buf.name,"/")+1)|endif
 		if buf.name!=expand('%:p')
-			if flag==0|let s:tab_result=s:tab_result."\ ".s:name|else|let s:tab_after=s:tab_after."\ ".s:name|endif
-		else
-			let flag=1
-		endif
+			if flag==0|let s:tab_result=s:tab_result."\ ".s:name."\ "|else|let s:tab_after=s:tab_after."\ ".s:name."\ "|endif
+		else|let flag=1|endif
 	endfor
 	redrawt
 	return s:tab_result
 endfunc
 func! TabLineSet()
-	if len(gettabinfo())>1|return "%5*  Tab%2*%=%1* buffer"|endif
-	if &modified|let tab="%2* %0.32(%{TabLine(0)}%)%5*\ %t%6*%2*%<%{TabLine(1)}%r%h%w%=%6*\ %5* buffer"
-	else|let tab="%2* %0.32(%{TabLine(0)}%)%1*\ %t%2*%2*%<%{TabLine(1)}%r%h%w%=%2*\ %1* buffer"
+	if len(gettabinfo())>1|return "%5* Tab %2*%=%1* buffer"|endif
+	if &modified|let tab="%2* %0.32(%{TabLine(0)}%)%5*\ %t\ %6*%2*%<%{TabLine(1)}%r%h%w%=%6*\ %5* buffer"
+	else|let tab="%2* %0.32(%{TabLine(0)}%)%1*\ %t\ %2*%2*%<%{TabLine(1)}%r%h%w%=%2*\ %1* buffer"
 	endif
 	return tab
 endfunc
@@ -1040,15 +1049,19 @@ func! s:ExludeIgnore()
 	let s:ignore_loaded=get(s:,"ignore_loaded",0)
 	if !s:ignore_loaded|let file=findfile(".gitignore",".;")|if file!=""|for line in readfile(file)|if line!=""&&match(line,"^#")==-1|exec ":set wildignore+=".line|endif|endfor|endif|endif
 endfunc
+let s:rg_fzf_cmd=""
 nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
 nnoremap <nowait><space>h :help<space>
 xnoremap <silent><space>h "sy:<c-u>help <c-r>=@s<cr><cr>
 nnoremap <nowait><space>a :call <sid>ExludeIgnore()<cr>:vimgrep /\V/j<space>./**<s-left><left><left><left>
 xnoremap <nowait><space>a "sy:call <sid>ExludeIgnore()<cr>:vimgrep /\V<c-r>=@s<cr>/j<space>./**<cr>:copen<cr>
-nnoremap <silent><space>t :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
-nnoremap <silent><space>j :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
-nnoremap <silent><space>/ :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>A :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('rg --column --line-number --no-heading --color=always ""<bar>fzf --ansi --multi --reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"1\",\"exit\"]]\007"')<cr>
+xnoremap <silent><space>A "sy:let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('rg --column --line-number --no-heading --color=always ""<bar>fzf --ansi --multi --query <c-r>=@s<cr> --reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"1\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>t :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>j :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>/ :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
+xnoremap <silent><space>/ "sy:let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --query <c-r>=@s<cr> --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
 nnoremap <silent><space>l :copen<cr>
@@ -1058,7 +1071,8 @@ nnoremap <silent><space>l :copen<cr>
 nnoremap <silent>f :call <sid>CleverF('f')<cr>
 nnoremap <silent>F :call <sid>CleverF('F')<cr>
 nnoremap <silent>; :call <sid>CleverF(';')<cr>
-let s:cleverf_hl_arr=[]|let s:cleverf_pos_arr=[]|let s:cleverf_find_now=0|let s:cleverf_find_line=-1
+let s:cleverf_hl_arr=[]|let s:cleverf_pos_arr=[]|let s:cleverf_find_now=0
+let s:cleverf_find_line=-1|let s:cleverf_find_last=0
 func! s:CleverFDeleteHl() abort
 	if s:cleverf_find_now==getline(line("."))[col(".")-1]&&s:cleverf_find_line==line('.')|return|endif
 	for hl in s:cleverf_hl_arr|call matchdelete(hl)|endfor
@@ -1068,7 +1082,7 @@ endfunc
 func! s:CleverF(ch) abort
 	let line=getline('.')|let line_num=line('.')|let col=col('.')
 	if type(s:cleverf_find_now)==0&&a:ch==#'F'|call feedkeys('F','n')|return|endif
-	if type(s:cleverf_find_now)!=0||a:ch==';'||a:ch==#'F'
+	if type(s:cleverf_find_now)!=0
 		let i=0
 		if a:ch!=#'F'|while i<len(s:cleverf_pos_arr)&&col>s:cleverf_pos_arr[i]|let i=i+1|endwhile
 		else|let i=len(s:cleverf_pos_arr)-1|while i>0&&col-1<=s:cleverf_pos_arr[i]|let i=i-1|endwhile
@@ -1076,13 +1090,19 @@ func! s:CleverF(ch) abort
 		if i>=0&&i<len(s:cleverf_pos_arr)|call cursor(line('.'),s:cleverf_pos_arr[i]+1)|endif
 		return
 	endif
-	let ch=nr2char(getchar())|let s:cleverf_pos_arr=[]|let pos=stridx(line,ch,col)
+	if a:ch==#'f'
+		let ch=nr2char(getchar())
+	elseif a:ch==#';'
+		let ch=s:cleverf_find_last
+	endif
+	let s:cleverf_pos_arr=[]|let pos=stridx(line,ch,col)
 	while pos!=-1|call add(s:cleverf_pos_arr,pos)|let pos=stridx(line,ch,pos+1)|endwhile
 	if len(s:cleverf_pos_arr)==0|return|endif
 	for now_pos in s:cleverf_pos_arr
 		let tmp = matchaddpos("incsearch", [[line_num,now_pos+1,1]])|call add(s:cleverf_hl_arr,tmp)
 	endfor
 	call cursor(line('.'), s:cleverf_pos_arr[0]+1)|let s:cleverf_find_now=ch|let s:cleverf_find_line=line_num
+	let s:cleverf_find_last=ch
 	augroup CleverF|au!| autocmd! CursorMoved * call <sid>CleverFDeleteHl()|augroup END
 endfunc
 " }}}
