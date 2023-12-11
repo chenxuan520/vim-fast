@@ -35,7 +35,9 @@ func! s:JsonRun(name)
 	call writefile(str,s:name)
 	if has('nvim')
 		let g:nvim_term_open=1
-		vsp|call termopen("go test -v -run TestJson",{"cwd":expand("%:p:h"),"on_exit":"JsonCloseCbNvim"})
+		let path=expand("%:p:h")
+		vsp|enew
+		call termopen("go test -v -run TestJson",{"cwd":path,"on_exit":"JsonCloseCbNvim"})
 	else
 		vert call term_start("go test -v -run TestJson",{"cwd":expand("%:p:h"),"close_cb":"JsonCloseCb"})
 	endif
