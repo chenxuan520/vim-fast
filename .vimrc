@@ -121,7 +121,7 @@ Plug 'preservim/tagbar', {'on':'TagbarToggle'}
 " auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release','tag': 'v0.0.81'}
 " find anything
-Plug 'Yggdroot/LeaderF', {'do':'./install.sh'}
+Plug 'Yggdroot/LeaderF', {'do':'./install.sh','tag':'v1.24'}
 " quick move mouse
 Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
 " enhance the /

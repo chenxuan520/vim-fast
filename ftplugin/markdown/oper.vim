@@ -202,7 +202,7 @@ func! g:VimFastEnter(ch)
 			execute ":Tabularize /|"
 			execute "normal! $l"
 		endif
-		let @s='|'
+		let @s=''
 	elseif s:char[0]>0&&s:char[0]<=9
 		let @s=(s:char+1).". "
 	else
@@ -210,6 +210,14 @@ func! g:VimFastEnter(ch)
 	endif
 
 	return "\<cr>".@s
+endfunc
+
+func! s:OrderList()
+	let line=getline('.')
+	if line =~ '^\s*\d$'
+		return '. '
+	endif
+	return '.'
 endfunc
 
 func! s:Backspace()
@@ -345,17 +353,47 @@ endfunc
 
 func! s:TableCreate(mode)
 	let s:get=getchar()-48
+	let s:time=getchar()-48
 	let s:result=''
+	let s:split=''
+	if s:get<'0'||s:get>'9'
+		let s:get=1
+	endif
+	if s:time<'0'||s:time>'9'
+		let s:time=1
+	endif
+
 	while s:get>0
 		let s:result=s:result.'|{text}'
+		let s:split=s:split.'| --- '
 		let s:get-=1
 	endwhile
+
 	let s:result=s:result.'|'
+	let s:split=s:split.'|'
+	let one=s:result
+	if s:time>1
+		let s:result=s:result."\<c-m>".s:split
+	endif
+
+	while s:time>1
+		let s:result=s:result."\<c-m>".one
+		let s:time-=1
+	endwhile
+
 	if a:mode!=''
 		return s:result
 	endif
-	execute 'normal! i'.s:result
-	execute 'normal! ^'
+
+	while s:time>0
+		execute 'normal! i'.s:result
+		if s:time>1
+			execute 'normal! o'.s:result
+		else
+			execute 'normal! ^'
+		endif
+		let s:time-=1
+	endwhile
 endfunc
 
 nnoremap <silent><buffer>#         : call <sid>AddTitle()<cr><right>
@@ -401,9 +439,7 @@ inoremap <expr><silent><buffer>- <sid>DivLine('-')
 inoremap <expr><silent><buffer>> <sid>DivLine('>')
 inoremap <silent><buffer>* **<left>
 inoremap <silent><buffer>~~ ~~~~<left><left>
-for s:i in [0,1,2,3,4,5,6,7,8,9]
-	execute "inoremap <silent><buffer>".s:i.". ".s:i.". "
-endfor
+inoremap <expr><silent><buffer>. <sid>OrderList()
 
 let s:head='#'
 for s:i in [1,2,3,4,5]
