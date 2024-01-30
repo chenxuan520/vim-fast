@@ -6,6 +6,7 @@ if exists('g:did_coc_loaded')
 	nnoremap <buffer><space>xf :call <sid>TestFunc()<cr>
 	nnoremap <buffer><space>xn :CocCommand go.test.generate.file<cr>
 	nnoremap <buffer><space>xg :CocCommand go.test.toggle<cr>
+	nnoremap <buffer><space>xc :CocCommand go.test.toggle<cr>
 	" tag
 	nnoremap <buffer><space>xa :CocCommand go.tags.add.prompt<cr>
 	nnoremap <buffer><space>xd :CocCommand go.tags.remove.prompt<cr>

@@ -478,7 +478,4 @@ func MarkDownMenu()
 endfunc
 let g:rightmouse_popupmenu['markdown']=function("MarkDownMenu")
 
-inoremap <silent><buffer> !<space> ![{title}]()<left>
-inoremap <silent><buffer> ]<space>  [{title}]()<left>
-
 setlocal conceallevel=3

@@ -15,11 +15,15 @@ function! s:Travel(file,tab,path) abort
 		if isdirectory(now)
 			let temp=now."/README.md"
 			if !filereadable(temp)|let temp=""|endif
+			if filereadable(now.".md")|let temp=now.".md"|endif
 			let s:result=s:result.tab."- [".old."](".temp.")\n"
 			call s:Travel(readdir(now),tab."\t",now."/")
 		else
 			if stridx(now,"README.md")!=-1|continue|endif
 			if stridx(now,"SUMMARY.md")!=-1|continue|endif
+			let file_ext = fnamemodify(now, ':e')|let file_path = fnamemodify(now, ':r')
+			if isdirectory(file_path)|continue|endif
+			if file_ext!="md"|echo "Warning: ".now." "." is not md file,ignore"|continue|endif
 			let name=fnamemodify(now,":t:r")
 			let s:result=s:result.tab."- [".name."](".now.")\n"
 		endif
@@ -31,14 +35,14 @@ function! s:Init() abort
 	let g:mdbook_sort=get(g:,"mdbook_sort",1)
 endfunction
 
-function! mdbook#MkbookFile() abort
+function! mdbook#MkbookFile(dir) abort
 	call s:Init()
-	if !isdirectory("./src")|echohl WarningMsg|echo "please back to root dir"|echohl NONE|endif
-	cd ./src
+	if !isdirectory(a:dir)|echohl WarningMsg|echo "please back to root dir"|echohl NONE|endif
+	execute "cd ".a:dir
 	if filereadable("./README.md")|let s:result=s:result."- [README](./README.md)\n"|endif
 	call s:Travel(readdir("."),"","./")
 	cd ..
 	return s:result
 endfunction
 
-" command! Mkbook for v in split(mdbook#MkbookFile(),"\n")|call append(line('.')-1,v)|endfor
+" command! Mkbook for v in split(mdbook#MkbookFile("./src"),"\n")|call append(line('.')-1,v)|endfor

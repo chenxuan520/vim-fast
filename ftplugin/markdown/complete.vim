@@ -27,4 +27,4 @@ func! s:MarkDownComplete()
 	endif
 endfunc
 
-inoremap <buffer>/ <c-r>=<SID>MarkDownComplete()<cr>
+inoremap <buffer>\\ <c-r>=<SID>MarkDownComplete()<cr>
