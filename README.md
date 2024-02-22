@@ -364,19 +364,27 @@
 
 9. 控制台状态栏和图标混乱
 
-  - 设置控制台的字体
+  - 设置终端的字体
 
       - 如果是linux系统
 
           1. 打开终端首选项
 
-          2. 设置字体为 `DroidSansMono Nerd Font Book`
+          2. 设置字体为 `DroidSansMono Nerd Font Book`(如果没有双击ttf字体安装)
 
       - 如果是mac(以iterm2终端举例)
 
           1. 打开fonts文件夹(项目根目录下),双击DejaVu.ttf文件安装该字体
 
           2. 打开Item2 -> setting -> profile -> text -> font
+
+          3. 设置字体为`DejaVvSansMona Nerd Font`
+
+      - 如果是windows(以windows terminal终端举例)
+
+          1. 打开fonts文件夹(项目根目录下),双击DejaVu.ttf文件安装该字体
+
+          2. 打开 terminal -> 设置 -> 默认值 -> 外观 -> 字体
 
           3. 设置字体为`DejaVvSansMona Nerd Font`
 

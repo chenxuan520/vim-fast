@@ -7,7 +7,7 @@ func s:SetComment()
 endfunc
 " set preparecode in buffernew
 func! VimFastSetPreCode()
-	call append(line(".")-1,'#!/usr/bin/env python')
+	call append(line(".")-1,'#!/usr/bin/env python3')
 	call append(line(".")-1,'# coding=utf-8')
 endfunc
 nnoremap <buffer><Leader>c :call <SID>SetComment()<CR>
