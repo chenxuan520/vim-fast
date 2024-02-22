@@ -239,8 +239,8 @@ augroup ReadPost
 	au!
 	autocmd FileType java,c,cpp set commentstring=//\ %s
 	autocmd TermOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|startinsert|endif
-	autocmd WinEnter * if &bt=='terminal'|call feedkeys("i\<esc>")|endif
-	autocmd TermClose * if !exists('g:nvim_term_open')|call feedkeys("i\<esc>")|else|unlet g:nvim_term_open|endif
+	autocmd WinEnter * if &bt=='terminal'|call feedkeys("i\<esc>\<esc>")|endif
+	autocmd TermClose * if !exists('g:nvim_term_open')|call feedkeys("i\<esc>\<esc>")|else|unlet g:nvim_term_open|endif
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}

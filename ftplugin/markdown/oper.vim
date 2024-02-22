@@ -458,6 +458,9 @@ nnoremap <silent><buffer>"+p :call <sid>Paste()<cr>
 nnoremap <silent><buffer>> >>
 nnoremap <silent><buffer>< <<
 
+inoremap <silent><buffer><c-f> [{text}]({link})
+inoremap <silent><buffer><c-g> ![{text}]({link})
+
 inoremap <silent><buffer><expr><TAB>
 			\ pumvisible() ? "\<C-n>" :
 			\ getline(".")=~'^\s*$'  ? "\<TAB>" :

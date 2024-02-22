@@ -17,14 +17,20 @@ func! s:MarkDownComplete()
 	let opt=&completeopt
 	let flag=stridx(opt,"noselect")
 	if col!=0 && line[col-1] =~ '\S'
-		return "/\<c-x>\<c-f>"
+		if flag!=-1
+			return "/\<c-x>\<c-f>"
+		else
+			return "/\<c-x>\<c-f>\<c-p>"
+		endif
 	endif
 	call complete(col('.'), s:suggestions)
 	if flag!=-1
 		return ''
 	else
+		echom 1
 		return "\<c-p>"
 	endif
 endfunc
 
-inoremap <buffer>\\ <c-r>=<SID>MarkDownComplete()<cr>
+" inoremap <buffer>\\ <c-r>=<SID>MarkDownComplete()<cr>
+inoremap <buffer>/ <c-r>=<SID>MarkDownComplete()<cr>
