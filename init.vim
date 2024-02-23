@@ -227,8 +227,8 @@ vnoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
 inoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
 
 " yank to system
-vnoremap <leader><leader>y "+y
-nnoremap <leader><leader>y "+y
+vnoremap <leader><leader>y y
+nnoremap <leader><leader>y y
 " paste to system
 nnoremap <leader><leader>p "+p
 nnoremap <leader><leader>P "+P
@@ -1092,3 +1092,7 @@ nnoremap <leader>A :AsyncRun ack -i<space>
 
 " Copilot
 cab Copilot Copilot enable
+augroup Yank
+  autocmd!
+  autocmd TextYankPost * if v:event.operator ==# 'y' | call system('/mnt/c/Windows/System32/clip.exe', @0) | endif
+augroup END
