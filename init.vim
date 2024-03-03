@@ -124,8 +124,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/LeaderF', {'do':'./install.sh','tag':'v1.24'}
 " quick move mouse
 Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
-" enhance the /
-Plug 'haya14busa/incsearch.vim'
 " pair auto
 Plug 'jiangmiao/auto-pairs'
 " file tree left
@@ -227,8 +225,8 @@ vnoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
 inoremap <c-t> <c-[>?}<cr>:noh<cr>va{<c-g>
 
 " yank to system
-vnoremap <leader><leader>y y
-nnoremap <leader><leader>y y
+vnoremap <leader><leader>y "+y
+nnoremap <leader><leader>y "+y
 " paste to system
 nnoremap <leader><leader>p "+p
 nnoremap <leader><leader>P "+P
@@ -966,11 +964,6 @@ let g:AutoPairsMapSpace = 0
 let g:dashboard_disable_statusline=1
 " let g:dashboard_icon_disable=1
 
-" incsearch.vim
-nmap /  <Plug>(incsearch-forward)
-nmap ?  <Plug>(incsearch-backward)
-nmap g/ <Plug>(incsearch-stay)
-
 " vim-easymotion
 let g:EasyMotion_smartcase = 1
 map  <leader>w <Plug>(easymotion-bd-w)
@@ -1092,7 +1085,3 @@ nnoremap <leader>A :AsyncRun ack -i<space>
 
 " Copilot
 cab Copilot Copilot enable
-augroup Yank
-  autocmd!
-  autocmd TextYankPost * if v:event.operator ==# 'y' | call system('/mnt/c/Windows/System32/clip.exe', @0) | endif
-augroup END

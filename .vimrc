@@ -124,8 +124,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release','tag': 'v0.0.81'}
 Plug 'Yggdroot/LeaderF', {'do':'./install.sh','tag':'v1.24'}
 " quick move mouse
 Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
-" enhance the /
-Plug 'haya14busa/incsearch.vim'
 " pair auto
 Plug 'jiangmiao/auto-pairs'
 " file tree left
@@ -988,11 +986,6 @@ let g:AutoPairsMapSpace = 0
 " dash board
 let g:dashboard_disable_statusline=1
 " let g:dashboard_icon_disable=1
-
-" incsearch.vim
-nmap /  <Plug>(incsearch-forward)
-nmap ?  <Plug>(incsearch-backward)
-nmap g/ <Plug>(incsearch-stay)
 
 " vim-easymotion
 let g:EasyMotion_smartcase = 1

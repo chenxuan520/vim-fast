@@ -276,10 +276,15 @@ if has('nvim')
 	nnoremap <leader><leader>T :split<CR>:term<cr>
 	nnoremap <leader><leader>t :vsplit<CR>:term<cr>
 	nnoremap <silent><space><space>t :term<cr>
+	nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:enew<cr>:call termopen('bash',{'cwd':'<c-r>=@s<cr>'})<cr>
 endif
 
 " lazygit
-nnoremap <silent><space>g :call <sid>ShellOpenFile("LAZYGIT_FILE")<cr>:call term_start("lazygit",{"close_cb":"<sid>ShellOpenFile","curwin":1,"term_finish":"close"})<cr>
+if !has('nvim')
+	nnoremap <silent><space>g :call <sid>ShellOpenFile("LAZYGIT_FILE")<cr>:call term_start("lazygit",{"close_cb":"<sid>ShellOpenFile","curwin":1,"term_finish":"close"})<cr>
+else
+	nnoremap <silent><space>g :call <sid>ShellOpenFile("LAZYGIT_FILE")<cr>:enew<cr>:call termopen("lazygit")<cr>
+endif
 nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
 func! s:ShellOpenFile(event) abort
 	if type(a:event)==type("")
