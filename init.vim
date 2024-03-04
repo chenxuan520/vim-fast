@@ -320,7 +320,6 @@ tnoremap <c-w>j <c-\><c-n><c-w>j
 tnoremap <c-w>k <c-\><c-n><c-w>k
 
 " lazygit
-nnoremap <silent><space>g :term lazygit<cr>
 nnoremap <silent><space>g :call <sid>ShellOpenFile(-1,0,"LAZYGIT_FILE")<cr>:call termopen("lazygit",{"on_exit":"<sid>ShellOpenFile"})<cr>
 nnoremap <silent><space>G :let @s=expand('%')<cr>:term lazygit -f <c-r>s<cr>
 func! s:ShellOpenFile(close,exitcode,event) abort

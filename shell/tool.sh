@@ -11,6 +11,14 @@ function command_exists {
 	fi
 }
 
+function file_exist(){
+	if [ -f "$1" ]; then
+		return 0
+	else
+		return 1
+	fi
+}
+
 install_lazygit() {
 	if command_exists "lazygit"; then
 		echo "lazygit command exists"
@@ -49,6 +57,16 @@ install_fzf(){
 	rm ./fzf-0.36.0-linux_amd64.tar.gz
 }
 
+install_nvr(){
+	if file_exist ~/.config/nvim/nvr.py; then
+		echo "nvr  exists"
+		return
+	fi
+	mkdir -p ~/.config/nvim
+	wget https://gitee.com/mirrorvim/vim-fast/raw/master/shell/nvr.py -O ~/.config/nvim/nvr.py
+	chmod +x ~/.config/nvim/nvr.py
+}
+
 check_and_add_to_path(){
 	if [[ ":$PATH:" == *":$HOME/.local/bin:"* ]]; then
 		echo "~/.local/bin is already in your PATH."
@@ -81,8 +99,11 @@ case "$1" in
 		install_lf
 		check_and_add_to_path
 		;;
+	nvr)
+		install_nvr
+		;;
 	*)
-		echo $"Usage: $0 {lazygit|ctags|fzf|lf}"
+		echo $"Usage: $0 {lazygit|ctags|fzf|lf|nvr}"
 		exit 2
 		;;
 esac
