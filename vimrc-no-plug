@@ -341,7 +341,6 @@ func! s:FzfFindTab(command)
 		call chansend(chanid, a:command."\<cr>")
 	endif
 endfunc
-
 let g:fzf_temp_file=""
 func! Tapi_Fzf(bufnum,arglist)
 	wincmd p|let temp=getenv("FZF_VIM")
@@ -366,8 +365,6 @@ func! Tapi_Fzf(bufnum,arglist)
 		endfor
 	endif
 endfunc
-nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
-nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
 
 " lf config define
 nnoremap <silent><space>E :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_start("lf <c-r>=getenv('HOME')<cr>",{"close_cb":"<sid>ShellOpenFile","curwin":1})<cr>
@@ -1077,12 +1074,18 @@ endfunc
 "}}}
 
 " like leaderf {{{
-func RecentFile()
+func s:RecentFile()
 	let files=split(execute("oldfiles"))|let result=[]
-	for temp in files
-		if filereadable(temp)|call add(result,temp)|endif
+	for key in files
+		if filereadable(key)
+			let value={}
+			let value['filename']=key
+			call insert(result,value)
+		endif
 	endfor
-	return result
+	let result=reverse(result)
+	call setqflist(result,'r')
+	copen
 endfunc
 set wildignore+=*/bin/*,.git*,*.out,*.gz
 func! s:ExludeIgnore()
@@ -1094,6 +1097,7 @@ let g:term_open_file=';printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"1\",\"exit\"]]\
 let g:nvim_term_open_file=';~/.config/nvim/nvr.py -c "call Tapi_Fzf(\"\",[\"1\"])";exit'
 nnoremap <silent><nowait><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>f :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
+nnoremap <silent><space>F :call <sid>RecentFile()<cr>
 nnoremap <nowait><space>a :call <sid>ExludeIgnore()<cr>:vimgrep /\V/j<space>./**<s-left><left><left><left>
 xnoremap <nowait><space>a "sy:call <sid>ExludeIgnore()<cr>:vimgrep /\V<c-r>=@s<cr>/j<space>./**<cr>:copen<cr>
 nnoremap <silent><space>A :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFindTab(g:rg_fzf_cmd.g:term_open_file)<cr>
@@ -1103,7 +1107,7 @@ nnoremap <silent><space>j :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_V
 nnoremap <silent><space>/ :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 xnoremap <silent><space>/ "sy:let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --query <c-r>=@s<cr> --layout=reverse > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"0\",\"exit\"]]\007"')<cr>
 if has('nvim')
-	nnoremap <silent><space>f :vsplit<bar>call termopen('~/.config/nvim/nvr.py -l `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`;exit')<cr>
+	nnoremap <silent><space>f :call <sid>FzfFind('~/.config/nvim/nvr.py -l `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`;exit')<cr>
 	nnoremap <silent><space>A :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFindTab(g:rg_fzf_cmd.g:nvim_term_open_file)<cr>
 	xnoremap <silent><space>A "sy:let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFindTab(g:rg_fzf_cmd.' --query="<c-r>=@s<cr>" '.g:nvim_term_open_file)<cr>
 	nnoremap <silent><space>/ :let g:fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('cat <c-r>=expand('%:p')<cr><bar>fzf --layout=reverse > $FZF_VIM;~/.config/nvim/nvr.py -c "call Tapi_Fzf(\"\",[\"0\"])";exit')<cr>
@@ -1116,46 +1120,6 @@ xnoremap <silent><space>h "sy:<c-u>help <c-r>=@s<cr><cr>
 nnoremap <silent><space>b :call setqflist(getbufinfo({'buflisted':1}),'r')<cr>:copen<cr>
 nnoremap <silent><space>k :call setqflist(getjumplist()[0], 'r')<cr>:copen<cr>
 nnoremap <silent><space>l :copen<cr>
-" }}}
-
-" like clever-f (experimental) {{{
-" nnoremap <silent>f :call <sid>CleverF('f')<cr>
-" nnoremap <silent>F :call <sid>CleverF('F')<cr>
-" nnoremap <silent>; :call <sid>CleverF(';')<cr>
-let s:cleverf_hl_arr=[]|let s:cleverf_pos_arr=[]|let s:cleverf_find_now=0
-let s:cleverf_find_line=-1|let s:cleverf_find_last=0
-func! s:CleverFDeleteHl() abort
-	if s:cleverf_find_now==getline(line("."))[col(".")-1]&&s:cleverf_find_line==line('.')|return|endif
-	for hl in s:cleverf_hl_arr|call matchdelete(hl)|endfor
-	let s:cleverf_hl_arr=[]|let s:cleverf_pos_arr=[]|let s:cleverf_find_now=0|let s:cleverf_find_line=-1
-	au! CleverF
-endfunc
-func! s:CleverF(ch) abort
-	let line=getline('.')|let line_num=line('.')|let col=col('.')
-	if type(s:cleverf_find_now)==0&&a:ch==#'F'|call feedkeys('F','n')|return|endif
-	if type(s:cleverf_find_now)!=0
-		let i=0
-		if a:ch!=#'F'|while i<len(s:cleverf_pos_arr)&&col>s:cleverf_pos_arr[i]|let i=i+1|endwhile
-		else|let i=len(s:cleverf_pos_arr)-1|while i>0&&col-1<=s:cleverf_pos_arr[i]|let i=i-1|endwhile
-		endif
-		if i>=0&&i<len(s:cleverf_pos_arr)|call cursor(line('.'),s:cleverf_pos_arr[i]+1)|endif
-		return
-	endif
-	if a:ch==#'f'
-		let ch=nr2char(getchar())
-	elseif a:ch==#';'
-		let ch=s:cleverf_find_last
-	endif
-	let s:cleverf_pos_arr=[]|let pos=stridx(line,ch,col)
-	while pos!=-1|call add(s:cleverf_pos_arr,pos)|let pos=stridx(line,ch,pos+1)|endwhile
-	if len(s:cleverf_pos_arr)==0|return|endif
-	for now_pos in s:cleverf_pos_arr
-		let tmp = matchaddpos("incsearch", [[line_num,now_pos+1,1]])|call add(s:cleverf_hl_arr,tmp)
-	endfor
-	call cursor(line('.'), s:cleverf_pos_arr[0]+1)|let s:cleverf_find_now=ch|let s:cleverf_find_line=line_num
-	let s:cleverf_find_last=ch
-	augroup CleverF|au!| autocmd! CursorMoved * call <sid>CleverFDeleteHl()|augroup END
-endfunc
 " }}}
 
 " like easy motion {{{

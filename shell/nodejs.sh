@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "this script need root permission,if you don't have root permission,please download nodejs from https://nodejs.org/en/download/ and install it manually"
 
 #check mac version
 type=$(uname)
