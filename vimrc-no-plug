@@ -140,6 +140,7 @@ func! s:Askifaddpath()
 endfunc
 command! -nargs=0 Fzfinstalldeb     exec ":!sudo apt install -y fzf"
 command! -nargs=0 Fzfinstallweb     exec ":!wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/fzf-0.36.0-linux_amd64.tar.gz;mkdir ~/.local;mkdir ~/.local/bin;tar -zxvf ./fzf-0.36.0-linux_amd64.tar.gz -C ~/.local/bin;rm ./fzf-0.36.0-linux_amd64.tar.gz"|redraw!|call <sid>Askifaddpath()
+command! -nargs=0 Fzfinstallweb     exec ":!mkdir -p ~/.config/nvim;wget https://gitee.com/mirrorvim/vim-fast/raw/master/shell/nvr.py -O ~/.config/nvim/nvr.py;chmod +x ~/.config/nvim/nvr.py"|redraw!|call <sid>Askifaddpath()
 command! -nargs=0 Ctagsinstalldeb   exec ":!sudo apt install -y ctags"
 command! -nargs=0 Ctagsinstallweb   exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.0/ctags -O ~/.local/bin/ctags;chmod +x ~/.local/bin/ctags"|redraw!|call <sid>Askifaddpath()
 command! -nargs=0 Lfinstallweb      exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/lfv1.0.0/lf -O ~/.local/bin/lf;chmod +x ~/.local/bin/lf"|redraw!|call <sid>Askifaddpath()
@@ -804,7 +805,9 @@ func! s:GotoLink()
 	if s:list[0]!=''|let s:link=s:list[0]|endif
 	let s:browser=get(g:,'default_browser','firefox')
 	if s:link!=''
-		call job_start(s:browser.' '.s:link)
+		if has('nvim')|call jobstart([s:browser,s:link])
+		else|call job_start(s:browser.' '.s:link)
+		endif
 	else
 		echo 'cannot find link'
 	endif
@@ -1016,10 +1019,19 @@ func! s:DelSourround()
 endfunc
 func! s:ChangeSourround()
 	let s:ch=nr2char(getchar())|let s:two=nr2char(getchar())
-	let pos=getcurpos()
-	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|return|endif
-	execute 'normal! r'.s:two.'f'.g:pair_map[s:ch].'r'.g:pair_map[s:two]
-	call setpos('.',pos)
+	if !has_key(g:pair_map,s:ch)|echo 'no this ch'.s:ch|return|endif
+	if !has_key(g:pair_map,s:two)|echo 'no this ch'.s:two|return|endif
+	let s:pair_ch=g:pair_map[s:ch]|let s:pair_two=g:pair_map[s:two]
+	if s:ch=="'"|exec "normal! r".s:two."f'"."r".s:pair_two|return|endif
+	let escape_str='~"\.^$[]*'."'"
+	let s:escape_ch=escape(s:ch, escape_str)|let s:escape_two=escape(s:two, escape_str)
+	let s:escape_pair_ch=escape(s:pair_ch, escape_str)|let s:escape_pair_two=escape(s:pair_two, escape_str)
+	let pos=getcurpos()|let now_line=getline('.')|if now_line[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|return|endif
+	let now_line=strpart(now_line,0,col('.')-1).s:two.strpart(now_line,col('.'))
+	let [ line , col ] = searchpairpos(s:escape_ch, '', s:escape_pair_ch, 'n')
+	call setline(line('.'),now_line)
+	let next_line=getline(line)|let next_line=strpart(next_line,0,col-1).s:pair_two.strpart(next_line,col)
+	call setline(line,next_line)|call setpos('.',pos)
 endfunc
 xnoremap <silent>S  :<c-u>call <sid>AddSourround()<cr>
 nnoremap <silent>ds :call <sid>DelSourround()<cr>
@@ -1073,19 +1085,38 @@ func! CreateTagCB(chan)
 endfunc
 "}}}
 
+" like clever-f {{{
+nnoremap <silent>f :call <sid>CleverF('f')<cr>
+nnoremap <silent>F :call <sid>CleverF('F')<cr>
+let s:cleverf_hl_arr=[]|let s:cleverf_pos_arr=[]|let s:cleverf_find_now=0
+func! s:CleverFDeleteHl() abort
+	if s:cleverf_find_now==getline(line("."))[col(".")-1]|return|endif
+	for hl in s:cleverf_hl_arr|call matchdelete(hl)|endfor
+	let s:cleverf_hl_arr=[]|let s:cleverf_pos_arr=[]|let s:cleverf_find_now=0|let s:cleverf_find_line=-1
+	au! CleverF
+endfunc
+func! s:CleverF(ch) abort
+	if type(s:cleverf_find_now)!=0|call feedkeys(a:ch.s:cleverf_find_now,'n')|return|endif
+	let line=getline('.')|let line_num=line('.')|let col=col('.')|let ch=nr2char(getchar())|let s:cleverf_pos_arr=[]|let pos=stridx(line,ch,0)
+	while pos!=-1|call add(s:cleverf_pos_arr,pos)|let pos=stridx(line,ch,pos+1)|endwhile
+	if len(s:cleverf_pos_arr)==0|return|endif
+	for now_pos in s:cleverf_pos_arr|let tmp = matchaddpos("incsearch", [[line_num,now_pos+1,1]])|call add(s:cleverf_hl_arr,tmp)|endfor
+	let s:cleverf_find_now=ch
+	augroup CleverF|au!|autocmd! CursorMoved * call <sid>CleverFDeleteHl()|augroup END
+	call feedkeys(a:ch.ch,'n')
+endfunc
+
+" }}}
+
 " like leaderf {{{
 func s:RecentFile()
 	let files=split(execute("oldfiles"))|let result=[]
 	for key in files
 		if filereadable(key)
-			let value={}
-			let value['filename']=key
-			call insert(result,value)
+			let value={}|let value['filename']=key|call insert(result,value)
 		endif
 	endfor
-	let result=reverse(result)
-	call setqflist(result,'r')
-	copen
+	let result=reverse(result)|call setqflist(result,'r')|copen
 endfunc
 set wildignore+=*/bin/*,.git*,*.out,*.gz
 func! s:ExludeIgnore()
