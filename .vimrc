@@ -102,7 +102,6 @@ if has("gui_running")
 	set guioptions-=b           " hide bottom scroll bar
 	set showtabline=0           " hide tab bar
 	set guicursor=n-v-c:ver5    " set cursor to a vertical line
-	" set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " set fonts in macvim
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

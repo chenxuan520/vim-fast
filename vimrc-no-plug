@@ -104,7 +104,6 @@ if has("gui_running")
 	set guioptions-=b           " 隐藏底部滚动条
 	set showtabline=0           " 隐藏Tab栏
 	set guicursor=n-v-c:ver5    " 设置光标为竖线
-	" set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete:h14 " set fonts in macvim
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -140,7 +139,7 @@ func! s:Askifaddpath()
 endfunc
 command! -nargs=0 Fzfinstalldeb     exec ":!sudo apt install -y fzf"
 command! -nargs=0 Fzfinstallweb     exec ":!wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/cmdv1.0.0/fzf-0.36.0-linux_amd64.tar.gz;mkdir ~/.local;mkdir ~/.local/bin;tar -zxvf ./fzf-0.36.0-linux_amd64.tar.gz -C ~/.local/bin;rm ./fzf-0.36.0-linux_amd64.tar.gz"|redraw!|call <sid>Askifaddpath()
-command! -nargs=0 Fzfinstallweb     exec ":!mkdir -p ~/.config/nvim;wget https://gitee.com/mirrorvim/vim-fast/raw/master/shell/nvr.py -O ~/.config/nvim/nvr.py;chmod +x ~/.config/nvim/nvr.py"|redraw!|call <sid>Askifaddpath()
+command! -nargs=0 Nvrinstallweb     exec ":!mkdir -p ~/.config/nvim;wget https://gitee.com/mirrorvim/vim-fast/raw/master/shell/nvr.py -O ~/.config/nvim/nvr.py;chmod +x ~/.config/nvim/nvr.py"|redraw!|call <sid>Askifaddpath()
 command! -nargs=0 Ctagsinstalldeb   exec ":!sudo apt install -y ctags"
 command! -nargs=0 Ctagsinstallweb   exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.0/ctags -O ~/.local/bin/ctags;chmod +x ~/.local/bin/ctags"|redraw!|call <sid>Askifaddpath()
 command! -nargs=0 Lfinstallweb      exec ":!mkdir ~/.local;mkdir ~/.local/bin;wget https://gitee.com/mirrorvim/userful-tools-2/releases/download/lfv1.0.0/lf -O ~/.local/bin/lf;chmod +x ~/.local/bin/lf"|redraw!|call <sid>Askifaddpath()
