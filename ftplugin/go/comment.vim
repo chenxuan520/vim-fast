@@ -7,7 +7,8 @@ func s:SetComment()
 endfunc
 " set preparecode in buffernew
 func! VimFastSetPreCode()
-	if expand('%')=='main.go'
+	" if str has main.go,make package main
+	if match(expand('%:p'),'/main.go')!=-1
 		call append(line(".")-1,'package main')
 		return
 	endif

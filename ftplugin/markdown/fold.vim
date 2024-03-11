@@ -33,6 +33,6 @@ endfunc
 
 setlocal foldexpr=VimFastFoldExpr()
 setlocal fdm=expr
-setlocal fen
+" setlocal fen
 
 nnoremap <silent><buffer><nowait>=z :setlocal fdm=expr<cr>:setlocal fen<cr>
