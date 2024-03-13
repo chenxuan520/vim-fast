@@ -215,7 +215,7 @@ augroup ReadPost
 	if !has('nvim')
 		autocmd TerminalOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|endif
 	else
-		autocmd WinEnter * if &bt=='terminal'|call feedkeys("i\<esc>\<esc>")|endif
+		autocmd WinEnter * if &bt=='terminal'&&!exists(':Termdebug')|call feedkeys("i\<esc>\<esc>")|endif
 		autocmd TermOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|startinsert|endif
 		autocmd TermClose * if !exists('g:nvim_term_open')|call feedkeys("i\<esc>\<esc>")|else|unlet g:nvim_term_open|endif
 	endif
