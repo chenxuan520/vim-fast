@@ -32,3 +32,6 @@ func ShMenu()
 	nnoremenu PopUp.Select\ All ggVG
 endfunc
 let g:rightmouse_popupmenu['sh']=function("ShMenu")
+
+" set index for shell script
+call g:SetTypeIndex("space", 4)

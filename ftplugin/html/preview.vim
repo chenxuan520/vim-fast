@@ -22,3 +22,12 @@ if expand('%:e')=='html'
 		nnoremap <silent><buffer><space><space>p :w<cr>:call job_start(b:browser.' '.expand('%:p'))<cr>
 	endif
 endif
+
+
+" for popup menu
+func HtmlMenu()
+	unmenu PopUp
+	vnoremenu PopUp.Html\ Run :w<cr>:call jobstart(b:browser.' '.expand('%:p'))<cr>
+	call MouseConfig()
+endfunc
+let g:rightmouse_popupmenu['go']=function("GoMenu")

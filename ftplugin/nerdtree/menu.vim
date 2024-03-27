@@ -11,3 +11,5 @@ func NERDTreeMenu()
 	nnoremenu PopUp.Flush :NERDTreeRefreshRoot<cr>
 endfunc
 let g:rightmouse_popupmenu['nerdtree']=function("NERDTreeMenu")
+
+setlocal nowrap
