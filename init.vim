@@ -248,7 +248,8 @@ augroup END
 " global popupmenu
 let g:rightmouse_popupmenu={}
 func RightMouseMenu()
-	if has_key(g:rightmouse_popupmenu, &ft)|call g:rightmouse_popupmenu[&ft]()
+	if g:coc_popup_flag|call s:CocMouse()
+	elseif has_key(g:rightmouse_popupmenu, &ft)|call g:rightmouse_popupmenu[&ft]()
 	else|call MouseConfig()|endif
 endfunc
 
@@ -929,6 +930,7 @@ nnoremap <silent> gh :call ShowDocumentation()<cr>
 " coc mouse
 nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
 nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
+let g:coc_popup_flag=0
 function! s:CocMouse()
 	unmenu PopUp
 	nmenu     <silent>PopUp.Coc\ Define    gd
@@ -941,9 +943,9 @@ function! s:CocMouse()
 	nnoremenu <silent>PopUp.Close\ Fold    zC
 	nnoremenu <silent>PopUp.Fold\ Enable   :setlocal fdm=indent<cr>:setlocal fen<cr>
 	nnoremenu <silent>PopUp.-Sep-          :<cr>
-	nnoremenu <silent>PopUp.Close\ Model\  :call <sid>MouseConfig()<cr>
+	nnoremenu <silent>PopUp.Close\ Model\  :let g:coc_popup_flag=0<cr>
 endfunction
-nnoremap <silent><nowait>-c :call <sid>CocMouse()<cr>
+nnoremap <silent><nowait>-c :let g:coc_popup_flag=1<cr>
 function! ShowDocumentation()
 	if CocAction('hasProvider', 'hover')|call CocActionAsync('doHover')
 	else|call feedkeys('K', 'in')
