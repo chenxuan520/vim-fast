@@ -521,6 +521,13 @@ func! s:IndentSet()abort
 	endif
 	echo 'indent ok'
 endfunc
+func! g:SetTypeIndex(index_type,index_num) abort
+	if a:index_type=='tab'|setlocal noexpandtab
+	else|setlocal expandtab|endif
+	exec "setlocal shiftwidth=".a:index_num
+	exec "setlocal softtabstop=".a:index_num
+	exec "setlocal softtabstop=".a:index_num
+endfunc
 
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
