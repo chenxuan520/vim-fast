@@ -30,4 +30,4 @@ func HtmlMenu()
 	vnoremenu PopUp.Html\ Run :w<cr>:call jobstart(b:browser.' '.expand('%:p'))<cr>
 	call MouseConfig()
 endfunc
-let g:rightmouse_popupmenu['go']=function("GoMenu")
+let g:rightmouse_popupmenu['html']=function("HtmlMenu")
