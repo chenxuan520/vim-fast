@@ -31,3 +31,5 @@ func HtmlMenu()
 	call MouseConfig()
 endfunc
 let g:rightmouse_popupmenu['html']=function("HtmlMenu")
+
+call g:SetTypeIndex("space", 4)

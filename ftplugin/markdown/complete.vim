@@ -27,7 +27,6 @@ func! s:MarkDownComplete()
 	if flag!=-1
 		return ''
 	else
-		echom 1
 		return "\<c-p>"
 	endif
 endfunc
