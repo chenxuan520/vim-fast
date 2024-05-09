@@ -69,7 +69,14 @@ func! s:CodeRun(testfunc)
 		endif
 	else
 		if a:testfunc==''
-			exec ":vert term go test -v ".expand('%:p:h')
+			if !has('nvim')
+				exec ":vert term go test -v ".expand('%:p:h')
+			else
+				let path=expand("%:p:h")
+				vsp|enew
+				let g:nvim_term_open=1
+				call termopen("go test -v ".path)
+			endif
 		else
 			if !has('nvim')
 				vert call term_start("go test -v -run ". a:testfunc,{"cwd":expand("%:p:h")})

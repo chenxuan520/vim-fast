@@ -834,6 +834,13 @@ nnoremap { ,
 nnoremap <space>S :mksession! .session.vim<cr>
 nnoremap <space>s :silent! source .session.vim<cr>
 
+" languages setting
+augroup languages
+	au!
+	autocmd! BufWritePost *.sh,*.py call setfperm(expand('%'),'rwxrwxr-x')
+augroup END
+
+
 " config complete {{{
 inoremap <silent><expr>/ complete_info(["selected"])["selected"]!=-1&&getline(line('.'))[col('.')-2]=='/'?
 			\ "\<bs>/\<c-x>\<c-f>":
