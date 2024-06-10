@@ -219,6 +219,9 @@
 - [zhihu](https://zhuanlan.zhihu.com/p/524286962)
 
 ## 安装
+
+- **在这里出现任何问题(比如乱码问题)先访问本文中的 QA 部分**,无法解决再去开issue或者联系作者
+
 > 第一第二步可以简化为
 >
 > curl https://gitee.com/mirrorvim/vim-fast/raw/master/shell/webinstall.sh |bash
@@ -336,7 +339,20 @@
 
    - xshell中 “工具” -> “选项” -> “高级”->"使用本色",打开后重启xshell
 
-   - tmux 目前只能切换主题为onedark,并关闭termguicolors,设置let g:onedark_termcolors=256
+   - tmux
+
+    1. 通过`echo $TERM` 查找终端类型,通常是`xterm-256color`或者`screen-256color`
+
+    2. 编辑`~/.tmux.conf` 添加
+```shell
+set -g default-terminal "xterm-256color"
+#set -g default-terminal "screen-256color"   # 如果使用screen-256color则用这条指令
+set-option -ga terminal-overrides ",*256col*:Tc"
+```
+
+    3. 重启tmux
+
+   - 如果还是无法解决,可以切换主题为onedark,并关闭termguicolors,设置let g:onedark_termcolors=256
 
 5. 是否需要root或者sudo权限
 
