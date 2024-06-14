@@ -104,7 +104,7 @@
 
 2. markdown,快捷编写,格式化,类似插件[vim-markdown](https://github.com/preservim/vim-markdown)
 
-3. **任务管理**,类似插件[asynvtasks](https://github.com/skywind3000/asynctasks.vim)
+3. **任务管理**,类似插件[asynctasks](https://github.com/skywind3000/asynctasks.vim)
 
 4. **git状态显示**,类似插件[vim-gitgutter](https://github.com/airblade/vim-gitgutter)
 
@@ -323,19 +323,19 @@
 
 ## QA
 
-1. 有nvim版本吗
+### 1. 有nvim版本吗
 
    - nvim可以通过nvim.sh安装,配置兼容
 
-2. 我的系统没有支持
+### 2. 我的系统没有支持
 
    - 可以提出issue或者自己制作提出mr
 
-3. PlugInstall 出现\# unsafe repository git config --global --add safe.directory
+### 3. PlugInstall 出现\# unsafe repository git config --global --add safe.directory
 
    - git config --global --add safe.directory "\*"
 
-4. xshell,tmux 打开的颜色混乱
+### 4. xshell,tmux 打开的颜色混乱
 
    - xshell中 “工具” -> “选项” -> “高级”->"使用本色",打开后重启xshell
 
@@ -354,13 +354,13 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
    - 如果还是无法解决,可以切换主题为onedark,并关闭termguicolors,设置let g:onedark_termcolors=256
 
-5. 是否需要root或者sudo权限
+### 5. 是否需要root或者sudo权限
 
    - 如果在本机之前安装过vim-fast或者对应的软件已经全部安装好了,可以不需要sudo,否则需要sudo安装软件包
 
    - 如果没有root权限可以运行./install_without_sudo.sh,但部分功能可能没有
 
-6. 我想要自定义Vim启动时候dashboard内容
+### 6. 我想要自定义Vim启动时候dashboard内容
 
    - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii),选择类型为`ANSI Shadow`
 
@@ -368,17 +368,17 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
    - 将得到的结果复制到.vimrc中
 
-7. 出现E1208: -complete used without allowing argumentsPress ENTER or type command to continue
+### 7. 出现E1208: -complete used without allowing argumentsPress ENTER or type command to continue
 
    - 进入coc.nvim 插件目录然后git reset --hard v0.0.81
 
    - 或者编辑coc.vim 这个出错的文件,把438行删除也可以
 
-8. Vim 特定文件预先生成的代码我想要修改
+### 8. Vim 特定文件预先生成的代码我想要修改
 
    - 在`~/.vim/ftplugin/template`找到对应文件的文件夹,修改文件的内容即可
 
-9. 控制台状态栏和图标混乱
+### 9. 控制台状态栏和图标混乱(重要参考)
 
   - 设置终端的字体
 
@@ -418,11 +418,11 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
       3. 在~/.vimrc中加入`let g:dashboard_icon_disable=1`
 
-10. 出现E117,未定义的函数getenv
+### 10. 出现E117,未定义的函数getenv
 
   - 出现问题原因为VIM版本太低了,可以升级VIM(./shell/vim_compile.sh 最新Vim安装)或者去到出问题的行删除该行
 
-11. 使用的主题
+### 11. 使用的主题
 
   - [tokyonight](https://github.com/ghifarit53/tokyonight-vim)
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 git pull
-vim -c "PlugInstall" -c "q" -c "q"
+vim -c "PlugInstall" -c "qa"
 
 echo '       _            __          _   '
 echo '      (_)          / _|        | |  '

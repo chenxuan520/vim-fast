@@ -39,7 +39,7 @@ function install_plug()
 		# cd ~/.vim/plugged/coc.nvim
 		# yarn install
 		# yarn build
-		vim -c "PlugInstall" -c "q" -c "q"
+		vim -c "PlugInstall" -c "qa"
 	fi
 
 	if [ -d ~/.vim/plugged/vim-airline/autoload/airline/extensions ];then
@@ -71,7 +71,7 @@ function install_plug()
 # 安装vim插件
 function install_vim_plugin()
 {
-	vim -c "PlugInstall" -c "q" -c "q"
+	vim -c "PlugInstall" -c "qa"
 }
 
 # 安装linux平台字体

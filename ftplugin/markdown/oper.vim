@@ -20,7 +20,8 @@ augroup mdpair
 augroup END
 
 func! s:AddTitle()
-	let s:old=col('.')-1
+	let old_pos=col('.')-1
+	let lnum=line('.')
 
 	execute "normal! ^"
 	let col = col('.') - 1
@@ -31,25 +32,26 @@ func! s:AddTitle()
 		execute "normal! i#\ "
 	endif
 
-	execute "normal! 0".s:old."l"
+	call cursor(lnum,old_pos)
 endfunc
 
 func! s:AddSub()
-	let s:old=col('.')-1
+	let old_pos=col('.')-1
+	let lnum=line('.')
 
 	execute "normal! ^"
 	let col = col('.') - 1
 	let s:char= getline('.')[col]
 	if s:char=='-'
 		execute "normal! 2x"
-		let s:old-=3
+		let old_pos-=3
 	else
 		execute "normal! i-\ "
-		let s:old+=1
+		let old_pos+=1
 	endif
 
-	if s:old>0
-		execute "normal! 0".s:old."l"
+	if old_pos>0
+		call cursor(lnum,old_pos)
 	endif
 endfunc
 
@@ -59,7 +61,8 @@ func! s:Code()
 endfunc
 
 func! s:Refence()
-	let s:old=col('.')-1
+	let old_pos=col('.')-1
+	let lnum=line('.')
 
 	execute "normal! ^"
 	let col = col('.') - 1
@@ -70,7 +73,7 @@ func! s:Refence()
 		execute "normal! i>\ "
 	endif
 
-	execute "normal! 0".s:old."l"
+	call cursor(lnum,old_pos)
 endfunc
 
 func! s:Bold(ch)
@@ -110,7 +113,8 @@ func! s:BlodLink(begin,end)
 endfunc
 
 func! s:Number()
-	let s:old=col('.')-1
+	let old_pos=col('.')-1
+	let lnum=line('.')
 
 	let s:get=getchar()
 	execute "normal! ^"
@@ -124,7 +128,7 @@ func! s:Number()
 		execute "normal! i".(str2nr(s:get)-48).".\ "
 	endif
 
-	execute "normal! 0".s:old."l"
+	call cursor(lnum,old_pos)
 endfunc
 
 func! s:Paste()

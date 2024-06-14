@@ -75,7 +75,7 @@ REM cd "%USERPROFILE%\.vim"
 REM del ./vim.tar.gz
 REM curl https://gitee.com/mirrorvim/vim-fast/releases/download/v1.0.12/vim.tar.gz -o vim.tar.gz
 REM tar -zxvf ./vim.tar.gz
-vim -c "PlugInstall" -c "q" -c "q"
+vim -c "PlugInstall" -c "qa"
 
 echo vim-fast install ok,have a good time
 pause

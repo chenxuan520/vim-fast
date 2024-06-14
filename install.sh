@@ -43,7 +43,7 @@ function install_plug()
 	git reset --hard v0.0.81
 	# yarn install
 	# yarn build
-	vim -c "PlugInstall" -c "q" -c "q"
+	vim -c "PlugInstall" -c "qa"
 
 	if [ -d ~/.vim/plugged/vim-airline/autoload/airline/extensions ];then
 		mv ${PWD}/vimscript/branch.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
@@ -56,7 +56,7 @@ function install_plug()
 # 安装vim插件
 function install_vim_plugin()
 {
-	vim -c "PlugInstall" -c "q" -c "q"
+	vim -c "PlugInstall" -c "qa"
 }
 
 # 安装linux平台字体
