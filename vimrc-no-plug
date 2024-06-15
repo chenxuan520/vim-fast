@@ -840,6 +840,12 @@ augroup languages
 	autocmd! BufWritePost *.sh,*.py call setfperm(expand('%'),'rwxrwxr-x')
 augroup END
 
+" set prepare code when new file,if need,add self
+augroup PreCode
+	autocmd!
+	autocmd BufNewFile *.sh call append(line(".")-1,'#!/bin/bash')
+	autocmd BufNewFile *.py call append(line(".")-1,'#!/usr/bin/env python3')
+augroup END
 
 " config complete {{{
 inoremap <silent><expr>/ complete_info(["selected"])["selected"]!=-1&&getline(line('.'))[col('.')-2]=='/'?
