@@ -39,6 +39,7 @@ function install_plug()
 	# yarn install
 
 	git clone -b release https://gitee.com/zgpio/coc.nvim.git ~/.vim/plugged/coc.nvim
+    root_path=${PWD}
 	cd ~/.vim/plugged/coc.nvim
 	git reset --hard v0.0.82
 	# yarn install
@@ -46,7 +47,7 @@ function install_plug()
 	vim -c "PlugInstall" -c "qa"
 
 	if [ -d ~/.vim/plugged/vim-airline/autoload/airline/extensions ];then
-		mv ${PWD}/vimscript/branch.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
+		mv $root_path/vimscript/branch.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
 		# mv ${PWD}/vimscript/coc.vim ~/.vim/plugged/vim-airline/autoload/airline/extensions
 	fi
 

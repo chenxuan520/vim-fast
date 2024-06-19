@@ -1017,7 +1017,7 @@ func! s:AddSourround()
 	let s:str = @s
 	for k in keys(g:pair_map)
 		if s:ch==k||s:ch==g:pair_map[k]
-			execute ":s/^\\(.\\{".(col('.')-1)."\\}\\)".escape(s:str, '~"\.^$[]*')."/\\1".k.s:str.g:pair_map[k]."/"
+			execute ":s/^\\(.\\{".(col('.')-1)."\\}\\)".escape(s:str, '~"/\.^$[]*')."/\\1".k.escape(s:str, '~"/\.^$[]*').g:pair_map[k]."/"
 			call setpos('.', pos)
 			return
 		endif
@@ -1028,7 +1028,15 @@ func! s:DelSourround()
 	let s:ch=nr2char(getchar())
 	if getline('.')[col('.')-1]!=s:ch|echo 'not begin with'.s:ch|return|endif
 	for k in keys(g:pair_map)
-		if s:ch==k|execute 'normal! xf'.g:pair_map[k].'x'|return|endif
+		if s:ch==k
+			let pair=g:pair_map[k]|let left_pos=[line('.'),col('.')]|call search(pair)|let right_pos=[line('.'),col('.')]
+			if left_pos[0]==right_pos[0]&&right_pos[1]!=left_pos[1]
+				let now_line=getline('.')
+				let now_line=strpart(now_line,0,left_pos[1]-1).strpart(now_line,left_pos[1],right_pos[1]-left_pos[1]-1).strpart(now_line,right_pos[1])
+				call setline(left_pos[0],now_line)
+			endif
+			call cursor(left_pos[0],left_pos[1])|return
+		endif
 	endfor
 endfunc
 func! s:ChangeSourround()
