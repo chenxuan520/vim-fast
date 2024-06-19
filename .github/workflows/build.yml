@@ -1,0 +1,16 @@
+name: build
+on:
+  push: #设置触发规则
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu:22.04
+
+    steps:
+      - name: Checkout code #这部分是为了从github自动clone代码
+        uses: actions/checkout@v4
+      - name: Build And Run
+        run: |
+          ./install.sh
