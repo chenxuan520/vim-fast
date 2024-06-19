@@ -1107,6 +1107,56 @@ func! CreateTagCB(chan)
 endfunc
 "}}}
 
+" tagbar
+let g:tagbar_name="tagbar"
+let g:tagbar_arr=[]
+let g:tagbar_current_win_id=0
+func s:EnterForCtag()
+	let current_buf_name = expand('%:t')
+	let line=line('.')
+	let origin=g:tagbar_arr[line][2]
+	let @/=strpart(origin,1,strlen(origin)-4)
+	call win_gotoid(g:tagbar_current_win_id)
+	call feedkeys('n','in')
+	set hlsearch
+endfunc
+func s:TagBar()
+	let tmp_file=tempname()
+	let file_path=expand('%:p')
+	call system('ctags '.'-f '.tmp_file.' '.file_path)
+	let arr=[]
+	let g:tagbar_current_win_id=win_getid()
+	" read from file and get all content to array
+	let file=readfile(tmp_file)
+	" split all
+	for line in file
+		let temp=[split(line,'\t')]
+		if temp[0][0]!='!'
+			let arr+=temp
+		endif
+	endfor
+	" create a new buffer,1/4 width,right of now windows
+	rightbelow vsplit enew
+	" resize
+	let screen_width = winwidth(0)
+	let new_width = screen_width /3
+	execute 'vertical resize' new_width
+	" Rename
+	execute 'file ' . g:tagbar_name
+	" set buffer to tagbar
+	let i=0
+	for map_line in arr
+		call setline(i,map_line[0])
+		let i+=1
+	endfor
+	let g:tagbar_arr=arr
+	setlocal nomod
+	setlocal bt=nofile
+	nnoremap <buffer><silent><enter> :call <sid>EnterForCtag()<cr>
+	nnoremap <buffer><2-leftMouse> :call <sid>EnterForCtag()<cr>
+endfunc
+nnoremap <leader>t :call <sid>TagBar()<cr>
+
 " like clever-f {{{
 nnoremap <silent>f :call <sid>CleverF('f')<cr>
 nnoremap <silent>F :call <sid>CleverF('F')<cr>
