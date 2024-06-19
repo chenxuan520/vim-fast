@@ -1,0 +1,33 @@
+version: '1.0'
+name: pipeline-20240619
+displayName: build
+triggers:
+  trigger: auto
+  push:
+    branches:
+      prefix:
+        - ''
+stages:
+  - name: stage-5516bbb3
+    displayName: build_and_run
+    strategy: naturally
+    trigger: auto
+    executor:
+      - mirrorvim
+      - chenxuan520
+    steps:
+      - step: execute@docker
+        name: execute_by_docker
+        displayName: 基于镜像的脚本执行
+        certificate: ''
+        image: ubuntu:22.04
+        command:
+          - '# 请在此输入您想执行的脚本'
+          - ./install.sh
+        artifacts:
+          - name: BUILD_ARTIFACT
+            path:
+              - ./target
+        notify: []
+        strategy:
+          retry: '0'
