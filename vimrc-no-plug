@@ -321,7 +321,7 @@ endfunc
 " fzf self defile
 func! s:FzfFind(command)
 	if !has('nvim')
-		call term_start('bash',{'term_finish':"close"})
+		call term_start('bash',{'term_finish':"close",'vertical': v:true})
 		call term_sendkeys(term_list()[0],a:command."\<cr>")
 	else
 		vsplit
@@ -956,6 +956,8 @@ func! TabLine(direct)
 		let s:name=buf.name
 		if strridx(buf.name,"/")!=-1|let s:name=strpart(buf.name,strridx(buf.name,"/")+1)|endif
 		if buf.name!=expand('%:p')
+			let bt=getbufvar(buf.bufnr,"&buftype")
+			if bt!=""|continue|endif
 			if flag==0|let s:tab_result=s:tab_result."\ ".s:name."\ "|else|let s:tab_after=s:tab_after."\ ".s:name."\ "|endif
 		else|let flag=1|endif
 	endfor
@@ -1107,55 +1109,56 @@ func! CreateTagCB(chan)
 endfunc
 "}}}
 
-" tagbar
+" tagbar {{{
 let g:tagbar_name="tagbar"
 let g:tagbar_arr=[]
 let g:tagbar_current_win_id=0
-func s:EnterForCtag()
-	let current_buf_name = expand('%:t')
-	let line=line('.')
-	let origin=g:tagbar_arr[line][2]
-	let @/=strpart(origin,1,strlen(origin)-4)
-	call win_gotoid(g:tagbar_current_win_id)
-	call feedkeys('n','in')
-	set hlsearch
+let g:tagbar_win_id=0
+func s:EnterFotTagBar()
+	let current_buf_name = expand('%:t')|let line=line('.')|let origin=g:tagbar_arr[line][1]|let @/="\\V".escape(strpart(origin,1,len(origin)-2),"^$")
+	call win_gotoid(g:tagbar_current_win_id)|call feedkeys('n','in')|set hlsearch
 endfunc
-func s:TagBar()
-	let tmp_file=tempname()
-	let file_path=expand('%:p')
-	call system('ctags '.'-f '.tmp_file.' '.file_path)
-	let arr=[]
-	let g:tagbar_current_win_id=win_getid()
-	" read from file and get all content to array
-	let file=readfile(tmp_file)
-	" split all
+func s:TagBar(is_update)
+	if g:tagbar_win_id!=0&&a:is_update==0
+		call win_gotoid(g:tagbar_win_id)|bdelete
+		let g:tagbar_win_id=0|let g:tagbar_arr=[]|let g:tagbar_current_win_id=0
+		return
+	endif
+	if a:is_update
+		if win_getid()==g:tagbar_win_id|return|endif
+		if win_getid()==g:tagbar_current_win_id|return|endif
+		if getbufvar(bufnr('%'), '&buftype')!=""|return|endif
+		if getbufvar(bufnr('%'), '&filetype')=="netrw"|return|endif
+		if getbufvar(bufnr('%'), '&filetype')=="netrw"|return|endif
+
+		let old=win_getid()
+		call win_gotoid(g:tagbar_win_id)|bdelete
+		call win_gotoid(old)
+	endif
+
+	let tmp_file=tempname()|let file_path=expand('%:p')
+	call system('ctags '.'-x --_xformat="%N	%P" --sort=no -f - >'.tmp_file.' '.file_path)|let arr=[]|let g:tagbar_current_win_id=win_getid()|let file=readfile(tmp_file)
 	for line in file
 		let temp=[split(line,'\t')]
-		if temp[0][0]!='!'
-			let arr+=temp
-		endif
+		let list=matchstr(line,"\/\^.*")
+		let arr+=[[temp[0][0],list]]
 	endfor
-	" create a new buffer,1/4 width,right of now windows
-	rightbelow vsplit enew
-	" resize
-	let screen_width = winwidth(0)
-	let new_width = screen_width /3
-	execute 'vertical resize' new_width
-	" Rename
-	execute 'file ' . g:tagbar_name
-	" set buffer to tagbar
-	let i=0
-	for map_line in arr
-		call setline(i,map_line[0])
-		let i+=1
-	endfor
+	silent! rightbelow vsplit enew|let screen_width = winwidth(0)|let new_width = screen_width /3
+	execute 'vertical resize' new_width|execute 'file ' . g:tagbar_name|setlocal winfixwidth
+	let g:tagbar_win_id=win_getid()|let i=0
+	for map_line in arr|call setline(i,map_line[0])|let i+=1|endfor
 	let g:tagbar_arr=arr
-	setlocal nomod
-	setlocal bt=nofile
-	nnoremap <buffer><silent><enter> :call <sid>EnterForCtag()<cr>
-	nnoremap <buffer><2-leftMouse> :call <sid>EnterForCtag()<cr>
+	setlocal nomod|setlocal bt=nofile|setlocal ft=tagbar
+	nnoremap <buffer><silent><enter> :call <sid>EnterFotTagBar()<cr>
+	nnoremap <buffer><2-leftMouse> :call <sid>EnterFotTagBar()<cr>
+	augroup TagBar
+		autocmd!
+		autocmd BufDelete <buffer> au! TagBar
+	augroup END
+	call win_gotoid(g:tagbar_current_win_id)
 endfunc
-nnoremap <leader>t :call <sid>TagBar()<cr>
+nnoremap <leader>t :call <sid>TagBar(0)<cr>
+" }}}
 
 " like clever-f {{{
 nnoremap <silent>f :call <sid>CleverF('f')<cr>
