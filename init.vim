@@ -179,7 +179,7 @@ nnoremap <silent><c-n> :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
 nnoremap <silent>H     :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
 nnoremap <silent>L     :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
 nnoremap <silent><leader>d :bd<cr>
-nnoremap <silent><expr><c-m> &bt==''?":w<cr>":
+nnoremap <silent><expr><c-m> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
 
@@ -309,6 +309,7 @@ nnoremap <F8> :Step<cr>
 tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> ~/.config/nvim/nvr.py -l <space>
 tnoremap <c-]> ~/.config/nvim/nvr.py -l<space>;exit<left><left><left><left><left>
+tnoremap <LeftMouse> <Nop>
 tnoremap <c-z> exit<cr>
 nnoremap <leader><leader>T :split<CR>:term<cr>
 nnoremap <leader><leader>t :vsplit<CR>:term<cr>
