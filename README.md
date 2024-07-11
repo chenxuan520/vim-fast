@@ -426,21 +426,28 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
   - [tokyonight](https://github.com/ghifarit53/tokyonight-vim)
 
-12. ctrl-s之后没有多光标,反而卡住了
+### 12. ctrl-s之后没有多光标,反而卡住了
 
   - 终端的设置问题,将`stty -ixon`加到~/.bashrc,然后重新打开终端加载就可以了
 
-13. 安装nodejs出错,无法连接下载
+### 13. 安装nodejs出错,无法连接下载
 
   - 重新运行./shell/nodejs.sh
 
-14. xshell中使用vim的backspace无法删除字符
+### 14. xshell中使用vim的backspace无法删除字符
 
   - xshell的问题,[参考](https://www.cnblogs.com/yjd_hycf_space/p/11329841.html)
 
-15. nvim无法使用系统粘贴板
+### 15. nvim无法使用系统粘贴板
 
   - 运行`sudo apt install xclip`,[参考](https://zhuanlan.zhihu.com/p/667386801)
+
+### 16. 出现ctags: Warning: Cannot disable fixed field
+
+  - 默认的ctags版本太低了,需要更新,[下载地址](https://github.com/universal-ctags/ctags-nightly-build/releases)
+
+  - 打不开github链接也可以用[我提前下好的](https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.1/ctags)(注意是linux x86_64的)
+
 
 ## 帮助
 

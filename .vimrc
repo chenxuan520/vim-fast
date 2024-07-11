@@ -116,7 +116,7 @@ call plug#begin('~/.vim/plugged')
 " begin vim
 Plug 'chenxuan520/my-vim-dashboard'
 " function list
-Plug 'preservim/tagbar', {'on':'TagbarToggle'}
+Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 " auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " find anything
@@ -987,9 +987,13 @@ function! ShowDocumentation()
 	endif
 endfunction
 
-" tagbar
-let g:tagbar_width = 22
-nnoremap <silent> <leader>t :TagbarToggle<cr>
+" vista
+nnoremap <silent> <leader>t :Vista!!<cr>
+let g:vista_default_executive = 'ctags'
+let g:vista#renderer#enable_icon = 0
+let g:vista_sidebar_width = 22
+let g:vista_echo_cursor = 0
+let g:vista_stay_on_open = 0
 
 " auto pair
 let g:AutoPairsMapCh = 0
