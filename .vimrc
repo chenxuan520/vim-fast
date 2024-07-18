@@ -994,6 +994,11 @@ let g:vista#renderer#enable_icon = 0
 let g:vista_sidebar_width = 22
 let g:vista_echo_cursor = 0
 let g:vista_stay_on_open = 0
+" exit vim if vista is the only window remaining in the only tab.
+augroup Vista
+	autocmd!
+	autocmd BufEnter * if winnr('$') == 1 && &ft == 'vista' | :bn | endif
+augroup END
 
 " auto pair
 let g:AutoPairsMapCh = 0
