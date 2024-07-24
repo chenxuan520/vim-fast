@@ -975,6 +975,7 @@ let g:vista_stay_on_open = 0
 augroup Vista
 	autocmd!
 	autocmd BufEnter * if winnr('$') == 1 && &ft == 'vista' | :bn | endif
+	autocmd BufEnter * if ( &ft == 'vista' || &ft == 'vista_markdown' ) && winnr('$') == 1 | call feedkeys(":vsplit|bn\<cr>") | endif
 augroup END
 
 " auto pair

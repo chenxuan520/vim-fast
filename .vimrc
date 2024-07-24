@@ -997,7 +997,7 @@ let g:vista_stay_on_open = 0
 " exit vim if vista is the only window remaining in the only tab.
 augroup Vista
 	autocmd!
-	autocmd BufEnter * if winnr('$') == 1 && &ft == 'vista' | :bn | endif
+	autocmd BufEnter * if ( &ft == 'vista' || &ft == 'vista_markdown' ) && winnr('$') == 1 | call feedkeys(":vsplit|bn\<cr>") | endif
 augroup END
 
 " auto pair
