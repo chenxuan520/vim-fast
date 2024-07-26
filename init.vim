@@ -178,7 +178,7 @@ nnoremap <silent><c-p> :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
 nnoremap <silent><c-n> :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
 nnoremap <silent>H     :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
 nnoremap <silent>L     :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
-nnoremap <silent><leader>d :bd<cr>
+nnoremap <silent><leader>d :let buf_now=bufnr()<bar>bn<bar>if &bt!=''<bar>bn<bar>endif<bar>execute "bd ".buf_now<cr>
 nnoremap <silent><expr><c-m> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
@@ -600,9 +600,13 @@ xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
 func s:ReplaceGlobal(str) abort
-	let str=escape(a:str,'.')|let replace=escape(input("replace ".a:str." to:"),'.')
+	let escape_char='.'
+	let str=escape(a:str,escape_char)|let replace=escape(input("replace ".a:str." to:"),escape_char)
 	if replace==""|return|endif
-	echo system('find . -path "./.git" -prune -o -type f -exec sed -i "s|'.a:str.'|'.replace.'|g" {} +')
+	let sed='sed'|if has('macunix')|let sed='gsed'|endif
+	echo system('find . -path "./.git" -prune -o -type f -exec '.sed.' -i "s|'.a:str.'|'.replace.'|g" {} +')
+	" reload file
+	exec ":edit ".expand('%')
 endfunc
 
 " object buffer
@@ -854,6 +858,7 @@ let g:airline_right_alt_sep = ''
 
 " nerdtree
 nnoremap <silent><leader>n :NERDTreeToggle<cr>
+nnoremap <silent><leader>N :NERDTreeFind<cr>
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
@@ -974,7 +979,6 @@ let g:vista_stay_on_open = 0
 " exit vim if vista is the only window remaining in the only tab.
 augroup Vista
 	autocmd!
-	autocmd BufEnter * if winnr('$') == 1 && &ft == 'vista' | :bn | endif
 	autocmd BufEnter * if ( &ft == 'vista' || &ft == 'vista_markdown' ) && winnr('$') == 1 | call feedkeys(":vsplit|bn\<cr>") | endif
 augroup END
 

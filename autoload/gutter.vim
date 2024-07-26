@@ -34,7 +34,8 @@ func! gutter#GitGutterDiff()
 		echo 'git gutter not open yet'
 		return
 	endif
-	let s:lines=system('git diff -U0 '.expand('%:p'))
+	let file_real_path=resolve(expand('%:p'))
+	let s:lines=system('git diff -U0 '.file_real_path)
 	let s:list=split(s:lines,'\n')
 	let result=''
 	let i=0
@@ -95,7 +96,8 @@ func! gutter#GitGutterRecover()
 	endif
 
 	let now_line=line('.')
-	let s:lines=system('git diff -U0 '.expand('%:p'))
+	let file_real_path=resolve(expand('%:p'))
+	let s:lines=system('git diff -U0 '.file_real_path)
 	let s:list=split(s:lines,'\n')
 	let result=''
 	let i=0
@@ -151,22 +153,23 @@ func! s:PlaceSign(new_line,new_change,old_line,old_change)
 	let new_change=a:new_change
 	let old_line=a:old_change
 	let old_change=a:old_change
+	let file_real_path=resolve(expand('%:p'))
 	if new_change>old_change
 		let i=new_change
 		while i>0
-			call sign_place(s:sign_id,s:sign_group_name,'gitadd',expand('%:p'),{'lnum':new_line+i-1,'priority':1})
+			call sign_place(s:sign_id,s:sign_group_name,'gitadd',file_real_path,{'lnum':new_line+i-1,'priority':1})
 			let i-=1
 		endwhile
 	elseif new_change==old_change
 		let i=new_change
 		while i>0
-			call sign_place(s:sign_id,s:sign_group_name,'gitchange',expand('%:p'),{'lnum':new_line+i-1,'priority':1})
+			call sign_place(s:sign_id,s:sign_group_name,'gitchange',file_real_path,{'lnum':new_line+i-1,'priority':1})
 			let i-=1
 		endwhile
 	else
 		let i=new_change==0?1:new_change
 		while i>0
-			call sign_place(s:sign_id,s:sign_group_name,'gitdelete',expand('%:p'),{'lnum':new_line+i-1,'priority':1})
+			call sign_place(s:sign_id,s:sign_group_name,'gitdelete',file_real_path,{'lnum':new_line+i-1,'priority':1})
 			let i-=1
 		endwhile
 	endif
@@ -222,7 +225,8 @@ func! gutter#GitGutterAble()
 		let g:gitgutter_status=1
 		call s:SignDefine()
 	endif
-	let s:lines=system('git diff -U0 '.expand('%:p').' | grep "^@@"')
+	let file_real_path=resolve(expand('%:p'))
+	let s:lines=system('git diff -U0 '.file_real_path.' | grep "^@@"')
 	let s:list=split(s:lines,'\n')
 	for s:line in s:list
 		let matches = matchlist(s:line, s:regex)
@@ -312,7 +316,8 @@ func! s:ClearHl()
 endfunc
 
 func! s:ClearSign()
-	call sign_unplace(s:sign_group_name,{'buffer':expand('%:p')})
+	let file_real_path=resolve(expand('%:p'))
+	call sign_unplace(s:sign_group_name,{'buffer':file_real_path})
 	let b:buffer_gitgutter=[]
 	let b:buffer_gitgutter_result=[]
 endfunc
