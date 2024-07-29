@@ -31,3 +31,6 @@ func! s:GetModPath()
 endfunc
 nnoremap <buffer><Leader>c :call <sid>SetComment()<CR>
 nnoremap <buffer><Leader>C :call <sid>GetModPath()<CR>
+
+" 设置折行
+setlocal wrap

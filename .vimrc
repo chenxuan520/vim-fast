@@ -178,10 +178,17 @@ nnoremap <silent><c-p> :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
 nnoremap <silent><c-n> :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
 nnoremap <silent>H     :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
 nnoremap <silent>L     :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
-nnoremap <silent><leader>d :let buf_now=bufnr()<bar>bn<bar>if &bt!=''<bar>bn<bar>endif<bar>execute "bd ".buf_now<cr>
-nnoremap <silent><expr><c-m> &bt==''?":w<cr>":
+nnoremap <silent><expr><c-m> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
+nnoremap <silent><leader>d :call <sid>CloseBuf()<cr>
+func! s:CloseBuf()
+	let buf_now=bufnr()
+	if &bt!=''|bd|return|endif
+	bn
+	while &bt!=''|bn|endwhile
+	execute "bd ".buf_now
+endfunc
 
 " insert model to move cursor
 imap <c-j> <down>
@@ -318,7 +325,7 @@ tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
 tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
 tnoremap <c-z> exit<cr>
-nnoremap <leader><leader>T :bo term ++rows=6<CR>
+nnoremap <leader><leader>T :bo term ++rows=<c-r>=winheight(0)/3<cr><cr>
 nnoremap <leader><leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
 nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:call term_start("bash",{"cwd":"<c-r>=@s<cr>","curwin":1,"term_finish":"close"})<cr>

@@ -178,10 +178,17 @@ nnoremap <silent><c-p> :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
 nnoremap <silent><c-n> :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
 nnoremap <silent>H     :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
 nnoremap <silent>L     :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
-nnoremap <silent><leader>d :let buf_now=bufnr()<bar>bn<bar>if &bt!=''<bar>bn<bar>endif<bar>execute "bd ".buf_now<cr>
 nnoremap <silent><expr><c-m> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
+nnoremap <silent><leader>d :call <sid>CloseBuf()<cr>
+func! s:CloseBuf()
+	let buf_now=bufnr()
+	if &bt!=''|bd|return|endif
+	bn
+	while &bt!=''|bn|endwhile
+	execute "bd ".buf_now
+endfunc
 
 " insert model to move cursor
 imap <c-j> <down>
@@ -310,7 +317,7 @@ tnoremap <c-\> <c-\><c-n>
 tnoremap <c-o> ~/.config/nvim/nvr.py -l <space>
 tnoremap <c-]> ~/.config/nvim/nvr.py -l<space>;exit<left><left><left><left><left>
 tnoremap <c-z> exit<cr>
-nnoremap <leader><leader>T :split<CR>:term<cr>
+nnoremap <leader><leader>T :belowright split +resize\ <c-r>=winheight(0)/3<cr><cr>:term<cr>
 nnoremap <leader><leader>t :vsplit<CR>:term<cr>
 nnoremap <silent><space><space>t :term<cr>
 nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:vert term $SHELL -c "cd <c-r>=@s<cr>;$SHELL"<cr>
