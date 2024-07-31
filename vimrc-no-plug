@@ -120,8 +120,8 @@ nnoremap <silent><leader>d :call <sid>CloseBuf()<cr>
 func! s:CloseBuf()
 	let buf_now=bufnr()
 	if &bt!=''|bd|return|endif
-	bn
-	while &bt!=''|bn|endwhile
+	bp
+	while &bt!=''|bp|endwhile
 	execute "bd ".buf_now
 endfunc
 
