@@ -328,7 +328,7 @@ tnoremap <c-z> exit<cr>
 nnoremap <leader><leader>T :bo term ++rows=<c-r>=winheight(0)/3<cr><cr>
 nnoremap <leader><leader>t :vert term<CR>
 nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
-nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:call term_start("bash",{"cwd":"<c-r>=@s<cr>","curwin":1,"term_finish":"close"})<cr>
+nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:call term_start($SHELL,{"cwd":"<c-r>=@s<cr>","curwin":1,"term_finish":"close"})<cr>
 
 " lazygit
 nnoremap <silent><space>g :call <sid>ShellOpenFile("LAZYGIT_FILE")<cr>:call term_start("lazygit",{"close_cb":"<sid>ShellOpenFile","curwin":1,"term_finish":"close"})<cr>

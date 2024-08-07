@@ -319,8 +319,8 @@ tnoremap <c-]> ~/.config/nvim/nvr.py -l<space>;exit<left><left><left><left><left
 tnoremap <c-z> exit<cr>
 nnoremap <leader><leader>T :belowright split +resize\ <c-r>=winheight(0)/3<cr><cr>:term<cr>
 nnoremap <leader><leader>t :vsplit<CR>:term<cr>
-nnoremap <silent><space><space>t :term<cr>
-nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:vert term $SHELL -c "cd <c-r>=@s<cr>;$SHELL"<cr>
+nnoremap <silent><space><space>t :tabe<cr>:term<cr>
+nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:term $SHELL -c "cd <c-r>=@s<cr>;$SHELL"<cr>
 tnoremap <c-w>l <c-\><c-n><c-w>l
 tnoremap <c-w>h <c-\><c-n><c-w>h
 tnoremap <c-w>j <c-\><c-n><c-w>j

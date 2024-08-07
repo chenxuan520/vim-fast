@@ -11,7 +11,7 @@
 " g:gitgutter_highlight_able is if highlight diff,default 1
 
 let s:regex = '^@@ -\(\d\+\),\?\(\d*\) +\(\d\+\),\?\(\d*\) @@'
-let s:sign_id=3
+let s:sign_id=0
 let s:sign_group_name= 'gutter'
 let b:buffer_gitgutter=[]
 let b:buffer_gitgutter_result=[]
