@@ -183,10 +183,18 @@ nnoremap <silent><expr><c-m> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
 nnoremap <silent><leader>d :call <sid>CloseBuf()<cr>
 func! s:CloseBuf()
-	let buf_now=bufnr()
 	if &bt!=''|bd|return|endif
-	bp
-	while &bt!=''|bp|endwhile
+	let buf_now=bufnr()
+	let buf_jump_list=getjumplist()[0]|let buf_jump_now=getjumplist()[1]-1
+	while buf_jump_now>=0
+		let last_nr=buf_jump_list[buf_jump_now]["bufnr"]
+		let last_line=buf_jump_list[buf_jump_now]["lnum"]
+		if buf_now!=last_nr&&bufloaded(last_nr)&&getbufvar(last_nr,"&bt")==''
+			execute ":buffer ".last_nr|execute ":bd ".buf_now|return
+		else|let buf_jump_now-=1
+		endif
+	endwhile
+	bp|while &bt!=''|bp|endwhile
 	execute "bd ".buf_now
 endfunc
 
@@ -328,7 +336,7 @@ tnoremap <c-w>k <c-\><c-n><c-w>k
 
 " lazygit
 nnoremap <silent><space>g :call <sid>ShellOpenFile(-1,0,"LAZYGIT_FILE")<cr>:call termopen("lazygit",{"on_exit":"<sid>ShellOpenFile"})<cr>
-nnoremap <silent><space>G :let @s=expand('%')<cr>:term lazygit -f <c-r>s<cr>
+nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:term lazygit -f <c-r>s<cr>
 func! s:ShellOpenFile(close,exitcode,event) abort
 	if a:close==-1
 		tabe
