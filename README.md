@@ -364,7 +364,7 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
    - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii),选择类型为`ANSI Shadow`
 
-   - 获取Vim形式[vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html)(花了一点自己时间做的,因为不怎么写前端,画面比较差)
+   - 获取Vim形式[vim-dashboard-header-make](https://chenxuanweb.top/cppweb/header.html)(花了一点自己时间做的,因为不怎么写前端,画面比较差)
 
    - 将得到的结果复制到.vimrc中
 

@@ -348,7 +348,7 @@
 
    - Get Pattern Representation[Spring Boot banner online generation tool](https://www.bootschool.net/ascii), select type`ANSI Shadow`
 
-   - Get Vim form[vim-dashboard-header-make](https://chenxuan520.gitee.io/chenxuanweb/header.html) (took a little time to do it, because I don't write much about the front, the picture is poor)
+   - Get Vim form[vim-dashboard-header-make](https://chenxuanweb.top/cppweb/header.html) (took a little time to do it, because I don't write much about the front, the picture is poor)
 
    - Copy the result to.vimrc
 
