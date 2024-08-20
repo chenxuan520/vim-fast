@@ -109,14 +109,23 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " vim-buffer
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <silent><c-p> :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
-nnoremap <silent><c-n> :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
-nnoremap <silent>H     :bp<bar>if &bt!=''<bar>bp<bar>endif<cr>
-nnoremap <silent>L     :bn<bar>if &bt!=''<bar>bn<bar>endif<cr>
+nnoremap <silent><c-p> :call <sid>ChangeBuffer('p')<cr>
+nnoremap <silent><c-n> :call <sid>ChangeBuffer('n')<cr>
+nnoremap <silent>H     :call <sid>ChangeBuffer('p')<cr>
+nnoremap <silent>L     :call <sid>ChangeBuffer('n')<cr>
 nnoremap <silent><expr><c-m> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
 nnoremap <silent><leader>d :call <sid>CloseBuf()<cr>
+func! s:ChangeBuffer(direct) abort
+	if &bt!=''|echoerr "buftype is ".&bt." cannot be change"|return|endif
+	if a:direct=='n'|bn
+	else|bp|endif
+	while &bt!=''
+		if a:direct=='n'|bn
+		else|bp|endif
+	endwhile
+endfunc
 func! s:CloseBuf()
 	if &bt!=''|bd|return|endif
 	let buf_now=bufnr()
