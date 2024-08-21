@@ -34,3 +34,5 @@ nnoremap <buffer><Leader>C :call <sid>GetModPath()<CR>
 
 " 设置折行
 setlocal wrap
+noremap<buffer> j gj
+noremap<buffer> k gk

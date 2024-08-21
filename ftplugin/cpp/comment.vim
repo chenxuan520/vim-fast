@@ -41,4 +41,7 @@ nnoremap <buffer><space>xx :call <sid>Run()<cr>
 
 " 设置cpp缩进
 call g:SetTypeIndex("space", 2)
+" 设置折行
 setlocal wrap
+noremap<buffer> j gj
+noremap<buffer> k gk

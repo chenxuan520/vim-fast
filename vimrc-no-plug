@@ -118,7 +118,7 @@ nnoremap <silent><expr><c-m> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
 nnoremap <silent><leader>d :call <sid>CloseBuf()<cr>
 func! s:ChangeBuffer(direct) abort
-	if &bt!=''|echoerr "buftype is ".&bt." cannot be change"|return|endif
+	if &bt!=''||&ft=='netrw'|echoerr "buftype is ".&bt." cannot be change"|return|endif
 	if a:direct=='n'|bn
 	else|bp|endif
 	while &bt!=''
@@ -127,7 +127,7 @@ func! s:ChangeBuffer(direct) abort
 	endwhile
 endfunc
 func! s:CloseBuf()
-	if &bt!=''|bd|return|endif
+	if &bt!=''||&ft=='netrw'|bd|return|endif
 	let buf_now=bufnr()
 	let buf_jump_list=getjumplist()[0]|let buf_jump_now=getjumplist()[1]-1
 	while buf_jump_now>=0
