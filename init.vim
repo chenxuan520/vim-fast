@@ -116,6 +116,7 @@ call plug#begin('~/.vim/plugged')
 " begin vim
 Plug 'chenxuan520/my-vim-dashboard'
 " function list
+Plug 'preservim/tagbar.git', {'on': 'Tagbar'}
 Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
 " auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -495,7 +496,7 @@ nnoremap <silent><nowait>\n :setlocal relativenumber<bar>setlocal number<cr>
 nnoremap <silent><nowait>=N :setlocal norelativenumber<cr>:setlocal nonumber<cr>:set nolist<cr>
 nnoremap <silent><nowait>\N :setlocal relativenumber<cr>:setlocal number<cr>:set list lcs=tab:¦\<space> <cr>
 
-" set fold auto
+" set fold auto,use zE unset all fold,zf create fold
 nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
 nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
 nnoremap <silent><nowait>=o zO
@@ -996,8 +997,9 @@ function! ShowDocumentation()
 	endif
 endfunction
 
-" vista
+" vista and tagbar
 nnoremap <silent> <leader>t :Vista!!<cr>
+let g:tagbar_width = 22
 let g:vista_default_executive = 'ctags'
 let g:vista#renderer#enable_icon = 0
 let g:vista_sidebar_width = 22

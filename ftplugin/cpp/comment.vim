@@ -43,5 +43,7 @@ nnoremap <buffer><space>xx :call <sid>Run()<cr>
 call g:SetTypeIndex("space", 2)
 " 设置折行
 setlocal wrap
-noremap<buffer> j gj
-noremap<buffer> k gk
+noremap <buffer> j gj
+noremap <buffer> k gk
+" 设置使用tagbar,vista对cpp支持太差了
+nnoremap <buffer> <silent><leader>t :Tagbar<cr>

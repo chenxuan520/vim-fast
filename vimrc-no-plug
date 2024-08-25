@@ -574,7 +574,7 @@ nnoremap <silent><nowait>\n :setlocal relativenumber<bar>setlocal number<cr>
 nnoremap <silent><nowait>=N :setlocal norelativenumber<cr>:setlocal nonumber<cr>:set nolist<cr>
 nnoremap <silent><nowait>\N :setlocal relativenumber<cr>:setlocal number<cr>:set list lcs=tab:¦\<space> <cr>
 
-" set fold auto
+" set fold auto,use zE unset all fold,zf create fold
 nnoremap <silent><nowait>=z :setlocal fdm=indent<cr>:setlocal fen<cr>
 nnoremap <silent><nowait>\z :setlocal fdm=manual<cr>:setlocal nofen<cr>
 nnoremap <silent><nowait>=o zO
