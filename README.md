@@ -98,6 +98,8 @@
 
 19. 内置众多便捷vimscript,方便学习和简化操作
 
+20. 携带 ai 插件, 方便让 gpt 接入 vim
+
 ## 内置的Vimscript功能
 
 1. 全文选中,类似插件[Vim-textobj-entire](https://github.com/kana/vim-textobj-entire)

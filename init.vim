@@ -638,7 +638,7 @@ func s:ReplaceGlobal(str) abort
 endfunc
 
 " object buffer
-nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
+nnoremap <silent><nowait> =e gg=G
 onoremap <silent>ae :<c-u>normal! ggVG<cr>
 xnoremap <silent>ae :<c-u>normal! ggVG<cr>
 " object line
@@ -1143,7 +1143,7 @@ cab Copilot Copilot enable
 cab Codeium Codeium Enable
 
 " vim-ai-doubao
-let g:vim_ai_name="xinhuo"
+let g:vim_ai_name="doubao"
 cab aic AIChat
 cab aie AIEdit
 cab ai  AI

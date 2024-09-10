@@ -660,7 +660,7 @@ func s:ReplaceGlobal(str) abort
 endfunc
 
 " object buffer
-nnoremap <silent><nowait> =e gg=G<c-o><c-o>zz
+nnoremap <silent><nowait> =e gg=G
 onoremap <silent>ae :<c-u>normal! ggVG<cr>
 xnoremap <silent>ae :<c-u>normal! ggVG<cr>
 " object line
