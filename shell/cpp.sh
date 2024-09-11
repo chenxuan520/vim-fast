@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# check g++
+type g++
+if [ $? == 1 ];then
+	echo 'Please install g++ first'
+	exit 0
+fi
+
 # for mac install
 if [ "$(uname)" == "Darwin" ]; then
 	brew install llvm

@@ -450,6 +450,10 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
   - 打不开github链接也可以用[我提前下好的](https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.1/ctags)(注意是linux x86_64的)
 
+### 17. pyright 无法识别本地的包(coc插件)
+
+  - 更改 `~/.config/nvim/coc-settings.json` 文件,将其中的 `python.pythonPath` 修改为正确的python路径
+
 
 ## 帮助
 

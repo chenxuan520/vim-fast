@@ -22,3 +22,8 @@ func! s:ExecPython(str)
 	call setfperm(temp,"rwxrwxrwx")
 	exec ":!".temp
 endfunc
+
+" 设置折行
+setlocal wrap
+noremap <buffer> j gj
+noremap <buffer> k gk
