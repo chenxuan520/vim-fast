@@ -17,11 +17,25 @@ nnoremap <silent><buffer><space>xl 0v$"+y:call <sid>ExecPython(getreg('+'))<cr>
 xnoremap <silent><buffer><space>xl "+y:call <sid>ExecPython(getreg('+'))<cr>
 func! s:ExecPython(str)
 	let temp=tempname()
-	let content=["#!/usr/bin/env python"]+split(a:str,'\n')
+	let content=["#!/usr/bin/env python3"]+split(a:str,'\n')
 	call writefile(content, temp)
 	call setfperm(temp,"rwxrwxrwx")
 	exec ":!".temp
 endfunc
+
+" for popup menu
+func PyMenu()
+	unmenu PopUp
+	vnoremenu PopUp.Python\ Run "+y:call <sid>ExecPython(getreg('+'))<cr>
+	nnoremenu PopUp.Python\ Run :w<cr>:let g:nvim_term_open=1<cr>:vert term python3 <c-r>=expand('%:p')<cr><cr>
+	" visual model
+	vnoremenu PopUp.Yank\ Text "+y
+	vnoremenu PopUp.Paste\ Text "+p
+	" normal model
+	nnoremenu PopUp.Paste\ Text "+p
+	nnoremenu PopUp.Select\ All ggVG
+endfunc
+let g:rightmouse_popupmenu['python']=function("ShMenu")
 
 " 设置折行
 setlocal wrap

@@ -795,7 +795,7 @@ nnoremap <silent>R :redr!<cr>
 command! -nargs=0 -bang Pwd echo expand('%:p')
 command! -nargs=? -bang Reload exec ":edit ".<q-args>." ".expand('%')
 nnoremap <silent>S :edit<space><c-r>=expand('%')<cr><cr>
-command! -nargs=0 -bang Delete if filereadable(expand('%'))|w|call delete(expand('%'))|execute ":bd"|execute ":bn"|endif
+command! -nargs=0 -bang Delete if filereadable(expand('%'))|w|call delete(expand('%'))|call <sid>CloseBuf()|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
 cab <expr>Rename "Rename ".expand('%:p:h')."/"
 command! -nargs=1 -bang -complete=file Mkdir echo mkdir(<f-args>)
