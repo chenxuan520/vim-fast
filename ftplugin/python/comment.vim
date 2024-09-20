@@ -35,7 +35,7 @@ func PyMenu()
 	nnoremenu PopUp.Paste\ Text "+p
 	nnoremenu PopUp.Select\ All ggVG
 endfunc
-let g:rightmouse_popupmenu['python']=function("ShMenu")
+let g:rightmouse_popupmenu['python']=function("PyMenu")
 
 " 设置折行
 setlocal wrap
