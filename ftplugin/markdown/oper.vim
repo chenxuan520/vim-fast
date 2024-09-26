@@ -465,12 +465,6 @@ nnoremap <silent><buffer>< <<
 inoremap <silent><buffer><c-f> [{text}]({link})
 inoremap <silent><buffer><c-g> ![{text}]({link})
 
-inoremap <silent><buffer><expr><TAB>
-			\ pumvisible() ? "\<C-n>" :
-			\ getline(".")=~'^\s*$'  ? "\<TAB>" :
-			\ "\<c-o>>>\<c-o>$"
-inoremap <expr><buffer><S-TAB> pumvisible() ? "\<C-p>" : "\<c-o><<\<c-o>$"
-
 " for popup menu
 func MarkDownMenu()
 	unmenu PopUp
