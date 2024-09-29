@@ -53,3 +53,10 @@ endfunc
 if get(g:,"cpp_enter",0)
 	inoremap <silent><expr><buffer><c-m> <sid>Enter()
 endif
+
+" for popup menu
+func CppMenu()
+	unmenu PopUp
+	call MouseConfig()
+endfunc
+let g:rightmouse_popupmenu['cpp']=function("CppMenu")
