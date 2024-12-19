@@ -35,6 +35,7 @@ set noshowmode           " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
 set matchpairs+=<:>      " make % can jump <>
 set background=dark      " set background color
+set jumpoptions=stack    " set jump to stack instead of list
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code indent and typesetting config
@@ -135,7 +136,7 @@ Plug 'tpope/vim-repeat'
 " quick add comment
 Plug 'tpope/vim-commentary'
 " add endif when enter if
-Plug 'tpope/vim-endwise', {'for':['vim','sh']}
+Plug 'tpope/vim-endwise', {'for':['vim','sh','cpp','c']}
 " for cpp highlight
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 " for go highlight
