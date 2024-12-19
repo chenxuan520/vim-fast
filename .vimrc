@@ -35,7 +35,7 @@ set noshowmode           " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
 set matchpairs+=<:>      " make % can jump <>
 set background=dark      " set background color
-set jumpoptions=stack    " set jump to stack instead of list
+" set jumpoptions=stack    " set jump to stack instead of list
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code indent and typesetting config
