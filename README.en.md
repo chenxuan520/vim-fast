@@ -448,7 +448,7 @@
 
   1. [Suitable for quick start, original video from MOOC](https://www.bilibili.com/video/BV1NG4y1p74h/)
 
-  2. [Best VIM tutorial I've seen, original video from YouTube](https://www.bilibili.com/video/BV1pE411y7nj/)
+  2. [Best VIM tutorial I've seen, original video from YouTube](https://www.youtube.com/watch?v=mPVwS8gjDVI&list=PLBd8JGCAcUAH56L2CYF7SmWJYKwHQYUDI)
 
 - Vim Recommended Books
 

@@ -485,7 +485,7 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
   1. [合适快速入门,原视频来自慕课](https://www.bilibili.com/video/BV1NG4y1p74h/)
 
-  2. [我见过最好的VIM教程,原视频来自油管](https://www.bilibili.com/video/BV1pE411y7nj/)
+  2. [我见过最好的VIM教程,原视频来自油管](https://www.youtube.com/watch?v=mPVwS8gjDVI&list=PLBd8JGCAcUAH56L2CYF7SmWJYKwHQYUDI)
 
 - Vim 书籍推荐
 
