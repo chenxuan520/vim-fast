@@ -44,6 +44,26 @@ func! s:JsonRun(name)
 	endif
 endfunc
 
+func! s:YamlRun(name)
+	if a:name==""|return|endif
+	let str=[]|let s:name=expand("%:p:h")."/yaml_test.go"
+	let packagename=s:FindGoPackageName()
+	if packagename==''|let packagename=split(expand('%:p'),'/')[-2]|endif
+	call add(str,'package ' . packagename)
+	let str+=["import (",'	"testing"','	"fmt"','"gopkg.in/yaml.v3"',')']
+	let str+=['func TestYaml(t *testing.T) {','	temp:='.a:name.'{}']
+	let str+=['	data, _ := yaml.Marshal(temp)','	fmt.Println(string(data))','}']
+	call writefile(str,s:name)
+	if has('nvim')
+		let g:nvim_term_open=1
+		let path=expand("%:p:h")
+		vsp|enew
+		call termopen("go test -v -run TestYaml",{"cwd":path,"on_exit":"JsonCloseCbNvim"})
+	else
+		vert call term_start("go test -v -run TestYaml",{"cwd":expand("%:p:h"),"close_cb":"JsonCloseCb"})
+	endif
+endfunc
+
 func! JsonCloseCb(chan)
 	call delete(s:name)|echo "Run ok"
 endfunc
@@ -101,16 +121,20 @@ endfunc
 nnoremap <buffer><space>xx :call <sid>CodeRun('')<cr>
 xnoremap <buffer><space>xf :<c-u>execute "normal! gv\"sy"<cr>:call <sid>CodeRun("^".@s."$")<cr>
 nnoremap <buffer><space>xj :call <sid>JsonRun(input("input struct name:"))<cr>
+nnoremap <buffer><space>xj :call <sid>YamlRun(input("input struct name:"))<cr>
 xnoremap <buffer><space>xj :<c-u>execute "normal! gv\"sy"<cr>:call <sid>JsonRun(@s)<cr>
+xnoremap <buffer><space>xy :<c-u>execute "normal! gv\"sy"<cr>:call <sid>YamlRun(@s)<cr>
 
 " for popup menu
 func GoMenu()
 	unmenu PopUp
 	vnoremenu PopUp.Go\ Run\ Test :<c-u>execute "normal! gv\"sy"<cr>:call <sid>CodeRun("^".@s."$")<cr>
 	vnoremenu PopUp.Go\ Json :<c-u>execute "normal! gv\"sy"<cr>:call <sid>JsonRun(@s)<cr>
+	vnoremenu PopUp.Go\ Yaml :<c-u>execute "normal! gv\"sy"<cr>:call <sid>YamlRun(@s)<cr>
 
 	nnoremenu PopUp.Go\ Run\ File :call <sid>CodeRun('')<cr>
 	nnoremenu PopUp.Go\ Json :call <sid>JsonRun(input("input struct name:"))<cr>
+	nnoremenu PopUp.Go\ Yaml :call <sid>YamlRun(input("input struct name:"))<cr>
 	nnoremenu PopUp.Go\ Toggle :CocCommand go.test.toggle<cr>
 	call MouseConfig()
 endfunc
