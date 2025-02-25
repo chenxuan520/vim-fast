@@ -633,7 +633,7 @@ func s:ReplaceGlobal(str) abort
 	let str=escape(a:str,escape_char)|let replace=escape(input("replace ".a:str." to:"),escape_char)
 	if replace==""|return|endif
 	let sed='sed'|if has('macunix')|let sed='gsed'|endif
-	echo system('find . -path "./.git" -prune -o -type f -exec '.sed.' -i "s|'.a:str.'|'.replace.'|g" {} +')
+	echo system('find . -path "./.git" -prune -o -type f -exec '.sed.' -i "s|'.str.'|'.replace.'|g" {} +')
 	" reload file
 	exec ":edit ".expand('%')
 endfunc
