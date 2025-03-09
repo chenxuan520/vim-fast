@@ -633,8 +633,8 @@ xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
 func s:ReplaceGlobal(str) abort
-	let escape_char='.'
-	let str=escape(a:str,escape_char)|let replace=escape(input("replace ".a:str." to:"),escape_char)
+	let escape_char='."'
+	let str=escape(a:str,escape_char)|let replace=escape(input("replace ".a:str." to:",a:str),escape_char)
 	if replace==""|return|endif
 	let sed='sed'|if has('macunix')|let sed='gsed'|endif
 	echo system('find . -path "./.git" -prune -o -type f -exec '.sed.' -i "s|'.a:str.'|'.replace.'|g" {} +')
@@ -1094,6 +1094,14 @@ nnoremap <silent>cs :call <sid>ChangeSourround()<cr>
 " git config {{{
 command! -nargs=+ Git echo system("git ".<q-args>)
 nnoremap <leader>g :!git log --all --decorate --oneline --graph<cr>
+function! GitBlameSplitWindow()
+	let s:original_win = win_getid()|let line_num=line('.')-1|let original_buf_name = expand('%:p')
+	call feedkeys("zz")|execute 'vsp blame'|execute 'read !git blame '.original_buf_name
+	setlocal filetype=gitblame|setlocal bt=nofile
+	call feedkeys("ggdd".line_num."jzz:syncbind\<cr>")|call setwinvar(s:original_win,"&scb",1)|set scb
+	autocmd BufDelete <buffer> set noscb
+endfunction
+nnoremap <leader>gb :call GitBlameSplitWindow()<CR>
 
 " make run
 command! -nargs=+ Run let command=strpart(<q-args>,0,stridx(<q-args>,' '))|
