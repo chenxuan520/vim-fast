@@ -1092,16 +1092,27 @@ nnoremap <silent>cs :call <sid>ChangeSourround()<cr>
 "}}}
 
 " git config {{{
-command! -nargs=+ Git echo system("git ".<q-args>)
-nnoremap <leader>g :!git log --all --decorate --oneline --graph<cr>
-function! GitBlameSplitWindow()
-	let s:original_win = win_getid()|let line_num=line('.')-1|let original_buf_name = expand('%:p')
-	call feedkeys("zz")|execute 'vsp blame'|execute 'read !git blame '.original_buf_name
-	setlocal filetype=gitblame|setlocal bt=nofile
-	call feedkeys("ggdd".line_num."jzz:syncbind\<cr>")|call setwinvar(s:original_win,"&scb",1)|set scb
+function! s:GitBlame()
+	let original_win = win_getid()|let line_num=line('.')-1|let original_buf_name = expand('%:p')
+	call feedkeys("zz")|execute 'vsp blame'|execute 'read !git blame '.original_buf_name|setlocal filetype=gitblame|setlocal bt=nofile
+	call feedkeys("ggdd".line_num."jzz:syncbind\<cr>")|call setwinvar(original_win,"&scb",1)|set scb
 	autocmd BufDelete <buffer> set noscb
 endfunction
-nnoremap <leader>gb :call GitBlameSplitWindow()<CR>
+function s:GitDiff(cmd) abort
+	exec "vsp ".a:cmd
+	execute 'read !git '.a:cmd|setlocal filetype=diff|setlocal bt=nofile
+endfunction
+function! s:GitCommand(cmd) abort
+	if stridx(a:cmd,"blame")==0
+		call s:GitBlame()
+	elseif stridx(a:cmd,"diff")==0
+		call s:GitDiff(a:cmd)
+	else
+		echo system("git ".a:cmd)
+	endif
+endfunction
+nnoremap <leader>g :!git log --all --decorate --oneline --graph<cr>
+command! -nargs=+ Git call s:GitCommand(<q-args>)
 
 " make run
 command! -nargs=+ Run let command=strpart(<q-args>,0,stridx(<q-args>,' '))|
