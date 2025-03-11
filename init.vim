@@ -149,8 +149,8 @@ Plug 'vim-airline/vim-airline'
 " file devicon
 Plug 'ryanoasis/vim-devicons'
 " git control
-Plug 'tpope/vim-fugitive', {'on':['Git','GV','GV!']}
-Plug 'junegunn/gv.vim', {'on':['Git','GV','GV!']}
+Plug 'tpope/vim-fugitive', {'on':['G','Git','GV','GV!']}
+Plug 'junegunn/gv.vim', {'on':['G','Git','GV','GV!']}
 " enhance f/t
 Plug 'rhysd/clever-f.vim'
 " code snippets
