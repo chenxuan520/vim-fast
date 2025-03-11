@@ -629,8 +629,8 @@ xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
 func s:ReplaceGlobal(str) abort
-	let escape_char='.'
-	let str=escape(a:str,escape_char)|let replace=escape(input("replace ".a:str." to:"),escape_char)
+	let escape_char='."'
+	let str=escape(a:str,escape_char)|let replace=escape(input("replace ".a:str." to:",a:str),escape_char)
 	if replace==""|return|endif
 	let sed='sed'|if has('macunix')|let sed='gsed'|endif
 	echo system('find . -path "./.git" -prune -o -type f -exec '.sed.' -i "s|'.str.'|'.replace.'|g" {} +')
