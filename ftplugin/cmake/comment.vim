@@ -15,6 +15,7 @@ func! VimFastSetPreCode()
 	call append(line(".")-1,"")
 	call append(line(".")-1,"# link dir add")
 	call append(line(".")-1,"# link_directories()")
+	call append(line(".")-1,"# link_libraries(-lpthread)")
 	call append(line(".")-1,"")
 	call append(line(".")-1,"# add source")
 	call append(line(".")-1,"aux_source_directory(./src DIR_SRCS)")
@@ -26,6 +27,5 @@ iab <buffer> sflag set( CMAKE_CXX_FLAGS
 iab <buffer> stype set( CMAKE_BUILD_TYPE
 iab <buffer> spath set( EXECUTABLE_OUTPUT_PATH 
 iab <buffer> sub add_subdirectory(
-iab <buffer> include include_directories(
 iab <buffer> link link_directories(
 iab <buffer> exe add_executable(

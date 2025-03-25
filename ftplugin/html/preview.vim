@@ -13,7 +13,19 @@ func! VimFastSetPreCode()
 endfunc
 
 " open in default browser
-let b:browser=get(g:,'default_browser','firefox')
+if has('unix')
+	" linux
+	let b:browser=get(g:,'default_browser','xdg-open')
+elseif has('mac')
+	" mac
+	let b:browser=get(g:,'default_browser','open')
+elseif has('win32') || has('win64')
+	" windows
+	let b:browser=get(g:,'default_browser','start')
+else
+	echom 'not support this system'
+	finish
+endif
 
 if expand('%:e')=='html'
 	if has('nvim')

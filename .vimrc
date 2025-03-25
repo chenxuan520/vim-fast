@@ -136,7 +136,7 @@ Plug 'tpope/vim-repeat'
 " quick add comment
 Plug 'tpope/vim-commentary'
 " add endif when enter if
-Plug 'tpope/vim-endwise', {'for':['vim','sh','cpp','c']}
+Plug 'tpope/vim-endwise'
 " for cpp highlight
 Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
 " for go highlight
@@ -235,6 +235,10 @@ func! s:CtrlB()
 		return "\<c-o>b"
 	endif
 endfunc
+
+" use jk map for esc
+inoremap jk <esc>
+vnoremap jk <esc>
 
 " select paste
 snoremap <c-v> <space><bs><c-o>"0P
