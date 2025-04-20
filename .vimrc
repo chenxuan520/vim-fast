@@ -238,7 +238,6 @@ endfunc
 
 " use jk map for esc
 inoremap jk <esc>
-vnoremap jk <esc>
 
 " select paste
 snoremap <c-v> <space><bs><c-o>"0P

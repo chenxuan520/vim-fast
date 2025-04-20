@@ -239,7 +239,6 @@ endfunc
 
 " use jk map for esc
 inoremap jk <esc>
-vnoremap jk <esc>
 
 " select paste
 snoremap <c-v> <space><bs><c-o>"0P
@@ -691,7 +690,7 @@ xnoremap <silent>in i{
 xnoremap <silent>an a{
 
 " sudo to write file
-cab w!! w !sudo tee % >/dev/null
+cab w!! silent! w !pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY tee % >/dev/null
 
 " quick to change dir
 cab cdn cd <c-r>=expand('%:p:h')<cr>
