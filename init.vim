@@ -585,7 +585,6 @@ nnoremap <silent><nowait>=c :call highlightcolor#Able()<cr>
 nnoremap <silent><nowait>\c :call highlightcolor#DisAble()<cr>
 
 " multcursor
-nnoremap <silent><a-LeftMouse> <LeftMouse>:call multcursor#Choose()<cr>
 nnoremap <silent><c-s> :call multcursor#Choose()<cr>
 nnoremap <silent>-s :call multcursor#Toggle()<cr>
 
@@ -978,7 +977,9 @@ nnoremap <silent> K  :call ShowDocumentation()<cr>
 nnoremap <silent> gh :call ShowDocumentation()<cr>
 " coc mouse
 nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
+nmap <a-LeftMouse> <LeftMouse><Plug>(coc-definition)
 nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
+nmap <a-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
 let g:coc_popup_flag=0
 function! s:CocMouse()
 	unmenu PopUp

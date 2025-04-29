@@ -607,7 +607,6 @@ nnoremap <silent><nowait>=c :call highlightcolor#Able()<cr>
 nnoremap <silent><nowait>\c :call highlightcolor#DisAble()<cr>
 
 " multcursor
-nnoremap <silent><a-LeftMouse> <LeftMouse>:call multcursor#Choose()<cr>
 nnoremap <silent><c-s> :call multcursor#Choose()<cr>
 nnoremap <silent>-s :call multcursor#Toggle()<cr>
 
@@ -654,7 +653,7 @@ xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
 func s:ReplaceGlobal(str) abort
-	let escape_char='.'
+	let escape_char='."'
 	let str=escape(a:str,escape_char)|let replace=escape(input("replace ".a:str." to:",a:str),escape_char)
 	if replace==""|return|endif
 	let sed='sed'|if has('macunix')|let sed='gsed'|endif
@@ -1000,7 +999,9 @@ nnoremap <silent> K  :call ShowDocumentation()<cr>
 nnoremap <silent> gh :call ShowDocumentation()<cr>
 " coc mouse
 nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
+nmap <a-LeftMouse> <LeftMouse><Plug>(coc-definition)
 nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
+nmap <a-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
 let g:coc_popup_flag=0
 function! s:CocMouse()
 	unmenu PopUp
