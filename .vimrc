@@ -616,8 +616,8 @@ augroup restful
 	autocmd BufNewFile,BufRead *.rest silent! call rest#Able()
 augroup END
 cab pyj !python3 -m json.tool
-nnoremap <space>i :call rest#VrcQuery(1)<CR>
-nnoremap <space>I :call rest#VrcQuery(0)<CR>
+nnoremap <space><space>i :call rest#VrcQuery(1)<CR>
+nnoremap <space><space>I :call rest#VrcQuery(0)<CR>
 
 " gutter for git
 let g:gitgutter_sign_able=1
@@ -1093,17 +1093,17 @@ xnoremap <space>t :<c-u>execute ":Leaderf function --all --input " . <sid>GetSel
 " find for help
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>H :Leaderf help --input key:<cr>
-xnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr><tab>
+xnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
 " enhance find
 nnoremap <space>/ :LeaderfLine<cr>
-xnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr><tab>
+xnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr>
 nnoremap <space>? :LeaderfLineAll<cr>
-xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectArea()<cr><tab>
+xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectArea()<cr>
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
-xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr><tab>
-xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr><tab>
+xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr>
 " tags
 nnoremap <space>j :LeaderfBufTag<cr>
 nnoremap <space>J :LeaderfBufTagAll<cr>
@@ -1177,3 +1177,6 @@ let g:vim_ai_name="xinhuo"
 cab aic AIChat
 cab aie AIEdit
 cab ai  AI
+nnoremap <space>i :AIChat<space>
+xnoremap <space>i :AIChat<space>
+xnoremap <space>I :AIEdit<space>
