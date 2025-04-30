@@ -879,7 +879,9 @@ nnoremap =a :ab<cr>
 " set function to choose select area
 func s:GetSelectArea()
 	norm! gv"sy
-	return @s
+	let split_ch="'"
+	if stridx(@s, split_ch)!=-1|let split_ch = '"'|endif
+	return split_ch.@s.split_ch
 endfunc
 
 " plug config setting
