@@ -157,7 +157,6 @@ Plug 'honza/vim-snippets'
 " run shell in async
 Plug 'skywind3000/asyncrun.vim'
 " copilot
-"Plug 'github/copilot.vim', {'on': 'Copilot'}
 Plug 'exafunction/codeium.vim', {'on': 'Codeium'}
 " vim-ai
 Plug 'chenxuan520/vim-ai-doubao', {'on': ['AIChat','AI','AIEdit','AIConfigEdit']}
@@ -1169,7 +1168,6 @@ nmap <space>: :AsyncRun<space>
 nnoremap <leader>A :AsyncRun ack -i<space>
 
 " Copilot
-cab Copilot Copilot enable
 cab Codeium Codeium Enable
 
 " vim-ai-doubao
