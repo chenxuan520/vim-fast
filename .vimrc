@@ -1016,7 +1016,7 @@ function! s:CocMouse()
 	nnoremenu <silent>PopUp.Close\ Fold    zC
 	nnoremenu <silent>PopUp.Fold\ Enable   :setlocal fdm=indent<cr>:setlocal fen<cr>
 	nnoremenu <silent>PopUp.-Sep-          :<cr>
-	nnoremenu <silent>PopUp.Close\ Model\  :let g:coc_popup_flag=0<cr>
+	nnoremenu <silent>PopUp.Close\ Coc\ Model\  :let g:coc_popup_flag=0<cr>
 endfunction
 nnoremap <silent><nowait>-c :let g:coc_popup_flag=1<cr>
 function! ShowDocumentation()
