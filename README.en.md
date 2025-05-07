@@ -8,7 +8,7 @@
 
 - [README](./README.en.md) in English
 
-```shell
+```txt
         _            __          _
        (_)          / _|        | |
  __   ___ _ __ ___ | |_ __ _ ___| |_
