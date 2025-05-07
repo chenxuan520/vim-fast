@@ -9,12 +9,12 @@
 - [README](./README.en.md) in English
 
 ```shell
-'       _            __          _   '
-'      (_)          / _|        | |  '
-'__   ___ _ __ ___ | |_ __ _ ___| |_ '
-'\ \ / / | "_ " _ \|  _/ _" / __| __|'
-' \ V /| | | | | | | || (_| \__ \ |_ '
-'  \_/ |_|_| |_| |_|_| \__,_|___/\__|'
+        _            __          _
+       (_)          / _|        | |
+ __   ___ _ __ ___ | |_ __ _ ___| |_
+ \ \ / / | "_ " _ \|  _/ _" / __| __|
+  \ V /| | | | | | | || (_| \__ \ |_
+   \_/ |_|_| |_| |_|_| \__,_|___/\__|
 ```
 
 ## warehouse address
@@ -348,7 +348,7 @@
 
    - Get Pattern Representation[Spring Boot banner online generation tool](https://www.bootschool.net/ascii), select type`ANSI Shadow`
 
-   - Get Vim form[vim-dashboard-header-make](https://chenxuanweb.top/cppweb/header.html) (took a little time to do it, because I don't write much about the front, the picture is poor)
+   - Get Vim form[vim-dashboard-header-make](https://chenxuanweb.top/cppnet/header.html) (took a little time to do it, because I don't write much about the front, the picture is poor)
 
    - Copy the result to.vimrc
 
@@ -420,7 +420,7 @@
 
 ## help
 
-1. [Plugin shortcut key description](./doc/key.md)(may be partially outdated, recommended to use\<space\>H view)
+1. [Plugin shortcut key description](./doc/key.md)(You can also use \<space\>H to check.)
 
 2. [Vim Some Keys Help](./doc/help.md)
 

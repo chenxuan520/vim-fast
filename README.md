@@ -9,12 +9,12 @@
 - [README](./README.en.md) in English
 
 ```shell
-'       _            __          _   '
-'      (_)          / _|        | |  '
-'__   ___ _ __ ___ | |_ __ _ ___| |_ '
-'\ \ / / | "_ " _ \|  _/ _" / __| __|'
-' \ V /| | | | | | | || (_| \__ \ |_ '
-'  \_/ |_|_| |_| |_|_| \__,_|___/\__|'
+        _            __          _
+       (_)          / _|        | |
+ __   ___ _ __ ___ | |_ __ _ ___| |_
+ \ \ / / | "_ " _ \|  _/ _" / __| __|
+  \ V /| | | | | | | || (_| \__ \ |_
+   \_/ |_|_| |_| |_|_| \__,_|___/\__|
 ```
 
 ## 仓库地址
@@ -366,7 +366,7 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
    - 获取图案表示[Spring Boot banner在线生成工具](https://www.bootschool.net/ascii),选择类型为`ANSI Shadow`
 
-   - 获取Vim形式[vim-dashboard-header-make](https://chenxuanweb.top/cppweb/header.html)(花了一点自己时间做的,因为不怎么写前端,画面比较差)
+   - 获取Vim形式[vim-dashboard-header-make](https://chenxuanweb.top/cppnet/header.html)(花了一点自己时间做的,因为不怎么写前端,画面比较差)
 
    - 将得到的结果复制到.vimrc中
 
@@ -457,7 +457,7 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
 ## 帮助
 
-1. [插件快捷键说明](./doc/key.md)(可能有部分过时,推荐使用\<space\>H查看)
+1. [插件快捷键说明](./doc/key.md)(也可以使用\<space\>H查看)
 
 2. [Vim一些按键帮助](./doc/help.md)
 
