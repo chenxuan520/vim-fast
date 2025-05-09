@@ -32,7 +32,7 @@ function! airline#extensions#branch#get_head()
     endif
     return s:git_last_branch
   else
-    return ""
+    return s:git_last_branch
   endif
 endfunction
 

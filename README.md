@@ -519,7 +519,7 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
 ---
 
-![](https://www.yundongfang.com/wp-content/uploads/2021/03/Vim-Text-Editor-logo.png)
+![](https://edyfox.codecarver.org/html/vim-logo-en.png)
 
 ---
 
