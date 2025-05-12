@@ -710,7 +710,12 @@ xnoremap <silent>in i{
 xnoremap <silent>an a{
 
 " sudo to write file
-cab w!! w !sudo tee % >/dev/null
+func! SaveAsRoot()
+	execute "w !sudo tee % >/dev/null"
+	" reload buffer
+	exec ":edit! ".expand('%')
+endfunc
+cab w!! call SaveAsRoot()
 
 " quick to change dir
 cab cdn cd <c-r>=expand('%:p:h')<cr>

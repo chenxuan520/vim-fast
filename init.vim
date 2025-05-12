@@ -688,7 +688,12 @@ xnoremap <silent>in i{
 xnoremap <silent>an a{
 
 " sudo to write file
-cab w!! silent! w !pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY tee % >/dev/null
+func! SaveAsRoot()
+	execute "silent! w !pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY tee % >/dev/null"
+	" reload buffer
+	exec ":edit! ".expand('%')
+endfunc
+cab w!! call SaveAsRoot()
 
 " quick to change dir
 cab cdn cd <c-r>=expand('%:p:h')<cr>
