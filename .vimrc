@@ -933,22 +933,17 @@ augroup NerdTree
 augroup END
 
 " coc.nvim
-" coc map for coc 0.0.81
-" inoremap <silent><expr><TAB>
-" 			\ pumvisible() ? "\<C-n>" :
-" 			\ CheckBackspace() ? "\<TAB>" :
-" 			\ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-" inoremap <expr><right> pumvisible() ? "\<c-y>" : "\<right>"
-" inoremap <expr><c-p>   pumvisible() ? "\<c-p>" : "\<c-[>"
-
-" for coc 0.0.82
 let g:coc_disable_startup_warning = 1
 inoremap <silent><expr> <TAB>
 			\ coc#pum#visible() ? coc#pum#next(1):
 			\ CheckBackspace() ? "\<TAB>" :
 			\ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" seting for diff copilot and coc
+inoremap <silent><expr> <S-TAB>
+			\ coc#pum#visible() ? coc#pum#next(1):
+			\ CheckBackspace() ? "\<TAB>" :
+			\ coc#refresh()
+" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 inoremap <silent><expr><right> coc#pum#visible() ? coc#pum#confirm() : "\<right>"
 inoremap <silent><expr><c-p> coc#pum#visible() ? coc#pum#prev(1) : "\<c-[>"
 
