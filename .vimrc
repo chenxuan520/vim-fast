@@ -275,10 +275,16 @@ augroup END
 
 " global popupmenu
 let g:rightmouse_popupmenu={}
+let g:rightmouse_extramenu=[]
+func AddMouseMenu(func)
+	if type(a:func)!=2|echoerr 'func must be function'|return|endif
+	call add(g:rightmouse_extramenu,a:func)
+endfunc
 func RightMouseMenu()
 	if g:coc_popup_flag|call s:CocMouse()
 	elseif has_key(g:rightmouse_popupmenu, &ft)|call g:rightmouse_popupmenu[&ft]()
 	else|call MouseConfig()|endif
+	if !empty(g:rightmouse_extramenu)|for Func_name in g:rightmouse_extramenu|call Func_name()|endfor|endif
 endfunc
 
 " load the file last edit pos
@@ -1175,6 +1181,10 @@ let g:vim_ai_name="xinhuo"
 cab aic AIChat
 cab aie AIEdit
 cab ai  AI
+func! g:AITranMenu()
+	vnoremenu PopUp.Tran\ Text :AIChat /tran <cr>
+endfunc
+call AddMouseMenu(function('AITranMenu'))
 nnoremap <space>i :AIChat<space>
 xnoremap <space>i :AIChat<space>
 xnoremap <space>I :AIEdit<space>

@@ -8,7 +8,7 @@ func! VimFastSetPreCode()
 	augroup END
 endfunc
 
-nnoremap <silent><buffer><space>xx :w<cr>:vert term <c-r>=expand('%:p')<cr><cr>
+nnoremap <silent><buffer><space>xx :w<cr>:let g:nvim_term_open = 1<cr>:vert term <c-r>=expand('%:p')<cr><cr>
 nnoremap <silent><buffer><space>xl 0v$"+y:!<c-r>=@+<cr><cr>
 xnoremap <silent><buffer><space>xl "+y:call <sid>ExecShell(getreg('+'))<cr>
 func! s:ExecShell(str)
