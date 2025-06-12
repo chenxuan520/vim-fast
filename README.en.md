@@ -378,7 +378,18 @@
 
           2. Open Item2 -> setting -> profile -> text -> font
 
-          3. Set font to`DejaVvSansMona Nerd Font`
+          3. Set font to`DejaVuSansMono Nerd Font`
+
+          4. If it's macvim GUI, use `set guifont=DejaVuSansMono_Nerd_Font:h17`
+
+      - If it's Windows (taking Windows Terminal as an example):
+
+          1. Open the fonts folder (located at the root directory of the project), and double-click the DejaVu.ttf file to install the font.
+
+          2. Open Terminal -> Settings -> Defaults -> Appearance -> Font.
+
+          3. Set the font to `DejaVuSansMono Nerd Font`.
+
 
   - If you don't want to set it or can't set it, you can choose to disable icon function
 

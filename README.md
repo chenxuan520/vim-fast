@@ -396,7 +396,9 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
           2. 打开Item2 -> setting -> profile -> text -> font
 
-          3. 设置字体为`DejaVvSansMona Nerd Font`
+          3. 设置字体为`DejaVuSansMono Nerd Font`
+
+          4. 如果是 macvim gui的话使用 `set guifont=DejaVuSansMono_Nerd_Font:h17`
 
       - 如果是windows(以windows terminal终端举例)
 
@@ -404,7 +406,7 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
           2. 打开 terminal -> 设置 -> 默认值 -> 外观 -> 字体
 
-          3. 设置字体为`DejaVvSansMona Nerd Font`
+          3. 设置字体为`DejaVuSansMono Nerd Font`
 
   - 如果不想设置或者无法设置,可以选择禁用图标功能
 
