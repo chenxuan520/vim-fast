@@ -281,8 +281,7 @@ func AddMouseMenu(func)
 	call add(g:rightmouse_extramenu,a:func)
 endfunc
 func RightMouseMenu()
-	if g:coc_popup_flag|call s:CocMouse()
-	elseif has_key(g:rightmouse_popupmenu, &ft)|call g:rightmouse_popupmenu[&ft]()
+	if has_key(g:rightmouse_popupmenu, &ft)|call g:rightmouse_popupmenu[&ft]()
 	else|call MouseConfig()|endif
 	if !empty(g:rightmouse_extramenu)|for Func_name in g:rightmouse_extramenu|call Func_name()|endfor|endif
 endfunc
@@ -488,6 +487,7 @@ func! MouseConfig()
 	vnoremenu PopUp.Cut\ Text "+d
 	vnoremenu PopUp.Del\ Text "_d
 	vnoremenu PopUp.Paste\ Text "+p
+	vnoremenu PopUp.-Sep- :<cr>
 	" normal model
 	nnoremenu PopUp.Paste\ Text "+p
 	nnoremenu PopUp.Select\ All ggVG
@@ -497,8 +497,8 @@ func! MouseConfig()
 	nnoremenu PopUp.Open\ Fold  zO
 	nnoremenu PopUp.Close\ Fold zC
 	" close
-	nnoremenu PopUp.-Sep- :<cr>
 	nnoremenu PopUp.Close\ Mouse :set mouse=""<cr>
+	nnoremenu PopUp.-Sep- :<cr>
 	" term model
 	tlnoremenu PopUp.Exit\ Term exit<cr>
 endfunc
@@ -1009,27 +1009,11 @@ nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
 nmap <a-LeftMouse> <LeftMouse><Plug>(coc-definition)
 nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
 nmap <a-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
-let g:coc_popup_flag=0
-function! s:CocMouse()
-	unmenu PopUp
+func! g:CocMenu()
 	nmenu     <silent>PopUp.Coc\ Define    gd
 	nmenu     <silent>PopUp.Coc\ Refer     gr
-	nnoremenu <silent>PopUp.Coc\ Doc       :call ShowDocumentation()<cr>
-	nmenu     <silent>PopUp.Hight\ Word    *
-	nnoremenu <silent>PopUp.Back\ Pos      <c-o>zz
-	nnoremenu <silent>PopUp.Next\ Pos      <c-i>zz
-	nnoremenu <silent>PopUp.Open\ Fold     zO
-	nnoremenu <silent>PopUp.Close\ Fold    zC
-	nnoremenu <silent>PopUp.Fold\ Enable   :setlocal fdm=indent<cr>:setlocal fen<cr>
-	nnoremenu <silent>PopUp.-Sep-          :<cr>
-	nnoremenu <silent>PopUp.Close\ Coc\ Model\  :let g:coc_popup_flag=0<cr>
-endfunction
-nnoremap <silent><nowait>-c :let g:coc_popup_flag=1<cr>
-function! ShowDocumentation()
-	if CocAction('hasProvider', 'hover')|call CocActionAsync('doHover')
-	else|call feedkeys('K', 'in')
-	endif
-endfunction
+endfunc
+call AddMouseMenu(function('CocMenu'))
 
 " vista and tagbar
 nnoremap <silent> <leader>t :Vista!!<cr>

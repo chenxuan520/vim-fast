@@ -532,6 +532,7 @@ func! MouseConfig()
 	vnoremenu PopUp.Cut\ Text "+d
 	vnoremenu PopUp.Del\ Text "_d
 	vnoremenu PopUp.Paste\ Text "+p
+	vnoremenu PopUp.-Sep- :<cr>
 	" normal model
 	nnoremenu PopUp.Paste\ Text "+p
 	nnoremenu PopUp.Select\ All ggVG
@@ -541,8 +542,8 @@ func! MouseConfig()
 	nnoremenu PopUp.Open\ Fold  zO
 	nnoremenu PopUp.Close\ Fold zC
 	" close
-	nnoremenu PopUp.-Sep- :<cr>
 	nnoremenu PopUp.Close\ Mouse :set mouse=""<cr>
+	nnoremenu PopUp.-Sep- :<cr>
 	" term model
 	tlnoremenu PopUp.Exit\ Term exit<cr>
 endfunc
