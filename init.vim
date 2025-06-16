@@ -987,6 +987,11 @@ nmap <c-LeftMouse> <LeftMouse><Plug>(coc-definition)
 nmap <a-LeftMouse> <LeftMouse><Plug>(coc-definition)
 nmap <c-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
 nmap <a-RightMouse> <LeftMouse>:call ShowDocumentation()<cr>
+function! ShowDocumentation()
+	if CocAction('hasProvider', 'hover')|call CocActionAsync('doHover')
+	else|call feedkeys('K', 'in')
+	endif
+endfunction
 func! g:CocMenu()
 	nmenu     <silent>PopUp.Coc\ Define    gd
 	nmenu     <silent>PopUp.Coc\ Refer     gr
