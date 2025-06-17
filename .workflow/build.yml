@@ -1,0 +1,29 @@
+version: '1.0'
+name: build
+displayName: build
+triggers:
+  trigger: auto
+  push:
+    branches:
+      prefix:
+        - master
+stages:
+  - name: build
+    displayName: build
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: execute@docker
+        name: execute_by_docker
+        displayName: build_and_test
+        certificate: ''
+        image: registry.cn-hangzhou.aliyuncs.com/chenxuan/ubuntu:22.04
+        command:
+          - apt-get update
+          - ./install.sh
+        strategy:
+          retry: '2'
+          timeout: 20
+          expression: []
+
