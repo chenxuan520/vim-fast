@@ -886,6 +886,20 @@ augroup languages
 	autocmd BufNewFile *.sh call append(line(".")-1,'#!/bin/bash')
 	autocmd BufNewFile *.py call append(line(".")-1,'#!/usr/bin/env python3')
 augroup END
+" TODO: tired today, add it later "
+let language_config={
+			\"sh":{"run":"sh","code":"#!/bin/bash" },
+			\"python":{"run":"python3","code":"#!/usr/bin/env python3" }
+			\}
+function LanguageRun()
+	let ft=&ft|let s:config=language_config[ft]
+	if s:config==0|return|endif
+	let s:path=expand('%')|let s:code=s:config["code"]
+	if !filereadable(s:path)|call writefile(s:path,s:code)|endif
+	let s:run=s:config["run"]
+	" run in terminal
+endfunction
+" nnoremap <silent><space>xx :
 
 " config complete {{{
 inoremap <silent><expr>/ complete_info(["selected"])["selected"]!=-1&&getline(line('.'))[col('.')-2]=='/'?
