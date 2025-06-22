@@ -882,24 +882,43 @@ nnoremap <space>s :silent! source .session.vim<cr>
 " languages setting
 augroup languages
 	au!
-	autocmd! BufWritePost *.sh,*.py call setfperm(expand('%'),'rwxrwxr-x')
-	autocmd BufNewFile *.sh call append(line(".")-1,'#!/bin/bash')
-	autocmd BufNewFile *.py call append(line(".")-1,'#!/usr/bin/env python3')
+	autocmd! BufWritePost * call LanguageModeSet()
+	autocmd BufNewFile * call LanguagePreCode()
 augroup END
-" TODO: tired today, add it later "
-let language_config={
-			\"sh":{"run":"sh","code":"#!/bin/bash" },
-			\"python":{"run":"python3","code":"#!/usr/bin/env python3" }
+nnoremap <silent><space>xx :call LanguageRun()<cr>
+let g:language_config={
+			\"sh":{"run":"sh","code":"#!/bin/bash","mode":"rwxrwxr-x" },
+			\"python":{"run":"python3","code":"#!/usr/bin/env python3","mode":"rwxrwxr-x" }
 			\}
-function LanguageRun()
-	let ft=&ft|let s:config=language_config[ft]
-	if s:config==0|return|endif
-	let s:path=expand('%')|let s:code=s:config["code"]
-	if !filereadable(s:path)|call writefile(s:path,s:code)|endif
-	let s:run=s:config["run"]
-	" run in terminal
+
+func LanguagePreCode()
+	let ft=&ft
+	if !has_key(g:language_config,ft)|return|endif
+	let config=g:language_config[ft]|let path=expand('%')
+	let code=config["code"]
+	if code==""|return|endif
+	call append(line(".")-1,code)
+endfunc
+
+function LanguageModeSet()
+	let ft=&ft
+	if !has_key(g:language_config,ft)|return|endif
+	let config=g:language_config[ft]|let path=expand('%')
+	let mode=config["mode"]
+	if mode==""|return|endif
+	if !filereadable(path)|write|endif
+	call setfperm(path,mode)
 endfunction
-" nnoremap <silent><space>xx :
+
+function LanguageRun()
+	let ft=&ft
+	if !has_key(g:language_config,ft)|return|endif
+	let config=g:language_config[ft]|let path=expand('%')
+	if !filereadable(path)|write|endif
+	let run=config["run"]
+	if has('nvim')|let g:nvim_term_open=1|exec "vert term ".run." ".path|endif
+	exec "vert term ".run." ".path
+endfunction
 
 " config complete {{{
 inoremap <silent><expr>/ complete_info(["selected"])["selected"]!=-1&&getline(line('.'))[col('.')-2]=='/'?
