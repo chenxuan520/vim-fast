@@ -329,6 +329,8 @@
 
    - nvim可以通过nvim.sh安装,配置兼容
 
+   - 纯lua 版本正在开发中, 敬请期待
+
 ### 2. 我的系统没有支持
 
    - 可以提出issue或者自己制作提出mr
@@ -455,6 +457,12 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 ### 17. pyright 无法识别本地的包(coc插件)
 
   - 更改 `~/.config/nvim/coc-settings.json` 文件,将其中的 `python.pythonPath` 修改为正确的python路径
+
+### 18. vimscript 和 lua 没有只能补全
+
+  - vimscript 的话使用 `:CocInstall coc-vimlsp`
+
+  - lua 使用 `:CocInstall coc-sumneko-lua`, 同时在 CocConfig 加上 `"sumneko-lua.enableNvimLuaDev": true,` 即可
 
 
 ## 帮助

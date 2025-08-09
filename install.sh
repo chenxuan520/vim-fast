@@ -29,6 +29,7 @@ function install_plug()
 	# curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 	sudo ./shell/nodejs.sh
 	npm config set registry https://registry.npmmirror.com
+	echo 'coc.nvim:registry https://registry.npmmirror.com' >> ~/.npmrc
 	# https://registry.npmjs.org/
 
 	# npm install -g yarn

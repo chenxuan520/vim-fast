@@ -1,13 +1,15 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  __   __   __     __    __     ______   ______     ______     ______
-" /\ \ / /  /\ \   /\ "-./  \   /\  ___\ /\  __ \   /\  ___\   /\__  _\
-" \ \ \"/   \ \ \  \ \ \-./\ \  \ \  __\ \ \  __ \  \ \___  \  \/_/\ \/
-"  \ \__|    \ \_\  \ \_\ \ \_\  \ \_\    \ \_\ \_\  \/\_____\    \ \_\
-"   \/_/      \/_/   \/_/  \/_/   \/_/     \/_/\/_/   \/_____/     \/_/
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" chenxuan's vim config
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+--- -----------------------------------------------------------------------
+--- -  __   __   __     __    __     ______   ______     ______     ______
+--- - /\ \ / /  /\ \   /\ "-./  \   /\  ___\ /\  __ \   /\  ___\   /\__  _\
+--- - \ \ \"/   \ \ \  \ \ \-./\ \  \ \  __\ \ \  __ \  \ \___  \  \/_/\ \/
+--- -  \ \__|    \ \_\  \ \_\ \ \_\  \ \_\    \ \_\ \_\  \/\_____\    \ \_\
+--- -   \/_/      \/_/   \/_/  \/_/   \/_/     \/_/\/_/   \/_____/     \/_/
+--- -----------------------------------------------------------------------
+--- - chenxuan's nvim config
+--- -----------------------------------------------------------------------
 
+--- origin vim script config
+vim.cmd [[
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " base config
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -35,7 +37,7 @@ set noshowmode           " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
 set matchpairs+=<:>      " make % can jump <>
 set background=dark      " set background color
-" set jumpoptions=stack    " set jump to stack instead of list
+set jumpoptions=stack    " set jump to stack instead of list
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " code indent and typesetting config
@@ -119,15 +121,15 @@ nnoremap <leader><leader>i :PlugInstall<cr>
 nnoremap <leader><leader>c :PlugClean<cr>
 
 " vim-buffer
-nnoremap <silent><c-p> :call <sid>ChangeBuffer('p')<cr>
-nnoremap <silent><c-n> :call <sid>ChangeBuffer('n')<cr>
-nnoremap <silent>H     :call <sid>ChangeBuffer('p')<cr>
-nnoremap <silent>L     :call <sid>ChangeBuffer('n')<cr>
+nnoremap <silent><c-p> :call ChangeBuffer('p')<cr>
+nnoremap <silent><c-n> :call ChangeBuffer('n')<cr>
+nnoremap <silent>H     :call ChangeBuffer('p')<cr>
+nnoremap <silent>L     :call ChangeBuffer('n')<cr>
 nnoremap <silent><expr><c-m> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
-nnoremap <silent><leader>d :call <sid>CloseBuf()<cr>
-func! s:ChangeBuffer(direct) abort
+nnoremap <silent><leader>d :call CloseBuf()<cr>
+func! ChangeBuffer(direct) abort
 	if &bt!=''||&ft=='netrw'|echoerr "buftype is ".&bt." cannot be change"|return|endif
 	if a:direct=='n'|bn
 	else|bp|endif
@@ -136,7 +138,7 @@ func! s:ChangeBuffer(direct) abort
 		else|bp|endif
 	endwhile
 endfunc
-func! s:CloseBuf()
+func! CloseBuf()
 	if &bt!=''||&ft=='netrw'|bd|return|endif
 	let buf_now=bufnr()
 	let buf_jump_list=getjumplist()[0]|let buf_jump_now=getjumplist()[1]-1
@@ -165,8 +167,8 @@ inoremap <c-d> <del>
 vnoremap <c-d> <del>
 inoremap <c-f> <c-o>w
 inoremap <c-v> <c-o>D
-inoremap <expr><c-b> <sid>CtrlB()
-func! s:CtrlB()
+inoremap <expr><c-b> CtrlB()
+func! CtrlB()
 	if pumvisible()|return "\<c-n>"
 	elseif getline('.')[col('.')-2]==nr2char(9)
 		let s:pos=col('.')|let s:result=""
@@ -207,7 +209,9 @@ vnoremap <leader><leader>P "+P
 augroup ReadPost
 	au!
 	autocmd FileType java,c,cpp set commentstring=//\ %s
-	autocmd TerminalOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|endif
+	autocmd TermOpen * if &bt=='terminal'|setlocal norelativenumber|setlocal nonumber|startinsert|endif
+	autocmd WinEnter * if &bt=='terminal'&&!exists(':Termdebug')|call feedkeys("i\<esc>\<esc>")|endif
+	autocmd TermClose * if !exists('g:nvim_term_open')|call feedkeys("i\<esc>\<esc>")|else|unlet g:nvim_term_open|endif
 	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | execute "normal! zz" | endif
 	autocmd BufDelete * if expand('%:p')!=''&& &bt==""|let g:map_recent_close[expand('%:p')] =
 				\{'lnum':line('.'),'col':col('.'),'text':'close at '.strftime("%H:%M"),'time':localtime()}
@@ -230,7 +234,7 @@ endfunc
 
 " load the file last edit pos
 let g:map_recent_close={}
-func! s:GetRecentClose()
+func! GetRecentClose()
 	let s:list=[]
 	for [key,value] in items(g:map_recent_close)
 		let value['filename']=key
@@ -241,7 +245,7 @@ func! s:GetRecentClose()
 	call setqflist(s:list,'r')
 	copen
 endfunc
-nnoremap <silent><nowait><space>q :call <sid>GetRecentClose()<cr>
+nnoremap <silent><nowait><space>q :call GetRecentClose()<cr>
 
 " ctags config
 command! -nargs=? TagCreate call s:CreateTags(<q-args>,0)
@@ -250,26 +254,26 @@ command! -nargs=0 TagKind echo system("ctags --list-maps")
 command! -nargs=1 -complete=tag  TagFind exec ":ts /".<q-args>
 command! -nargs=1 -complete=file TagSave if exists("g:tag_file")&&filereadable(g:tag_file)|call system("cp ".g:tag_file." ".<q-args>)|endif
 cab TagSave TagSave <c-r>=termtask#Term_get_dir()<cr>/tags
-nnoremap <expr><c-]> <sid>FindTags(expand('<cword>'))
+nnoremap <expr><c-]> FindTags(expand('<cword>'))
 vnoremap <nowait><c-]> "sy:TagFind <c-r>=@s<cr><cr>
-func! s:FindTags(str)
+func! FindTags(str)
 	let list=taglist(a:str)
 	if len(list)==1|return "\<c-]>"|else|return ":ts ".a:str."\<cr>"|endif
 endfunc
-func! s:CreateTags(arg,flag)
+func! CreateTags(arg,flag)
 	if exists("g:tag_file")|exec "set tags-=".g:tag_file|endif|let g:tag_file=tempname()
 	if a:flag|let g:tag_file="./tags"|endif
 	if a:arg!=""|let arg=" --languages=".a:arg|else|let arg=" "|endif
 	let dir=termtask#Term_get_dir()
-	call job_start("ctags -f ".g:tag_file.arg." --tag-relative=no -R ".dir,
-				\{"close_cb":"CreateTagCB","err_cb":"CreateTagErrCB"})
+	call jobstart("ctags -f ".g:tag_file.arg." --tag-relative=no -R ".dir,
+				\{"on_exit":"CreateTagCB","on_stderr":"CreateTagErrCB"})
 	exec "set tags+=".g:tag_file
 endfunc
-func! CreateTagErrCB(chan,msg)
-	echoerr a:msg
+func! CreateTagErrCB(chan,msg,name)
+	if a:msg[0]!=""|echoerr a:msg|endif
 endfunc
-func! CreateTagCB(chan)
-	call popup_create("tags create success", #{pos:'botright',time: 1000,highlight: 'WarningMsg',border: [],close: 'click',})
+func! CreateTagCB(chan,msg,event)
+	if a:msg==0|echom "tag create success"|else|echom a:msg."create tag wrong"|endif
 endfunc
 
 " termdebug
@@ -281,30 +285,24 @@ nnoremap <F7> :Over<cr>
 nnoremap <F8> :Step<cr>
 
 " term console
-func! Tapi_EditFile(bufnum,arglist)
-	execute ":wincmd p"
-	if isdirectory(a:arglist[0])
-		execute ":cd " . a:arglist[0]|echo "cd ".a:arglist[0]." success"
-	else
-		execute ":edit " . a:arglist[0]|echo "open ".a:arglist[0]." success"
-	endif
-	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
-	if len(gettabinfo())>1|tabclose|if filereadable(a:arglist[0])|execute ":edit " . a:arglist[0]|endif|endif
-endfunc
 tnoremap <c-\> <c-\><c-n>
-tnoremap <c-o> printf '\033]51;["call","Tapi_EditFile",["%s/%s"]]\007' $PWD<space>
-tnoremap <c-]> printf '\033]51;["call","Tapi_EditFile",["%s/%s","exit"]]\007' $PWD<space>
+tnoremap <c-o> ~/.config/nvim/nvr.py -l <space>
+tnoremap <c-]> ~/.config/nvim/nvr.py -l<space>;exit<left><left><left><left><left>
 tnoremap <c-z> exit<cr>
-nnoremap <leader><leader>T :bo term ++rows=<c-r>=winheight(0)/3<cr><cr>
-nnoremap <leader><leader>t :vert term<CR>
-nnoremap <silent><space><space>t :tabe<cr>:execute ":vert term ++curwin ++close " <cr>
-nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:call term_start($SHELL,{"cwd":"<c-r>=@s<cr>","curwin":1,"term_finish":"close"})<cr>
+nnoremap <leader><leader>T :belowright split +resize\ <c-r>=winheight(0)/3<cr><cr>:term<cr>
+nnoremap <leader><leader>t :vsplit<CR>:term<cr>
+nnoremap <silent><space><space>t :tabe<cr>:term<cr>
+nnoremap <silent><space><space>T :let @s=expand('%:p:h')<cr>:tabe<cr>:term $SHELL -c "cd <c-r>=@s<cr>;$SHELL"<cr>
+tnoremap <c-w>l <c-\><c-n><c-w>l
+tnoremap <c-w>h <c-\><c-n><c-w>h
+tnoremap <c-w>j <c-\><c-n><c-w>j
+tnoremap <c-w>k <c-\><c-n><c-w>k
 
 " lazygit
-nnoremap <silent><space>g :call <sid>ShellOpenFile("LAZYGIT_FILE")<cr>:call term_start("lazygit",{"close_cb":"<sid>ShellOpenFile","curwin":1,"term_finish":"close"})<cr>
-nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:vert term ++curwin ++close lazygit -f <c-r>s<cr>
-func! s:ShellOpenFile(event) abort
-	if type(a:event)==type("")
+nnoremap <silent><space>g :call ShellOpenFile(-1,0,"LAZYGIT_FILE")<cr>:call termopen("lazygit",{"on_exit":"ShellOpenFile"})<cr>
+nnoremap <silent><space>G :let @s=expand('%')<cr>:tabe<cr>:term lazygit -f <c-r>s<cr>
+func! ShellOpenFile(close,exitcode,event) abort
+	if a:close==-1
 		tabe
 		if !exists("s:shell_open_file")||getenv(a:event)==v:null
 			let s:shell_open_file=tempname()|let s:shell_open_env=a:event
@@ -312,7 +310,7 @@ func! s:ShellOpenFile(event) abort
 		endif
 		return
 	endif
-	tabclose
+	bd
 	if exists("s:shell_open_file")&&filereadable(expand(s:shell_open_file))&&getenv(s:shell_open_env)==s:shell_open_file&&filereadable(expand(s:shell_open_file))
 		call setenv(s:shell_open_env, v:null)
 		for line in readfile(s:shell_open_file)
@@ -329,28 +327,8 @@ func! s:ShellOpenFile(event) abort
 endfunc
 
 " lf config define
-nnoremap <silent><space>E :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_start("lf <c-r>=getenv('HOME')<cr>",{"close_cb":"<sid>ShellOpenFile","curwin":1})<cr>
-nnoremap <silent><space>e :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_start("lf",{"close_cb":"<sid>ShellOpenFile","curwin":1})<cr>
-
-" fzf self defile
-func! s:FzfFind(command)
-	vert call term_start('bash',{'term_finish':"close"})
-	call term_sendkeys(term_list()[0],a:command."\<cr>")
-endfunc
-let g:fzf_temp_file=""
-func! Tapi_Fzf(bufnum,arglist)
-	wincmd p|let temp=getenv("FZF_VIM")
-	if len(a:arglist)>1|call term_sendkeys(a:bufnum,a:arglist[1]."\<cr>")|endif
-	if temp!=v:null
-		for line in readfile(g:fzf_temp_file)
-			let list=matchstr(line,"\/\^.*")
-			if a:arglist[0]=="0"|let @/="\\V\\^".line."\\$"|else|let @/="\\V".escape(strpart(list,1,len(list)-2),"^$")|endif
-			call feedkeys('n','in')|set hlsearch
-		endfor
-	endif
-endfunc
-nnoremap <silent><space>z :call <sid>FzfFind('printf "\033]51;[\"call\",\"Tapi_EditFile\",[\"%s/%s\",\"exit\"]]\007" $PWD `fzf --layout=reverse --preview-window=down --preview "head -64 {}"`')<cr>
-nnoremap <silent><space>Z :let fzf_temp_file=tempname()<cr>:call setenv("FZF_VIM",g:fzf_temp_file)<cr>:call <sid>FzfFind('ctags -x --_xformat="%N     %P" -f - <c-r>=expand('%:p')<cr><bar>fzf > $FZF_VIM;printf "\033]51;[\"call\",\"Tapi_Fzf\",[\"$FZF_VIM\",\"exit\"]]\007"')<cr>
+nnoremap <silent><space>E :call ShellOpenFile(-1,0,"OPEN_FILE")<cr>:call termopen("lf <c-r>=getenv('HOME')<cr>",{"on_exit":"ShellOpenFile"})<cr>
+nnoremap <silent><space>e :call ShellOpenFile(-1,0,"OPEN_FILE")<cr>:call termopen("lf",{"on_exit":"ShellOpenFile"})<cr>
 
 " yank and paste
 nnoremap <leader>p "0p
@@ -366,7 +344,7 @@ command! -nargs=0 Base   :diffg BA
 command! -nargs=0 Local  :diffg LO
 
 " edit binrary
-func! s:BinraryEdit(args) abort
+func! BinraryEdit(args) abort
 	if join(readfile(expand('%:p'), 'b', 5), '\n') !~# '[\x00-\x08\x10-\x1a\x1c-\x1f]\{2,}'
 		echo "not a bin file"|return
 	endif
@@ -378,11 +356,11 @@ func! s:BinraryEdit(args) abort
 	augroup Binrary
 		au!
 		autocmd BufWritePre  <buffer> let g:bin_pos_now=getcurpos()|silent! exec ":%!xxd -r"
-		autocmd BufWritePost <buffer> silent! exec g:xxd_cmd|call cursor([g:bin_pos_now[1],g:bin_pos_now[2]])
+		autocmd BufWritePost <buffer> silent! exec g:xxd_cmd|call cursor([g:bin_pos_now[1],g:bin_pos_now[2] ])
 		autocmd BufDelete    <buffer> au! Binrary
 	augroup END
 endfunc
-command! -nargs=? Binrary :call <sid>BinraryEdit(<q-args>)
+command! -nargs=? Binrary :call BinraryEdit(<q-args>)
 
 " change window width
 nnoremap <c-up> <c-w>+
@@ -411,11 +389,11 @@ nnoremap ]q :cnext<cr>
 nnoremap [q :cprevious<cr>
 nnoremap \q :cclose<cr>
 nnoremap =q :copen<cr>
-nnoremap ]Q :cnext<cr>:call <sid>Qfpopup()<cr>
-nnoremap [Q :cprevious<cr>:call <sid>Qfpopup()<cr>
-func! s:Qfpopup()abort
+nnoremap ]Q :cnext<cr>:call Qfpopup()<cr>
+nnoremap [Q :cprevious<cr>:call Qfpopup()<cr>
+func! Qfpopup()abort
 	let dict=getqflist({'all':1})|let pos=dict['idx']|let item=dict['items']|let len=len(dict['items'])
-	if len==0||(pos==1&&item[pos-1]['lnum']==0)|cclose|return|endif|let show=[item[pos-1]['text']]
+	if len==0||(pos==1&&item[pos-1]['lnum']==0)|cclose|return|endif|let show=[item[pos-1]['text'] ]
 	while pos<len&&item[pos]['lnum']==0|let show=add(show,item[pos]['text'])|let pos+=1|endwhile
 	let show=show[0:-2]|call popup_atcursor(show,{})
 endfunc
@@ -488,8 +466,8 @@ nnoremap <silent><nowait>\h :noh<cr>
 nnoremap <silent><nowait>=h :set hlsearch<cr>
 
 " set auto indent file
-nnoremap <silent>=<tab> :call <sid>IndentSet()<cr>
-func! s:IndentSet()abort
+nnoremap <silent>=<tab> :call IndentSet()<cr>
+func! IndentSet()abort
 	let line=matchstr(getline(line('.')),"^\\s*")
 	for temp in getline(line('.')+1, line('$'))
 		let temp=matchstr(temp,"^\\s*")|if temp!=line|break|endif
@@ -506,6 +484,7 @@ func! g:SetTypeIndex(index_type,index_num) abort
 	exec "setlocal softtabstop=".a:index_num
 	exec "setlocal softtabstop=".a:index_num
 endfunc
+
 
 " delete <space> in end of line
 nnoremap <silent><nowait>d<space> :%s/ *$//g<cr>:noh<cr><c-o>
@@ -598,7 +577,7 @@ nnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('')<cr>
 " use select area to replace
 xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn<left><left><left>
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
-xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
+xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call ReplaceGlobal(@s)<cr>
 func s:ReplaceGlobal(str) abort
 	let escape_char='."'
 	let str=escape(a:str,escape_char)|let replace=escape(input("replace ".a:str." to:",a:str),escape_char)
@@ -659,7 +638,7 @@ xnoremap <silent>an a{
 
 " sudo to write file
 func! SaveAsRoot()
-	execute "w !sudo tee % >/dev/null"
+	execute "silent! w !pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY tee % >/dev/null"
 	" reload buffer
 	exec ":edit! ".expand('%')
 endfunc
@@ -680,13 +659,13 @@ cnoremap <c-f> <s-right>
 
 " cmd pair
 let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
-func! s:Judge(ch,mode)
+func! Judge(ch,mode)
 	if a:mode!='c'|let ch=getline('.')[col('.')-1]|else|let ch=getcmdline()[getcmdpos()-1]|endif
 	if a:ch=='"'||a:ch=="'"||a:ch=='`'|if ch!=a:ch|return a:ch.a:ch."\<left>"|endif|endif
 	if ch==a:ch|return "\<right>"|endif
 	return a:ch
 endfunc
-func! s:Backspace(mode)
+func! Backspace(mode)
 	if a:mode!='c'
 		let s:pair=getline('.')[col('.')-1]|let s:pair_l=getline('.')[col('.')-2]
 	else
@@ -697,17 +676,17 @@ endfunc
 cnoremap ( ()<left>
 cnoremap [ []<left>
 cnoremap { {}<left>
-cnoremap <expr>"    <sid>Judge('"','c')
-cnoremap <expr>`    <sid>Judge('`','c')
-cnoremap <expr>'    <sid>Judge("'",'c')
-cnoremap <expr>>    <sid>Judge('>','c')
-cnoremap <expr>)    <sid>Judge(')','c')
-cnoremap <expr>}    <sid>Judge('}','c')
-cnoremap <expr>]    <sid>Judge(']','c')
-cnoremap <expr><bs> <sid>Backspace('c')
+cnoremap <expr>"    Judge('"','c')
+cnoremap <expr>`    Judge('`','c')
+cnoremap <expr>'    Judge("'",'c')
+cnoremap <expr>>    Judge('>','c')
+cnoremap <expr>)    Judge(')','c')
+cnoremap <expr>}    Judge('}','c')
+cnoremap <expr>]    Judge(']','c')
+cnoremap <expr><bs> Backspace('c')
 
 " jump >
-inoremap <expr><silent>> <sid>Judge('>','i')
+inoremap <expr><silent>> Judge('>','i')
 
 " set cursor middle
 nnoremap <c-o> <c-o>zz
@@ -757,12 +736,12 @@ nnoremap <silent><expr>g<c-a> getline('.')[col('.')-1]=='9'?"r0":"r".(getline('.
 nnoremap <silent><expr>g<c-x> getline('.')[col('.')-1]=='0'?"r9":"r".(getline('.')[col('.')-1]-1)
 
 " add space
-func! s:AddSpace()
+func! AddSpace()
 	execute("normal! i ")|redraw|let ch=nr2char(getchar())
 	while ch==' '|execute("normal! i ")|redraw|let ch=nr2char(getchar())|endwhile
 	call feedkeys(ch,'im')
 endfunc
-nnoremap <silent><leader><space> :call <sid>AddSpace()<cr>
+nnoremap <silent><leader><space> :call AddSpace()<cr>
 
 " scroll in other window
 nnoremap <silent>\u <c-w>p<c-u><c-w>p
@@ -775,7 +754,7 @@ nnoremap <silent>R :redr!<cr>
 command! -nargs=0 -bang Pwd echo expand('%:p')
 command! -nargs=? -bang Reload exec ":edit ".<q-args>." ".expand('%')
 nnoremap <silent>S :edit<space><c-r>=expand('%')<cr><cr>
-command! -nargs=0 -bang Delete if filereadable(expand('%'))|w|call delete(expand('%'))|call <sid>CloseBuf()|execute ":bn"|endif
+command! -nargs=0 -bang Delete if filereadable(expand('%'))|w|call delete(expand('%'))|call CloseBuf()|execute ":bn"|endif
 command! -nargs=1 -bang -complete=file Rename let @s=expand('%')|f <args>|w<bang>|call delete(@s)
 cab <expr>Rename "Rename ".expand('%:p:h')."/"
 command! -nargs=1 -bang -complete=file Mkdir echo mkdir(<f-args>)
@@ -810,7 +789,7 @@ xnoremap <silent><c-l>   y<c-w>lo<c-[>Vpgv
 xnoremap <silent><c-h>   y<c-w>ho<c-[>Vpgv
 
 " open link,is default in vim by gx
-func! s:GotoLink()
+func! GotoLink()
 	let s:list=matchstrpos(getline('.'),'https*://\S[^][(){}]*',0)
 	let s:link=s:list[0]
 	while s:list[0]!=''&&(s:list[1]>col('.')||s:list[2]<col('.'))
@@ -818,9 +797,9 @@ func! s:GotoLink()
 	endwhile
 	if s:list[0]!=''|let s:link=s:list[0]|endif
 	let s:browser=get(g:,'default_browser','firefox')
-	if s:link!=''|call job_start(s:browser.' '.s:link)|else|echo 'cannot find link'|endif
+	if s:link!=''|call jobstart(s:browser.' '.s:link)|else|echo 'cannot find link'|endif
 endfunc
-nnoremap <silent><nowait>gl :call <sid>GotoLink()<cr>
+nnoremap <silent><nowait>gl :call GotoLink()<cr>
 
 " set alias
 iab ;e 1607772321@qq.com
@@ -835,78 +814,89 @@ func s:GetSelectArea()
 	if stridx(@s, split_ch)!=-1|let split_ch = '"'|endif
 	return split_ch.@s.split_ch
 endfunc
+]]
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" plug list
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+--- lua config
 
-" if your network is not good,change it to mirror
-" let g:plug_url_format="https://git::@gitee.com/%s.git"
+--- lazy.nvim
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+    local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+    local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+    if vim.v.shell_error ~= 0 then
+        vim.api.nvim_echo({
+            { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+            { out,                            "WarningMsg" },
+            { "\nPress any key to exit..." },
+        }, true, {})
+        vim.fn.getchar()
+        os.exit(1)
+    end
+end
+vim.opt.rtp:prepend(lazypath)
 
-call plug#begin('~/.vim/plugged')
+-- Setup lazy.nvim
+require("lazy").setup({
+    spec = {
+        -- import your plugins
+        -- { import = "plugins" },
+        {
+            "folke/tokyonight.nvim",
+            lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+            priority = 1000, -- make sure to load this before all the other start plugins
+            config = function()
+                -- load the colorscheme here
+                vim.cmd([[colorscheme tokyonight-night]])
+            end,
+        },
+        { 'nvim-lualine/lualine.nvim',        dependencies = { 'nvim-tree/nvim-web-devicons' } },
+        { 'akinsho/bufferline.nvim', },
+        { 'neoclide/coc.nvim',                branch = 'release' },
+        { 'kylechui/nvim-surround' },
+        { 'nvim-tree/nvim-tree.lua',          lazy = true },
+        { 'Yggdroot/LeaderF',                 build = './install.sh' },
+        { 'preservim/tagbar',                 cmd = { 'Tagbar' } },
+        { 'liuchengxu/vista.vim',             cmd = { 'Vista' } },
+        { 'jiangmiao/auto-pairs' },
+        { 'octol/vim-cpp-enhanced-highlight', ft = 'cpp' },
+        { 'chenxuan520/vim-go-highlight',     ft = 'go' },
+        { 'vim-python/python-syntax',         ft = 'py' },
+        { 'easymotion/vim-easymotion', },
+        { 'godlygeek/tabular',                cmd = { 'Tabularize' } },
+        { 'tpope/vim-fugitive', },
+        { 'tpope/vim-commentary', },
+        { 'tpope/vim-endwise', },
+        { 'junegunn/gv.vim',                  cmd = { 'G', 'Git', 'GV', } },
+        { 'rhysd/clever-f.vim' },
+        { 'honza/vim-snippets' },
+        { 'skywind3000/asyncrun.vim' },
+        { 'exafunction/codeium.vim',          cmd = { 'Codeium' } },
+        { 'chenxuan520/vim-ai-doubao',        cmd = { 'AIChat', 'AI', 'AIEdit', 'AIConfigEdit' } },
+        { 'chenxuan520/my-vim-dashboard' }
+    },
+    -- Configure any other settings here. See the documentation for more details.
+    -- colorscheme that will be used when installing plugins.
+    install = { colorscheme = { "tokyonight-night" } },
+    -- automatically check for plugin updates
+    checker = { enabled = false },
+})
 
-" begin vim
-Plug 'chenxuan520/my-vim-dashboard'
-" function list
-Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
-" auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" find anything
-Plug 'Yggdroot/LeaderF', {'do':'./install.sh','tag':'v1.24'}
-" quick move mouse
-Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
-" pair auto
-Plug 'jiangmiao/auto-pairs'
-" file tree left
-Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
-" easy align
-Plug 'godlygeek/tabular', {'on':'Tabularize'}
-" change surround quick
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-" quick add comment
-Plug 'tpope/vim-commentary'
-" add endif when enter if
-Plug 'tpope/vim-endwise'
-" for cpp highlight
-Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
-" for go highlight
-Plug 'chenxuan520/vim-go-highlight', {'for':'go'}
-" for python highlight
-Plug 'vim-python/python-syntax', {'for':'py'}
-" statusline of bottom
-Plug 'vim-airline/vim-airline'
-" file devicon
-Plug 'ryanoasis/vim-devicons'
-" git control
-Plug 'tpope/vim-fugitive', {'on':['G','Git','GV','GV!']}
-Plug 'junegunn/gv.vim', {'on':['G','Git','GV','GV!']}
-" enhance f/t
-Plug 'rhysd/clever-f.vim'
-" code snippets
-Plug 'honza/vim-snippets'
-" run shell in async
-Plug 'skywind3000/asyncrun.vim'
-" copilot
-Plug 'exafunction/codeium.vim', {'on': 'Codeium'}
-" vim-ai
-Plug 'chenxuan520/vim-ai-doubao', {'on': ['AIChat','AI','AIEdit','AIConfigEdit']}
+require('lualine').setup({})
+require("bufferline").setup({})
+require("nvim-surround").setup({
+    -- Configuration here, or leave empty to use defaults
+})
+require("nvim-tree").setup({
+    view = {
+        width = 20,
+    },
+})
 
-call plug#end()
-
+vim.cmd([[
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plug config setting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" tokyonight themes
-set termguicolors
-let g:tokyonight_style = 'night' " available: night, storm
-let g:tokyonight_enable_italic = 1
-colorscheme tokyonight
-
-" onedark themes
-" let g:onedark_termcolors=256
-" colorscheme onedark
 
 " set prepare code when new file
 augroup PreCode
@@ -914,31 +904,9 @@ augroup PreCode
 	autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,*.html,.config.vim,CMakeLists.txt call VimFastSetPreCode()
 augroup END
 
-" airline
-let g:airline_theme= "tokyonight"
-let g:airline_powerline_fonts = 1
-let g:airline_extensions = ['tabline' , 'coc', 'branch']
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-
-" nerdtree
-nnoremap <silent><leader>n :NERDTreeToggle<cr>
-nnoremap <silent><leader>N :NERDTreeFind<cr>
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-let g:NERDTreeHighlightFolders = 1
-let g:NERDTreeHighlightFoldersFullName = 1
-let g:NERDTreeDirArrowExpandable='▷'
-let g:NERDTreeDirArrowCollapsible='▼'
-let g:NERDTreeWinSize=18
-" exit vim if NERDTree is the only window remaining in the only tab.
-augroup NerdTree
-	autocmd!
-	autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | :bn | endif
-augroup END
+" nvim-tree
+nnoremap <silent><leader>n :NvimTreeToggle<cr>
+nnoremap <silent><leader>N :NvimTreeFocus<cr>
 
 " coc.nvim
 let g:coc_disable_startup_warning = 1
@@ -1025,7 +993,6 @@ call AddMouseMenu(function('CocMenu'))
 " vista and tagbar
 nnoremap <silent> <leader>t :Vista!!<cr>
 let g:tagbar_width = 22
-nnoremap <silent> <leader>t :Vista!!<cr>
 let g:vista_default_executive = 'ctags'
 let g:vista#renderer#enable_icon = 0
 let g:vista_sidebar_width = 22
@@ -1085,21 +1052,21 @@ nnoremap <space>b :LeaderfBuffer<cr>
 " function list
 nnoremap <space>t :LeaderfFunction<cr>
 nnoremap <space>T :LeaderfFunctionAll<cr>
-xnoremap <space>t :<c-u>execute ":Leaderf function --all --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>t :<c-u>execute ":Leaderf function --all --input " . GetSelectArea()<cr>
 " find for help
 nnoremap <space>h :LeaderfHelp<cr>
 nnoremap <space>H :Leaderf help --input key:<cr>
-xnoremap <space>h :<c-u>execute ":Leaderf help --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>h :<c-u>execute ":Leaderf help --input " . GetSelectArea()<cr>
 " enhance find
 nnoremap <space>/ :LeaderfLine<cr>
-xnoremap <space>/ :<c-u>execute ":Leaderf line --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>/ :<c-u>execute ":Leaderf line --input " . GetSelectArea()<cr>
 nnoremap <space>? :LeaderfLineAll<cr>
-xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . <sid>GetSelectArea()<cr>
+xnoremap <space>? :<c-u>execute ":Leaderf line --all --input " . GetSelectArea()<cr>
 " find key word
 nnoremap <space>a :Leaderf rg -i<cr>
 nnoremap <space>A :Leaderf rg -i --cword<cr>
-xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . <sid>GetSelectArea()<cr>
-xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . <sid>GetSelectArea()<cr>
+xnoremap <space>a :<c-u>execute ":Leaderf rg -i --input " . GetSelectArea()<cr>
+xnoremap <space>A :<c-u>execute ":Leaderf rg -i " . GetSelectArea()<cr>
 " tags
 nnoremap <space>j :LeaderfBufTag<cr>
 nnoremap <space>J :LeaderfBufTagAll<cr>
@@ -1168,7 +1135,7 @@ nnoremap <leader>A :AsyncRun ack -i<space>
 cab Codeium Codeium Enable
 
 " vim-ai-doubao
-let g:vim_ai_name="xinhuo"
+let g:vim_ai_name="doubao"
 cab aic AIChat
 cab aie AIEdit
 cab ai  AI
@@ -1179,3 +1146,4 @@ call AddMouseMenu(function('AITranMenu'))
 nnoremap <space>i :AIChat<space>
 xnoremap <space>i :AIChat<space>
 xnoremap <space>I :AIEdit<space>
+]])

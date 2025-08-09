@@ -429,6 +429,22 @@
 
   - Run`sudo apt install xclip`,[see](https://zhuanlan.zhihu.com/p/667386801)
 
+16. Appearance of ctags: Warning: Cannot disable fixed field
+
+  - The default version of ctags is too low and needs to be updated. [Download address](https://github.com/universal-ctags/ctags-nightly-build/releases)
+
+  - If you can't open the github link, you can also use [the one I downloaded in advance](https://gitee.com/mirrorvim/userful-tools-2/releases/download/ctagsv1.0.1/ctags) (note that it is for linux x86_64).
+
+17. pyright cannot recognize local packages (coc plugin)
+
+  - Change the `~/.config/nvim/coc-settings.json` file and modify the `python.pythonPath` in it to the correct python path.
+
+18. There is no only completion for vimscript and lua.
+
+  - For vimscript, use `:CocInstall coc-vimlsp`.
+
+  - For lua, use `:CocInstall coc-sumneko-lua`, and at the same time add `"sumneko-lua.enableNvimLuaDev": true` in CocConfig. 
+
 ## help
 
 1. [Plugin shortcut key description](./doc/key.md)(You can also use \<space\>H to check.)

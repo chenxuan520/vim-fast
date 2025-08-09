@@ -25,6 +25,7 @@ function main(){
 	ln -s $PWD/coc/coc-settings.json ~/.config/nvim/coc-settings.json
 	ln -s $PWD/autoload ~/.config/nvim/autoload
 	ln -s $PWD/ftplugin ~/.config/nvim/ftplugin
+    ln -s $PWD/lua ~/.config/nvim/lua
 	cp $PWD/shell/nvr.py ~/.config/nvim/nvr.py
 	cp -r $PWD/colors ~/.config/nvim/
 

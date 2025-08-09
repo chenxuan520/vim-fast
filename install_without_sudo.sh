@@ -30,6 +30,7 @@ function install_plug()
 	type node
 	if [ $? == 1 ];then
 		npm config set registry https://registry.npmmirror.com
+		echo 'coc.nvim:registry https://registry.npmmirror.com' >> ~/.npmrc
 		# https://registry.npmjs.org/
 		# npm install -g yarn
 		git clone -b release https://gitee.com/zgpio/coc.nvim.git ~/.vim/plugged/coc.nvim

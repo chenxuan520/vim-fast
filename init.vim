@@ -105,65 +105,6 @@ if has("gui_running")
 	set guicursor=n-v-c:ver5    " set cursor to a vertical line
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" plug list
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" if your network is not good,change it to mirror
-" let g:plug_url_format="https://git::@gitee.com/%s.git"
-
-call plug#begin('~/.vim/plugged')
-
-" begin vim
-Plug 'chenxuan520/my-vim-dashboard'
-" function list
-Plug 'preservim/tagbar.git', {'on': 'Tagbar'}
-Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
-" auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" find anything
-Plug 'Yggdroot/LeaderF', {'do':'./install.sh','tag':'v1.24'}
-" quick move mouse
-Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
-" pair auto
-Plug 'jiangmiao/auto-pairs'
-" file tree left
-Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
-" easy align
-Plug 'godlygeek/tabular', {'on':'Tabularize'}
-" change surround quick
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-" quick add comment
-Plug 'tpope/vim-commentary'
-" add endif when enter if
-Plug 'tpope/vim-endwise'
-" for cpp highlight
-Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
-" for go highlight
-Plug 'chenxuan520/vim-go-highlight', {'for':'go'}
-" for python highlight
-Plug 'vim-python/python-syntax', {'for':'py'}
-" statusline of bottom
-Plug 'vim-airline/vim-airline'
-" file devicon
-Plug 'ryanoasis/vim-devicons'
-" git control
-Plug 'tpope/vim-fugitive', {'on':['G','Git','GV','GV!']}
-Plug 'junegunn/gv.vim', {'on':['G','Git','GV','GV!']}
-" enhance f/t
-Plug 'rhysd/clever-f.vim'
-" code snippets
-Plug 'honza/vim-snippets'
-" run shell in async
-Plug 'skywind3000/asyncrun.vim'
-" copilot
-Plug 'exafunction/codeium.vim', {'on': 'Codeium'}
-" vim-ai
-Plug 'chenxuan520/vim-ai-doubao', {'on': ['AIChat','AI','AIEdit','AIConfigEdit']}
-
-call plug#end()
-
 " load vim default plugin
 runtime macros/matchit.vim
 
@@ -872,7 +813,68 @@ func s:GetSelectArea()
 	return split_ch.@s.split_ch
 endfunc
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" plug list
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" if your network is not good,change it to mirror
+" let g:plug_url_format="https://git::@gitee.com/%s.git"
+
+call plug#begin('~/.vim/plugged')
+
+" begin vim
+Plug 'chenxuan520/my-vim-dashboard'
+" function list
+Plug 'preservim/tagbar.git', {'on': 'Tagbar'}
+Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
+" auto complete
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" find anything
+Plug 'Yggdroot/LeaderF', {'do':'./install.sh','tag':'v1.24'}
+" quick move mouse
+Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
+" pair auto
+Plug 'jiangmiao/auto-pairs'
+" file tree left
+Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
+" easy align
+Plug 'godlygeek/tabular', {'on':'Tabularize'}
+" change surround quick
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+" quick add comment
+Plug 'tpope/vim-commentary'
+" add endif when enter if
+Plug 'tpope/vim-endwise'
+" for cpp highlight
+Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
+" for go highlight
+Plug 'chenxuan520/vim-go-highlight', {'for':'go'}
+" for python highlight
+Plug 'vim-python/python-syntax', {'for':'py'}
+" statusline of bottom
+Plug 'vim-airline/vim-airline'
+" file devicon
+Plug 'ryanoasis/vim-devicons'
+" git control
+Plug 'tpope/vim-fugitive', {'on':['G','Git','GV','GV!']}
+Plug 'junegunn/gv.vim', {'on':['G','Git','GV','GV!']}
+" enhance f/t
+Plug 'rhysd/clever-f.vim'
+" code snippets
+Plug 'honza/vim-snippets'
+" run shell in async
+Plug 'skywind3000/asyncrun.vim'
+" copilot
+Plug 'exafunction/codeium.vim', {'on': 'Codeium'}
+" vim-ai
+Plug 'chenxuan520/vim-ai-doubao', {'on': ['AIChat','AI','AIEdit','AIConfigEdit']}
+
+call plug#end()
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plug config setting
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " tokyonight themes
 set termguicolors
