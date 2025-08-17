@@ -29,8 +29,12 @@ function main(){
 	cp $PWD/shell/nvr.py ~/.config/nvim/nvr.py
 	cp -r $PWD/colors ~/.config/nvim/
 
-	cd ~/.vim/plugged/coc.nvim
-	git pull
+    # plug install
+    mkdir -p ~/.local/share/nvim/lazy/
+    wget https://gitee.com/mirrorvim/vim-fast/releases/download/latest/nvim.tar.gz
+    tar -zxvf ${PWD}/nvim.tar.gz -C ~/.local/share/nvim/lazy/
+
+    cp ~/.vim/plugged/coc.nvim ~/.local/share/nvim/lazy/
 
 	color="$(tput setaf 6)"
 	normal="$(tput sgr0)"

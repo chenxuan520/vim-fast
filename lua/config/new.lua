@@ -32,29 +32,27 @@ require("lazy").setup({
                 vim.cmd([[colorscheme tokyonight-night]])
             end,
         },
-        { 'nvim-lualine/lualine.nvim',        dependencies = { 'nvim-tree/nvim-web-devicons' } },
+        { 'nvim-lualine/lualine.nvim',       dependencies = { 'nvim-tree/nvim-web-devicons' } },
         { 'akinsho/bufferline.nvim', },
-        { 'neoclide/coc.nvim',                branch = 'release' },
+        { 'neoclide/coc.nvim',               branch = 'release' },
         { 'kylechui/nvim-surround' },
-        { 'nvim-tree/nvim-tree.lua',          lazy = true },
-        { 'Yggdroot/LeaderF',                 build = './install.sh' },
-        { 'preservim/tagbar',                 cmd = { 'Tagbar' } },
-        { 'liuchengxu/vista.vim',             cmd = { 'Vista' } },
+        { 'nvim-tree/nvim-tree.lua',         lazy = true },
+        { 'Yggdroot/LeaderF',                build = './install.sh' },
+        { 'preservim/tagbar',                cmd = { 'Tagbar' } },
+        { 'liuchengxu/vista.vim',            cmd = { 'Vista' } },
         { 'jiangmiao/auto-pairs' },
-        { 'octol/vim-cpp-enhanced-highlight', ft = 'cpp' },
-        { 'chenxuan520/vim-go-highlight',     ft = 'go' },
-        { 'vim-python/python-syntax',         ft = 'py' },
         { 'easymotion/vim-easymotion', },
-        { 'godlygeek/tabular',                cmd = { 'Tabularize' } },
+        { 'godlygeek/tabular',               cmd = { 'Tabularize' } },
         { 'tpope/vim-fugitive', },
         { 'tpope/vim-commentary', },
         { 'tpope/vim-endwise', },
-        { 'junegunn/gv.vim',                  cmd = { 'G', 'Git', 'GV', } },
+        { 'junegunn/gv.vim',                 cmd = { 'G', 'Git', 'GV', } },
         { 'rhysd/clever-f.vim' },
         { 'honza/vim-snippets' },
         { 'skywind3000/asyncrun.vim' },
-        { 'exafunction/codeium.vim',          cmd = { 'Codeium' } },
-        { 'chenxuan520/vim-ai-doubao',        cmd = { 'AIChat', 'AI', 'AIEdit', 'AIConfigEdit' } },
+        { 'exafunction/codeium.vim',         cmd = { 'Codeium' } },
+        { 'chenxuan520/vim-ai-doubao',       cmd = { 'AIChat', 'AI', 'AIEdit', 'AIConfigEdit' } },
+        { "nvim-treesitter/nvim-treesitter", branch = 'master',                                 build = ":TSUpdate" },
         { 'chenxuan520/my-vim-dashboard' }
     },
     -- Configure any other settings here. See the documentation for more details.
@@ -67,10 +65,11 @@ require("lazy").setup({
 require('lualine').setup({
     theme = 'tokyonight'
 })
+
 require("bufferline").setup({})
-require("nvim-surround").setup({
-    -- Configuration here, or leave empty to use defaults
-})
+
+require("nvim-surround").setup({})
+
 require("nvim-tree").setup({
     view = {
         width = 20,
@@ -82,3 +81,14 @@ require("nvim-tree").setup({
         ignore_list = {},    -- 不需要自动定位的文件类型列表（留空则全部处理）
     },
 })
+
+require 'nvim-treesitter.configs'.setup {
+    -- 安装 language parser
+    -- :TSInstallInfo 命令查看支持的语言
+    ensure_installed = {},
+    -- 启用代码高亮功能
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = true
+    },
+}
