@@ -390,7 +390,7 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
           1. 打开终端首选项
 
-          2. 设置字体为 `DroidSansMono Nerd Font Book`(如果没有双击ttf字体安装)
+          2. 设置字体为 `DejaVuSansM NerdFont Mono`(如果没有双击ttf字体安装)
 
       - 如果是mac(以iterm2终端举例)
 
