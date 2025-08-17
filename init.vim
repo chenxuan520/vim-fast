@@ -143,7 +143,7 @@ func! s:CloseBuf()
 	while buf_jump_now>=0
 		let last_nr=buf_jump_list[buf_jump_now]["bufnr"]
 		let last_line=buf_jump_list[buf_jump_now]["lnum"]
-		if buf_now!=last_nr&&bufloaded(last_nr)&&getbufvar(last_nr,"&bt")==''
+		if buf_now!=last_nr&&bufloaded(last_nr)&&getbufvar(last_nr,"&bt")==''&&getbufvar(last_nr,"&bt")=='nofile'
 			execute ":buffer ".last_nr|execute ":bd ".buf_now|return
 		else|let buf_jump_now-=1
 		endif
@@ -816,61 +816,7 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plug list
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" if your network is not good,change it to mirror
-" let g:plug_url_format="https://git::@gitee.com/%s.git"
-
-call plug#begin('~/.vim/plugged')
-
-" begin vim
-Plug 'chenxuan520/my-vim-dashboard'
-" function list
-Plug 'preservim/tagbar.git', {'on': 'Tagbar'}
-Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
-" auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" find anything
-Plug 'Yggdroot/LeaderF', {'do':'./install.sh','tag':'v1.24'}
-" quick move mouse
-Plug 'easymotion/vim-easymotion',{'on':['<Plug>(easymotion-s)','<Plug>(easymotion-bd-w)']}
-" pair auto
-Plug 'jiangmiao/auto-pairs'
-" file tree left
-Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle'}
-" easy align
-Plug 'godlygeek/tabular', {'on':'Tabularize'}
-" change surround quick
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-" quick add comment
-Plug 'tpope/vim-commentary'
-" add endif when enter if
-Plug 'tpope/vim-endwise'
-" for cpp highlight
-Plug 'octol/vim-cpp-enhanced-highlight', {'for':'cpp'}
-" for go highlight
-Plug 'chenxuan520/vim-go-highlight', {'for':'go'}
-" for python highlight
-Plug 'vim-python/python-syntax', {'for':'py'}
-" statusline of bottom
-Plug 'vim-airline/vim-airline'
-" file devicon
-Plug 'ryanoasis/vim-devicons'
-" git control
-Plug 'tpope/vim-fugitive', {'on':['G','Git','GV','GV!']}
-Plug 'junegunn/gv.vim', {'on':['G','Git','GV','GV!']}
-" enhance f/t
-Plug 'rhysd/clever-f.vim'
-" code snippets
-Plug 'honza/vim-snippets'
-" run shell in async
-Plug 'skywind3000/asyncrun.vim'
-" copilot
-Plug 'exafunction/codeium.vim', {'on': 'Codeium'}
-" vim-ai
-Plug 'chenxuan520/vim-ai-doubao', {'on': ['AIChat','AI','AIEdit','AIConfigEdit']}
-
-call plug#end()
+lua require('config.new')
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plug config setting
@@ -892,30 +838,17 @@ augroup PreCode
 	autocmd BufNewFile *.cpp,*.cc,*.go,*.py,*.sh,*.hpp,*.h,*.html,.config.vim,CMakeLists.txt call VimFastSetPreCode()
 augroup END
 
-" airline
-let g:airline_theme= "tokyonight"
-let g:airline_powerline_fonts = 1
-let g:airline_extensions = ['tabline' , 'coc', 'branch']
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-
-" nerdtree
-nnoremap <silent><leader>n :NERDTreeToggle<cr>
-nnoremap <silent><leader>N :NERDTreeFind<cr>
-let g:NERDTreeFileExtensionHighlightFullName = 1
-let g:NERDTreeExactMatchHighlightFullName = 1
-let g:NERDTreePatternMatchHighlightFullName = 1
-let g:NERDTreeHighlightFolders = 1
-let g:NERDTreeHighlightFoldersFullName = 1
-let g:NERDTreeDirArrowExpandable='▷'
-let g:NERDTreeDirArrowCollapsible='▼'
-let g:NERDTreeWinSize=18
-" exit vim if NERDTree is the only window remaining in the only tab.
-augroup NerdTree
-	autocmd!
-	autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | :bn | endif
+" nvim-tree
+nnoremap <silent><leader>n :NvimTreeToggle<cr>
+nnoremap <silent><leader>N :NvimTreeFocus<cr>
+func s:NvimTreeFind()
+	lua require('nvim-tree.api').tree.find_file()
+endfunc
+augroup NvimTree
+  autocmd!
+  " 当进入缓冲区时，如果仅存一个窗口且为 nvim-tree，则切换到下一个缓冲区
+  autocmd BufEnter * if winnr('$') == 1 && &filetype == 'NvimTree' | :bn |endif
+  autocmd BufEnter * if &filetype != 'NvimTree'| call s:NvimTreeFind()|endif
 augroup END
 
 " coc.nvim

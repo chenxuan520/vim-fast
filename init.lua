@@ -882,7 +882,9 @@ require("lazy").setup({
     checker = { enabled = false },
 })
 
-require('lualine').setup({})
+require('lualine').setup({
+    theme = 'tokyonight'
+})
 require("bufferline").setup({})
 require("nvim-surround").setup({
     -- Configuration here, or leave empty to use defaults
