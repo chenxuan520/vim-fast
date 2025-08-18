@@ -55,12 +55,6 @@ require("lazy").setup({
         { 'octol/vim-cpp-enhanced-highlight', ft = { 'c', 'cpp' } },
         { 'chenxuan520/vim-go-highlight',     ft = { 'go' } },
         { 'vim-python/python-syntax',         ft = { 'python' } },
-        {
-            "https://code.byted.org/chenjiaqi.cposture/codeverse.vim.git",
-            dependencies = {
-                "hrsh7th/nvim-cmp",
-            }
-        },
         { 'chenxuan520/my-vim-dashboard' }
 
         -- no need for temp
