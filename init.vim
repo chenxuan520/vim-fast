@@ -143,7 +143,6 @@ func! s:CloseBuf()
 	while buf_jump_now>=0
 		let last_nr=buf_jump_list[buf_jump_now]["bufnr"]
 		let last_line=buf_jump_list[buf_jump_now]["lnum"]
-		if buf_now!=last_nr&&bufloaded(last_nr)&&getbufvar(last_nr,"&bt")==''&&getbufvar(last_nr,"&bt")=='nofile'
 		if buf_now!=last_nr&&bufloaded(last_nr)&&getbufvar(last_nr,"&bt")==''
 			execute ":buffer ".last_nr|execute ":bd ".buf_now|return
 		else|let buf_jump_now-=1
@@ -815,11 +814,6 @@ func s:GetSelectArea()
 endfunc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" plug list
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua require('config.new')
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plug config setting
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -1090,3 +1084,8 @@ call AddMouseMenu(function('AITranMenu'))
 nnoremap <space>i :AIChat<space>
 xnoremap <space>i :AIChat<space>
 xnoremap <space>I :AIEdit<space>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" plug list
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua require('config.new')

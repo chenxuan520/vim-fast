@@ -400,7 +400,7 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
           3. 设置字体为`DejaVuSansM Nerd Font Mono`
 
-          4. 如果是 macvim gui的话使用 `set guifont=DejaVuSansMono_Nerd_Font:h17`
+          4. 如果是 macvim gui的话使用 `set guifont=DejaVuSansM_Nerd_Font_Mono:h22`
 
       - 如果是windows(以windows terminal终端举例)
 

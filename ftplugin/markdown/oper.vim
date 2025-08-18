@@ -411,7 +411,6 @@ nnoremap <silent><buffer><leader>> : call <sid>Refence()<cr>
 xnoremap <silent><buffer><leader>~ : call <sid>Bold('~~')<cr>
 
 xnoremap <silent><buffer>*     :call <sid>Bold('*')<cr>gvlol
-xnoremap <silent><buffer><c-i> :call <sid>Bold('*')<cr>
 xnoremap <silent><buffer><c-b> :call <sid>Bold('**')<cr>
 inoremap <silent><buffer><c-b> ****<left><left>
 

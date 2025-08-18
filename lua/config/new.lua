@@ -23,15 +23,6 @@ require("lazy").setup({
     spec = {
         -- import your plugins
         -- { import = "plugins" },
-        {
-            "folke/tokyonight.nvim",
-            lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-            priority = 1000, -- make sure to load this before all the other start plugins
-            config = function()
-                -- load the colorscheme here
-                vim.cmd([[colorscheme tokyonight-night]])
-            end,
-        },
         { 'nvim-lualine/lualine.nvim',        dependencies = { 'nvim-tree/nvim-web-devicons' } },
         { 'akinsho/bufferline.nvim', },
         { 'neoclide/coc.nvim',                branch = 'release' },
@@ -55,10 +46,8 @@ require("lazy").setup({
         { 'octol/vim-cpp-enhanced-highlight', ft = { 'c', 'cpp' } },
         { 'chenxuan520/vim-go-highlight',     ft = { 'go' } },
         { 'vim-python/python-syntax',         ft = { 'python' } },
-        { 'chenxuan520/my-vim-dashboard' }
+        { 'chenxuan520/my-vim-dashboard' },
 
-        -- no need for temp
-        -- { "nvim-treesitter/nvim-treesitter", branch = 'master',                                 build = ":TSUpdate" },
     },
     -- Configure any other settings here. See the documentation for more details.
     -- colorscheme that will be used when installing plugins.
@@ -97,14 +86,3 @@ require("nvim-tree").setup({
         ignore_list = {},    -- 不需要自动定位的文件类型列表（留空则全部处理）
     },
 })
-
--- require 'nvim-treesitter.configs'.setup {
---     -- 安装 language parser
---     -- :TSInstallInfo 命令查看支持的语言
---     ensure_installed = {},
---     -- 启用代码高亮功能
---     highlight = {
---         enable = true,
---         additional_vim_regex_highlighting = true
---     },
--- }

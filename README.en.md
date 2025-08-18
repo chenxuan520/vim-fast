@@ -362,48 +362,47 @@
 
    - Find the folder corresponding to the file in`~/.vim/ftplugin/template`, and modify the contents of the file
 
-9. Console status bar and icon confusion
+9. Messy Console Status Bar and Icons (Important Note)
 
-  - Set font for console
+  - Set the terminal font:
 
-      - linux
+       - On Linux systems:
 
-          1. Open Terminal Preferences
+           1. Open terminal preferences.
 
-          2. Set font to`DroidSansMono Nerd Font Book`
+           2. Set the font to `DejaVuSansM Nerd Font Mono` (if not installed, double-click the .ttf file to install it).
 
-      - mac(iterm2)
+       - On macOS (using iTerm2 as an example):
 
-          1. Open the fonts folder (in the project root directory) and double-click the DejaVu.ttf file to install the font
+           1. Open the `fonts` folder (located in the project root directory), then double-click the `DejaVu.ttf` file to install the font.
 
-          2. Open Item2 -> setting -> profile -> text -> font
+           2. Go to iTerm2 → Settings → Profiles → Text → Font.
 
-          3. Set font to`DejaVuSansMono Nerd Font`
+           3. Set the font to `DejaVuSansM Nerd Font Mono`.
 
-          4. If it's macvim GUI, use `set guifont=DejaVuSansMono_Nerd_Font:h17`
+           4. For MacVim GUI users, use `set guifont=DejaVuSansM_Nerd_Font_Mono:h22`.
 
-      - If it's Windows (taking Windows Terminal as an example):
+       - On Windows (using Windows Terminal as an example):
 
-          1. Open the fonts folder (located at the root directory of the project), and double-click the DejaVu.ttf file to install the font.
+           1. Open the `fonts` folder (in the project root directory), then double-click the `DejaVu.ttf` file to install the font.
 
-          2. Open Terminal -> Settings -> Defaults -> Appearance -> Font.
+           2. Navigate to Settings → Defaults → Appearance → Font in Windows Terminal.
 
-          3. Set the font to `DejaVuSansMono Nerd Font`.
+           3. Set the font to `DejaVuSansMono Nerd Font`.
 
+   - If you prefer not to set or cannot set these configurations, you may disable icon features instead:
 
-  - If you don't want to set it or can't set it, you can choose to disable icon function
+       1. Comment out the following code block. If garbled text still appears after execution, replace special characters like `` with spaces in this code:
+           ```vim
+           let g:airline_left_sep = ''
+           let g:airline_left_alt_sep = ''
+           let g:airline_right_sep = ''
+           let g:airline_right_alt_sep = ''
+           ```
 
-     1. Comment the following code, if it is still garbled after execution, change the similar in the following code to a space
-      ```
-      let g:airline_left_sep = ''
-      let g:airline_left_alt_sep = ''
-      let g:airline_right_sep = ''
-      let g:airline_right_alt_sep = ''
-      ```
+       2. Comment out the line `Plug 'ryanoasis/vim-devicons'`.
 
-      2. Comment on the line`Plug 'ryanoasis/vim-devicons'`
-
-      3. Add`let g:dashboard_icon_disable=1`to ~/.vimrc
+       3. Add `let g:dashboard_icon_disable=1` to your `~/.vimrc` file.
 
 10. E117, undefined function getenv appears
 
