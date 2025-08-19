@@ -58,6 +58,7 @@ require("lazy").setup({
 
 require('lualine').setup({
     theme = 'tokyonight',
+    options = {},
     sections = {
         lualine_x = {
             -- 内联函数：直接返回总行数
@@ -71,6 +72,7 @@ require("bufferline").setup({
     options = {
         diagnostics = "coc",
     },
+    highlights = {}
 })
 
 require("nvim-surround").setup({})

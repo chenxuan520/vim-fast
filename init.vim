@@ -24,7 +24,7 @@ set cmdheight=1          " set command height
 set showcmd              " show select line nums in visual
 set textwidth=0          " close auto enter
 set ruler                " cursor position displayed
-set laststatus=2         " show status
+set laststatus=3         " show status, nvim 3, vim 2
 set number               " show line number
 set relativenumber       " show relativenumber
 set cursorline           " highlight current line
