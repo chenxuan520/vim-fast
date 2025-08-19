@@ -63,13 +63,67 @@ require('lualine').setup({
             -- 内联函数：直接返回总行数
             'encoding', 'fileformat', 'filetype',
             function() return vim.api.nvim_buf_line_count(0) end
+        },
+        lualine_c = {
+            {
+                'filename',
+                path = 3,     -- 内置的简化路径显示
+                file_status = true, -- 显示文件状态（只读、修改等）
+                newfile_status = true -- 新文件显示 [New]
+            }
         }
     }
 })
 
+
+local bufline_hightlight_bold = {
+    fg = '#15161e',
+    bg = '#9ece6a',
+    bold = true,
+    italic = true
+}
+local bufline_hightlight_change = {
+    fg = '#ff9e64',
+    bg = '#9ece6a',
+}
+local bufline_hightlight = {
+    fg = '#15161e',
+    bg = '#9ece6a',
+}
 require("bufferline").setup({
     options = {
         diagnostics = "coc",
+        separator_style = "slope",
+        indicator = {
+            style = 'underline',
+        },
+    },
+
+    highlights = {
+        buffer_selected = bufline_hightlight_bold,
+        tab_selected = bufline_hightlight_bold,
+        separator_selected = bufline_hightlight,
+        tab_separator_selected = bufline_hightlight,
+        indicator_selected = bufline_hightlight,
+        close_button_selected = bufline_hightlight,
+        numbers_selected = bufline_hightlight,
+        diagnostic_selected = bufline_hightlight_bold,
+        pick_selected = bufline_hightlight_bold,
+        modified_selected = bufline_hightlight_change,
+        duplicate_selected = bufline_hightlight,
+        hint_selected = bufline_hightlight_bold,
+        info_selected = {
+            fg = '#1abc9c',
+            bg = '#9ece6a',
+        },
+        warning_selected = {
+            fg = '#ff9e64',
+            bg = '#9ece6a',
+        },
+        error_selected = {
+            fg = '#db4b4b',
+            bg = '#9ece6a',
+        },
     },
 })
 
