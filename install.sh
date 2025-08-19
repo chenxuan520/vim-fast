@@ -65,8 +65,7 @@ function install_vim_plugin()
 function install_fonts_on_linux()
 {
 	mkdir -p ~/.local/share/fonts
-	rm -rf ~/.local/share/fonts/Droid\ Sans\ Mono\ Nerd\ Font\ Complete.otf
-	cp ./fonts/Droid\ Sans\ Mono\ Nerd\ Font\ Complete.otf ~/.local/share/fonts
+	cp ./fonts/DejaVuSansMNerdFontMono-Regular.ttf ~/.local/share/fonts
 
 	fc-cache -vf ~/.local/share/fonts
 }

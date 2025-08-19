@@ -1038,9 +1038,6 @@ let g:Lf_WildIgnore = {
 nnoremap <leader>T :Tabularize /
 xnoremap <leader>T :Tabularize /
 
-" vim-surround
-let g:surround_no_insert_mappings=1
-
 " vim-smooth-scroll
 nnoremap <silent><c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
 nnoremap <silent><c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>

@@ -47,3 +47,12 @@ noremap <buffer> j gj
 noremap <buffer> k gk
 " 设置使用tagbar,vista对cpp支持太差了
 nnoremap <buffer> <silent><leader>t :Tagbar<cr>
+
+" for gopl coc-clangd
+if exists('g:did_coc_loaded')
+	" auto format
+	augroup CppFormat
+		autocmd!
+		autocmd BufWritePre *.c,*.cpp,*.h,*.hpp silent! call CocAction('format')
+	augroup END
+endif
