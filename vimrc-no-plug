@@ -135,7 +135,7 @@ func! s:CloseBuf()
 		let last_nr=buf_jump_list[buf_jump_now]["bufnr"]
 		let last_line=buf_jump_list[buf_jump_now]["lnum"]
 		if buf_now!=last_nr&&bufloaded(last_nr)&&getbufvar(last_nr,"&bt")==''
-			execute ":buffer ".last_nr|execute ":bd ".buf_now|return
+			execute ":buffer ".last_nr|silent! execute ":bd ".buf_now|return
 		else|let buf_jump_now-=1
 		endif
 	endwhile

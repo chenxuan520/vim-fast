@@ -1,6 +1,7 @@
 {
 	"suggest.noselect": true,
 	"coc.preferences.currentFunctionSymbolAutoUpdate": false,
+	"sumneko-lua.enableNvimLuaDev": true,
 
 	"sh.commandPath":"/usr/local/bin/bash-language-server",
 	"python.pythonPath" : "/usr/bin/python3",
