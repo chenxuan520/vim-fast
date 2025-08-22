@@ -1142,6 +1142,9 @@ nnoremap <silent><c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 nnoremap <silent><c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
 nnoremap <silent><c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
 
+" fugitive
+nnoremap <silent><nowait>gb :Git blame<cr>
+
 " gv
 nnoremap <leader>g         :GV<cr>
 nnoremap <leader>G         :GV!<cr>

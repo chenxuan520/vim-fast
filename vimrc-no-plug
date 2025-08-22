@@ -1161,6 +1161,7 @@ function! s:GitCommand(cmd) abort
 	endif
 endfunction
 nnoremap <leader>g :!git log --all --decorate --oneline --graph<cr>
+nnoremap <silent><nowait>gb :Git blame<cr>
 command! -nargs=+ Git call s:GitCommand(<q-args>)
 
 " make run
