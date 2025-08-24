@@ -138,4 +138,9 @@ require("nvim-tree").setup({
         update_root = false, -- 不自动更新根目录（避免频繁切换根目录）
         ignore_list = {},    -- 不需要自动定位的文件类型列表（留空则全部处理）
     },
+    actions = {
+        open_file = {
+            resize_window = false,
+        },
+    },
 })
