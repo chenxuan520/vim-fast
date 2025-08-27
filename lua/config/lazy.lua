@@ -87,7 +87,7 @@ local bufline_hightlight_change = {
     bg = '#9ece6a',
 }
 local bufline_hightlight = {
-    fg = '#15161e',
+    fg = '#000000',
     bg = '#9ece6a',
 }
 require("bufferline").setup({
