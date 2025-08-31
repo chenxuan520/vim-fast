@@ -114,9 +114,8 @@ runtime macros/matchit.vim
 nnoremap <leader><leader>s :source $MYVIMRC<cr>
 nnoremap <leader><leader>S :source <c-r>=expand('%:p')<cr><cr>
 
-" install and clean plug
-nnoremap <leader><leader>i :PlugInstall<cr>
-nnoremap <leader><leader>c :PlugClean<cr>
+" lazy interface
+nnoremap <leader><leader>i :Lazy<cr>
 
 " vim-buffer
 nnoremap <silent><c-p> :call <sid>ChangeBuffer('p')<cr>
