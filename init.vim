@@ -533,6 +533,10 @@ nnoremap <silent><nowait>\c :call highlightcolor#DisAble()<cr>
 nnoremap <silent><c-s> :call multcursor#Choose()<cr>
 nnoremap <silent>-s :call multcursor#Toggle()<cr>
 
+" rainbow-pair
+nnoremap <silent><nowait>=b :call rainbow#load()<cr>
+nnoremap <silent><nowait>\b :call rainbow#clear()<cr>
+
 " rest test
 augroup restful
 	au!
