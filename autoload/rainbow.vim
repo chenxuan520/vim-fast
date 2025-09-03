@@ -238,6 +238,18 @@ fun rainbow#gen_configs(ft)
 endfun
 
 fun rainbow#load()
+	call rainbow#autocmd()
+	call rainbow#highlight()
+endfun
+
+fun rainbow#autocmd() abort
+	augroup rainbow
+		au!
+		auto syntax cpp,go,python call rainbow#highlight()
+	augroup END
+endfun
+
+fun rainbow#highlight() abort
 	let b:rainbow_confs = rainbow#gen_configs(&filetype)
 	for conf in b:rainbow_confs
 		call rainbow#syn(conf)
@@ -252,6 +264,7 @@ fun rainbow#clear()
 		call rainbow#syn_clear(conf)
 	endfor
 	unlet b:rainbow_confs
+	au! rainbow
 endfun
 
 fun rainbow#toggle()

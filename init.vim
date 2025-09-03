@@ -536,13 +536,6 @@ nnoremap <silent>-s :call multcursor#Toggle()<cr>
 " rainbow-pair
 nnoremap <silent><nowait>=b :call rainbow#load()<cr>
 nnoremap <silent><nowait>\b :call rainbow#clear()<cr>
-let g:rainbow_active=1
-if (exists('g:rainbow_active') && g:rainbow_active)
-	augroup rainbow
-		au!
-		auto syntax cpp,go,python call rainbow#load()
-	augroup END
-endif
 
 " rest test
 augroup restful
