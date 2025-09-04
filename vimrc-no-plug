@@ -403,12 +403,13 @@ nnoremap <silent><space>e :call <sid>ShellOpenFile("OPEN_FILE")<cr>:call term_st
 inoremap ( ()<left>
 inoremap [ []<left>
 inoremap { {}<left>
-cnoremap ( ()<left>
-cnoremap [ []<left>
-cnoremap { {}<left>
+cnoremap <expr>(    getcmdtype()==':' ? "()\<left>" : "("
+cnoremap <expr>[    getcmdtype()==':' ? "[]\<left>" : "["
+cnoremap <expr>{    getcmdtype()==':' ? "{}\<left>" : "{"
 
 " jump
 func! s:Judge(ch,mode)
+	if a:mode=='c'&&getcmdtype()!=':'|return a:ch|endif
 	if a:mode!='c'
 		let ch=getline('.')[col('.')-1]
 	else
@@ -724,8 +725,8 @@ endfunc
 cab w!! call SaveAsRoot()
 
 " quick to change dir
-cab cdn cd <c-r>=expand('%:p:h')<cr>
-cab cdr cd <c-r>=<sid>FindRoot()<cr>
+cab <expr> cdn getcmdtype() == ':' ? "cd ".expand('%:p:h') : "cdn"
+cab <expr> cdr getcmdtype() == ':' ? "cd ".<sid>FindRoot() : "cdr"
 func! s:FindRoot()
 	let s:gitdir = finddir(".git", getcwd() .';')
 	if !empty(s:gitdir)

@@ -123,7 +123,7 @@ nnoremap <silent><c-p> :call <sid>ChangeBuffer('p')<cr>
 nnoremap <silent><c-n> :call <sid>ChangeBuffer('n')<cr>
 nnoremap <silent>H     :call <sid>ChangeBuffer('p')<cr>
 nnoremap <silent>L     :call <sid>ChangeBuffer('n')<cr>
-nnoremap <silent><expr><c-m> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
+nnoremap <silent><expr><enter> &bt==''?":w<cr>":&bt=='terminal'?"i\<enter>":
 			\ getwininfo(win_getid())[0]["quickfix"]!=0?"\<cr>:cclose<cr>":
 			\ getwininfo(win_getid())[0]["loclist"]!=0?"\<cr>:lclose<cr>":"\<cr>"
 nnoremap <silent><leader>d :call <sid>CloseBuf()<cr>
@@ -594,8 +594,6 @@ nnoremap <silent><nowait>\f :call cursorline#Disable()<cr>
 
 " ici to tran
 let g:term_cmd='~/.local/bin/ici'
-xnoremap <silent><leader>I :call termtask#Term_cmd_exec('v')<cr>
-nnoremap <silent><leader>I :call termtask#Term_cmd_exec('')<cr>
 xnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('v')<cr>
 nnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('')<cr>
 
@@ -670,8 +668,9 @@ endfunc
 cab w!! call SaveAsRoot()
 
 " quick to change dir
-cab cdn cd <c-r>=expand('%:p:h')<cr>
-cab cdr cd <c-r>=termtask#Term_get_dir()<cr>
+" cab cdn cd <c-r>=expand('%:p:h')<cr>
+cab <expr> cdn getcmdtype() == ':' ? "cd ".expand('%:p:h') : "cdn"
+cab <expr> cdr getcmdtype() == ':' ? "cd ".termtask#Term_get_dir() : "cdr"
 
 " cmd emacs model
 cnoremap <c-a> <home>
@@ -685,6 +684,7 @@ cnoremap <c-f> <s-right>
 " cmd pair
 let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
 func! s:Judge(ch,mode)
+	if getcmdtype()!=':'|return a:ch|endif
 	if a:mode!='c'|let ch=getline('.')[col('.')-1]|else|let ch=getcmdline()[getcmdpos()-1]|endif
 	if a:ch=='"'||a:ch=="'"||a:ch=='`'|if ch!=a:ch|return a:ch.a:ch."\<left>"|endif|endif
 	if ch==a:ch|return "\<right>"|endif
@@ -698,9 +698,9 @@ func! s:Backspace(mode)
 	endif
 	if has_key(g:pair_map, s:pair_l)&&(g:pair_map[s:pair_l]==s:pair)|return "\<right>\<bs>\<bs>"|else|return "\<bs>"|endif
 endfunc
-cnoremap ( ()<left>
-cnoremap [ []<left>
-cnoremap { {}<left>
+cnoremap <expr>(    getcmdtype()==':' ? "()\<left>" : "("
+cnoremap <expr>[    getcmdtype()==':' ? "[]\<left>" : "["
+cnoremap <expr>{    getcmdtype()==':' ? "{}\<left>" : "{"
 cnoremap <expr>"    <sid>Judge('"','c')
 cnoremap <expr>`    <sid>Judge('`','c')
 cnoremap <expr>'    <sid>Judge("'",'c')
