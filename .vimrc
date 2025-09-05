@@ -35,6 +35,7 @@ set noshowmode           " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
 set matchpairs+=<:>      " make % can jump <>
 set background=dark      " set background color
+set maxmempattern=10240  " add max pattern memory size(10M)
 " set jumpoptions=stack    " set jump to stack instead of list
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1185,3 +1186,4 @@ call AddMouseMenu(function('AITranMenu'))
 nnoremap <space>i :AIChat<space>
 xnoremap <space>i :AIChat<space>
 xnoremap <space>I :AIEdit<space>
+xnoremap <leader>I :AIChat /tran <cr>

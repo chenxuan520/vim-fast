@@ -35,6 +35,7 @@ set noshowmode           " disable bottom mode displayed 'insert'
 set hidden               " allows toggle buffers in unsaved
 set matchpairs+=<:>      " make % can jump <>
 set background=dark      " set background color
+set maxmempattern=10240  " add max pattern memory size(10M)
 set jumpoptions=stack    " set jump to stack instead of list
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -307,7 +308,10 @@ func! s:ShellOpenFile(close,exitcode,event) abort
 		endif
 		return
 	endif
-	bd
+	silent! bd
+	let need_close_tab=1|let all_buffers_info = getbufinfo()
+	for buf_info in all_buffers_info|if buf_info.name != ""|let need_close_tab=0|endif|endfor
+	if need_close_tab|silent! tabc|endif
 	if exists("s:shell_open_file")&&filereadable(expand(s:shell_open_file))&&getenv(s:shell_open_env)==s:shell_open_file&&filereadable(expand(s:shell_open_file))
 		call setenv(s:shell_open_env, v:null)
 		for line in readfile(s:shell_open_file)
@@ -1085,6 +1089,7 @@ call AddMouseMenu(function('AITranMenu'))
 nnoremap <space>i :AIChat<space>
 xnoremap <space>i :AIChat<space>
 xnoremap <space>I :AIEdit<space>
+xnoremap <leader>I :AIChat /tran <cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plug list
