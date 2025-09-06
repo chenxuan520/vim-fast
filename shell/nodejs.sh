@@ -26,7 +26,7 @@ function AddPath()
 
 type node
 if [ $? == 1 ];then
-	NODEVERSION='v20.14.0'
+	NODEVERSION='v22.19.0'
 	PKGNAME=node-${NODEVERSION}-linux-x64.tar.xz
 	URL=https://cdn.npmmirror.com/binaries/node/${NODEVERSION}/${PKGNAME}
 	if [ $# == 0 ]; then

@@ -90,6 +90,9 @@ local bufline_hightlight = {
     fg = '#000000',
     bg = '#9ece6a',
 }
+local bufline_hightlight_separator = {
+    bg = '#9ece6a',
+}
 require("bufferline").setup({
     options = {
         diagnostics = "coc",
@@ -101,15 +104,15 @@ require("bufferline").setup({
     highlights = {
         buffer_selected = bufline_hightlight_bold,
         tab_selected = bufline_hightlight_bold,
-        separator_selected = bufline_hightlight,
-        tab_separator_selected = bufline_hightlight,
-        indicator_selected = bufline_hightlight,
+        separator_selected = bufline_hightlight_separator,
+        tab_separator_selected = bufline_hightlight_separator,
+        indicator_selected = bufline_hightlight_separator,
         close_button_selected = bufline_hightlight,
-        numbers_selected = bufline_hightlight,
+        numbers_selected = bufline_hightlight_separator,
         diagnostic_selected = bufline_hightlight_bold,
         pick_selected = bufline_hightlight_bold,
         modified_selected = bufline_hightlight_change,
-        duplicate_selected = bufline_hightlight,
+        duplicate_selected = bufline_hightlight_separator,
         hint_selected = bufline_hightlight_bold,
         info_selected = {
             fg = '#1abc9c',
