@@ -39,7 +39,7 @@ require("lazy").setup({
         { 'tpope/vim-endwise', },
         { 'junegunn/gv.vim',                  cmd = { 'G', 'Git', 'GV', } },
         { 'rhysd/clever-f.vim' },
-        { 'honza/vim-snippets' },
+        { 'chenxuan520/vim-snippets' },
         { 'skywind3000/asyncrun.vim' },
         { 'exafunction/codeium.vim',          cmd = { 'Codeium' } },
         { 'chenxuan520/vim-ai-doubao',        cmd = { 'AIChat', 'AI', 'AIEdit', 'AIConfigEdit' } },
@@ -87,7 +87,6 @@ local bufline_hightlight_change = {
     bg = '#9ece6a',
 }
 local bufline_hightlight = {
-    fg = '#000000',
     bg = '#9ece6a',
 }
 local bufline_hightlight_separator = {

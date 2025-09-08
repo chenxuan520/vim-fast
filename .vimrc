@@ -889,7 +889,7 @@ Plug 'junegunn/gv.vim', {'on':['G','Git','GV','GV!']}
 " enhance f/t
 Plug 'rhysd/clever-f.vim'
 " code snippets
-Plug 'honza/vim-snippets'
+Plug 'chenxuan520/vim-snippets'
 " run shell in async
 Plug 'skywind3000/asyncrun.vim'
 " copilot
