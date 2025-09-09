@@ -1091,6 +1091,10 @@ xnoremap <space>i :AIChat<space>
 xnoremap <space>I :AIEdit<space>
 xnoremap <leader>I :AIChat /tran <cr>
 
+" vim-snippet
+let g:snips_author = 'chenxuan'
+let g:snips_email = '1607772321@qq.com'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plug list
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
