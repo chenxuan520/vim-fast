@@ -70,7 +70,8 @@ require('lualine').setup({
                 path = 1,             -- 内置的简化路径显示
                 file_status = true,   -- 显示文件状态（只读、修改等）
                 newfile_status = true -- 新文件显示 [New]
-            }
+            },
+            { 'g:coc_status' }
         }
     }
 })
