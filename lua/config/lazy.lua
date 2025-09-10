@@ -88,6 +88,7 @@ local bufline_hightlight_change = {
     bg = '#9ece6a',
 }
 local bufline_hightlight = {
+    fg = '#000000',
     bg = '#9ece6a',
 }
 local bufline_hightlight_separator = {
