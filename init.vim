@@ -578,7 +578,7 @@ xnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('v')<cr>
 nnoremap <silent><leader>i :call termtask#Term_cmd_exec_popup('')<cr>
 
 " use select area to replace
-xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=@s<cr>/<c-r>=@s<cr>/gn<left><left><left>
+xnoremap s  :<c-u>execute "normal! gv\"sy"<cr>:%s/\V<c-r>=escape(@s,'/\.')<cr>/<c-r>=escape(@s,'/\.')<cr>/gn<left><left><left>
 nnoremap gs :%s/<c-r>=@/<cr>//gn<left><left><left>
 xnoremap gs :<c-u>execute "normal! gv\"sy"<cr>:call <sid>ReplaceGlobal(@s)<cr>
 func s:ReplaceGlobal(str) abort
