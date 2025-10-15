@@ -46,6 +46,7 @@ require("lazy").setup({
         { 'octol/vim-cpp-enhanced-highlight', ft = { 'c', 'cpp' } },
         { 'chenxuan520/vim-go-highlight',     ft = { 'go' } },
         { 'vim-python/python-syntax',         ft = { 'python' } },
+        { 'sindrets/diffview.nvim' },
         { 'chenxuan520/my-vim-dashboard' },
 
     },
