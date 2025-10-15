@@ -854,6 +854,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'chenxuan520/my-vim-dashboard'
 " function list
 Plug 'liuchengxu/vista.vim', {'on': 'Vista'}
+Plug 'preservim/tagbar', {'on': 'Tagbar'}
 " auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " find anything

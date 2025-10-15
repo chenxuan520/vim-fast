@@ -19,10 +19,11 @@
 
 ## 仓库地址
 
-
 1. gitee:[vim-fast: A easy vim config](https://gitee.com/mirrorvim/vim-fast)
 
 2. github:[GitHub - chenxuan520/vim-fast](https://github.com/chenxuan520/vim-fast)
+
+3. 官网: [Vim-Fast | 超级快速的Vim配置](https://www.chenxuanweb.top/vimfast)
 
 ## 配置效果
 
