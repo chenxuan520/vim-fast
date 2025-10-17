@@ -135,7 +135,7 @@ require("nvim-surround").setup({})
 
 require("nvim-tree").setup({
     view = {
-        width = 20,
+        width = math.floor(vim.o.columns * 0.15),
     },
     -- 核心配置：自动定位当前聚焦的文件
     update_focused_file = {

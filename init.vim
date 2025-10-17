@@ -663,7 +663,7 @@ cnoremap <c-f> <s-right>
 " cmd pair
 let g:pair_map={'(':')','[':']','{':'}','"':'"',"'":"'",'<':'>','`':'`',}
 func! s:Judge(ch,mode)
-	if getcmdtype()!=':'|return a:ch|endif
+	if a:mode=='c'&&getcmdtype()!=':'|return a:ch|endif
 	if a:mode!='c'|let ch=getline('.')[col('.')-1]|else|let ch=getcmdline()[getcmdpos()-1]|endif
 	if a:ch=='"'||a:ch=="'"||a:ch=='`'|if ch!=a:ch|return a:ch.a:ch."\<left>"|endif|endif
 	if ch==a:ch|return "\<right>"|endif
