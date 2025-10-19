@@ -8,6 +8,7 @@ func NvimTreeMenu()
 	nnoremenu PopUp.Splite\ File   :lua require('nvim-tree.api').node.open.horizontal()<cr>
 	nnoremenu PopUp.Move\ Node     :lua require('nvim-tree.api').fs.rename_sub()<cr>
 	nnoremenu PopUp.Hidden\ File   :lua require('nvim-tree.api').tree.toggle_hidden_filter()<cr>
+	nnoremenu PopUp.Git\ Ignore    :lua require('nvim-tree.api').tree.toggle_gitignore_filter()<cr>
 	nnoremenu PopUp.Focus\ File    :wincmd w<bar>lua require('nvim-tree.api').tree.find_file();require('nvim-tree.api').tree.focus()<cr>
 	nnoremenu PopUp.Copy\ Path     :lua require('nvim-tree.api').fs.copy.absolute_path()<cr>
 endfunc

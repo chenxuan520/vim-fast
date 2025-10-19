@@ -137,6 +137,9 @@ require("nvim-tree").setup({
     view = {
         width = math.floor(vim.o.columns * 0.15),
     },
+    git = {
+        ignore = false, -- 关闭 .gitignore 过滤，显示所有文件（包括被忽略的）
+    },
     -- 核心配置：自动定位当前聚焦的文件
     update_focused_file = {
         enable = true,       -- 启用该功能
