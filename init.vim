@@ -929,8 +929,10 @@ function! ShowDocumentation()
 	endif
 endfunction
 func! g:CocMenu()
-	nmenu     <silent>PopUp.Coc\ Define    gd
-	nmenu     <silent>PopUp.Coc\ Refer     gr
+	if &bt == ''
+		nmenu     <silent>PopUp.Coc\ Define    gd
+		nmenu     <silent>PopUp.Coc\ Refer     gr
+	endif
 endfunc
 call AddMouseMenu(function('CocMenu'))
 

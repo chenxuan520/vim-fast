@@ -103,7 +103,7 @@ if has("gui_running")
 	set guioptions-=r           " hide right scroll bar
 	set guioptions-=b           " hide bottom scroll bar
 	set showtabline=0           " hide tab bar
-	set guicursor=n-v-c:ver5    " set cursor to a vertical line
+	set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
 endif
 
 " load vim default plugin
@@ -1023,8 +1023,10 @@ function! ShowDocumentation()
 	endif
 endfunction
 func! g:CocMenu()
-	nmenu     <silent>PopUp.Coc\ Define    gd
-	nmenu     <silent>PopUp.Coc\ Refer     gr
+	if &bt == ''
+		nmenu     <silent>PopUp.Coc\ Define    gd
+		nmenu     <silent>PopUp.Coc\ Refer     gr
+	endif
 endfunc
 call AddMouseMenu(function('CocMenu'))
 
