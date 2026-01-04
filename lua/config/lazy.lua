@@ -152,3 +152,17 @@ require("nvim-tree").setup({
         },
     },
 })
+
+require("diffview").setup({
+    view = {
+        merge_tool = {
+            -- 推荐这个，最接近 VSCode 的混合三分栏
+            layout = "diff3_mixed",
+
+            -- 或者纯上下垂直三分栏
+            -- layout = "diff3_vertical",
+
+            disable_diagnostics = true,
+        },
+    },
+})
